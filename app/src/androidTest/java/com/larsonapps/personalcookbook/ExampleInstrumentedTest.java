@@ -1,4 +1,4 @@
-package mobi.thalic.personalcookbook;
+package com.larsonapps.personalcookbook;
 
 import android.content.Context;
 

@@ -16,7 +16,7 @@ Copyright (C) 2020  Gary Larson
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package mobi.thalic.personalcookbook.ui.main;
+package com.larsonapps.personalcookbook.ui.main;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,8 +28,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import mobi.thalic.personalcookbook.databinding.CookbookFragmentBinding;
-import mobi.thalic.personalcookbook.ui.main.CookbookViewModel;
+import com.larsonapps.personalcookbook.databinding.CookbookFragmentBinding;
+
 
 public class CookbookFragment extends Fragment {
     // Declare variables

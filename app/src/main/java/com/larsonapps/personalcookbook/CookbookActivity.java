@@ -15,16 +15,17 @@ Copyright (C) 2020  Gary Larson
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package mobi.thalic.personalcookbook;
+package com.larsonapps.personalcookbook;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 
-import mobi.thalic.personalcookbook.databinding.CookbookActivityBinding;
-import mobi.thalic.personalcookbook.ui.main.CookbookFragment;
-import mobi.thalic.personalcookbook.ui.main.CookbookViewModel;
+
+import com.larsonapps.personalcookbook.databinding.CookbookActivityBinding;
+import com.larsonapps.personalcookbook.ui.main.CookbookFragment;
+import com.larsonapps.personalcookbook.ui.main.CookbookViewModel;
 
 public class CookbookActivity extends AppCompatActivity {
     // Declare variables

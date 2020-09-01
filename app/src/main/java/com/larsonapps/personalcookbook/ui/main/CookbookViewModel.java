@@ -15,7 +15,7 @@ Copyright (C) 2020  Gary Larson
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package mobi.thalic.personalcookbook.ui.main;
+package com.larsonapps.personalcookbook.ui.main;
 
 import androidx.lifecycle.ViewModel;
 
