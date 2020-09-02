@@ -15,7 +15,7 @@ Copyright (C) 2020  Larson Apps - Gary Larson
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.larsonapps.personalcookbook;
+package com.larsonapps.personalcookbook.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -23,13 +23,13 @@ import androidx.lifecycle.ViewModelProvider;
 import android.os.Bundle;
 
 
+import com.larsonapps.personalcookbook.R;
 import com.larsonapps.personalcookbook.databinding.CookbookActivityBinding;
-import com.larsonapps.personalcookbook.ui.main.CookbookFragment;
-import com.larsonapps.personalcookbook.ui.main.CookbookViewModel;
+import com.larsonapps.personalcookbook.data.CookbookRecipesViewModel;
 
 public class CookbookActivity extends AppCompatActivity {
     // Declare variables
-    CookbookViewModel mCookbookViewModel;
+    CookbookRecipesViewModel mCookbookRecipesViewModel;
     CookbookActivityBinding mBinding;
 
 
@@ -43,6 +43,6 @@ public class CookbookActivity extends AppCompatActivity {
                     .replace(R.id.container, CookbookFragment.newInstance())
                     .commitNow();
         }
-        mCookbookViewModel = new ViewModelProvider(this).get(CookbookViewModel.class);
+        mCookbookRecipesViewModel = new ViewModelProvider(this).get(CookbookRecipesViewModel.class);
     }
 }

@@ -1,4 +1,4 @@
-package com.larsonapps.personalcookbook.ui.main.dummy;
+package com.larsonapps.personalcookbook.ui.dummy;
 
 import java.util.ArrayList;
 import java.util.HashMap;

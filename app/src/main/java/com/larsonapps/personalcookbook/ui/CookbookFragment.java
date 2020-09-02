@@ -16,7 +16,7 @@ Copyright (C) 2020  Larson Apps - Gary Larson
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.larsonapps.personalcookbook.ui.main;
+package com.larsonapps.personalcookbook.ui;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -28,18 +28,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.larsonapps.personalcookbook.data.CookbookRecipesViewModel;
+import com.larsonapps.personalcookbook.adapter.MyRecipeRecyclerViewAdapter;
 import com.larsonapps.personalcookbook.databinding.CookbookFragmentBinding;
 import com.larsonapps.personalcookbook.databinding.RecipeFragmentItemListBinding;
-import com.larsonapps.personalcookbook.ui.main.dummy.DummyContent;
+import com.larsonapps.personalcookbook.ui.dummy.DummyContent;
 
 
 public class CookbookFragment extends Fragment {
     // Declare variables
-    private CookbookViewModel mCookbookViewModel;
+    private CookbookRecipesViewModel mCookbookRecipesViewModel;
     private CookbookFragmentBinding mBinding;
     private RecipeFragmentItemListBinding mListBinding;
     public static CookbookFragment newInstance() {
@@ -64,8 +64,8 @@ public class CookbookFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mCookbookViewModel = new ViewModelProvider(requireActivity())
-                .get(CookbookViewModel.class);
+        mCookbookRecipesViewModel = new ViewModelProvider(requireActivity())
+                .get(CookbookRecipesViewModel.class);
         // TODO: Use the ViewModel
     }
 

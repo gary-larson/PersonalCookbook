@@ -15,10 +15,10 @@ Copyright (C) 2020  Larson Apps - Gary Larson
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.larsonapps.personalcookbook.ui.main;
+package com.larsonapps.personalcookbook.data;
 
 import androidx.lifecycle.ViewModel;
 
-public class CookbookViewModel extends ViewModel {
+public class CookbookRecipesViewModel extends ViewModel {
     // TODO: Implement the ViewModel
 }
