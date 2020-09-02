@@ -1,4 +1,27 @@
 <resources>
     <string name="app_name">Personal Cookbook</string>
     <string name="mainfragment">MainFragment</string>
+    <string name="meal">Meal</string>
+    <string name="protein">Protein</string>
+    <string name="category">Category</string>
+    <string name="search">Search</string>
+    <string-array name="meal_array">
+        <item>Meal</item>
+        <item>Breakfast</item>
+        <item>Lunch</item>
+        <item>Dinner</item>
+        <item>Dessert</item>
+    </string-array>
+    <string-array name="protein_array">
+        <item>Protein</item>
+        <item>Chicken</item>
+        <item>Beef</item>
+        <item>Pork</item>
+        <item>Lamb</item>
+        <item>Vegan</item>
+    </string-array>
+    <string-array name="category_array">
+        <item>Category</item>
+        <item>Favorites</item>
+    </string-array>
 </resources>

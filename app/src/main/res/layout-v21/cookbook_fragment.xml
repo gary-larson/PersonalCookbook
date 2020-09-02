@@ -83,6 +83,7 @@
         android:layout_marginBottom="@dimen/fab_margin"
         android:background="@drawable/fab_background"
         android:contentDescription="@string/search"
+        android:elevation="@dimen/fab_elevation"
         android:src="@drawable/ic_search_24px" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,6 +1,6 @@
 /*
 This program saves all recipes on a device with search and editing capabilities.
-Copyright (C) 2020  Gary Larson
+Copyright (C) 2020  Larson Apps - Gary Larson
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
