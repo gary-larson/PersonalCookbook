@@ -53,10 +53,10 @@ public class CookbookFragment extends Fragment {
         mBinding = CookbookFragmentBinding.inflate(inflater, container, false);
         mListBinding = mBinding.content;
         // Set the adapter
-        Context context = mListBinding.list.getContext();
+        Context context = mListBinding.recipeList.getContext();
         //RecyclerView recyclerView = (RecyclerView) view;
-        mListBinding.list.setLayoutManager(new LinearLayoutManager(context));
-        mListBinding.list.setAdapter(new MyRecipeRecyclerViewAdapter(DummyContent.ITEMS));
+        mListBinding.recipeList.setLayoutManager(new LinearLayoutManager(context));
+        mListBinding.recipeList.setAdapter(new MyRecipeRecyclerViewAdapter(DummyContent.ITEMS));
 
         return mBinding.getRoot();
     }

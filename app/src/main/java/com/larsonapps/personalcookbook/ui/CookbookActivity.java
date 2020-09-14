@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 
 
 import com.larsonapps.personalcookbook.R;
@@ -29,8 +30,9 @@ import com.larsonapps.personalcookbook.data.CookbookRecipesViewModel;
 
 public class CookbookActivity extends AppCompatActivity {
     // Declare variables
-    CookbookRecipesViewModel mCookbookRecipesViewModel;
-    CookbookActivityBinding mBinding;
+    private CookbookRecipesViewModel mCookbookRecipesViewModel;
+    private CookbookActivityBinding mBinding;
+    private int mHeight;
 
 
     @Override
@@ -40,9 +42,19 @@ public class CookbookActivity extends AppCompatActivity {
         setContentView(mBinding.getRoot());
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, CookbookFragment.newInstance())
+                    //.replace(R.id.container, CookbookFragment.newInstance())
+                    .replace(mBinding.container.getId(), CookbookDetailsFragment.newInstance())
                     .commitNow();
         }
-        mCookbookRecipesViewModel = new ViewModelProvider(this).get(CookbookRecipesViewModel.class);
+
+        int height;
+        if (android.os.Build.VERSION.SDK_INT >= 30){
+            height = getWindowManager().getMaximumWindowMetrics().getBounds().height();
+        } else{
+            height = getWindowManager().getDefaultDisplay().getHeight();
+        }
+        mHeight = height;
     }
+
+    public int getHeight() {return mHeight;}
 }

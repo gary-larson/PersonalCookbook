@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.larsonapps.personalcookbook.R;
+import com.larsonapps.personalcookbook.databinding.CookbookDetailsContentFragmentBinding;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,14 +20,14 @@ import com.larsonapps.personalcookbook.R;
  */
 public class CookbookDetailsContentFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    // Constants for parameter initialization
+    private static final String ARG_IS_EDIT= "IsEdit";
+    private static final String ARG_IS_MANUAL = "IsManual";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    // Declare variables
+    private boolean isEdit;
+    private boolean isManual;
+    private CookbookDetailsContentFragmentBinding mBinding;
 
     public CookbookDetailsContentFragment() {
         // Required empty public constructor
@@ -34,16 +37,16 @@ public class CookbookDetailsContentFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param isEdit Parameter 1.
+     * @param isManual Parameter 2.
      * @return A new instance of fragment CookbookDetailsContentFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CookbookDetailsContentFragment newInstance(String param1, String param2) {
+    public static CookbookDetailsContentFragment newInstance(boolean isEdit, boolean isManual) {
         CookbookDetailsContentFragment fragment = new CookbookDetailsContentFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putBoolean(ARG_IS_EDIT, isEdit);
+        args.putBoolean(ARG_IS_MANUAL, isManual);
         fragment.setArguments(args);
         return fragment;
     }
@@ -52,15 +55,16 @@ public class CookbookDetailsContentFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            isEdit = getArguments().getBoolean(ARG_IS_EDIT);
+            isManual = getArguments().getBoolean(ARG_IS_MANUAL);
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.cookbook_details_content_fragment, container, false);
+        mBinding = CookbookDetailsContentFragmentBinding.inflate(inflater, container, false);
+        return mBinding.getRoot();
     }
 }

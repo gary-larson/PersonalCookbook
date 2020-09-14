@@ -2,17 +2,26 @@
 <resources>
     <!-- app default -->
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="fab_elevation">6dp</dimen>
+    <dimen name="app_bar_elevation">4dp</dimen>
+
     <!-- cookbook fragment -->
     <dimen name="app_bar_height">140dp</dimen>
-    <dimen name="app_bar_elevation">4dp</dimen>
     <dimen name="minimum_app_bar_height">112dp</dimen>
     <dimen name="list_toolbar_side_margin">0dp</dimen>
     <dimen name="logo_padding">24dp</dimen>
     <dimen name="label_padding">16dp</dimen>
     <dimen name="spinner_padding">16dp</dimen>
 
-    <dimen name="fab_elevation">6dp</dimen>
+    <!-- fab -->
     <dimen name="fab_press_translation_z">6dp</dimen>
     <dimen name="fab_margin">24dp</dimen>
     <dimen name="fab_size">56dp</dimen>
+
+    <!-- cookbook details fragment -->
+    <dimen name="details_photo_height">252dp</dimen>
+    <dimen name="details_photo_width">182dp</dimen>
+    <dimen name="details_minimum_app_bar_height">250dp</dimen>
+    <dimen name="details_default_container_height">250dp</dimen>
+    <dimen name="details_text_margin_start">20dp</dimen>
 </resources>

@@ -7,7 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.larsonapps.personalcookbook.R;
+import com.larsonapps.personalcookbook.databinding.CookbookDetailsFragmentBinding;
+import com.larsonapps.personalcookbook.databinding.IngredientFragmentItemBinding;
+import com.larsonapps.personalcookbook.databinding.IngredientFragmentItemListBinding;
 import com.larsonapps.personalcookbook.ui.dummy.DummyContent.DummyItem;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -18,16 +24,18 @@ import java.util.List;
 public class MyIngredientRecyclerViewAdapter extends RecyclerView.Adapter<MyIngredientRecyclerViewAdapter.ViewHolder> {
 
     private final List<DummyItem> mValues;
+    private IngredientFragmentItemBinding mBinding;
 
     public MyIngredientRecyclerViewAdapter(List<DummyItem> items) {
         mValues = items;
     }
 
+    @NotNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.ingredients_fragment_item, parent, false);
-        return new ViewHolder(view);
+    public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
+        mBinding = IngredientFragmentItemBinding.inflate(
+                LayoutInflater.from(parent.getContext()),parent, false);
+        return new ViewHolder(mBinding.getRoot());
     }
 
     @Override
@@ -42,7 +50,7 @@ public class MyIngredientRecyclerViewAdapter extends RecyclerView.Adapter<MyIngr
         return mValues.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
