@@ -6,11 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.larsonapps.personalcookbook.adapter.MyStepRecyclerViewAdapter;
+import com.larsonapps.personalcookbook.data.Ingredient;
+import com.larsonapps.personalcookbook.data.Step;
 import com.larsonapps.personalcookbook.databinding.StepFragmentItemListBinding;
 import com.larsonapps.personalcookbook.ui.dummy.DummyContent;
 
@@ -30,6 +33,7 @@ public class StepFragment extends Fragment {
     private boolean isEdit;
     private boolean isManual;
     private StepFragmentItemListBinding mBinding;
+    private OnListFragmentInteractionListener mListener;
 
     /**
      * Default constructor
@@ -71,8 +75,39 @@ public class StepFragment extends Fragment {
         } else {
             mBinding.stepList.setLayoutManager(new GridLayoutManager(context, mColumnCount));
         }
-        mBinding.stepList.setAdapter(new MyStepRecyclerViewAdapter(DummyContent.ITEMS));
+        mBinding.stepList.setAdapter(new MyStepRecyclerViewAdapter(mListener, DummyContent.ITEMS));
 
         return mBinding.getRoot();
+    }
+
+    /**
+     * Method that initializes the listener
+     * @param context to use
+     */
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof IngredientFragment.OnListFragmentInteractionListener) {
+            mListener = (StepFragment.OnListFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString() );
+        }
+    }
+
+    /**
+     * Method to remove listener
+     */
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    /**
+     * Interface for the click listener in the activity containing the fragment
+     */
+    public interface OnListFragmentInteractionListener {
+        // set arguments type and name
+        void onListFragmentInteraction(Step step);
     }
 }

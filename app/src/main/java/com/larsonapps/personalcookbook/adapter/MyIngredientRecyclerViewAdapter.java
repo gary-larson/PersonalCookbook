@@ -8,10 +8,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.larsonapps.personalcookbook.R;
+import com.larsonapps.personalcookbook.data.Ingredient;
 import com.larsonapps.personalcookbook.databinding.CookbookDetailsFragmentBinding;
 import com.larsonapps.personalcookbook.databinding.IngredientFragmentItemBinding;
 import com.larsonapps.personalcookbook.databinding.IngredientFragmentItemListBinding;
+import com.larsonapps.personalcookbook.ui.IngredientFragment;
 import com.larsonapps.personalcookbook.ui.dummy.DummyContent.DummyItem;
+
 
 import org.jetbrains.annotations.NotNull;
 
@@ -25,8 +28,10 @@ public class MyIngredientRecyclerViewAdapter extends RecyclerView.Adapter<MyIngr
 
     private final List<DummyItem> mValues;
     private IngredientFragmentItemBinding mBinding;
+    private final IngredientFragment.OnListFragmentInteractionListener mListener;
 
-    public MyIngredientRecyclerViewAdapter(List<DummyItem> items) {
+    public MyIngredientRecyclerViewAdapter(IngredientFragment.OnListFragmentInteractionListener listener, List<DummyItem> items) {
+        mListener = listener;
         mValues = items;
     }
 
@@ -43,6 +48,13 @@ public class MyIngredientRecyclerViewAdapter extends RecyclerView.Adapter<MyIngr
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).id);
         holder.mContentView.setText(mValues.get(position).content);
+        holder.mView.setOnClickListener(v -> {
+            if (null != mListener) {
+                // Notify the active callbacks interface (the activity, if the
+                // fragment is attached to one) that an item has been selected.
+                mListener.onListFragmentInteraction(new Ingredient());
+            }
+        });
     }
 
     @Override

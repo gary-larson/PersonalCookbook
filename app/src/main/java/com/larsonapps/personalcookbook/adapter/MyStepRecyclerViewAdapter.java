@@ -8,8 +8,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.larsonapps.personalcookbook.R;
+import com.larsonapps.personalcookbook.data.Step;
 import com.larsonapps.personalcookbook.databinding.StepFragmentItemBinding;
 import com.larsonapps.personalcookbook.databinding.StepFragmentItemListBinding;
+import com.larsonapps.personalcookbook.ui.StepFragment;
 import com.larsonapps.personalcookbook.ui.dummy.DummyContent.DummyItem;
 
 import org.jetbrains.annotations.NotNull;
@@ -24,8 +26,10 @@ public class MyStepRecyclerViewAdapter extends RecyclerView.Adapter<MyStepRecycl
 
     private final List<DummyItem> mValues;
     private StepFragmentItemBinding mBinding;
+    private StepFragment.OnListFragmentInteractionListener mListener;
 
-    public MyStepRecyclerViewAdapter(List<DummyItem> items) {
+    public MyStepRecyclerViewAdapter(StepFragment.OnListFragmentInteractionListener listener, List<DummyItem> items) {
+        mListener = listener;
         mValues = items;
     }
 
@@ -42,6 +46,13 @@ public class MyStepRecyclerViewAdapter extends RecyclerView.Adapter<MyStepRecycl
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).id);
         holder.mContentView.setText(mValues.get(position).content);
+        holder.mView.setOnClickListener(v -> {
+            if (null != mListener) {
+                // Notify the active callbacks interface (the activity, if the
+                // fragment is attached to one) that an item has been selected.
+                mListener.onListFragmentInteraction(new Step());
+            }
+        });
     }
 
     @Override

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.larsonapps.personalcookbook.R;
 import com.larsonapps.personalcookbook.adapter.MyIngredientRecyclerViewAdapter;
 import com.larsonapps.personalcookbook.adapter.MyStepRecyclerViewAdapter;
+import com.larsonapps.personalcookbook.data.Ingredient;
 import com.larsonapps.personalcookbook.databinding.IngredientFragmentItemListBinding;
 import com.larsonapps.personalcookbook.ui.dummy.DummyContent;
 
@@ -34,6 +36,7 @@ public class IngredientFragment extends Fragment {
     private boolean isEdit;
     private boolean isManual;
     private IngredientFragmentItemListBinding mBinding;
+    private OnListFragmentInteractionListener mListener;
 
 
     /**
@@ -77,8 +80,39 @@ public class IngredientFragment extends Fragment {
         } else {
             mBinding.ingredientList.setLayoutManager(new GridLayoutManager(context, mColumnCount));
         }
-        mBinding.ingredientList.setAdapter(new MyIngredientRecyclerViewAdapter(DummyContent.ITEMS));
+        mBinding.ingredientList.setAdapter(new MyIngredientRecyclerViewAdapter(mListener, DummyContent.ITEMS));
 
         return mBinding.getRoot();
+    }
+
+    /**
+     * Method that initializes the listener
+     * @param context to use
+     */
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof OnListFragmentInteractionListener) {
+            mListener = (OnListFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString() );
+        }
+    }
+
+    /**
+     * Method to remove listener
+     */
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    /**
+     * Interface for the click listener in the activity containing the fragment
+     */
+    public interface OnListFragmentInteractionListener {
+        // set arguments type and name
+        void onListFragmentInteraction(Ingredient ingredient);
     }
 }

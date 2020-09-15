@@ -22,13 +22,20 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.widget.Toast;
 
 
 import com.larsonapps.personalcookbook.R;
+import com.larsonapps.personalcookbook.data.Ingredient;
+import com.larsonapps.personalcookbook.data.Recipe;
+import com.larsonapps.personalcookbook.data.Step;
 import com.larsonapps.personalcookbook.databinding.CookbookActivityBinding;
 import com.larsonapps.personalcookbook.data.CookbookRecipesViewModel;
 
-public class CookbookActivity extends AppCompatActivity {
+public class CookbookActivity extends AppCompatActivity implements
+        CookbookFragment.OnListFragmentInteractionListener,
+        StepFragment.OnListFragmentInteractionListener,
+        IngredientFragment.OnListFragmentInteractionListener {
     // Declare variables
     private CookbookRecipesViewModel mCookbookRecipesViewModel;
     private CookbookActivityBinding mBinding;
@@ -57,4 +64,19 @@ public class CookbookActivity extends AppCompatActivity {
     }
 
     public int getHeight() {return mHeight;}
+
+    @Override
+    public void onListFragmentInteraction(Recipe recipe) {
+        Toast.makeText(this, "Recipe clicked", Toast.LENGTH_LONG).show();
+}
+
+    @Override
+    public void onListFragmentInteraction(Ingredient ingredient) {
+        Toast.makeText(this, "Ingredient clicked", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onListFragmentInteraction(Step step) {
+        Toast.makeText(this, "Step clicked", Toast.LENGTH_LONG).show();
+    }
 }
