@@ -24,4 +24,11 @@
     <dimen name="details_minimum_app_bar_height">250dp</dimen>
     <dimen name="details_default_container_height">250dp</dimen>
     <dimen name="details_text_margin_start">20dp</dimen>
+
+    <!-- cookbook edit fragment -->
+    <dimen name="edit_button_padding">8dp</dimen>
+    <dimen name="edit_delete_icon_size">56dp</dimen>
+    <dimen name="edit_delete_icon_margin">16dp</dimen>
+    <dimen name="edit_edit_icon_size">24dp</dimen>
+    <dimen name="edit_edit_icon_padding">4dp</dimen>
 </resources>

@@ -1,20 +1,3 @@
-/*
-This program saves all recipes on a device with search and editing capabilities.
-Copyright (C) 2020  Larson Apps - Gary Larson
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
 package com.larsonapps.personalcookbook.adapter;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,9 +8,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.larsonapps.personalcookbook.R;
-import com.larsonapps.personalcookbook.data.Recipe;
-import com.larsonapps.personalcookbook.ui.CookbookFragment;
+import com.larsonapps.personalcookbook.data.Ingredient;
+import com.larsonapps.personalcookbook.databinding.IngredientFragmentItemBinding;
+import com.larsonapps.personalcookbook.ui.IngredientFragment;
 import com.larsonapps.personalcookbook.ui.dummy.DummyContent.DummyItem;
+
 
 import org.jetbrains.annotations.NotNull;
 
@@ -37,22 +22,29 @@ import java.util.List;
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class MyRecipeRecyclerViewAdapter extends RecyclerView.Adapter<MyRecipeRecyclerViewAdapter.ViewHolder> {
+public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<IngredientRecyclerViewAdapter.ViewHolder> {
+    // Declare Constants
+    private static final int STATE_EDIT= 1;
+    private static final int STATE_MANUAL = 2;
+    private static final int STATE_IMPORT = 3;
 
     private final List<DummyItem> mValues;
-    private CookbookFragment.OnListFragmentInteractionListener mListener;
+    private final int mState;
+    private IngredientFragmentItemBinding mBinding;
+    private final IngredientFragment.OnListFragmentInteractionListener mListener;
 
-    public MyRecipeRecyclerViewAdapter(CookbookFragment.OnListFragmentInteractionListener listener, List<DummyItem> items) {
+    public IngredientRecyclerViewAdapter(IngredientFragment.OnListFragmentInteractionListener listener, List<DummyItem> items, int state) {
         mListener = listener;
         mValues = items;
+        mState = state;
     }
 
     @NotNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.recipe_fragment_item, parent, false);
-        return new ViewHolder(view);
+    public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
+        mBinding = IngredientFragmentItemBinding.inflate(
+                LayoutInflater.from(parent.getContext()),parent, false);
+        return new ViewHolder(mBinding.getRoot());
     }
 
     @Override
@@ -64,7 +56,7 @@ public class MyRecipeRecyclerViewAdapter extends RecyclerView.Adapter<MyRecipeRe
             if (null != mListener) {
                 // Notify the active callbacks interface (the activity, if the
                 // fragment is attached to one) that an item has been selected.
-                mListener.onListFragmentInteraction(new Recipe());
+                mListener.onListFragmentInteraction(new Ingredient(), mState);
             }
         });
     }
@@ -74,7 +66,7 @@ public class MyRecipeRecyclerViewAdapter extends RecyclerView.Adapter<MyRecipeRe
         return mValues.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
@@ -87,7 +79,6 @@ public class MyRecipeRecyclerViewAdapter extends RecyclerView.Adapter<MyRecipeRe
             mContentView = (TextView) view.findViewById(R.id.content);
         }
 
-        @NotNull
         @Override
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";

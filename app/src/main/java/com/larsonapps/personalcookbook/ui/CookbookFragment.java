@@ -31,9 +31,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.larsonapps.personalcookbook.data.CookbookRecipesViewModel;
-import com.larsonapps.personalcookbook.adapter.MyRecipeRecyclerViewAdapter;
+import com.larsonapps.personalcookbook.adapter.RecipeRecyclerViewAdapter;
 import com.larsonapps.personalcookbook.data.Recipe;
-import com.larsonapps.personalcookbook.data.Step;
 import com.larsonapps.personalcookbook.databinding.CookbookFragmentBinding;
 import com.larsonapps.personalcookbook.databinding.RecipeFragmentItemListBinding;
 import com.larsonapps.personalcookbook.ui.dummy.DummyContent;
@@ -59,7 +58,7 @@ public class CookbookFragment extends Fragment {
         Context context = mListBinding.recipeList.getContext();
         //RecyclerView recyclerView = (RecyclerView) view;
         mListBinding.recipeList.setLayoutManager(new LinearLayoutManager(context));
-        mListBinding.recipeList.setAdapter(new MyRecipeRecyclerViewAdapter(mListener, DummyContent.ITEMS));
+        mListBinding.recipeList.setAdapter(new RecipeRecyclerViewAdapter(mListener, DummyContent.ITEMS));
 
         return mBinding.getRoot();
     }

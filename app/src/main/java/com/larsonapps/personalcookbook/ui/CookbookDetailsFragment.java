@@ -1,7 +1,6 @@
 package com.larsonapps.personalcookbook.ui;
 
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.bumptech.glide.Glide;
 import com.larsonapps.personalcookbook.R;
 import com.larsonapps.personalcookbook.data.CookbookIngredientsViewModel;
 
@@ -37,12 +35,12 @@ public class CookbookDetailsFragment extends Fragment {
                 .into(mBinding.photo);
         mBinding.toolbar.setTitle(getString(R.string.app_name));
         getChildFragmentManager().beginTransaction()
-                .replace(mBinding.contentContainer.getId(), CookbookDetailsContentFragment
-                        .newInstance(false, false))
+                .replace(mBinding.contentContainer.getId(), ContentFragment
+                        .newInstance(0))
                 .replace(mBinding.ingredientListContainer.getId(), IngredientFragment
-                        .newInstance(1, false, false))
+                        .newInstance(1, 0))
                 .replace(mBinding.stepListContainer.getId(), StepFragment
-                        .newInstance(1, false, false))
+                        .newInstance(1, 0))
                 .commit();
         CookbookActivity activity = (CookbookActivity) getActivity();
         int height = 0;

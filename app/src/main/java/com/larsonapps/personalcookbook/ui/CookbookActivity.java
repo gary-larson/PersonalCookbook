@@ -20,6 +20,7 @@ package com.larsonapps.personalcookbook.ui;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.widget.Toast;
@@ -28,6 +29,7 @@ import android.widget.Toast;
 import com.larsonapps.personalcookbook.R;
 import com.larsonapps.personalcookbook.data.Ingredient;
 import com.larsonapps.personalcookbook.data.Recipe;
+import com.larsonapps.personalcookbook.data.RecipeImage;
 import com.larsonapps.personalcookbook.data.Step;
 import com.larsonapps.personalcookbook.databinding.CookbookActivityBinding;
 import com.larsonapps.personalcookbook.data.CookbookRecipesViewModel;
@@ -35,7 +37,8 @@ import com.larsonapps.personalcookbook.data.CookbookRecipesViewModel;
 public class CookbookActivity extends AppCompatActivity implements
         CookbookFragment.OnListFragmentInteractionListener,
         StepFragment.OnListFragmentInteractionListener,
-        IngredientFragment.OnListFragmentInteractionListener {
+        IngredientFragment.OnListFragmentInteractionListener,
+        ImageFragment.OnListFragmentInteractionListener {
     // Declare variables
     private CookbookRecipesViewModel mCookbookRecipesViewModel;
     private CookbookActivityBinding mBinding;
@@ -50,7 +53,8 @@ public class CookbookActivity extends AppCompatActivity implements
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     //.replace(R.id.container, CookbookFragment.newInstance())
-                    .replace(mBinding.container.getId(), CookbookDetailsFragment.newInstance())
+                    //.replace(mBinding.container.getId(), CookbookDetailsFragment.newInstance())
+                    .replace(mBinding.container.getId(), CookbookEditFragment.newInstance())
                     .commitNow();
         }
 
@@ -71,12 +75,17 @@ public class CookbookActivity extends AppCompatActivity implements
 }
 
     @Override
-    public void onListFragmentInteraction(Ingredient ingredient) {
+    public void onListFragmentInteraction(Ingredient ingredient, int state) {
         Toast.makeText(this, "Ingredient clicked", Toast.LENGTH_LONG).show();
     }
 
     @Override
-    public void onListFragmentInteraction(Step step) {
+    public void onListFragmentInteraction(Step step, int state) {
         Toast.makeText(this, "Step clicked", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onListFragmentInteraction(RecipeImage recipeImage, int state) {
+        Toast.makeText(this, "Image clicked", Toast.LENGTH_LONG).show();
     }
 }

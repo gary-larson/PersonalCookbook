@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/edit_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/recipe_content_description" />
+
+    <ImageButton
+        android:id="@+id/image_button"
+        android:layout_height="@dimen/edit_delete_icon_size"
+        android:layout_width="@dimen/edit_delete_icon_size"
+        android:background="@drawable/button_background"
+        android:layout_margin="@dimen/edit_delete_icon_margin"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_delete_24px"/>
+</LinearLayout>

@@ -1,27 +1,33 @@
 package com.larsonapps.personalcookbook.ui;
 
 import android.content.Context;
+import android.media.Image;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.larsonapps.personalcookbook.adapter.StepRecyclerViewAdapter;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.larsonapps.personalcookbook.R;
+import com.larsonapps.personalcookbook.adapter.ImageRecyclerViewAdapter;
+import com.larsonapps.personalcookbook.data.RecipeImage;
 import com.larsonapps.personalcookbook.data.Step;
-import com.larsonapps.personalcookbook.databinding.StepFragmentItemListBinding;
+import com.larsonapps.personalcookbook.databinding.ImageFragmentItemListBinding;
 import com.larsonapps.personalcookbook.ui.dummy.DummyContent;
 
-import org.jetbrains.annotations.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A fragment representing a list of Items.
  */
-public class StepFragment extends Fragment {
+public class ImageFragment extends Fragment {
 
     // Declare constants
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -32,18 +38,20 @@ public class StepFragment extends Fragment {
     // Declare variables
     private int mColumnCount = 1;
     private int mState;
-    private StepFragmentItemListBinding mBinding;
-    private OnListFragmentInteractionListener mListener;
+    private ImageFragmentItemListBinding mBinding;
+    private ImageFragment.OnListFragmentInteractionListener mListener;
 
     /**
-     * Default constructor
+     * Mandatory empty constructor for the fragment manager to instantiate the
+     * fragment (e.g. upon screen orientation changes).
      */
-    public StepFragment() {
+    public ImageFragment() {
     }
 
     // TODO: Customize parameter initialization
-    public static StepFragment newInstance(int columnCount, int state) {
-        StepFragment fragment = new StepFragment();
+    @SuppressWarnings("unused")
+    public static ImageFragment newInstance(int columnCount, int state) {
+        ImageFragment fragment = new ImageFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         args.putInt(ARG_STATE, state);
@@ -62,20 +70,26 @@ public class StepFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mBinding = StepFragmentItemListBinding.inflate(inflater, container, false);
+        View view = inflater.inflate(R.layout.image_fragment_item_list, container, false);
 
         // Set the adapter
-        Context context = mBinding.getRoot().getContext();
-        if (mColumnCount <= 1) {
-            mBinding.stepList.setLayoutManager(new LinearLayoutManager(context));
-        } else {
-            mBinding.stepList.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+        if (view instanceof RecyclerView) {
+            Context context = view.getContext();
+            RecyclerView recyclerView = (RecyclerView) view;
+            if (mColumnCount <= 1) {
+                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            } else {
+                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+            }
+            List<RecipeImage> recipeImages = new ArrayList<>();
+            RecipeImage recipeImage = new RecipeImage();
+            recipeImage.setImageUrl("file:///android_asset/ApplePie.jpg");
+            recipeImages.add(recipeImage);
+            recyclerView.setAdapter(new ImageRecyclerViewAdapter(mListener, recipeImages, 1));
         }
-        mBinding.stepList.setAdapter(new StepRecyclerViewAdapter(mListener, DummyContent.ITEMS, mState));
-
-        return mBinding.getRoot();
+        return view;
     }
 
     /**
@@ -85,8 +99,8 @@ public class StepFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        if (context instanceof StepFragment.OnListFragmentInteractionListener) {
-            mListener = (StepFragment.OnListFragmentInteractionListener) context;
+        if (context instanceof ImageFragment.OnListFragmentInteractionListener) {
+            mListener = (ImageFragment.OnListFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString() );
         }
@@ -106,6 +120,6 @@ public class StepFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // set arguments type and name
-        void onListFragmentInteraction(Step step, int state);
+        void onListFragmentInteraction(RecipeImage recipeImage, int state);
     }
 }

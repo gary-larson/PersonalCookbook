@@ -1,9 +1,7 @@
 package com.larsonapps.personalcookbook.ui;
 
 import android.content.Context;
-import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.larsonapps.personalcookbook.R;
-import com.larsonapps.personalcookbook.adapter.MyIngredientRecyclerViewAdapter;
-import com.larsonapps.personalcookbook.adapter.MyStepRecyclerViewAdapter;
+import com.larsonapps.personalcookbook.adapter.IngredientRecyclerViewAdapter;
 import com.larsonapps.personalcookbook.data.Ingredient;
 import com.larsonapps.personalcookbook.databinding.IngredientFragmentItemListBinding;
 import com.larsonapps.personalcookbook.ui.dummy.DummyContent;
@@ -29,12 +25,13 @@ public class IngredientFragment extends Fragment {
 
     // Declare constants
     private static final String ARG_COLUMN_COUNT = "column-count";
-    private static final String ARG_IS_EDIT= "IsEdit";
-    private static final String ARG_IS_MANUAL = "IsManual";
+    private static final String ARG_STATE = "state";
+    private static final int STATE_EDIT= 1;
+    private static final int STATE_MANUAL = 2;
+    private static final int STATE_IMPORT = 3;
     // Declare variables
     private int mColumnCount = 1;
-    private boolean isEdit;
-    private boolean isManual;
+    private int mState = 0;
     private IngredientFragmentItemListBinding mBinding;
     private OnListFragmentInteractionListener mListener;
 
@@ -47,12 +44,11 @@ public class IngredientFragment extends Fragment {
     }
 
     // TODO: Customize parameter initialization
-    public static IngredientFragment newInstance(int columnCount, boolean isEdit, boolean isManual) {
+    public static IngredientFragment newInstance(int columnCount, int state) {
         IngredientFragment fragment = new IngredientFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
-        args.putBoolean(ARG_IS_EDIT, isEdit);
-        args.putBoolean(ARG_IS_MANUAL, isManual);
+        args.putInt(ARG_STATE, state);
         fragment.setArguments(args);
         return fragment;
     }
@@ -63,8 +59,7 @@ public class IngredientFragment extends Fragment {
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-            isEdit = getArguments().getBoolean(ARG_IS_EDIT);
-            isManual = getArguments().getBoolean(ARG_IS_MANUAL);
+            mState = getArguments().getInt(ARG_STATE);
         }
     }
 
@@ -80,7 +75,7 @@ public class IngredientFragment extends Fragment {
         } else {
             mBinding.ingredientList.setLayoutManager(new GridLayoutManager(context, mColumnCount));
         }
-        mBinding.ingredientList.setAdapter(new MyIngredientRecyclerViewAdapter(mListener, DummyContent.ITEMS));
+        mBinding.ingredientList.setAdapter(new IngredientRecyclerViewAdapter(mListener, DummyContent.ITEMS, mState));
 
         return mBinding.getRoot();
     }
@@ -113,6 +108,6 @@ public class IngredientFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // set arguments type and name
-        void onListFragmentInteraction(Ingredient ingredient);
+        void onListFragmentInteraction(Ingredient ingredient, int state);
     }
 }

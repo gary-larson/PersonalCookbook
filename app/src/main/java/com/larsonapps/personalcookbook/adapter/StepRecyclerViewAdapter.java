@@ -8,13 +8,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.larsonapps.personalcookbook.R;
-import com.larsonapps.personalcookbook.data.Ingredient;
-import com.larsonapps.personalcookbook.databinding.CookbookDetailsFragmentBinding;
-import com.larsonapps.personalcookbook.databinding.IngredientFragmentItemBinding;
-import com.larsonapps.personalcookbook.databinding.IngredientFragmentItemListBinding;
-import com.larsonapps.personalcookbook.ui.IngredientFragment;
+import com.larsonapps.personalcookbook.data.Step;
+import com.larsonapps.personalcookbook.databinding.StepFragmentItemBinding;
+import com.larsonapps.personalcookbook.ui.StepFragment;
 import com.larsonapps.personalcookbook.ui.dummy.DummyContent.DummyItem;
-
 
 import org.jetbrains.annotations.NotNull;
 
@@ -24,22 +21,28 @@ import java.util.List;
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class MyIngredientRecyclerViewAdapter extends RecyclerView.Adapter<MyIngredientRecyclerViewAdapter.ViewHolder> {
+public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerViewAdapter.ViewHolder> {
+    // Declare constants
+    private static final int STATE_EDIT= 1;
+    private static final int STATE_MANUAL = 2;
+    private static final int STATE_IMPORT = 3;
 
     private final List<DummyItem> mValues;
-    private IngredientFragmentItemBinding mBinding;
-    private final IngredientFragment.OnListFragmentInteractionListener mListener;
+    private StepFragmentItemBinding mBinding;
+    private StepFragment.OnListFragmentInteractionListener mListener;
+    private final int mState;
 
-    public MyIngredientRecyclerViewAdapter(IngredientFragment.OnListFragmentInteractionListener listener, List<DummyItem> items) {
+    public StepRecyclerViewAdapter(StepFragment.OnListFragmentInteractionListener listener, List<DummyItem> items, int state) {
         mListener = listener;
         mValues = items;
+        mState = state;
     }
 
     @NotNull
     @Override
     public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
-        mBinding = IngredientFragmentItemBinding.inflate(
-                LayoutInflater.from(parent.getContext()),parent, false);
+        mBinding = StepFragmentItemBinding.inflate(
+                LayoutInflater.from(parent.getContext()), parent, false);
         return new ViewHolder(mBinding.getRoot());
     }
 
@@ -52,7 +55,7 @@ public class MyIngredientRecyclerViewAdapter extends RecyclerView.Adapter<MyIngr
             if (null != mListener) {
                 // Notify the active callbacks interface (the activity, if the
                 // fragment is attached to one) that an item has been selected.
-                mListener.onListFragmentInteraction(new Ingredient());
+                mListener.onListFragmentInteraction(new Step(), mState);
             }
         });
     }
@@ -62,7 +65,7 @@ public class MyIngredientRecyclerViewAdapter extends RecyclerView.Adapter<MyIngr
         return mValues.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
@@ -75,6 +78,7 @@ public class MyIngredientRecyclerViewAdapter extends RecyclerView.Adapter<MyIngr
             mContentView = (TextView) view.findViewById(R.id.content);
         }
 
+        @NotNull
         @Override
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";

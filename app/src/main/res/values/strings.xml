@@ -30,4 +30,11 @@
     <string name="edit">Edit</string>
     <string name="ingredients">Ingredients</string>
     <string name="steps">Steps</string>
+    <string name="apple_pie">Apple Pie</string>
+    <string name="add_ingredient_button_text">Add ingredient</string>
+    <string name="reorder_ingredients_button_text">Reorder Ingredients</string>
+    <string name="reorder_steps_button_text">Reorder Steps</string>
+    <string name="images">Images</string>
+    <string name="add_image_button_text">Add Image</string>
+    <string name="add_step_button_text">Add Step</string>
 </resources>
