@@ -31,8 +31,8 @@ import com.larsonapps.personalcookbook.data.Ingredient;
 import com.larsonapps.personalcookbook.data.Recipe;
 import com.larsonapps.personalcookbook.data.RecipeImage;
 import com.larsonapps.personalcookbook.data.Step;
-import com.larsonapps.personalcookbook.databinding.CookbookActivityBinding;
 import com.larsonapps.personalcookbook.data.CookbookRecipesViewModel;
+import com.larsonapps.personalcookbook.databinding.CookbookActivityBinding;
 
 public class CookbookActivity extends AppCompatActivity implements
         CookbookFragment.OnListFragmentInteractionListener,
@@ -52,9 +52,10 @@ public class CookbookActivity extends AppCompatActivity implements
         setContentView(mBinding.getRoot());
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    //.replace(R.id.container, CookbookFragment.newInstance())
+                    //.replace(mBinding.container.getId(), CookbookFragment.newInstance())
                     //.replace(mBinding.container.getId(), CookbookDetailsFragment.newInstance())
-                    .replace(mBinding.container.getId(), CookbookEditFragment.newInstance())
+                    //.replace(mBinding.container.getId(), CookbookEditFragment.newInstance())
+                    .replace(mBinding.container.getId(), CookbookManualFragment.newInstance())
                     .commitNow();
         }
 

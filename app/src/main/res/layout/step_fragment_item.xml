@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal">
 
     <TextView
@@ -9,7 +10,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
-        android:textAppearance="?attr/textAppearanceListItem"
         android:textColor="@color/white"/>
 
     <TextView
@@ -17,16 +17,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
-        android:textAppearance="?attr/textAppearanceListItem"
         android:textColor="@color/white"/>
 
-    <ImageButton
-        android:id="@+id/image_button"
-        android:layout_height="@dimen/edit_edit_icon_size"
-        android:layout_width="@dimen/edit_edit_icon_size"
-        android:background="@drawable/button_background"
-        android:layout_margin="@dimen/edit_delete_icon_margin"
-        android:padding="@dimen/edit_edit_icon_padding"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_edit_24px"/>
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/step_image_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/edit_icon_padding"
+        android:layout_margin="@dimen/edit_icon_margin"
+        android:background="@drawable/button_selector"
+        android:src="@drawable/ic_edit_24px" />
 </LinearLayout>

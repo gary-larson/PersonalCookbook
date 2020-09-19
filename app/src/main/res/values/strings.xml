@@ -37,4 +37,6 @@
     <string name="images">Images</string>
     <string name="add_image_button_text">Add Image</string>
     <string name="add_step_button_text">Add Step</string>
+    <string name="enter_recipe_name_hint">Enter Recipe Name</string>
+    <string name="enter_recipe_description_hint">Enter Recipe Description</string>
 </resources>

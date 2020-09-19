@@ -95,14 +95,14 @@ public class ImageRecyclerViewAdapter extends RecyclerView.Adapter<ImageRecycler
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public ImageView mImageView;
-        public ImageButton mImageButton;
+        public ImageView mImageButton;
         public RecipeImage mImage;
 
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mImageView = mBinding.editImage;
+            mImageView = mBinding.image;
             mImageButton = mBinding.imageButton;
         }
     }

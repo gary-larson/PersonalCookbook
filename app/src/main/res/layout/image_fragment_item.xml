@@ -5,17 +5,17 @@
     android:orientation="horizontal">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/edit_image"
+        android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:contentDescription="@string/recipe_content_description" />
 
-    <ImageButton
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/image_button"
-        android:layout_height="@dimen/edit_delete_icon_size"
         android:layout_width="@dimen/edit_delete_icon_size"
-        android:background="@drawable/button_background"
+        android:layout_height="@dimen/edit_delete_icon_size"
+        android:padding="@dimen/edit_icon_padding"
         android:layout_margin="@dimen/edit_delete_icon_margin"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_delete_24px"/>
+        android:background="@drawable/button_selector"
+        android:src="@drawable/ic_delete_24px" />
 </LinearLayout>

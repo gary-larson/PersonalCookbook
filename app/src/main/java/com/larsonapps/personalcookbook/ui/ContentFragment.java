@@ -7,7 +7,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.larsonapps.personalcookbook.data.Ingredient;
 import com.larsonapps.personalcookbook.databinding.ContentFragmentBinding;
 
 import org.jetbrains.annotations.NotNull;
@@ -21,6 +23,7 @@ public class ContentFragment extends Fragment {
 
     // Constants for parameter initialization
     private static final String ARG_STATE= "state";
+    private  static final int STATE_NONE = 0;
     private static final int STATE_EDIT= 1;
     private static final int STATE_MANUAL = 2;
     private static final int STATE_IMPORT = 3;
@@ -62,6 +65,14 @@ public class ContentFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mBinding = ContentFragmentBinding.inflate(inflater, container, false);
+        if (mState == STATE_NONE) {
+            mBinding.descriptionImageButton.setVisibility(View.GONE);
+        } else if (mState == STATE_EDIT) {
+            mBinding.descriptionImageButton.setOnClickListener(v -> {
+                Toast.makeText(getContext(), "Description Clicked", Toast.LENGTH_LONG).show();
+            });
+            mBinding.descriptionImageButton.setVisibility(View.VISIBLE);
+        }
         return mBinding.getRoot();
     }
 }

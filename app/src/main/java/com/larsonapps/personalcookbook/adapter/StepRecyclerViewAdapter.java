@@ -5,6 +5,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.larsonapps.personalcookbook.R;
@@ -28,7 +31,7 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
     private static final int STATE_IMPORT = 3;
 
     private final List<DummyItem> mValues;
-    private StepFragmentItemBinding mBinding;
+    private static StepFragmentItemBinding mBinding;
     private StepFragment.OnListFragmentInteractionListener mListener;
     private final int mState;
 
@@ -51,13 +54,25 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).id);
         holder.mContentView.setText(mValues.get(position).content);
-        holder.mView.setOnClickListener(v -> {
-            if (null != mListener) {
-                // Notify the active callbacks interface (the activity, if the
-                // fragment is attached to one) that an item has been selected.
-                mListener.onListFragmentInteraction(new Step(), mState);
-            }
-        });
+        if (mState == 0) {
+            holder.mView.setOnClickListener(v -> {
+                if (null != mListener) {
+                    // Notify the active callbacks interface (the activity, if the
+                    // fragment is attached to one) that an item has been selected.
+                    mListener.onListFragmentInteraction(new Step(), mState);
+                }
+            });
+            mBinding.stepImageButton.setVisibility(View.GONE);
+        } else if (mState == 1) {
+            holder.mImageButton.setOnClickListener(v -> {
+                if (null != mListener) {
+                    // Notify the active callbacks interface (the activity, if the
+                    // fragment is attached to one) that an item has been selected.
+                    mListener.onListFragmentInteraction(new Step(), mState);
+                }
+            });
+            mBinding.stepImageButton.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -69,13 +84,15 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
+        public final ImageView mImageButton;
         public DummyItem mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mIdView = mBinding.itemNumber;
+            mContentView = mBinding.content;
+            mImageButton = mBinding.stepImageButton;
         }
 
         @NotNull
