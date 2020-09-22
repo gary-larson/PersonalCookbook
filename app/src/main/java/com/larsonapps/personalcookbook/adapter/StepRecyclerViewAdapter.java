@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.larsonapps.personalcookbook.R;
 import com.larsonapps.personalcookbook.data.Step;
 import com.larsonapps.personalcookbook.databinding.StepFragmentItemBinding;
+import com.larsonapps.personalcookbook.ui.CookbookActivity;
 import com.larsonapps.personalcookbook.ui.StepFragment;
 import com.larsonapps.personalcookbook.ui.dummy.DummyContent.DummyItem;
 
@@ -25,13 +26,8 @@ import java.util.List;
  * TODO: Replace the implementation with code for your data type.
  */
 public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerViewAdapter.ViewHolder> {
-    // Declare constants
-    private static final int STATE_EDIT= 1;
-    private static final int STATE_MANUAL = 2;
-    private static final int STATE_IMPORT = 3;
-
+    // Declare variables
     private final List<DummyItem> mValues;
-    private static StepFragmentItemBinding mBinding;
     private StepFragment.OnListFragmentInteractionListener mListener;
     private final int mState;
 
@@ -44,9 +40,8 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
     @NotNull
     @Override
     public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
-        mBinding = StepFragmentItemBinding.inflate(
-                LayoutInflater.from(parent.getContext()), parent, false);
-        return new ViewHolder(mBinding.getRoot());
+        return new ViewHolder(StepFragmentItemBinding.inflate(
+                LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
@@ -54,29 +49,34 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).id);
         holder.mContentView.setText(mValues.get(position).content);
-        if (mState == 0) {
-            holder.mView.setOnClickListener(v -> {
+        if (mState == CookbookActivity.STATE_EDIT) {
+            holder.mEditImageButton.setOnClickListener(v -> {
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(new Step(), mState);
+                    mListener.onListFragmentInteraction(new Step(), mState, v);
                 }
             });
-            mBinding.stepImageButton.setVisibility(View.GONE);
-        } else if (mState == 1) {
-            holder.mImageButton.setOnClickListener(v -> {
+            holder.mDeleteImageButton.setOnClickListener(v -> {
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(new Step(), mState);
+                    mListener.onListFragmentInteraction(new Step(), mState, v);
                 }
             });
-            mBinding.stepImageButton.setVisibility(View.VISIBLE);
+            holder.mEditImageButton.setVisibility(View.VISIBLE);
+            holder.mDeleteImageButton.setVisibility(View.VISIBLE);
+        } else {
+            holder.mEditImageButton.setVisibility(View.GONE);
+            holder.mDeleteImageButton.setVisibility(View.GONE);
         }
     }
 
     @Override
     public int getItemCount() {
+        if (mValues == null) {
+            return 0;
+        }
         return mValues.size();
     }
 
@@ -84,15 +84,18 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public final ImageView mImageButton;
+        public final ImageView mEditImageButton;
+        public final ImageView mDeleteImageButton;
         public DummyItem mItem;
 
-        public ViewHolder(View view) {
-            super(view);
-            mView = view;
-            mIdView = mBinding.itemNumber;
-            mContentView = mBinding.content;
-            mImageButton = mBinding.stepImageButton;
+        public ViewHolder(StepFragmentItemBinding binding) {
+            super(binding.getRoot());
+            mView = binding.getRoot();
+            mIdView = binding.itemNumber;
+            mContentView = binding.content;
+            mEditImageButton = binding.stepEditImageButton;
+            mDeleteImageButton = binding.stepDeleteImageButton;
+
         }
 
         @NotNull

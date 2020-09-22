@@ -5,13 +5,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.larsonapps.personalcookbook.R;
 import com.larsonapps.personalcookbook.data.Ingredient;
 import com.larsonapps.personalcookbook.databinding.IngredientFragmentItemBinding;
+import com.larsonapps.personalcookbook.ui.CookbookActivity;
 import com.larsonapps.personalcookbook.ui.IngredientFragment;
 import com.larsonapps.personalcookbook.ui.dummy.DummyContent.DummyItem;
 
@@ -25,14 +24,9 @@ import java.util.List;
  * TODO: Replace the implementation with code for your data type.
  */
 public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<IngredientRecyclerViewAdapter.ViewHolder> {
-    // Declare Constants
-    private static final int STATE_EDIT= 1;
-    private static final int STATE_MANUAL = 2;
-    private static final int STATE_IMPORT = 3;
 
     private final List<DummyItem> mValues;
     private final int mState;
-    private static IngredientFragmentItemBinding mBinding;
     private final IngredientFragment.OnListFragmentInteractionListener mListener;
 
     public IngredientRecyclerViewAdapter(IngredientFragment.OnListFragmentInteractionListener listener, List<DummyItem> items, int state) {
@@ -44,9 +38,8 @@ public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<Ingredie
     @NotNull
     @Override
     public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
-        mBinding = IngredientFragmentItemBinding.inflate(
-                LayoutInflater.from(parent.getContext()),parent, false);
-        return new ViewHolder(mBinding.getRoot());
+        return new ViewHolder(IngredientFragmentItemBinding.inflate(
+                LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
@@ -54,29 +47,34 @@ public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<Ingredie
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).id);
         holder.mContentView.setText(mValues.get(position).content);
-        if (mState == 0) {
-            holder.mView.setOnClickListener(v -> {
+        if (mState == CookbookActivity.STATE_EDIT) {
+            holder.mEditImageButton.setOnClickListener(v -> {
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(new Ingredient(), mState);
+                    mListener.onListFragmentInteraction(new Ingredient(), mState, v);
                 }
             });
-            mBinding.ingredientImageButton.setVisibility(View.GONE);
-        } else if (mState == 1) {
-            holder.mImageButton.setOnClickListener(v -> {
+            holder.mDeleteImageButton.setOnClickListener(v -> {
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(new Ingredient(), mState);
+                    mListener.onListFragmentInteraction(new Ingredient(), mState, v);
                 }
             });
-            mBinding.ingredientImageButton.setVisibility(View.VISIBLE);
+            holder.mEditImageButton.setVisibility(View.VISIBLE);
+            holder.mDeleteImageButton.setVisibility(View.VISIBLE);
+        } else {
+            holder.mEditImageButton.setVisibility(View.GONE);
+            holder.mDeleteImageButton.setVisibility(View.GONE);
         }
     }
 
     @Override
     public int getItemCount() {
+        if (mValues == null) {
+            return 0;
+        }
         return mValues.size();
     }
 
@@ -84,17 +82,20 @@ public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<Ingredie
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public final ImageView mImageButton;
+        public final ImageView mEditImageButton;
+        public final ImageView mDeleteImageButton;
         public DummyItem mItem;
 
-        public ViewHolder(View view) {
-            super(view);
-            mView = view;
-            mIdView = mBinding.itemNumber;
-            mContentView = mBinding.content;
-            mImageButton = mBinding.ingredientImageButton;
+        public ViewHolder(IngredientFragmentItemBinding binding) {
+            super(binding.getRoot());
+            mView = binding.getRoot();
+            mIdView = binding.itemNumber;
+            mContentView = binding.content;
+            mEditImageButton = binding.ingredientEditImageButton;
+            mDeleteImageButton = binding.ingredientDeleteImageButton;
         }
 
+        @NotNull
         @Override
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";

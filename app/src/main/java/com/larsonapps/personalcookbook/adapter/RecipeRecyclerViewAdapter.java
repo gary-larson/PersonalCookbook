@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import com.larsonapps.personalcookbook.R;
 import com.larsonapps.personalcookbook.data.Recipe;
+import com.larsonapps.personalcookbook.databinding.RecipeFragmentItemBinding;
 import com.larsonapps.personalcookbook.ui.CookbookFragment;
 import com.larsonapps.personalcookbook.ui.dummy.DummyContent.DummyItem;
 
@@ -49,10 +50,10 @@ public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecycl
 
     @NotNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.recipe_fragment_item, parent, false);
-        return new ViewHolder(view);
+    public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
+        return new ViewHolder(
+                RecipeFragmentItemBinding.inflate(LayoutInflater.from(parent.getContext()),
+                        parent, false));
     }
 
     @Override
@@ -71,6 +72,9 @@ public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecycl
 
     @Override
     public int getItemCount() {
+        if (mValues == null) {
+            return 0;
+        }
         return mValues.size();
     }
 
@@ -80,11 +84,11 @@ public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecycl
         public final TextView mContentView;
         public DummyItem mItem;
 
-        public ViewHolder(View view) {
-            super(view);
-            mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
+        public ViewHolder(RecipeFragmentItemBinding binding) {
+            super(binding.getRoot());
+            mView = binding.getRoot();
+            mIdView = binding.itemNumber;
+            mContentView = binding.content;
         }
 
         @NotNull

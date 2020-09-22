@@ -30,13 +30,8 @@ import java.util.List;
 public class ImageFragment extends Fragment {
 
     // Declare constants
-    private static final String ARG_COLUMN_COUNT = "column-count";
     private static final String ARG_STATE= "state";
-    private static final int STATE_EDIT= 1;
-    private static final int STATE_MANUAL = 2;
-    private static final int STATE_IMPORT = 3;
     // Declare variables
-    private int mColumnCount = 1;
     private int mState;
     private ImageFragmentItemListBinding mBinding;
     private ImageFragment.OnListFragmentInteractionListener mListener;
@@ -48,12 +43,9 @@ public class ImageFragment extends Fragment {
     public ImageFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static ImageFragment newInstance(int columnCount, int state) {
+    public static ImageFragment newInstance(int state) {
         ImageFragment fragment = new ImageFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
         args.putInt(ARG_STATE, state);
         fragment.setArguments(args);
         return fragment;
@@ -64,7 +56,6 @@ public class ImageFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
             mState = getArguments().getInt(ARG_STATE);
         }
     }
@@ -78,16 +69,17 @@ public class ImageFragment extends Fragment {
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            // TODO remove when data is in
             List<RecipeImage> recipeImages = new ArrayList<>();
             RecipeImage recipeImage = new RecipeImage();
             recipeImage.setImageUrl("file:///android_asset/ApplePie.jpg");
             recipeImages.add(recipeImage);
-            recyclerView.setAdapter(new ImageRecyclerViewAdapter(mListener, recipeImages, 1));
+            if (mState == CookbookActivity.STATE_EDIT) {
+                recyclerView.setAdapter(new ImageRecyclerViewAdapter(mListener, recipeImages, mState));
+            } else if (mState == CookbookActivity.STATE_MANUAL) {
+                recyclerView.setAdapter(new ImageRecyclerViewAdapter(mListener, null, mState));
+            }
         }
         return view;
     }
@@ -120,6 +112,6 @@ public class ImageFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // set arguments type and name
-        void onListFragmentInteraction(RecipeImage recipeImage, int state);
+        void onListFragmentInteraction(RecipeImage recipeImage, int state, View view);
     }
 }

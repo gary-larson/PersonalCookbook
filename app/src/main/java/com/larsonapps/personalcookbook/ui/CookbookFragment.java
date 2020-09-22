@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -59,7 +60,9 @@ public class CookbookFragment extends Fragment {
         //RecyclerView recyclerView = (RecyclerView) view;
         mListBinding.recipeList.setLayoutManager(new LinearLayoutManager(context));
         mListBinding.recipeList.setAdapter(new RecipeRecyclerViewAdapter(mListener, DummyContent.ITEMS));
-
+        mBinding.shareFab.setOnClickListener(v -> {
+            Toast.makeText(getContext(), "Shared FAB Clicked", Toast.LENGTH_LONG).show();
+        });
         return mBinding.getRoot();
     }
 

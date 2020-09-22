@@ -23,6 +23,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.View;
 import android.widget.Toast;
 
 
@@ -39,6 +40,11 @@ public class CookbookActivity extends AppCompatActivity implements
         StepFragment.OnListFragmentInteractionListener,
         IngredientFragment.OnListFragmentInteractionListener,
         ImageFragment.OnListFragmentInteractionListener {
+    // Declare constants
+    public static final int STATE_DISPLAY = 0;
+    public static final int STATE_EDIT= 1;
+    public static final int STATE_MANUAL = 2;
+    public static final int STATE_IMPORT = 3;
     // Declare variables
     private CookbookRecipesViewModel mCookbookRecipesViewModel;
     private CookbookActivityBinding mBinding;
@@ -76,17 +82,34 @@ public class CookbookActivity extends AppCompatActivity implements
 }
 
     @Override
-    public void onListFragmentInteraction(Ingredient ingredient, int state) {
-        Toast.makeText(this, "Ingredient clicked", Toast.LENGTH_LONG).show();
+    public void onListFragmentInteraction(Ingredient ingredient, int state, View view) {
+        if (view.getId() == R.id.ingredient_edit_image_button) {
+            Toast.makeText(this, "Ingredient edit clicked", Toast.LENGTH_LONG).show();
+        } else if (view.getId() == R.id.ingredient_delete_image_button) {
+            Toast.makeText(this, "Ingredient delete clicked", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "Ingredient clicked", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     @Override
-    public void onListFragmentInteraction(Step step, int state) {
-        Toast.makeText(this, "Step clicked", Toast.LENGTH_LONG).show();
+    public void onListFragmentInteraction(Step step, int state, View view) {
+        if (view.getId() == R.id.step_edit_image_button) {
+            Toast.makeText(this, "Step edit clicked", Toast.LENGTH_LONG).show();
+        } else if (view.getId() == R.id.step_delete_image_button) {
+            Toast.makeText(this, "Step delete clicked", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "Step clicked", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
-    public void onListFragmentInteraction(RecipeImage recipeImage, int state) {
-        Toast.makeText(this, "Image clicked", Toast.LENGTH_LONG).show();
+    public void onListFragmentInteraction(RecipeImage recipeImage, int state, View view) {
+        if (view.getId() == R.id.image_button) {
+            Toast.makeText(this, "Image delete clicked", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "Image clicked", Toast.LENGTH_LONG).show();
+        }
     }
 }

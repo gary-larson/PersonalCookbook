@@ -16,10 +16,14 @@ import com.larsonapps.personalcookbook.data.RecipeImage;
 import com.larsonapps.personalcookbook.data.Step;
 
 import com.larsonapps.personalcookbook.databinding.ImageFragmentItemBinding;
+import com.larsonapps.personalcookbook.databinding.IngredientFragmentItemBinding;
+import com.larsonapps.personalcookbook.ui.CookbookActivity;
 import com.larsonapps.personalcookbook.ui.ImageFragment;
 import com.larsonapps.personalcookbook.ui.dummy.DummyContent.DummyItem;
 import com.larsonapps.personalcookbook.utilities.GlideApp;
 import com.squareup.picasso.Picasso;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.List;
@@ -37,8 +41,6 @@ public class ImageRecyclerViewAdapter extends RecyclerView.Adapter<ImageRecycler
     private final List<RecipeImage> mValues;
     private final ImageFragment.OnListFragmentInteractionListener mListener;
     private final int mState;
-    private ImageFragmentItemBinding mBinding;
-    private Context mContext;
 
     public ImageRecyclerViewAdapter(ImageFragment.OnListFragmentInteractionListener listener, List<RecipeImage> images, int state) {
         mValues = images;
@@ -46,12 +48,11 @@ public class ImageRecyclerViewAdapter extends RecyclerView.Adapter<ImageRecycler
         mState = state;
     }
 
+    @NotNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        mBinding = ImageFragmentItemBinding.inflate(LayoutInflater.from(parent.getContext()),
-                parent, false);
-        mContext = parent.getContext();
-        return new ViewHolder(mBinding.getRoot());
+    public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
+        return new ViewHolder(ImageFragmentItemBinding.inflate(LayoutInflater.from(parent.getContext()),
+                parent, false));
     }
 
     @Override
@@ -68,17 +69,25 @@ public class ImageRecyclerViewAdapter extends RecyclerView.Adapter<ImageRecycler
 //                   .load(holder.mImage.getImageUrl())
 //                   .into(holder.mImageView);
         }
-        holder.mImageButton.setOnClickListener(v -> {
-            if (null != mListener) {
-                // Notify the active callbacks interface (the activity, if the
-                // fragment is attached to one) that an item has been selected.
-                mListener.onListFragmentInteraction(holder.mImage, mState);
-            }
-        });
+        if (mState == CookbookActivity.STATE_EDIT) {
+            holder.mImageButton.setOnClickListener(v -> {
+                if (null != mListener) {
+                    // Notify the active callbacks interface (the activity, if the
+                    // fragment is attached to one) that an item has been selected.
+                    mListener.onListFragmentInteraction(holder.mImage, mState, v);
+                }
+            });
+            holder.mImageButton.setVisibility(View.VISIBLE);
+        } else {
+            holder.mImageButton.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public int getItemCount() {
+        if (mValues == null) {
+            return 0;
+        }
         return mValues.size();
     }
 
@@ -99,11 +108,11 @@ public class ImageRecyclerViewAdapter extends RecyclerView.Adapter<ImageRecycler
         public RecipeImage mImage;
 
 
-        public ViewHolder(View view) {
-            super(view);
-            mView = view;
-            mImageView = mBinding.image;
-            mImageButton = mBinding.imageButton;
+        public ViewHolder(ImageFragmentItemBinding binding) {
+            super(binding.getRoot());
+            mView = binding.getRoot();
+            mImageView = binding.image;
+            mImageButton = binding.imageButton;
         }
     }
 }

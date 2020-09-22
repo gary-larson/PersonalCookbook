@@ -49,39 +49,20 @@ public class CookbookEditFragment extends Fragment {
        // mBinding.toolbar.setTitle(getString(R.string.app_name));
         getChildFragmentManager().beginTransaction()
                 .replace(mBinding.editContentContainer.getId(), ContentFragment
-                        .newInstance(1))
-                .replace(mBinding.editImageListContainer.getId(), IngredientFragment
-                        .newInstance(1, 1))
+                        .newInstance(CookbookActivity.STATE_EDIT))
+                .replace(mBinding.editIngredientListContainer.getId(), IngredientFragment
+                        .newInstance(CookbookActivity.STATE_EDIT))
                 .replace(mBinding.editStepListContainer.getId(), StepFragment
-                        .newInstance(1, 1))
-                .replace(mBinding.editImageListContainer.getId(), ImageFragment.newInstance(1, 1))
+                        .newInstance(CookbookActivity.STATE_EDIT))
+                .replace(mBinding.editImageListContainer.getId(), ImageFragment.newInstance(1))
                 .commit();
-//        mBinding.editRecipeNameEditText.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//                Toast.makeText(getContext(), "Before text changed", Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//                Toast.makeText(getContext(), "On text changed", Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//                Toast.makeText(getContext(), "After text changed", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-        mBinding.editRecipeNameEditText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE || event != null) {
-                    String text = v.getText().toString();
-                    Toast.makeText(getContext(), text, Toast.LENGTH_LONG).show();
-                    return true;
-                }
-                return false;
+        mBinding.editRecipeNameEditText.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE || event != null) {
+                String text = v.getText().toString();
+                Toast.makeText(getContext(), text, Toast.LENGTH_LONG).show();
+                return true;
             }
+            return false;
         });
         mBinding.editReorderIngredientButton.setOnClickListener(v -> {
             Toast.makeText(getContext(), "Reorder Ingredient clicked", Toast.LENGTH_LONG).show();
@@ -98,20 +79,6 @@ public class CookbookEditFragment extends Fragment {
         mBinding.editAddImageButton.setOnClickListener(v -> {
             Toast.makeText(getContext(), "Add Image clicked", Toast.LENGTH_LONG).show();
         });
-//        CookbookActivity activity = (CookbookActivity) getActivity();
-//        int height = 0;
-//        if (activity != null) {
-//            height = activity.getHeight();
-//            float h = getResources().getDimension(R.dimen.details_photo_height);
-//            height -= h - getResources().getInteger(R.integer.list_size_adjuster);
-//            height /= getResources().getInteger(R.integer.list_size_divisor);
-//        }
-//        ViewGroup.LayoutParams params = mBinding.ingredientListContainer.getLayoutParams();
-//        params.height = height;
-//        mBinding.ingredientListContainer.setLayoutParams(params);
-//        params = mBinding.stepListContainer.getLayoutParams();
-//        params.height = height;
-//        mBinding.stepListContainer.setLayoutParams(params);
         return mBinding.getRoot();
     }
 

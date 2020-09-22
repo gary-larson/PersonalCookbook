@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,11 +37,11 @@ public class CookbookDetailsFragment extends Fragment {
         mBinding.toolbar.setTitle(getString(R.string.app_name));
         getChildFragmentManager().beginTransaction()
                 .replace(mBinding.contentContainer.getId(), ContentFragment
-                        .newInstance(0))
+                        .newInstance(CookbookActivity.STATE_DISPLAY))
                 .replace(mBinding.ingredientListContainer.getId(), IngredientFragment
-                        .newInstance(1, 0))
+                        .newInstance(CookbookActivity.STATE_DISPLAY))
                 .replace(mBinding.stepListContainer.getId(), StepFragment
-                        .newInstance(1, 0))
+                        .newInstance(CookbookActivity.STATE_DISPLAY))
                 .commit();
         CookbookActivity activity = (CookbookActivity) getActivity();
         int height = 0;
@@ -56,6 +57,9 @@ public class CookbookDetailsFragment extends Fragment {
         params = mBinding.stepListContainer.getLayoutParams();
         params.height = height;
         mBinding.stepListContainer.setLayoutParams(params);
+        mBinding.editFab.setOnClickListener(v -> {
+            Toast.makeText(getContext(), "Edit FAB clicked", Toast.LENGTH_LONG).show();
+        });
         return mBinding.getRoot();
     }
 

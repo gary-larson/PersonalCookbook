@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.larsonapps.personalcookbook.adapter.IngredientRecyclerViewAdapter;
 import com.larsonapps.personalcookbook.data.Ingredient;
@@ -24,13 +25,11 @@ import org.jetbrains.annotations.NotNull;
 public class IngredientFragment extends Fragment {
 
     // Declare constants
-    private static final String ARG_COLUMN_COUNT = "column-count";
     private static final String ARG_STATE = "state";
     private static final int STATE_EDIT= 1;
     private static final int STATE_MANUAL = 2;
     private static final int STATE_IMPORT = 3;
     // Declare variables
-    private int mColumnCount = 1;
     private int mState = 0;
     private IngredientFragmentItemListBinding mBinding;
     private OnListFragmentInteractionListener mListener;
@@ -44,10 +43,9 @@ public class IngredientFragment extends Fragment {
     }
 
     // TODO: Customize parameter initialization
-    public static IngredientFragment newInstance(int columnCount, int state) {
+    public static IngredientFragment newInstance(int state) {
         IngredientFragment fragment = new IngredientFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
         args.putInt(ARG_STATE, state);
         fragment.setArguments(args);
         return fragment;
@@ -58,7 +56,6 @@ public class IngredientFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
             mState = getArguments().getInt(ARG_STATE);
         }
     }
@@ -67,15 +64,15 @@ public class IngredientFragment extends Fragment {
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mBinding = IngredientFragmentItemListBinding.inflate(inflater, container, false);
+        Context context = mBinding.getRoot().getContext();
 
         // Set the adapter
-        Context context = mBinding.getRoot().getContext();
-        if (mColumnCount <= 1) {
-            mBinding.ingredientList.setLayoutManager(new LinearLayoutManager(context));
-        } else {
-            mBinding.ingredientList.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+        mBinding.ingredientList.setLayoutManager(new LinearLayoutManager(context));
+        if (mState == CookbookActivity.STATE_EDIT) {
+            mBinding.ingredientList.setAdapter(new IngredientRecyclerViewAdapter(mListener, DummyContent.ITEMS, mState));
+        } else if (mState == CookbookActivity.STATE_MANUAL) {
+            mBinding.ingredientList.setAdapter(new IngredientRecyclerViewAdapter(mListener, null, mState));
         }
-        mBinding.ingredientList.setAdapter(new IngredientRecyclerViewAdapter(mListener, DummyContent.ITEMS, mState));
 
         return mBinding.getRoot();
     }
@@ -108,6 +105,6 @@ public class IngredientFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // set arguments type and name
-        void onListFragmentInteraction(Ingredient ingredient, int state);
+        void onListFragmentInteraction(Ingredient ingredient, int state, View view);
     }
 }
