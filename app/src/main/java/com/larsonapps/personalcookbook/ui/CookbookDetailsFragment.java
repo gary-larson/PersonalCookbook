@@ -1,13 +1,16 @@
 package com.larsonapps.personalcookbook.ui;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -15,7 +18,9 @@ import com.larsonapps.personalcookbook.R;
 import com.larsonapps.personalcookbook.data.CookbookIngredientsViewModel;
 
 import com.larsonapps.personalcookbook.databinding.CookbookDetailsFragmentBinding;
-import com.larsonapps.personalcookbook.utilities.GlideApp;
+import com.squareup.picasso.Picasso;
+
+import java.util.Objects;
 
 public class CookbookDetailsFragment extends Fragment {
     // Declare variables
@@ -31,8 +36,11 @@ public class CookbookDetailsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         mBinding = CookbookDetailsFragmentBinding.inflate(inflater, container, false);
         String assetUrl = "file:///android_asset/ApplePie.jpg";
-        GlideApp.with(this)
-                .load(assetUrl)
+        Picasso.get().load(assetUrl)
+                //.error(R.mipmap.error)
+                .noPlaceholder()
+                //.resize((int) mContext.getResources().getDimension(R.dimen.details_photo_height),
+                //        (int)mContext.getResources().getDimension(R.dimen.details_photo_height))
                 .into(mBinding.photo);
         mBinding.toolbar.setTitle(getString(R.string.app_name));
         getChildFragmentManager().beginTransaction()
@@ -69,6 +77,16 @@ public class CookbookDetailsFragment extends Fragment {
         mViewModel = new ViewModelProvider(requireActivity())
                 .get(CookbookIngredientsViewModel.class);
         // TODO: Use the ViewModel
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getActivity() != null) {
+            ((AppCompatActivity) getActivity()).setSupportActionBar(mBinding.toolbar);
+            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar())
+                    .setDisplayHomeAsUpEnabled(true);
+        }
     }
 
 }

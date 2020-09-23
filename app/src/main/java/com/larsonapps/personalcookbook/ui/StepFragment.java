@@ -63,7 +63,7 @@ public class StepFragment extends Fragment {
         Context context = mBinding.getRoot().getContext();
 
         mBinding.stepList.setLayoutManager(new LinearLayoutManager(context));
-        if (mState == CookbookActivity.STATE_EDIT) {
+        if (mState == CookbookActivity.STATE_DISPLAY || mState == CookbookActivity.STATE_EDIT) {
             mBinding.stepList.setAdapter(new StepRecyclerViewAdapter(mListener, DummyContent.ITEMS, mState));
         } else if (mState == CookbookActivity.STATE_MANUAL) {
             mBinding.stepList.setAdapter((new StepRecyclerViewAdapter(mListener, null, mState)));

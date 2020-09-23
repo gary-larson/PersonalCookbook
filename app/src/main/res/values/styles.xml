@@ -7,6 +7,7 @@
         <item name="colorAccent">@color/colorAccent</item>
        <!-- <item name="textAppearanceButton">@style/TextAppearance.App.Button</item> -->
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
+        <item name="colorControlNormal">@color/white</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">

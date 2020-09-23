@@ -7,6 +7,7 @@ import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,11 +17,9 @@ import com.larsonapps.personalcookbook.data.RecipeImage;
 import com.larsonapps.personalcookbook.data.Step;
 
 import com.larsonapps.personalcookbook.databinding.ImageFragmentItemBinding;
-import com.larsonapps.personalcookbook.databinding.IngredientFragmentItemBinding;
 import com.larsonapps.personalcookbook.ui.CookbookActivity;
 import com.larsonapps.personalcookbook.ui.ImageFragment;
 import com.larsonapps.personalcookbook.ui.dummy.DummyContent.DummyItem;
-import com.larsonapps.personalcookbook.utilities.GlideApp;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
@@ -33,11 +32,7 @@ import java.util.List;
  * TODO: Replace the implementation with code for your data type.
  */
 public class ImageRecyclerViewAdapter extends RecyclerView.Adapter<ImageRecyclerViewAdapter.ViewHolder> {
-    //Declare Constants
-    private static final int STATE_EDIT= 1;
-    private static final int STATE_MANUAL = 2;
-    private static final int STATE_IMPORT = 3;
-
+    // Declare variables
     private final List<RecipeImage> mValues;
     private final ImageFragment.OnListFragmentInteractionListener mListener;
     private final int mState;
@@ -65,9 +60,6 @@ public class ImageRecyclerViewAdapter extends RecyclerView.Adapter<ImageRecycler
                     //.resize((int) mContext.getResources().getDimension(R.dimen.details_photo_height),
                     //        (int)mContext.getResources().getDimension(R.dimen.details_photo_height))
                     .into(holder.mImageView);
-//            GlideApp.with(mContext)
-//                   .load(holder.mImage.getImageUrl())
-//                   .into(holder.mImageView);
         }
         if (mState == CookbookActivity.STATE_EDIT) {
             holder.mImageButton.setOnClickListener(v -> {
@@ -78,8 +70,13 @@ public class ImageRecyclerViewAdapter extends RecyclerView.Adapter<ImageRecycler
                 }
             });
             holder.mImageButton.setVisibility(View.VISIBLE);
-        } else {
+            holder.mCheckbox.setVisibility(View.GONE);
+        } else if (mState == CookbookActivity.STATE_IMPORT) {
+            holder.mCheckbox.setVisibility(View.VISIBLE);
             holder.mImageButton.setVisibility(View.GONE);
+        } else {
+                holder.mImageButton.setVisibility(View.GONE);
+                holder.mCheckbox.setVisibility(View.GONE);
         }
     }
 
@@ -106,6 +103,7 @@ public class ImageRecyclerViewAdapter extends RecyclerView.Adapter<ImageRecycler
         public ImageView mImageView;
         public ImageView mImageButton;
         public RecipeImage mImage;
+        public CheckBox mCheckbox;
 
 
         public ViewHolder(ImageFragmentItemBinding binding) {
@@ -113,6 +111,7 @@ public class ImageRecyclerViewAdapter extends RecyclerView.Adapter<ImageRecycler
             mView = binding.getRoot();
             mImageView = binding.image;
             mImageButton = binding.imageButton;
+            mCheckbox = binding.imageCheckbox;
         }
     }
 }

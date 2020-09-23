@@ -42,4 +42,7 @@
     <!-- cookbook manual fragment -->
     <dimen name="manual_button_padding">8dp</dimen>
     <dimen name="manual_fragment_height">150dp</dimen>
+
+    <!-- cookbook import fragment -->
+    <dimen name="import_fragment_height">150dp</dimen>
 </resources>

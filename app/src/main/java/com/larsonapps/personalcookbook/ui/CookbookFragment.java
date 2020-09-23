@@ -27,14 +27,15 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.larsonapps.personalcookbook.R;
 import com.larsonapps.personalcookbook.data.CookbookRecipesViewModel;
 import com.larsonapps.personalcookbook.adapter.RecipeRecyclerViewAdapter;
 import com.larsonapps.personalcookbook.data.Recipe;
-import com.larsonapps.personalcookbook.databinding.CookbookFragmentBinding;
 import com.larsonapps.personalcookbook.databinding.RecipeFragmentItemListBinding;
 import com.larsonapps.personalcookbook.ui.dummy.DummyContent;
 
@@ -42,7 +43,7 @@ import com.larsonapps.personalcookbook.ui.dummy.DummyContent;
 public class CookbookFragment extends Fragment {
     // Declare variables
     private CookbookRecipesViewModel mCookbookRecipesViewModel;
-    private CookbookFragmentBinding mBinding;
+    private com.larsonapps.personalcookbook.databinding.CookbookFragmentBinding mBinding;
     private RecipeFragmentItemListBinding mListBinding;
     private OnListFragmentInteractionListener mListener;
     public static CookbookFragment newInstance() {
@@ -53,11 +54,10 @@ public class CookbookFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mBinding = CookbookFragmentBinding.inflate(inflater, container, false);
+        mBinding = com.larsonapps.personalcookbook.databinding.CookbookFragmentBinding.inflate(inflater, container, false);
         mListBinding = mBinding.content;
-        // Set the adapter
         Context context = mListBinding.recipeList.getContext();
-        //RecyclerView recyclerView = (RecyclerView) view;
+        // Set adapter
         mListBinding.recipeList.setLayoutManager(new LinearLayoutManager(context));
         mListBinding.recipeList.setAdapter(new RecipeRecyclerViewAdapter(mListener, DummyContent.ITEMS));
         mBinding.shareFab.setOnClickListener(v -> {

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     android:fitsSystemWindows="true"
     tools:context=".ui.CookbookActivity">
 
@@ -27,36 +28,55 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_marginTop="@dimen/text_margin"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/list_toolbar_side_margin"
+                android:layout_marginTop="@dimen/text_margin"
                 android:layout_marginRight="@dimen/list_toolbar_side_margin"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay">
 
-            <Spinner
-                android:id="@+id/meal_spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/spinner_padding"
-                android:entries="@array/meal_array"
-                android:spinnerMode="dropdown" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-            <Spinner
-                android:id="@+id/protein_spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/spinner_padding"
-                android:entries="@array/protein_array"
-                android:spinnerMode="dropdown" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/app_name"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                        android:textColor="@color/white" />
 
-            <Spinner
-                android:id="@+id/category_spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/spinner_padding"
-                android:entries="@array/category_array"
-                android:spinnerMode="dropdown" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Spinner
+                            android:id="@+id/meal_spinner"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:entries="@array/meal_array"
+                            android:paddingTop="@dimen/spinner_padding"
+                            android:spinnerMode="dropdown" />
+
+                        <Spinner
+                            android:id="@+id/protein_spinner"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:entries="@array/protein_array"
+                            android:paddingTop="@dimen/spinner_padding"
+                            android:spinnerMode="dropdown" />
+
+                        <Spinner
+                            android:id="@+id/category_spinner"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:entries="@array/category_array"
+                            android:paddingTop="@dimen/spinner_padding"
+                            android:spinnerMode="dropdown" />
+                    </LinearLayout>
+                </LinearLayout>
 
             </androidx.appcompat.widget.Toolbar>
 

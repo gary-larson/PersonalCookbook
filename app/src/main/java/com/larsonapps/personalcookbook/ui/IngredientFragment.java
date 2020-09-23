@@ -68,7 +68,7 @@ public class IngredientFragment extends Fragment {
 
         // Set the adapter
         mBinding.ingredientList.setLayoutManager(new LinearLayoutManager(context));
-        if (mState == CookbookActivity.STATE_EDIT) {
+        if (mState == CookbookActivity.STATE_DISPLAY || mState == CookbookActivity.STATE_EDIT) {
             mBinding.ingredientList.setAdapter(new IngredientRecyclerViewAdapter(mListener, DummyContent.ITEMS, mState));
         } else if (mState == CookbookActivity.STATE_MANUAL) {
             mBinding.ingredientList.setAdapter(new IngredientRecyclerViewAdapter(mListener, null, mState));

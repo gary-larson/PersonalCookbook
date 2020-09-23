@@ -1,32 +1,62 @@
 package com.larsonapps.personalcookbook.data;
 
-public class RecipeImage {
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "images")
+public class RecipeImageEntity {
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "image_id")
+    private int imageId;
+    @ColumnInfo(name = "recipe_id")
+    private int recipeId;
+    @ColumnInfo(name = "type")
     private String type;
+    @ColumnInfo(name = "image_url")
     private String imageUrl;
+    @ColumnInfo(name = "height")
     private int height;
+    @ColumnInfo(name = "width")
     private int width;
+    @ColumnInfo(name = "caption")
     private String caption;
 
     /**
-     * Default Constructor
-     */
-    public RecipeImage() {
-    }
-
-    /**
-     * Constructor for all member variables
+     * Constructor for all member variables\
+     * @param imageId to set
+     * @param recipeId to set
      * @param type to set
      * @param imageUrl to set
      * @param height to set
      * @param width to set
      * @param caption to set
      */
-    public RecipeImage(String type, String imageUrl, int height, int width, String caption) {
+    public RecipeImageEntity(int imageId, int recipeId, String type, String imageUrl, int height,
+                             int width, String caption) {
+        this.imageId = imageId;
+        this.recipeId = recipeId;
         this.type = type;
         this.imageUrl = imageUrl;
         this.height = height;
         this.width = width;
         this.caption = caption;
+    }
+
+    /**
+     * Getter for image id
+     * @return image id
+     */
+    public int getImageId() {
+        return imageId;
+    }
+
+    /**
+     * Getter for recipe id
+     * @return recipe id
+     */
+    public int getRecipeId() {
+        return recipeId;
     }
 
     /**

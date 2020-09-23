@@ -37,4 +37,5 @@
     <string name="enter_recipe_name_hint">Enter Recipe Name</string>
     <string name="enter_recipe_description_hint">Enter Recipe Description</string>
     <string name="submit">Submit</string>
+    <string name="enter_url_of_recipe_hint">Enter url of recipe</string>
 </resources>

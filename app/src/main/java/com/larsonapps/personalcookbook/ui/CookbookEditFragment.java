@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -23,7 +24,8 @@ import com.larsonapps.personalcookbook.data.CookbookIngredientsViewModel;
 import com.larsonapps.personalcookbook.data.CookbookStepsViewModel;
 import com.larsonapps.personalcookbook.data.Step;
 import com.larsonapps.personalcookbook.databinding.CookbookEditFragmentBinding;
-import com.larsonapps.personalcookbook.utilities.GlideApp;
+
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -88,6 +90,16 @@ public class CookbookEditFragment extends Fragment {
         mIngredientsViewModel = new ViewModelProvider(requireActivity())
                 .get(CookbookIngredientsViewModel.class);
         // TODO: Use the ViewModel
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getActivity() != null) {
+            ((AppCompatActivity) getActivity()).setSupportActionBar(mBinding.editToolbar);
+            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar())
+                    .setDisplayHomeAsUpEnabled(true);
+        }
     }
 
 }

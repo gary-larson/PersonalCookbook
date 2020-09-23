@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -64,9 +65,15 @@ public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<Ingredie
             });
             holder.mEditImageButton.setVisibility(View.VISIBLE);
             holder.mDeleteImageButton.setVisibility(View.VISIBLE);
+            holder.mCheckbox.setVisibility(View.GONE);
+        } else if (mState == CookbookActivity.STATE_IMPORT) {
+            holder.mEditImageButton.setVisibility(View.GONE);
+            holder.mDeleteImageButton.setVisibility(View.GONE);
+            holder.mCheckbox.setVisibility(View.VISIBLE);
         } else {
             holder.mEditImageButton.setVisibility(View.GONE);
             holder.mDeleteImageButton.setVisibility(View.GONE);
+            holder.mCheckbox.setVisibility(View.GONE);
         }
     }
 
@@ -84,6 +91,7 @@ public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<Ingredie
         public final TextView mContentView;
         public final ImageView mEditImageButton;
         public final ImageView mDeleteImageButton;
+        public final CheckBox mCheckbox;
         public DummyItem mItem;
 
         public ViewHolder(IngredientFragmentItemBinding binding) {
@@ -93,6 +101,7 @@ public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<Ingredie
             mContentView = binding.content;
             mEditImageButton = binding.ingredientEditImageButton;
             mDeleteImageButton = binding.ingredientDeleteImageButton;
+            mCheckbox = binding.ingredientCheckbox;
         }
 
         @NotNull

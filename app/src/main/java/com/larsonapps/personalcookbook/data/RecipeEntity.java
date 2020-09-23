@@ -1,24 +1,35 @@
 package com.larsonapps.personalcookbook.data;
 
-import java.util.List;
-import java.util.Locale;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-public class Recipe {
+@Entity(tableName = "recipes")
+public class RecipeEntity {
+    // Declare Variables
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "recipe_id")
+    private int id;
+    @ColumnInfo(name = "name")
     private String name;
+    @ColumnInfo(name = "description")
     private String description;
+    @ColumnInfo(name = "servings")
     private int servings;
-    // Times in minutes
+    @ColumnInfo(name = "prep_time")
     private int prepTime;
+    @ColumnInfo(name = "cook_time")
     private int cookTime;
+    @ColumnInfo(name = "total_time")
     private int totalTime;
+    @ColumnInfo(name = "notes")
     private String notes;
+    @ColumnInfo(name = "copyright")
     private String coypright;
-    List<Ingredient> ingredients;
-    List<Step> steps;
-    List<RecipeImage> images;
 
     /**
-     * Constructor for all variables
+     * Constructor for all arguments
+     * @param id to set
      * @param name to set
      * @param description to set
      * @param servings to set
@@ -27,13 +38,10 @@ public class Recipe {
      * @param totalTime to set
      * @param notes to set
      * @param coypright to set
-     * @param ingredients to set
-     * @param steps to set
-     * @param images to set
      */
-    public Recipe(String name, String description, int servings, int prepTime, int cookTime,
-                  int totalTime, String notes, String coypright, List<Ingredient> ingredients,
-                  List<Step> steps, List<RecipeImage> images) {
+    public RecipeEntity(int id, String name, String description, int servings, int prepTime,
+                        int cookTime, int totalTime, String notes, String coypright) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.servings = servings;
@@ -42,15 +50,15 @@ public class Recipe {
         this.totalTime = totalTime;
         this.notes = notes;
         this.coypright = coypright;
-        this.ingredients = ingredients;
-        this.steps = steps;
-        this.images = images;
     }
 
     /**
-     * Default constructor
+     * Getter for id
+     * @return id
      */
-    public Recipe() {}
+    public int getId() {
+        return id;
+    }
 
     /**
      * Getter for name
@@ -178,92 +186,5 @@ public class Recipe {
      */
     public void setCoypright(String coypright) {
         this.coypright = coypright;
-    }
-
-    /**
-     * Getter for ingredients
-     * @return ingredients
-     */
-    public List<Ingredient> getIngredients() {
-        return ingredients;
-    }
-
-    /**
-     * Setter for ingredients
-     * @param ingredients to set
-     */
-    public void setIngredients(List<Ingredient> ingredients) {
-        this.ingredients = ingredients;
-    }
-
-    /**
-     * Getter for steps
-     * @return steps
-     */
-    public List<Step> getSteps() {
-        return steps;
-    }
-
-    /**
-     * Setter for steps
-     * @param steps to set
-     */
-    public void setSteps(List<Step> steps) {
-        this.steps = steps;
-    }
-
-    /**
-     * Getter for images
-     * @return images
-     */
-    public List<RecipeImage> getImages() {
-        return images;
-    }
-
-    /**
-     * Setter for images
-     * @param images to set
-     */
-    public void setImages(List<RecipeImage> images) {
-        this.images = images;
-    }
-
-    /**
-     * Getter for prepTime in a string
-     * @return prepTime in a string
-     */
-    public String getPrepTimeString() {
-        int days, hours, mins;
-        days = prepTime / 1440;
-        hours = (prepTime - (days * 1440)) / 60;
-        mins = prepTime % 60;
-        return String.format(Locale.getDefault(),"%d days %d hours %d minutes", days,
-                hours, mins);
-    }
-
-    /**
-     * Getter for cookTime in a string
-     * @return cookTime in a string
-     */
-    public String getCookTimeString() {
-        int days, hours, mins;
-        days = cookTime / 1440;
-        hours = (cookTime - (days * 1440)) / 60;
-        mins = cookTime % 60;
-        return String.format(Locale.getDefault(),"%d days %d hours %d minutes", days,
-                hours, mins);
-    }
-
-    /**
-     * Getter for totalTime in a string
-     * @return totalTime in a string
-     */
-    public String getTotalTimeString() {
-        int days, hours, mins;
-        days = totalTime / 1440;
-        hours = (totalTime - (days * 1440)) / 60;
-        mins = totalTime % 60;
-        return String.format(Locale.getDefault(),"%d days %d hours %d minutes", days,
-                hours, mins);
     }
 }

@@ -17,7 +17,9 @@ Copyright (C) 2020  Larson Apps - Gary Larson
  */
 package com.larsonapps.personalcookbook.ui;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.media.Image;
@@ -39,7 +41,8 @@ public class CookbookActivity extends AppCompatActivity implements
         CookbookFragment.OnListFragmentInteractionListener,
         StepFragment.OnListFragmentInteractionListener,
         IngredientFragment.OnListFragmentInteractionListener,
-        ImageFragment.OnListFragmentInteractionListener {
+        ImageFragment.OnListFragmentInteractionListener,
+        FragmentManager.OnBackStackChangedListener {
     // Declare constants
     public static final int STATE_DISPLAY = 0;
     public static final int STATE_EDIT= 1;
@@ -58,10 +61,11 @@ public class CookbookActivity extends AppCompatActivity implements
         setContentView(mBinding.getRoot());
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    //.replace(mBinding.container.getId(), CookbookFragment.newInstance())
+                    .replace(mBinding.container.getId(), CookbookFragment.newInstance())
                     //.replace(mBinding.container.getId(), CookbookDetailsFragment.newInstance())
                     //.replace(mBinding.container.getId(), CookbookEditFragment.newInstance())
-                    .replace(mBinding.container.getId(), CookbookManualFragment.newInstance())
+                    //.replace(mBinding.container.getId(), CookbookManualFragment.newInstance())
+                    //.replace(mBinding.container.getId(), CookbookImportFragment.newInstance())
                     .commitNow();
         }
 
@@ -111,5 +115,10 @@ public class CookbookActivity extends AppCompatActivity implements
         } else {
             Toast.makeText(this, "Image clicked", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void onBackStackChanged() {
+        getSupportFragmentManager().popBackStack();
     }
 }

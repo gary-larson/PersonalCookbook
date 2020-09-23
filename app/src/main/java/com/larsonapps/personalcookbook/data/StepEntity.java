@@ -1,27 +1,39 @@
 package com.larsonapps.personalcookbook.data;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Locale;
-
-public class Step {
+public class StepEntity {
+    private int stepId;
+    private int recipeId;
     private int number;
     private String instruction;
 
     /**
-     * Default constructor
-     */
-    public Step() {
-    }
-
-    /**
      * Constructor for all member variables
+     * @param stepId to set
+     * @param recipeId to set
      * @param number to set
      * @param instruction to set
      */
-    public Step(int number, String instruction) {
+    public StepEntity(int stepId, int recipeId,int number, String instruction) {
+        this.stepId = stepId;
+        this.recipeId = recipeId;
         this.number = number;
         this.instruction = instruction;
+    }
+
+    /**
+     * Getter for step id
+     * @return step id
+     */
+    public int getStepId() {
+        return stepId;
+    }
+
+    /**
+     * Getter for recipe id
+     * @return recipe id
+     */
+    public int getRecipeId() {
+        return recipeId;
     }
 
     /**
@@ -54,15 +66,5 @@ public class Step {
      */
     public void setInstruction(String instruction) {
         this.instruction = instruction;
-    }
-
-    /**
-     * Step presented as a string
-     * @return string presentation of Step
-     */
-    @NotNull
-    @Override
-    public String toString() {
-        return String.format(Locale.getDefault(),"%d) %s", number, instruction);
     }
 }

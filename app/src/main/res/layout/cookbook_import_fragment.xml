@@ -1,14 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.CookbookImportFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/import_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        app:title="Import Recipe"
+        app:titleTextColor="@color/white"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-</FrameLayout>
+    <EditText
+        android:id="@+id/import_url_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/text_margin"
+        android:hint="@string/enter_url_of_recipe_hint"
+        style="@style/TextAppearance.MaterialComponents.Headline5"
+        android:inputType="textUri"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/import_toolbar"
+        android:importantForAutofill="no" />
+
+    <TextView
+        android:id="@+id/import_recipe_name_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/import_url_edit_text"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <CheckBox
+        android:id="@+id/import_recipe_name_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@id/import_recipe_name_text_view"
+        app:layout_constraintBottom_toTopOf="@id/import_recipe_name_text_view"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/import_description_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/text_margin"
+        style="@style/TextAppearance.MaterialComponents.Body1"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/import_recipe_name_text_view" />
+
+    <CheckBox
+        android:id="@+id/import_description_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@id/import_description_text_view"
+        app:layout_constraintBottom_toTopOf="@id/import_description_text_view"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/import_ingredient_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.MaterialComponents.Headline5"
+        android:text="@string/ingredients"
+        android:textColor="@color/white"
+        android:layout_marginStart="@dimen/text_margin"
+        app:layout_constraintTop_toBottomOf="@id/import_description_text_view"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/import_ingredient_list_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/import_fragment_height"
+        app:layout_constraintTop_toBottomOf="@id/import_ingredient_label"
+        app:layout_constraintBottom_toTopOf="@id/import_step_label"
+        tools:context="com.larsonapps.personalcookbook.IngredientFragment" />
+
+    <TextView
+        android:id="@+id/import_step_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.MaterialComponents.Headline5"
+        android:text="@string/steps"
+        android:textColor="@color/white"
+        android:layout_marginStart="@dimen/text_margin"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+        app:layout_constraintTop_toBottomOf="@id/import_ingredient_list_container"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/import_step_list_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/import_fragment_height"
+        tools:context="com.larsonapps.personalcookbook.StepFragment"
+        app:layout_constraintTop_toBottomOf="@id/import_step_label"
+        app:layout_constraintBottom_toTopOf="@id/import_image_label"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/import_image_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.MaterialComponents.Headline5"
+        android:text="@string/images"
+        android:textColor="@color/white"
+        android:layout_marginStart="@dimen/text_margin"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+        app:layout_constraintTop_toBottomOf="@id/import_step_list_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/import_image_list_container"/>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/import_image_list_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/import_fragment_height"
+        tools:context="com.larsonapps.personalcookbook.ImageFragment"
+        app:layout_constraintTop_toBottomOf="@id/import_image_label"
+        app:layout_constraintBottom_toTopOf="@id/import_submit_button"/>
+
+    <Button
+        android:id="@+id/import_submit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/submit"
+        android:paddingStart="@dimen/manual_button_padding"
+        android:paddingEnd="@dimen/manual_button_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

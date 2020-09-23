@@ -2,6 +2,7 @@ package com.larsonapps.personalcookbook.ui;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.KeyEvent;
@@ -23,6 +24,8 @@ import com.larsonapps.personalcookbook.databinding.IngredientFragmentItemListBin
 import com.larsonapps.personalcookbook.databinding.StepFragmentItemListBinding;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -85,5 +88,15 @@ public class CookbookManualFragment extends Fragment {
             Toast.makeText(getContext(), "Submit clicked", Toast.LENGTH_LONG).show();
         });
         return mBinding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getActivity() != null) {
+            ((AppCompatActivity) getActivity()).setSupportActionBar(mBinding.manualToolbar);
+            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar())
+                    .setDisplayHomeAsUpEnabled(true);
+        }
     }
 }
