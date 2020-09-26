@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 public class IngredientEntity {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "ingredient_id")
-    private int id;
+    private int ingredientId;
     @ColumnInfo(name = "recipe_id")
     private int recipeId;
     @ColumnInfo(name = "name")
@@ -22,16 +22,16 @@ public class IngredientEntity {
 
     /**
      * Constructor for all variables
-     * @param id to set
+     * @param ingredientId to set
      * @param recipeId to set
      * @param name to set
      * @param amount to set
      * @param measure to set
      * @param preparation to set
      */
-    public IngredientEntity(int id, int recipeId, String name, double amount, String measure,
-                            String preparation) {
-        this.id = id;
+    public IngredientEntity(int ingredientId, int recipeId, String name, double amount,
+                            String measure, String preparation) {
+        this.ingredientId = ingredientId;
         this.recipeId = recipeId;
         this.name = name;
         this.amount = amount;
@@ -43,8 +43,8 @@ public class IngredientEntity {
      * Getter for id
      * @return id
      */
-    public int getId() {
-        return id;
+    public int getIngredientId() {
+        return ingredientId;
     }
 
     /**

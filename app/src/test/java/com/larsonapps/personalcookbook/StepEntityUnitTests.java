@@ -1,6 +1,5 @@
 package com.larsonapps.personalcookbook;
 
-import com.larsonapps.personalcookbook.data.Step;
 import com.larsonapps.personalcookbook.data.StepEntity;
 
 import org.junit.Test;

@@ -1,6 +1,7 @@
 package com.larsonapps.personalcookbook.data;
 
-import org.jetbrains.annotations.NotNull;
+
+import androidx.annotation.NonNull;
 
 import java.util.Locale;
 
@@ -98,7 +99,7 @@ public class Ingredient {
      * String presentation of Ingredient
      * @return presentation of Ingredient
      */
-    @NotNull
+    @NonNull
     @Override
     public String toString() {
         return String.format(Locale.getDefault(),"%s %.1f %s\n%s",name, amount, measure, preparation);

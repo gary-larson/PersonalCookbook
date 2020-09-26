@@ -1,9 +1,19 @@
 package com.larsonapps.personalcookbook.data;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "steps")
 public class StepEntity {
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "step_id")
     private int stepId;
+    @ColumnInfo(name = "recipe_id")
     private int recipeId;
+    @ColumnInfo(name = "number")
     private int number;
+    @ColumnInfo(name = "instruction")
     private String instruction;
 
     /**

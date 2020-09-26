@@ -35,11 +35,27 @@ public class IngredientUpdateEntity {
     }
 
     /**
+     * Setter for ingredient update id
+     * @param ingredientUpdateId to set
+     */
+    public void setIngredientUpdateId(int ingredientUpdateId) {
+        this.ingredientUpdateId = ingredientUpdateId;
+    }
+
+    /**
      * Getter for ingredient id
      * @return ingredient id
      */
     public int getIngredientId() {
         return ingredientId;
+    }
+
+    /**
+     * Setter for ingredient id
+     * @param ingredientId to set
+     */
+    public void setIngredientId(int ingredientId) {
+        this.ingredientId = ingredientId;
     }
 
     /**

@@ -18,23 +18,37 @@ public class StepUpdateEntityUnitTests {
 
     // test constructor and getters
     @Test
-    public void testRecipeUpdateIdGetter() {
+    public void testStepUpdateIdGetter() {
         assertEquals(STEP_UPDATE_ID_VALUE, stepUpdateEntity.getStepUpdateId());
     }
 
     @Test
-    public void testRecipeIdGetter() {
+    public void testStepIdGetter() {
         assertEquals(STEP_ID_VALUE, stepUpdateEntity.getStepId());
     }
 
     @Test
-    public void testRecipeUpdateGetter() {
+    public void testStepUpdateGetter() {
         assertEquals(UPDATE_VALUE, stepUpdateEntity.getUpdate());
     }
 
     // test setter
     @Test
-    public void testRecipeUpdateSetter() {
+    public void testStepUpdateIdSetter() {
+        int temp = 39;
+        stepUpdateEntity.setStepUpdateId(temp);
+        assertEquals(temp, stepUpdateEntity.getStepUpdateId());
+    }
+
+    @Test
+    public void testStepIdSetter() {
+        int temp = 97;
+        stepUpdateEntity.setStepId(temp);
+        assertEquals(temp, stepUpdateEntity.getStepId());
+    }
+
+    @Test
+    public void testStepUpdateSetter() {
         String temp = "beat eggs for 12 minutes";
         stepUpdateEntity.setUpdate(temp);
         assertEquals(temp, stepUpdateEntity.getUpdate());

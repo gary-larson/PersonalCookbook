@@ -17,6 +17,7 @@ Copyright (C) 2020  Larson Apps - Gary Larson
  */
 package com.larsonapps.personalcookbook.adapter;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -29,8 +30,6 @@ import com.larsonapps.personalcookbook.data.Recipe;
 import com.larsonapps.personalcookbook.databinding.RecipeFragmentItemBinding;
 import com.larsonapps.personalcookbook.ui.CookbookFragment;
 import com.larsonapps.personalcookbook.ui.dummy.DummyContent.DummyItem;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -48,9 +47,9 @@ public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecycl
         mValues = items;
     }
 
-    @NotNull
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(
                 RecipeFragmentItemBinding.inflate(LayoutInflater.from(parent.getContext()),
                         parent, false));
@@ -91,7 +90,7 @@ public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecycl
             mContentView = binding.content;
         }
 
-        @NotNull
+        @NonNull
         @Override
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";

@@ -31,6 +31,19 @@ public class IngredientUpdateEntityUnitTests {
     }
 
     @Test
+    public void testIngredientUpdateIdSetter() {
+        int temp = 28;
+        ingredientUpdateEntity.setIngredientUpdateId(temp);
+        assertEquals(temp, ingredientUpdateEntity.getIngredientUpdateId());
+    }
+
+    public void testIngredientIdSetter() {
+        int temp = 73;
+        ingredientUpdateEntity.setIngredientId(temp);
+        assertEquals(temp, ingredientUpdateEntity.getIngredientId());
+    }
+
+    @Test
     public void testIngredientUpdateSetter() {
         String temp = "changed name to skim milk";
         ingredientUpdateEntity.setUpdate(temp);

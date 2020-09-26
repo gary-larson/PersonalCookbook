@@ -1,6 +1,5 @@
 package com.larsonapps.personalcookbook;
 
-import com.larsonapps.personalcookbook.data.Ingredient;
 import com.larsonapps.personalcookbook.data.IngredientEntity;
 
 import org.junit.Test;
@@ -23,7 +22,7 @@ public class IngredientEntityUnitTests {
     // Tests for the constructor and Getters
     @Test
     public void testIngredientIDGetter() {
-        assertEquals(ID_VALUE, ingredient.getId());
+        assertEquals(ID_VALUE, ingredient.getIngredientId());
     }
 
     @Test

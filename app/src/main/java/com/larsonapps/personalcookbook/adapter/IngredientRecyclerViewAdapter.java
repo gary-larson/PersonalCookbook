@@ -1,5 +1,6 @@
 package com.larsonapps.personalcookbook.adapter;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -14,9 +15,6 @@ import com.larsonapps.personalcookbook.databinding.IngredientFragmentItemBinding
 import com.larsonapps.personalcookbook.ui.CookbookActivity;
 import com.larsonapps.personalcookbook.ui.IngredientFragment;
 import com.larsonapps.personalcookbook.ui.dummy.DummyContent.DummyItem;
-
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -36,9 +34,9 @@ public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<Ingredie
         mState = state;
     }
 
-    @NotNull
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(IngredientFragmentItemBinding.inflate(
                 LayoutInflater.from(parent.getContext()), parent, false));
     }
@@ -104,7 +102,7 @@ public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<Ingredie
             mCheckbox = binding.ingredientCheckbox;
         }
 
-        @NotNull
+        @NonNull
         @Override
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";

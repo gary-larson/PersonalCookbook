@@ -8,9 +8,9 @@ import androidx.room.PrimaryKey;
 public class StepUpdateEntity {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "step_update_id")
-    private int StepUpdateId;
+    private int stepUpdateId;
     @ColumnInfo(name = "step_id")
-    private int StepId;
+    private int stepId;
     @ColumnInfo(name = "update")
     private String update;
 
@@ -21,8 +21,8 @@ public class StepUpdateEntity {
      * @param update to set
      */
     public StepUpdateEntity(int stepUpdateId, int stepId, String update) {
-        StepUpdateId = stepUpdateId;
-        StepId = stepId;
+        this.stepUpdateId = stepUpdateId;
+        this.stepId = stepId;
         this.update = update;
     }
 
@@ -31,7 +31,15 @@ public class StepUpdateEntity {
      * @return step update id
      */
     public int getStepUpdateId() {
-        return StepUpdateId;
+        return stepUpdateId;
+    }
+
+    /**
+     * Setter for step update id
+     * @param stepUpdateId to set
+     */
+    public void setStepUpdateId(int stepUpdateId) {
+        this.stepUpdateId = stepUpdateId;
     }
 
     /**
@@ -39,7 +47,15 @@ public class StepUpdateEntity {
      * @return step id
      */
     public int getStepId() {
-        return StepId;
+        return stepId;
+    }
+
+    /**
+     * Setter for step id
+     * @param stepId to set
+     */
+    public void setStepId(int stepId) {
+        this.stepId = stepId;
     }
 
     /**

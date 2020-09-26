@@ -2,6 +2,7 @@ package com.larsonapps.personalcookbook.ui;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -22,8 +23,6 @@ import com.larsonapps.personalcookbook.databinding.CookbookManualFragmentBinding
 import com.larsonapps.personalcookbook.databinding.ImageFragmentItemListBinding;
 import com.larsonapps.personalcookbook.databinding.IngredientFragmentItemListBinding;
 import com.larsonapps.personalcookbook.databinding.StepFragmentItemListBinding;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -47,7 +46,7 @@ public class CookbookManualFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mBinding = CookbookManualFragmentBinding.inflate(inflater, container, false);

@@ -1,6 +1,5 @@
 package com.larsonapps.personalcookbook;
 
-import com.larsonapps.personalcookbook.data.RecipeImage;
 import com.larsonapps.personalcookbook.data.RecipeImageEntity;
 
 import org.junit.Test;

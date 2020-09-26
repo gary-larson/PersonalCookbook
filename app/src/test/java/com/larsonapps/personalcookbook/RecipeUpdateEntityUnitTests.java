@@ -34,6 +34,20 @@ public class RecipeUpdateEntityUnitTests {
 
     // test setter
     @Test
+    public void testRecipeUpdateIdSetter() {
+        int temp = 12468;
+        recipeUpdateEntity.setRecipeUpdateId(temp);
+        assertEquals(temp, recipeUpdateEntity.getRecipeUpdateId());
+    }
+
+    @Test
+    public void testRecipeIdSetter() {
+        int temp = 17;
+        recipeUpdateEntity.setRecipeId(temp);
+        assertEquals(temp, recipeUpdateEntity.getRecipeId());
+    }
+
+    @Test
     public void testRecipeUpdateSetter() {
         String temp = "total time to 25 minutes";
         recipeUpdateEntity.setUpdate(temp);

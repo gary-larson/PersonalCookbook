@@ -16,8 +16,6 @@ import com.larsonapps.personalcookbook.data.Step;
 import com.larsonapps.personalcookbook.databinding.StepFragmentItemListBinding;
 import com.larsonapps.personalcookbook.ui.dummy.DummyContent;
 
-import org.jetbrains.annotations.NotNull;
-
 /**
  * A fragment representing a list of Items.
  */
@@ -55,7 +53,7 @@ public class StepFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mBinding = StepFragmentItemListBinding.inflate(inflater, container, false);
 

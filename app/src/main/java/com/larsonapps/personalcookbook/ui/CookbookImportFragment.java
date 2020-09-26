@@ -2,6 +2,7 @@ package com.larsonapps.personalcookbook.ui;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -11,8 +12,6 @@ import android.view.ViewGroup;
 
 
 import com.larsonapps.personalcookbook.databinding.CookbookImportFragmentBinding;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -37,7 +36,7 @@ public class CookbookImportFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mBinding = CookbookImportFragmentBinding.inflate(inflater, container, false);

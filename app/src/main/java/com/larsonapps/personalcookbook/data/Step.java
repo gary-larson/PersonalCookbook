@@ -1,6 +1,7 @@
 package com.larsonapps.personalcookbook.data;
 
-import org.jetbrains.annotations.NotNull;
+
+import androidx.annotation.NonNull;
 
 import java.util.Locale;
 
@@ -60,7 +61,7 @@ public class Step {
      * Step presented as a string
      * @return string presentation of Step
      */
-    @NotNull
+    @NonNull
     @Override
     public String toString() {
         return String.format(Locale.getDefault(),"%d) %s", number, instruction);

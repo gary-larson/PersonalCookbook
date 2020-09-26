@@ -1,5 +1,6 @@
 package com.larsonapps.personalcookbook.adapter;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -17,8 +18,6 @@ import com.larsonapps.personalcookbook.databinding.StepFragmentItemBinding;
 import com.larsonapps.personalcookbook.ui.CookbookActivity;
 import com.larsonapps.personalcookbook.ui.StepFragment;
 import com.larsonapps.personalcookbook.ui.dummy.DummyContent.DummyItem;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -38,9 +37,9 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
         mState = state;
     }
 
-    @NotNull
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(StepFragmentItemBinding.inflate(
                 LayoutInflater.from(parent.getContext()), parent, false));
     }
@@ -107,7 +106,7 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
 
         }
 
-        @NotNull
+        @NonNull
         @Override
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";

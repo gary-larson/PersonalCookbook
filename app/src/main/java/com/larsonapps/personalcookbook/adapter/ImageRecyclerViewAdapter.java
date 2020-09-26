@@ -1,5 +1,6 @@
 package com.larsonapps.personalcookbook.adapter;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
@@ -22,7 +23,6 @@ import com.larsonapps.personalcookbook.ui.ImageFragment;
 import com.larsonapps.personalcookbook.ui.dummy.DummyContent.DummyItem;
 import com.squareup.picasso.Picasso;
 
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.List;
@@ -43,9 +43,9 @@ public class ImageRecyclerViewAdapter extends RecyclerView.Adapter<ImageRecycler
         mState = state;
     }
 
-    @NotNull
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(ImageFragmentItemBinding.inflate(LayoutInflater.from(parent.getContext()),
                 parent, false));
     }

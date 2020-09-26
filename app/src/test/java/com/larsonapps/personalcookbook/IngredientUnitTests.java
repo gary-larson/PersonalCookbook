@@ -12,7 +12,7 @@ public class IngredientUnitTests {
     private static final String MEASURE_VALUE = "Tablespoon";
     private static final String NAME_VALUE = "Milk";
     private static final String PREPARATION_VALUE = "Pour into container";
-    private static final String TO_STRING_VALUE = "Milk 20.4 Tablspoon\nPour into container";
+    private static final String TO_STRING_VALUE = "Milk 20.5 Tablespoon\nPour into container";
 
     // Create ingredient
     Ingredient ingredient = new Ingredient(NAME_VALUE, AMOUNT_VALUE, MEASURE_VALUE,
@@ -69,5 +69,10 @@ public class IngredientUnitTests {
         String temp = "This is a preparation statement";
         ingredientDefault.setName(temp);
         assertEquals(temp, ingredientDefault.getName());
+    }
+
+    @Test
+    public void testIngredientToString() {
+        assertEquals(TO_STRING_VALUE, ingredient.toString());
     }
 }
