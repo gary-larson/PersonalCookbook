@@ -17,28 +17,23 @@ Copyright (C) 2020  Larson Apps - Gary Larson
  */
 package com.larsonapps.personalcookbook.ui;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProvider;
-
-import android.media.Image;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.larsonapps.personalcookbook.R;
-import com.larsonapps.personalcookbook.data.Ingredient;
-import com.larsonapps.personalcookbook.data.Recipe;
-import com.larsonapps.personalcookbook.data.RecipeImage;
-import com.larsonapps.personalcookbook.data.Step;
-import com.larsonapps.personalcookbook.data.CookbookRecipesViewModel;
+import com.larsonapps.personalcookbook.data.CookbookRecipeViewModel;
+import com.larsonapps.personalcookbook.data.ImageEntity;
+import com.larsonapps.personalcookbook.data.IngredientEntity;
+import com.larsonapps.personalcookbook.data.RecipeEntity;
+import com.larsonapps.personalcookbook.data.StepEntity;
 import com.larsonapps.personalcookbook.databinding.CookbookActivityBinding;
 
 public class CookbookActivity extends AppCompatActivity implements
-        CookbookFragment.OnListFragmentInteractionListener,
+        RecipeFragment.OnListFragmentInteractionListener,
         StepFragment.OnListFragmentInteractionListener,
         IngredientFragment.OnListFragmentInteractionListener,
         ImageFragment.OnListFragmentInteractionListener,
@@ -49,7 +44,7 @@ public class CookbookActivity extends AppCompatActivity implements
     public static final int STATE_MANUAL = 2;
     public static final int STATE_IMPORT = 3;
     // Declare variables
-    private CookbookRecipesViewModel mCookbookRecipesViewModel;
+    private CookbookRecipeViewModel mCookbookRecipeViewModel;
     private CookbookActivityBinding mBinding;
     private int mHeight;
 
@@ -61,7 +56,7 @@ public class CookbookActivity extends AppCompatActivity implements
         setContentView(mBinding.getRoot());
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(mBinding.container.getId(), CookbookFragment.newInstance())
+                    .replace(mBinding.container.getId(), RecipeFragment.newInstance())
                     //.replace(mBinding.container.getId(), CookbookDetailsFragment.newInstance())
                     //.replace(mBinding.container.getId(), CookbookEditFragment.newInstance())
                     //.replace(mBinding.container.getId(), CookbookManualFragment.newInstance())
@@ -81,12 +76,12 @@ public class CookbookActivity extends AppCompatActivity implements
     public int getHeight() {return mHeight;}
 
     @Override
-    public void onListFragmentInteraction(Recipe recipe) {
+    public void onListFragmentInteraction(RecipeEntity recipe) {
         Toast.makeText(this, "Recipe clicked", Toast.LENGTH_LONG).show();
 }
 
     @Override
-    public void onListFragmentInteraction(Ingredient ingredient, int state, View view) {
+    public void onListFragmentInteraction(IngredientEntity ingredient, int state, View view) {
         if (view.getId() == R.id.ingredient_edit_image_button) {
             Toast.makeText(this, "Ingredient edit clicked", Toast.LENGTH_LONG).show();
         } else if (view.getId() == R.id.ingredient_delete_image_button) {
@@ -98,7 +93,7 @@ public class CookbookActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onListFragmentInteraction(Step step, int state, View view) {
+    public void onListFragmentInteraction(StepEntity step, int state, View view) {
         if (view.getId() == R.id.step_edit_image_button) {
             Toast.makeText(this, "Step edit clicked", Toast.LENGTH_LONG).show();
         } else if (view.getId() == R.id.step_delete_image_button) {
@@ -109,7 +104,7 @@ public class CookbookActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onListFragmentInteraction(RecipeImage recipeImage, int state, View view) {
+    public void onListFragmentInteraction(ImageEntity image, int state, View view) {
         if (view.getId() == R.id.image_button) {
             Toast.makeText(this, "Image delete clicked", Toast.LENGTH_LONG).show();
         } else {

@@ -1,9 +1,7 @@
 package com.larsonapps.personalcookbook.ui;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -15,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.larsonapps.personalcookbook.R;
-import com.larsonapps.personalcookbook.data.CookbookIngredientsViewModel;
+import com.larsonapps.personalcookbook.data.CookbookIngredientViewModel;
 
 import com.larsonapps.personalcookbook.databinding.CookbookDetailsFragmentBinding;
 import com.squareup.picasso.Picasso;
@@ -24,7 +22,7 @@ import java.util.Objects;
 
 public class CookbookDetailsFragment extends Fragment {
     // Declare variables
-    private CookbookIngredientsViewModel mViewModel;
+    private CookbookIngredientViewModel mViewModel;
     private CookbookDetailsFragmentBinding mBinding;
 
     public static CookbookDetailsFragment newInstance() {
@@ -75,7 +73,7 @@ public class CookbookDetailsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(requireActivity())
-                .get(CookbookIngredientsViewModel.class);
+                .get(CookbookIngredientViewModel.class);
         // TODO: Use the ViewModel
     }
 

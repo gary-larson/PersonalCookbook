@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.larsonapps.personalcookbook.data.Ingredient;
 import com.larsonapps.personalcookbook.databinding.ContentFragmentBinding;
 
 /**

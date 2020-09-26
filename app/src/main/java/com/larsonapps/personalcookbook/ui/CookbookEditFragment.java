@@ -8,21 +8,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.larsonapps.personalcookbook.R;
-import com.larsonapps.personalcookbook.data.CookbookIngredientsViewModel;
-import com.larsonapps.personalcookbook.data.CookbookStepsViewModel;
-import com.larsonapps.personalcookbook.data.Step;
+import com.larsonapps.personalcookbook.data.CookbookIngredientViewModel;
+import com.larsonapps.personalcookbook.data.CookbookStepViewModel;
 import com.larsonapps.personalcookbook.databinding.CookbookEditFragmentBinding;
 
 import java.util.Objects;
@@ -35,8 +28,8 @@ import java.util.Objects;
 public class CookbookEditFragment extends Fragment {
 
     // Declare variables
-    private CookbookIngredientsViewModel mIngredientsViewModel;
-    private CookbookStepsViewModel mStepsViewModel;
+    private CookbookIngredientViewModel mIngredientsViewModel;
+    private CookbookStepViewModel mStepsViewModel;
     private CookbookEditFragmentBinding mBinding;
 
     public static CookbookEditFragment newInstance() {
@@ -88,7 +81,7 @@ public class CookbookEditFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mIngredientsViewModel = new ViewModelProvider(requireActivity())
-                .get(CookbookIngredientsViewModel.class);
+                .get(CookbookIngredientViewModel.class);
         // TODO: Use the ViewModel
     }
 

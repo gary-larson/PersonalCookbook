@@ -2,6 +2,7 @@ package com.larsonapps.personalcookbook.data;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "steps")
@@ -15,6 +16,12 @@ public class StepEntity {
     private int number;
     @ColumnInfo(name = "instruction")
     private String instruction;
+
+    /**
+     * Default Constructor
+     */
+    @Ignore
+    public StepEntity() {}
 
     /**
      * Constructor for all member variables

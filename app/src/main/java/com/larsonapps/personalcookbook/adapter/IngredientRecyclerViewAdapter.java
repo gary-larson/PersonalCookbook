@@ -10,7 +10,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.larsonapps.personalcookbook.data.Ingredient;
+import com.larsonapps.personalcookbook.data.IngredientEntity;
 import com.larsonapps.personalcookbook.databinding.IngredientFragmentItemBinding;
 import com.larsonapps.personalcookbook.ui.CookbookActivity;
 import com.larsonapps.personalcookbook.ui.IngredientFragment;
@@ -51,14 +51,14 @@ public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<Ingredie
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(new Ingredient(), mState, v);
+                    mListener.onListFragmentInteraction(new IngredientEntity(), mState, v);
                 }
             });
             holder.mDeleteImageButton.setOnClickListener(v -> {
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(new Ingredient(), mState, v);
+                    mListener.onListFragmentInteraction(new IngredientEntity(), mState, v);
                 }
             });
             holder.mEditImageButton.setVisibility(View.VISIBLE);

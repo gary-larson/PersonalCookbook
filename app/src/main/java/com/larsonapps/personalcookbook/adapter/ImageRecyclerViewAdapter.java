@@ -3,19 +3,13 @@ package com.larsonapps.personalcookbook.adapter;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.larsonapps.personalcookbook.R;
-import com.larsonapps.personalcookbook.data.RecipeImage;
-import com.larsonapps.personalcookbook.data.Step;
+import com.larsonapps.personalcookbook.data.ImageEntity;
 
 import com.larsonapps.personalcookbook.databinding.ImageFragmentItemBinding;
 import com.larsonapps.personalcookbook.ui.CookbookActivity;
@@ -24,7 +18,6 @@ import com.larsonapps.personalcookbook.ui.dummy.DummyContent.DummyItem;
 import com.squareup.picasso.Picasso;
 
 
-import java.io.File;
 import java.util.List;
 
 /**
@@ -33,11 +26,11 @@ import java.util.List;
  */
 public class ImageRecyclerViewAdapter extends RecyclerView.Adapter<ImageRecyclerViewAdapter.ViewHolder> {
     // Declare variables
-    private final List<RecipeImage> mValues;
+    private final List<ImageEntity> mValues;
     private final ImageFragment.OnListFragmentInteractionListener mListener;
     private final int mState;
 
-    public ImageRecyclerViewAdapter(ImageFragment.OnListFragmentInteractionListener listener, List<RecipeImage> images, int state) {
+    public ImageRecyclerViewAdapter(ImageFragment.OnListFragmentInteractionListener listener, List<ImageEntity> images, int state) {
         mValues = images;
         mListener = listener;
         mState = state;
@@ -102,7 +95,7 @@ public class ImageRecyclerViewAdapter extends RecyclerView.Adapter<ImageRecycler
         public final View mView;
         public ImageView mImageView;
         public ImageView mImageButton;
-        public RecipeImage mImage;
+        public ImageEntity mImage;
         public CheckBox mCheckbox;
 
 

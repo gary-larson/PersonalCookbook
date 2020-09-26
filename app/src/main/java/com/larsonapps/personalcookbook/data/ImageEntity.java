@@ -2,10 +2,11 @@ package com.larsonapps.personalcookbook.data;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "images")
-public class RecipeImageEntity {
+public class ImageEntity {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "image_id")
     private int imageId;
@@ -23,6 +24,12 @@ public class RecipeImageEntity {
     private String caption;
 
     /**
+     * Default constructor
+     */
+    @Ignore
+    public ImageEntity() {}
+
+    /**
      * Constructor for all member variables\
      * @param imageId to set
      * @param recipeId to set
@@ -32,8 +39,8 @@ public class RecipeImageEntity {
      * @param width to set
      * @param caption to set
      */
-    public RecipeImageEntity(int imageId, int recipeId, String type, String imageUrl, int height,
-                             int width, String caption) {
+    public ImageEntity(int imageId, int recipeId, String type, String imageUrl, int height,
+                       int width, String caption) {
         this.imageId = imageId;
         this.recipeId = recipeId;
         this.type = type;

@@ -8,11 +8,10 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.larsonapps.personalcookbook.adapter.StepRecyclerViewAdapter;
-import com.larsonapps.personalcookbook.data.Step;
+import com.larsonapps.personalcookbook.data.StepEntity;
 import com.larsonapps.personalcookbook.databinding.StepFragmentItemListBinding;
 import com.larsonapps.personalcookbook.ui.dummy.DummyContent;
 
@@ -98,6 +97,6 @@ public class StepFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // set arguments type and name
-        void onListFragmentInteraction(Step step, int state, View view);
+        void onListFragmentInteraction(StepEntity step, int state, View view);
     }
 }

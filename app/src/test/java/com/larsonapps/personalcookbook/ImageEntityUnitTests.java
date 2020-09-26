@@ -1,12 +1,12 @@
 package com.larsonapps.personalcookbook;
 
-import com.larsonapps.personalcookbook.data.RecipeImageEntity;
+import com.larsonapps.personalcookbook.data.ImageEntity;
 
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class RecipeImageEntityUnitTests {
+public class ImageEntityUnitTests {
     // image data
     private static final int IMAGE_ID_VALUE = 548;
     private static final int RECIPE_ID_VALUE = 468;
@@ -17,7 +17,7 @@ public class RecipeImageEntityUnitTests {
     private static final String CAPTION_VALUE = "picture of chocolate chip cookies";
 
     // Create RecipeImage
-    RecipeImageEntity image = new RecipeImageEntity(IMAGE_ID_VALUE, RECIPE_ID_VALUE, TYPE_VALUE,
+    ImageEntity image = new ImageEntity(IMAGE_ID_VALUE, RECIPE_ID_VALUE, TYPE_VALUE,
             IMAGE_URL_VALUE, HEIGHT_VALUE, WIDTH_VALUE, CAPTION_VALUE);
 
     // Tests for the constructor and Getters

@@ -72,14 +72,14 @@ public interface CookbookDao {
      * @param image to insert
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertImage(RecipeImageEntity image);
+    void insertImage(ImageEntity image);
 
     /**
      * Method to insert a list of images
      * @param images to insert
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAllImages(List<RecipeImageEntity> images);
+    void insertAllImages(List<ImageEntity> images);
 
     /**
      * Method to insert a keyword
@@ -142,7 +142,7 @@ public interface CookbookDao {
      * @param image to delete
      */
     @Delete
-    void deleteImage(RecipeImageEntity image);
+    void deleteImage(ImageEntity image);
 
     /**
      * Method to delete a keyword
@@ -198,7 +198,7 @@ public interface CookbookDao {
      * @param image to update
      */
     @Update
-    void updateImage(RecipeImageEntity image);
+    void updateImage(ImageEntity image);
 
     /**
      * Method to update a keyword
@@ -282,7 +282,7 @@ public interface CookbookDao {
      * @return list of images
      */
     @Query("SELECT * FROM images WHERE recipe_id = :recipeId")
-    List<RecipeImageEntity> getAllImages(int recipeId);
+    List<ImageEntity> getAllImages(int recipeId);
 
     /**
      * Method to retrieve all keywords by recipe id

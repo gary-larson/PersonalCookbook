@@ -2,6 +2,7 @@ package com.larsonapps.personalcookbook.data;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "ingredients")
@@ -19,6 +20,12 @@ public class IngredientEntity {
     private String measure;
     @ColumnInfo(name = "preparation")
     private String preparation;
+
+    /**
+     * Default Constructor
+     */
+    @Ignore
+    public IngredientEntity() {}
 
     /**
      * Constructor for all variables

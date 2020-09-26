@@ -3,9 +3,7 @@ package com.larsonapps.personalcookbook.data;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
-import androidx.room.Dao;
 import androidx.room.Database;
-import androidx.room.Entity;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
@@ -18,7 +16,7 @@ import java.util.concurrent.Executors;
  * Class to handle a room database cookbook_database
  */
 @Database(entities = {IngredientEntity.class, IngredientUpdateEntity.class, RecipeEntity.class,
-        RecipeUpdateEntity.class, RecipeImageEntity.class, StepEntity.class,
+        RecipeUpdateEntity.class, ImageEntity.class, StepEntity.class,
         StepUpdateEntity.class, KeywordEntity.class}, version = 1)
 public abstract class CookbookRoomDatabase extends RoomDatabase {
     // register DAO

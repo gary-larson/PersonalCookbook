@@ -6,14 +6,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.larsonapps.personalcookbook.R;
-import com.larsonapps.personalcookbook.data.Step;
+import com.larsonapps.personalcookbook.data.StepEntity;
 import com.larsonapps.personalcookbook.databinding.StepFragmentItemBinding;
 import com.larsonapps.personalcookbook.ui.CookbookActivity;
 import com.larsonapps.personalcookbook.ui.StepFragment;
@@ -54,14 +51,14 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(new Step(), mState, v);
+                    mListener.onListFragmentInteraction(new StepEntity(), mState, v);
                 }
             });
             holder.mDeleteImageButton.setOnClickListener(v -> {
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(new Step(), mState, v);
+                    mListener.onListFragmentInteraction(new StepEntity(), mState, v);
                 }
             });
             holder.mEditImageButton.setVisibility(View.VISIBLE);

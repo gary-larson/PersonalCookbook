@@ -8,12 +8,10 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.larsonapps.personalcookbook.adapter.IngredientRecyclerViewAdapter;
-import com.larsonapps.personalcookbook.data.Ingredient;
+import com.larsonapps.personalcookbook.data.IngredientEntity;
 import com.larsonapps.personalcookbook.databinding.IngredientFragmentItemListBinding;
 import com.larsonapps.personalcookbook.ui.dummy.DummyContent;
 
@@ -104,6 +102,6 @@ public class IngredientFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // set arguments type and name
-        void onListFragmentInteraction(Ingredient ingredient, int state, View view);
+        void onListFragmentInteraction(IngredientEntity ingredient, int state, View view);
     }
 }

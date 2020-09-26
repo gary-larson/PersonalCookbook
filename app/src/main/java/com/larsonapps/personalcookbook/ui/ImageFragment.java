@@ -1,12 +1,10 @@
 package com.larsonapps.personalcookbook.ui;
 
 import android.content.Context;
-import android.media.Image;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,10 +14,8 @@ import android.view.ViewGroup;
 
 import com.larsonapps.personalcookbook.R;
 import com.larsonapps.personalcookbook.adapter.ImageRecyclerViewAdapter;
-import com.larsonapps.personalcookbook.data.RecipeImage;
-import com.larsonapps.personalcookbook.data.Step;
+import com.larsonapps.personalcookbook.data.ImageEntity;
 import com.larsonapps.personalcookbook.databinding.ImageFragmentItemListBinding;
-import com.larsonapps.personalcookbook.ui.dummy.DummyContent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,12 +67,12 @@ public class ImageFragment extends Fragment {
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             // TODO remove when data is in
-            List<RecipeImage> recipeImages = new ArrayList<>();
-            RecipeImage recipeImage = new RecipeImage();
-            recipeImage.setImageUrl("file:///android_asset/ApplePie.jpg");
-            recipeImages.add(recipeImage);
+            List<ImageEntity> images = new ArrayList<>();
+            ImageEntity image = new ImageEntity();
+            image.setImageUrl("file:///android_asset/ApplePie.jpg");
+            images.add(image);
             if (mState == CookbookActivity.STATE_EDIT) {
-                recyclerView.setAdapter(new ImageRecyclerViewAdapter(mListener, recipeImages, mState));
+                recyclerView.setAdapter(new ImageRecyclerViewAdapter(mListener, images, mState));
             } else if (mState == CookbookActivity.STATE_MANUAL) {
                 recyclerView.setAdapter(new ImageRecyclerViewAdapter(mListener, null, mState));
             }
@@ -112,6 +108,6 @@ public class ImageFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // set arguments type and name
-        void onListFragmentInteraction(RecipeImage recipeImage, int state, View view);
+        void onListFragmentInteraction(ImageEntity image, int state, View view);
     }
 }

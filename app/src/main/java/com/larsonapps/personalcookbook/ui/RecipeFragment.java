@@ -27,27 +27,25 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.larsonapps.personalcookbook.R;
-import com.larsonapps.personalcookbook.data.CookbookRecipesViewModel;
+import com.larsonapps.personalcookbook.data.CookbookRecipeViewModel;
 import com.larsonapps.personalcookbook.adapter.RecipeRecyclerViewAdapter;
-import com.larsonapps.personalcookbook.data.Recipe;
+import com.larsonapps.personalcookbook.data.RecipeEntity;
 import com.larsonapps.personalcookbook.databinding.RecipeFragmentItemListBinding;
 import com.larsonapps.personalcookbook.ui.dummy.DummyContent;
 
 
-public class CookbookFragment extends Fragment {
+public class RecipeFragment extends Fragment {
     // Declare variables
-    private CookbookRecipesViewModel mCookbookRecipesViewModel;
+    private CookbookRecipeViewModel mCookbookRecipeViewModel;
     private com.larsonapps.personalcookbook.databinding.CookbookFragmentBinding mBinding;
     private RecipeFragmentItemListBinding mListBinding;
     private OnListFragmentInteractionListener mListener;
-    public static CookbookFragment newInstance() {
-        return new CookbookFragment();
+    public static RecipeFragment newInstance() {
+        return new RecipeFragment();
     }
 
     @Nullable
@@ -69,8 +67,8 @@ public class CookbookFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mCookbookRecipesViewModel = new ViewModelProvider(requireActivity())
-                .get(CookbookRecipesViewModel.class);
+        mCookbookRecipeViewModel = new ViewModelProvider(requireActivity())
+                .get(CookbookRecipeViewModel.class);
         // TODO: Use the ViewModel
     }
 
@@ -82,7 +80,7 @@ public class CookbookFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (context instanceof IngredientFragment.OnListFragmentInteractionListener) {
-            mListener = (CookbookFragment.OnListFragmentInteractionListener) context;
+            mListener = (RecipeFragment.OnListFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString() );
         }
@@ -102,7 +100,7 @@ public class CookbookFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // set arguments type and name
-        void onListFragmentInteraction(Recipe recipe);
+        void onListFragmentInteraction(RecipeEntity recipe);
     }
 
 }

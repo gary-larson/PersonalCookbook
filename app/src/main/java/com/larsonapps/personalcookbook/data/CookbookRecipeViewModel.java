@@ -19,6 +19,6 @@ package com.larsonapps.personalcookbook.data;
 
 import androidx.lifecycle.ViewModel;
 
-public class CookbookRecipesViewModel extends ViewModel {
+public class CookbookRecipeViewModel extends ViewModel {
     // TODO: Implement the ViewModel
 }

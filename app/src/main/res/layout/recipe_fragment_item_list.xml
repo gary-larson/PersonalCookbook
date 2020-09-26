@@ -10,5 +10,5 @@
     android:layout_marginRight="16dp"
     app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".ui.CookbookFragment"
+    tools:context=".ui.RecipeFragment"
     tools:listitem="@layout/recipe_fragment_item" />
