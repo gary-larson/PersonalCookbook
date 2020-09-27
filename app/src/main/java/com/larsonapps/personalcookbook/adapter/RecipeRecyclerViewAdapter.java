@@ -31,17 +31,19 @@ import com.larsonapps.personalcookbook.ui.RecipeFragment;
 import com.larsonapps.personalcookbook.ui.dummy.DummyContent.DummyItem;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem}.
- * TODO: Replace the implementation with code for your data type.
+ * Class to display recipe list
  */
-public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecyclerViewAdapter.ViewHolder> {
+public class RecipeRecyclerViewAdapter extends
+        RecyclerView.Adapter<RecipeRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<RecipeEntity> mValues;
     private RecipeFragment.OnListFragmentInteractionListener mListener;
 
-    public RecipeRecyclerViewAdapter(RecipeFragment.OnListFragmentInteractionListener listener, List<DummyItem> items) {
+    public RecipeRecyclerViewAdapter(RecipeFragment.OnListFragmentInteractionListener listener,
+                                     List<RecipeEntity> items) {
         mListener = listener;
         mValues = items;
     }
@@ -57,13 +59,16 @@ public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecycl
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mNameView.setText(mValues.get(position).getName());
+        String temp = String.format(Locale.getDefault(), "Servings %d",
+                holder.mItem.getServings());
+        holder.mServingsView.setText(temp);
+        temp = String.format(Locale.getDefault(),"Time = %s",
+                holder.mItem.getTotalTimeString());
+        holder.mTotalTimeView.setText(temp);
         holder.mView.setOnClickListener(v -> {
             if (null != mListener) {
-                // Notify the active callbacks interface (the activity, if the
-                // fragment is attached to one) that an item has been selected.
-                mListener.onListFragmentInteraction(new RecipeEntity());
+                mListener.onListFragmentInteraction(holder.mItem);
             }
         });
     }
@@ -78,21 +83,17 @@ public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecycl
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public DummyItem mItem;
+        public final TextView mNameView;
+        public final TextView mServingsView;
+        public final TextView mTotalTimeView;
+        public RecipeEntity mItem;
 
         public ViewHolder(RecipeFragmentItemBinding binding) {
             super(binding.getRoot());
             mView = binding.getRoot();
-            mIdView = binding.itemNumber;
-            mContentView = binding.content;
-        }
-
-        @NonNull
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            mNameView = binding.recipeNameTextView;
+            mServingsView = binding.recipeServingsTextView;
+            mTotalTimeView = binding.recipeTotalTimeTextView;
         }
     }
 }

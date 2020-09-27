@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
 
-import com.larsonapps.personalcookbook.data.CookbookIngredientViewModel;
-import com.larsonapps.personalcookbook.data.CookbookStepViewModel;
+import com.larsonapps.personalcookbook.model.IngredientViewModel;
+import com.larsonapps.personalcookbook.model.StepViewModel;
 import com.larsonapps.personalcookbook.databinding.CookbookManualFragmentBinding;
 
 import java.util.Objects;
@@ -25,8 +25,8 @@ import java.util.Objects;
  */
 public class CookbookManualFragment extends Fragment {
     // Declare variables
-    CookbookIngredientViewModel mIngredientsViewModel;
-    CookbookStepViewModel mStepsViewModel;
+    IngredientViewModel mIngredientsViewModel;
+    StepViewModel mStepsViewModel;
     CookbookManualFragmentBinding mBinding;
 
     public CookbookManualFragment() {

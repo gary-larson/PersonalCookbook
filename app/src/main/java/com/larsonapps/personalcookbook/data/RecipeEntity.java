@@ -5,6 +5,8 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.util.Locale;
+
 @Entity(tableName = "recipes")
 public class RecipeEntity {
     // Declare Variables
@@ -13,6 +15,9 @@ public class RecipeEntity {
     private int id;
     @ColumnInfo(name = "name")
     private String name;
+    //TODO add for database version 2
+    //@ColumnInfo(name = "short_description")
+    //private String shortDescription;
     @ColumnInfo(name = "description")
     private String description;
     @ColumnInfo(name = "servings")
@@ -26,7 +31,7 @@ public class RecipeEntity {
     @ColumnInfo(name = "notes")
     private String notes;
     @ColumnInfo(name = "copyright")
-    private String coypright;
+    private String copyright;
 
     /**
      * Default Constructor
@@ -44,10 +49,10 @@ public class RecipeEntity {
      * @param cookTime to set
      * @param totalTime to set
      * @param notes to set
-     * @param coypright to set
+     * @param copyright to set
      */
     public RecipeEntity(int id, String name, String description, int servings, int prepTime,
-                        int cookTime, int totalTime, String notes, String coypright) {
+                        int cookTime, int totalTime, String notes, String copyright) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -56,7 +61,7 @@ public class RecipeEntity {
         this.cookTime = cookTime;
         this.totalTime = totalTime;
         this.notes = notes;
-        this.coypright = coypright;
+        this.copyright = copyright;
     }
 
     /**
@@ -124,6 +129,14 @@ public class RecipeEntity {
     }
 
     /**
+     * Getter for preparation time string
+     * @return preparation time string
+     */
+    public String getPrepTimeString() {
+        return getString(prepTime);
+    }
+
+    /**
      * Setter for prepTime in minutes
      * @param prepTime to set
      */
@@ -140,6 +153,55 @@ public class RecipeEntity {
     }
 
     /**
+     * Getter for cook time string
+     * @return cook time string
+     */
+    public String getCookTimeString() {
+        return getString(cookTime);
+    }
+
+    private String getString(int time) {
+        String temp;
+        int days = time / 1440;
+        int hours;
+        if (time > 1440) {
+            hours = (time - (days * 1440)) / 60;
+        } else {
+            hours = time / 60;
+        }
+        int mins = time % 60;
+        String day = "days";
+        String hour = "hours";
+        String min = "mins";
+        if (days == 1) {
+            day = "day";
+        }
+        if (hours == 1) {
+            hour = "hour";
+        }
+        if (hours == 0 && days == 0) {
+            if (mins == 1) {
+                min = "minute";
+            } else {
+                min = "minutes";
+            }
+        } else {
+            if (mins == 1) {
+                min = "min";
+            }
+        }
+        if (days > 0) {
+            temp = String.format(Locale.getDefault(), "%d %s %d %s %d %s", days, day,
+                    hours, hour, mins, min);
+        } else if (hours > 0) {
+            temp = String.format(Locale.getDefault(), "%d %s %d %s", hours, hour, mins, min);
+        } else {
+            temp = String.format(Locale.getDefault(), "%d %s", mins, min);
+        }
+        return temp;
+    }
+
+    /**
      * Setter for cookTime in minutes
      * @param cookTime to set
      */
@@ -153,6 +215,14 @@ public class RecipeEntity {
      */
     public int getTotalTime() {
         return totalTime;
+    }
+
+    /**
+     * Getter for total time string
+     * @return total time string
+     */
+    public String getTotalTimeString() {
+        return getString(totalTime);
     }
 
     /**
@@ -183,15 +253,15 @@ public class RecipeEntity {
      * Getter for copyright
      * @return copyright
      */
-    public String getCoypright() {
-        return coypright;
+    public String getCopyright() {
+        return copyright;
     }
 
     /**
      * Setter for copyright
-     * @param coypright to set
+     * @param copyright to set
      */
-    public void setCoypright(String coypright) {
-        this.coypright = coypright;
+    public void setCopyright(String copyright) {
+        this.copyright = copyright;
     }
 }

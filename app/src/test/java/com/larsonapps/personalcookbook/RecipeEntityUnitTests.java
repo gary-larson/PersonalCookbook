@@ -12,11 +12,14 @@ public class RecipeEntityUnitTests {
     private static final String NAME_VALUE = "Chocolate Cookies";
     private static final String DESCRIPTION_VALUE = "Sufficient description";
     private static final int SERVINGS_VALUE = 12;
-    private static final int PREP_TIME_VALUE = 40;
-    private static final int COOK_TIME_VALUE = 12;
-    private static final int TOTAL_TIME_VALUE = 52;
+    private static final int PREP_TIME_VALUE = 22;
+    private static final int COOK_TIME_VALUE = 142;
+    private static final int TOTAL_TIME_VALUE = 1501;
     private static final String NOTES_VALUE = "These are the notes by the cook.";
     private static final String COPYRIGHT_VALUE = "copyright 5201";
+    private static final String PREP_TIME_STRING_VALUE = "22 minutes";
+    private static final String COOK_TIME_STRING_VALUE = "2 hours 22 mins";
+    private static final String TOTAL_TIME_STRING_VALUE = "1 day 1 hour 1 min";
 
 
 
@@ -67,7 +70,7 @@ public class RecipeEntityUnitTests {
 
     @Test
     public void testRecipeCopyrightGetter() {
-        assertEquals(COPYRIGHT_VALUE, recipe.getCoypright());
+        assertEquals(COPYRIGHT_VALUE, recipe.getCopyright());
     }
 
     // Test setters
@@ -124,7 +127,22 @@ public class RecipeEntityUnitTests {
     @Test
     public void testRecipeCopyrightSetter() {
         String temp = "copyright of something";
-        recipe.setCoypright(temp);
-        assertEquals(temp, recipe.getCoypright());
+        recipe.setCopyright(temp);
+        assertEquals(temp, recipe.getCopyright());
+    }
+
+    @Test
+    public void testRecipePreptimeStringGetter() {
+        assertEquals(PREP_TIME_STRING_VALUE, recipe.getPrepTimeString());
+    }
+
+    @Test
+    public void testRecipeCooktimeStringGetter() {
+        assertEquals(COOK_TIME_STRING_VALUE, recipe.getCookTimeString());
+    }
+
+    @Test
+    public void testRecipeTotalTimeStringGetter() {
+        assertEquals(TOTAL_TIME_STRING_VALUE, recipe.getTotalTimeString());
     }
 }

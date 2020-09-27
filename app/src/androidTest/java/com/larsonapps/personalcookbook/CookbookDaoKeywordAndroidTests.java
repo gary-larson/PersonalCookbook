@@ -2,6 +2,7 @@ package com.larsonapps.personalcookbook;
 
 import android.content.Context;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -27,6 +28,7 @@ public class CookbookDaoKeywordAndroidTests {
     private CookbookDao cookbookDao;
     private CookbookRoomDatabase db;
     private static final String NAME_VALUE_1 = "Chocolate Cookies";
+    private static final String SHORT_DESCRIPTION_1 = "Short description";
     private static final String DESCRIPTION_VALUE_1 = "Sufficient description";
     private static final int SERVINGS_VALUE_1 = 12;
     private static final int PREP_TIME_VALUE_1 = 40;
@@ -35,6 +37,7 @@ public class CookbookDaoKeywordAndroidTests {
     private static final String NOTES_VALUE_1 = "These are the notes by the cook.";
     private static final String COPYRIGHT_VALUE_1 = "copyright 5201";
     private static final String NAME_VALUE_2 = "Apple Pie";
+    private static final String SHORT_DESCRIPTION_2 = "another short description";
     private static final String DESCRIPTION_VALUE_2 = "Old fashioned apple pie";
     private static final int SERVINGS_VALUE_2 = 8;
     private static final int PREP_TIME_VALUE_2 = 35;
@@ -51,6 +54,7 @@ public class CookbookDaoKeywordAndroidTests {
     private static final int KEYWORD_ID_VALUE_4 = 0;
     private static final String KEYWORD_VALUE_4 = "beef";
     // declare variables
+    //TODO add short description in for database version 2
     RecipeEntity recipeEntity1 = new RecipeEntity(0, NAME_VALUE_1, DESCRIPTION_VALUE_1,
             SERVINGS_VALUE_1, PREP_TIME_VALUE_1, COOK_TIME_VALUE_1, TOTAL_TIME_VALUE_1,
             NOTES_VALUE_1, COPYRIGHT_VALUE_1);
@@ -72,22 +76,26 @@ public class CookbookDaoKeywordAndroidTests {
         // insert recipe 1
         cookbookDao.insertRecipe(recipeEntity1);
         // get all records
-        List<RecipeEntity> recipeEntities = cookbookDao.getAllRecipes();
+        LiveData<List<RecipeEntity>> liveRecipes = cookbookDao.getAllRecipes();
+        List<RecipeEntity> recipes = liveRecipes.getValue();
         // test size
-        assertEquals(1, recipeEntities.size());
+        assert recipes != null;
+        assertEquals(1, recipes.size());
         // get recipe id 1
-        recipeId1 = recipeEntities.get(0).getId();
+        recipeId1 = recipes.get(0).getId();
         // add another recipe
         cookbookDao.insertRecipe((recipeEntity2));
         // get all recipes
-        recipeEntities = cookbookDao.getAllRecipes();
+        liveRecipes = cookbookDao.getAllRecipes();
+        recipes = liveRecipes.getValue();
         // test size
-        assertEquals(2, recipeEntities.size());
+        assert recipes != null;
+        assertEquals(2, recipes.size());
         // assign recipe id 3
-        if (recipeEntities.get(0).getId() == recipeId1) {
-            recipeId2 = recipeEntities.get(1).getId();
+        if (recipes.get(0).getId() == recipeId1) {
+            recipeId2 = recipes.get(1).getId();
         } else {
-            recipeId2 = recipeEntities.get(0).getId();
+            recipeId2 = recipes.get(0).getId();
         }
         keyword1 = new KeywordEntity(KEYWORD_ID_VALUE_1, recipeId1, KEYWORD_VALUE_1);
         keyword2 = new KeywordEntity(KEYWORD_ID_VALUE_2, recipeId1, KEYWORD_VALUE_2);
@@ -110,11 +118,15 @@ public class CookbookDaoKeywordAndroidTests {
         // add to database
         cookbookDao.insertAllKeywords(keywords);
         // get all keywords for recipe 1
-        List<KeywordEntity> keywords1 = cookbookDao.getAllKeywords(recipeId1);
+        LiveData<List<KeywordEntity>> liveKeywords1 = cookbookDao.getAllKeywords(recipeId1);
+        List<KeywordEntity> keywords1 = liveKeywords1.getValue();
         // get all keywords for recipe 2
-        List<KeywordEntity> keywords2 = cookbookDao.getAllKeywords(recipeId2);
+        LiveData<List<KeywordEntity>> liveKeywords2 = cookbookDao.getAllKeywords(recipeId2);
+        List<KeywordEntity> keywords2 = liveKeywords2.getValue();
         // test
+        assert keywords1 != null;
         assertEquals(2, keywords1.size());
+        assert keywords2 != null;
         assertEquals(1, keywords2.size());
     }
 
@@ -123,14 +135,18 @@ public class CookbookDaoKeywordAndroidTests {
         // insert keyword into database
         cookbookDao.insertKeyword(keyword1);
         // get keywords for recipe 1
-        List<KeywordEntity> keywords = cookbookDao.getAllKeywords(recipeId1);
+        LiveData<List<KeywordEntity>> liveKeywords = cookbookDao.getAllKeywords(recipeId1);
+        List<KeywordEntity> keywords = liveKeywords.getValue();
         // test
+        assert keywords != null;
         assertEquals(1, keywords.size());
         assertEquals(recipeId1, keywords.get(0).getRecipeId());
         assertEquals(KEYWORD_VALUE_1, keywords.get(0).getKeyword());
         // get keywords for recipe 2
-        List<KeywordEntity> keywords1 = cookbookDao.getAllKeywords(recipeId2);
+        LiveData<List<KeywordEntity>> liveKeywords1 = cookbookDao.getAllKeywords(recipeId2);
+        List<KeywordEntity> keywords1 = liveKeywords1.getValue();
         // test
+        assert keywords1 != null;
         assertEquals(0, keywords1.size());
     }
 
@@ -139,13 +155,17 @@ public class CookbookDaoKeywordAndroidTests {
         // insert keyword into database
         cookbookDao.insertKeyword(keyword1);
         // get keywords for recipe 1
-        List<KeywordEntity> keywords = cookbookDao.getAllKeywords(recipeId1);
+        LiveData<List<KeywordEntity>> liveKeywords = cookbookDao.getAllKeywords(recipeId1);
+        List<KeywordEntity> keywords = liveKeywords.getValue();
+        assert keywords != null;
         assertEquals(1, keywords.size());
         // delete keyword
         cookbookDao.deleteKeyword(keywords.get(0));
         // get keywords for recipe 1
-        List<KeywordEntity> keywords1 = cookbookDao.getAllKeywords(recipeId1);
+        LiveData<List<KeywordEntity>> liveKeywords1 = cookbookDao.getAllKeywords(recipeId1);
+        List<KeywordEntity> keywords1 = liveKeywords1.getValue();
         // test
+        assert keywords1 != null;
         assertEquals(0, keywords1.size());
     }
 
@@ -154,15 +174,19 @@ public class CookbookDaoKeywordAndroidTests {
         // insert keyword into database
         cookbookDao.insertKeyword(keyword1);
         // get keywords for recipe 1
-        List<KeywordEntity> keywords = cookbookDao.getAllKeywords(recipeId1);
+        LiveData<List<KeywordEntity>> liveKeywords = cookbookDao.getAllKeywords(recipeId1);
+        List<KeywordEntity> keywords = liveKeywords.getValue();
+        assert keywords != null;
         assertEquals(1, keywords.size());
         // modify keyword
         String temp = "vegan";
         keywords.get(0).setKeyword(temp);
         cookbookDao.updateKeyword(keywords.get(0));
         // get keywords for recipe 1
-        List<KeywordEntity> keywords1 = cookbookDao.getAllKeywords(recipeId1);
+        LiveData<List<KeywordEntity>> liveKeywords1 = cookbookDao.getAllKeywords(recipeId1);
+        List<KeywordEntity> keywords1 = liveKeywords1.getValue();
         // test
+        assert keywords1 != null;
         assertEquals(1, keywords1.size());
         assertEquals(temp, keywords1.get(0).getKeyword());
     }
@@ -178,16 +202,22 @@ public class CookbookDaoKeywordAndroidTests {
         // add to database
         cookbookDao.insertAllKeywords(keywords);
         // get recipes by keyword beef
-        List<RecipeEntity> recipes = cookbookDao.getAllRecipes("beef");
+        LiveData<List<RecipeEntity>> liveRecipes = cookbookDao.getAllRecipes("beef");
+        List<RecipeEntity> recipes = liveRecipes.getValue();
         // test
+        assert recipes != null;
         assertEquals(2, recipes.size());
         // get recipes by keyword chicken
-        List<RecipeEntity> recipes1 = cookbookDao.getAllRecipes("chicken");
+        LiveData<List<RecipeEntity>> liveRecipes1 = cookbookDao.getAllRecipes("chicken");
+        List<RecipeEntity> recipes1 = liveRecipes1.getValue();
         // test
+        assert recipes1 != null;
         assertEquals(1, recipes1.size());
         // get recipes by keyword vegan
-        List<RecipeEntity> recipes2 = cookbookDao.getAllRecipes("vegan");
+        LiveData<List<RecipeEntity>> liveRecipes2 = cookbookDao.getAllRecipes("vegan");
+        List<RecipeEntity> recipes2 = liveRecipes2.getValue();
         // test
+        assert recipes2 != null;
         assertEquals(0, recipes2.size());
     }
 
@@ -203,13 +233,17 @@ public class CookbookDaoKeywordAndroidTests {
         cookbookDao.insertAllKeywords(keywords);
         // get recipes by keyword chicken and pork
         String[] temp = {"chicken", "pork"};
-        List<RecipeEntity> recipes = cookbookDao.getAllRecipes(temp);
+        LiveData<List<RecipeEntity>> liveRecipes = cookbookDao.getAllRecipes(temp);
+        List<RecipeEntity> recipes = liveRecipes.getValue();
         // test
+        assert recipes != null;
         assertEquals(2, recipes.size());
         // get recipes by keyword vegan and dinner
         String[] temp1 = {"vegan", "dinner"};
-        List<RecipeEntity> recipes1 = cookbookDao.getAllRecipes(temp1);
+        LiveData<List<RecipeEntity>> liveRecipes1 = cookbookDao.getAllRecipes(temp1);
+        List<RecipeEntity> recipes1 = liveRecipes1.getValue();
         // test
+        assert recipes1 != null;
         assertEquals(0, recipes1.size());
     }
 }

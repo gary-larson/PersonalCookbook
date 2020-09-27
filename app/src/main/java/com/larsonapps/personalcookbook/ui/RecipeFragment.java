@@ -28,20 +28,23 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.larsonapps.personalcookbook.data.CookbookRecipeViewModel;
+import com.larsonapps.personalcookbook.model.RecipeViewModel;
 import com.larsonapps.personalcookbook.adapter.RecipeRecyclerViewAdapter;
 import com.larsonapps.personalcookbook.data.RecipeEntity;
 import com.larsonapps.personalcookbook.databinding.RecipeFragmentItemListBinding;
 import com.larsonapps.personalcookbook.ui.dummy.DummyContent;
 
+import java.util.List;
+
 
 public class RecipeFragment extends Fragment {
     // Declare variables
-    private CookbookRecipeViewModel mCookbookRecipeViewModel;
-    private com.larsonapps.personalcookbook.databinding.CookbookFragmentBinding mBinding;
+    private RecipeViewModel mRecipeViewModel;
+    private com.larsonapps.personalcookbook.databinding.RecipeFragmentBinding mBinding;
     private RecipeFragmentItemListBinding mListBinding;
     private OnListFragmentInteractionListener mListener;
     public static RecipeFragment newInstance() {
@@ -52,24 +55,23 @@ public class RecipeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mBinding = com.larsonapps.personalcookbook.databinding.CookbookFragmentBinding.inflate(inflater, container, false);
+        mBinding = com.larsonapps.personalcookbook.databinding.RecipeFragmentBinding.inflate(inflater, container, false);
         mListBinding = mBinding.content;
         Context context = mListBinding.recipeList.getContext();
         // Set adapter
         mListBinding.recipeList.setLayoutManager(new LinearLayoutManager(context));
-        mListBinding.recipeList.setAdapter(new RecipeRecyclerViewAdapter(mListener, DummyContent.ITEMS));
+        mRecipeViewModel = new ViewModelProvider(requireActivity()).get(RecipeViewModel.class);
         mBinding.shareFab.setOnClickListener(v -> {
             Toast.makeText(getContext(), "Shared FAB Clicked", Toast.LENGTH_LONG).show();
         });
+        // Create the observer which updates the UI and sets the adapter
+        final Observer<List<RecipeEntity>> recipeObserver = newRecipes -> {
+            if (newRecipes != null) {
+                mListBinding.recipeList.setAdapter(new RecipeRecyclerViewAdapter(mListener, newRecipes));
+            }
+        };
+        mRecipeViewModel.getRecipes(false).observe(getViewLifecycleOwner(), recipeObserver);
         return mBinding.getRoot();
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mCookbookRecipeViewModel = new ViewModelProvider(requireActivity())
-                .get(CookbookRecipeViewModel.class);
-        // TODO: Use the ViewModel
     }
 
     /**

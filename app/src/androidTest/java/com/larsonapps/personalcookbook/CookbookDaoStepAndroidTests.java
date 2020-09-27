@@ -2,6 +2,7 @@ package com.larsonapps.personalcookbook;
 
 import android.content.Context;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -29,6 +30,7 @@ public class CookbookDaoStepAndroidTests {
     private CookbookDao cookbookDao;
     private CookbookRoomDatabase db;
     private static final String NAME_VALUE_1 = "Chocolate Cookies";
+    private static final String SHORT_DESCRIPTION_1 = "Short description";
     private static final String DESCRIPTION_VALUE_1 = "Sufficient description";
     private static final int SERVINGS_VALUE_1 = 12;
     private static final int PREP_TIME_VALUE_1 = 40;
@@ -37,6 +39,7 @@ public class CookbookDaoStepAndroidTests {
     private static final String NOTES_VALUE_1 = "These are the notes by the cook.";
     private static final String COPYRIGHT_VALUE_1 = "copyright 5201";
     private static final String NAME_VALUE_2 = "Apple Pie";
+    private static final String SHORT_DESCRIPTION_2 = "another short description";
     private static final String DESCRIPTION_VALUE_2 = "Old fashioned apple pie";
     private static final int SERVINGS_VALUE_2 = 8;
     private static final int PREP_TIME_VALUE_2 = 35;
@@ -54,6 +57,7 @@ public class CookbookDaoStepAndroidTests {
     private static final int NUMBER_VALUE_3 = 7;
     private static final String INSTRUCTION_VALUE_3 = "cook for 30 minutes";
     // declare variables
+    // TODO add short description for database version 2
     RecipeEntity recipeEntity1 = new RecipeEntity(0, NAME_VALUE_1, DESCRIPTION_VALUE_1,
             SERVINGS_VALUE_1, PREP_TIME_VALUE_1, COOK_TIME_VALUE_1, TOTAL_TIME_VALUE_1,
             NOTES_VALUE_1, COPYRIGHT_VALUE_1);
@@ -74,22 +78,26 @@ public class CookbookDaoStepAndroidTests {
         // insert recipe 1
         cookbookDao.insertRecipe(recipeEntity1);
         // get all records
-        List<RecipeEntity> recipeEntities = cookbookDao.getAllRecipes();
+        LiveData<List<RecipeEntity>> liveRecipes = cookbookDao.getAllRecipes();
+        List<RecipeEntity> recipes = liveRecipes.getValue();
         // test size
-        assertEquals(1, recipeEntities.size());
+        assert recipes != null;
+        assertEquals(1, recipes.size());
         // get recipe id 1
-        recipeId1 = recipeEntities.get(0).getId();
+        recipeId1 = recipes.get(0).getId();
         // add another recipe
         cookbookDao.insertRecipe((recipeEntity2));
         // get all recipes
-        recipeEntities = cookbookDao.getAllRecipes();
+        liveRecipes = cookbookDao.getAllRecipes();
+        recipes = liveRecipes.getValue();
         // test size
-        assertEquals(2, recipeEntities.size());
+        assert recipes != null;
+        assertEquals(2, recipes.size());
         // assign recipe id 3
-        if (recipeEntities.get(0).getId() == recipeId1) {
-            recipeId2 = recipeEntities.get(1).getId();
+        if (recipes.get(0).getId() == recipeId1) {
+            recipeId2 = recipes.get(1).getId();
         } else {
-            recipeId2 = recipeEntities.get(0).getId();
+            recipeId2 = recipes.get(0).getId();
         }
         step1 = new StepEntity(STEP_ID_VALUE_1, recipeId1, NUMBER_VALUE_1, INSTRUCTION_VALUE_1);
         step2 = new StepEntity(STEP_ID_VALUE_2, recipeId1, NUMBER_VALUE_2, INSTRUCTION_VALUE_2);
@@ -111,11 +119,15 @@ public class CookbookDaoStepAndroidTests {
         // add to database
         cookbookDao.insertAllSteps(steps);
         // get all steps for recipe 1
-        List<StepEntity> steps1 = cookbookDao.getAllSteps(recipeId1);
+        LiveData<List<StepEntity>> liveSteps1 = cookbookDao.getAllSteps(recipeId1);
+        List<StepEntity> steps1 = liveSteps1.getValue();
         // get all ingredients for recipe 2
-        List<StepEntity> steps2 = cookbookDao.getAllSteps(recipeId2);
+        LiveData<List<StepEntity>> liveSteps2 = cookbookDao.getAllSteps(recipeId2);
+        List<StepEntity> steps2 = liveSteps2.getValue();
         // test
+        assert steps1 != null;
         assertEquals(2, steps1.size());
+        assert steps2 != null;
         assertEquals(1, steps2.size());
     }
 
@@ -124,15 +136,19 @@ public class CookbookDaoStepAndroidTests {
         // insert step to database
         cookbookDao.insertStep(step1);
         // get ingredients for recipe 1
-        List<StepEntity> steps = cookbookDao.getAllSteps(recipeId1);
+        LiveData<List<StepEntity>> liveSteps = cookbookDao.getAllSteps(recipeId1);
+        List<StepEntity> steps = liveSteps.getValue();
         // test
+        assert steps != null;
         assertEquals(1, steps.size());
         assertEquals(recipeId1, steps.get(0).getRecipeId());
         assertEquals(NUMBER_VALUE_1, steps.get(0).getNumber());
         assertEquals(INSTRUCTION_VALUE_1, steps.get(0).getInstruction());
         // get steps for recipe 2
-        List<StepEntity> steps1 = cookbookDao.getAllSteps(recipeId2);
+        LiveData<List<StepEntity>> liveSteps1 = cookbookDao.getAllSteps(recipeId2);
+        List<StepEntity> steps1 = liveSteps1.getValue();
         // test
+        assert steps1 != null;
         assertEquals(0, steps1.size());
     }
 
@@ -141,13 +157,17 @@ public class CookbookDaoStepAndroidTests {
         // insert step into database
         cookbookDao.insertStep(step1);
         // get steps for recipe 1
-        List<StepEntity> steps = cookbookDao.getAllSteps(recipeId1);
+        LiveData<List<StepEntity>>liveSteps = cookbookDao.getAllSteps(recipeId1);
+        List<StepEntity> steps = liveSteps.getValue();
+        assert steps != null;
         assertEquals(1, steps.size());
         // delete step
         cookbookDao.deleteStep(steps.get(0));
         // get steps for recipe 1
-        List<StepEntity> steps1 = cookbookDao.getAllSteps(recipeId1);
+        LiveData<List<StepEntity>> liveSteps1 = cookbookDao.getAllSteps(recipeId1);
+        List<StepEntity> steps1 = liveSteps1.getValue();
         // test
+        assert steps1 != null;
         assertEquals(0, steps1.size());
     }
 
@@ -156,15 +176,19 @@ public class CookbookDaoStepAndroidTests {
         // insert step to database
         cookbookDao.insertStep(step1);
         // get steps for recipe 1
-        List<StepEntity> steps = cookbookDao.getAllSteps(recipeId1);
+        LiveData<List<StepEntity>> liveSteps = cookbookDao.getAllSteps(recipeId1);
+        List<StepEntity> steps = liveSteps.getValue();
+        assert steps != null;
         assertEquals(1, steps.size());
         // modify step
         String temp = "add dry ingredients";
         steps.get(0).setInstruction(temp);
         cookbookDao.updateStep(steps.get(0));
         // get steps for recipe 1
-        List<StepEntity> steps1 = cookbookDao.getAllSteps(recipeId1);
+        LiveData<List<StepEntity>> liveSteps1 = cookbookDao.getAllSteps(recipeId1);
+        List<StepEntity> steps1 = liveSteps1.getValue();
         // test
+        assert steps1 != null;
         assertEquals(1, steps1.size());
         assertEquals(temp, steps1.get(0).getInstruction());
     }
@@ -174,7 +198,9 @@ public class CookbookDaoStepAndroidTests {
         // insert step into database
         cookbookDao.insertStep(step1);
         // get step id
-        List<StepEntity> steps = cookbookDao.getAllSteps(recipeId1);
+        LiveData<List<StepEntity>> liveSteps = cookbookDao.getAllSteps(recipeId1);
+        List<StepEntity> steps = liveSteps.getValue();
+        assert steps != null;
         assertEquals(1, steps.size());
         int stepId = steps.get(0).getStepId();
         // create variable
@@ -194,7 +220,9 @@ public class CookbookDaoStepAndroidTests {
         // insert step into database
         cookbookDao.insertStep(step1);
         // get step id
-        List<StepEntity> steps = cookbookDao.getAllSteps(recipeId1);
+        LiveData<List<StepEntity>> liveSteps = cookbookDao.getAllSteps(recipeId1);
+        List<StepEntity> steps = liveSteps.getValue();
+        assert steps != null;
         assertEquals(1, steps.size());
         int stepId = steps.get(0).getStepId();
         // create variable
@@ -218,7 +246,9 @@ public class CookbookDaoStepAndroidTests {
         // insert step into database
         cookbookDao.insertStep(step1);
         // get step id
-        List<StepEntity> steps = cookbookDao.getAllSteps(recipeId1);
+        LiveData<List<StepEntity>> liveSteps = cookbookDao.getAllSteps(recipeId1);
+        List<StepEntity> steps = liveSteps.getValue();
+        assert steps != null;
         assertEquals(1, steps.size());
         int stepId = steps.get(0).getStepId();
         // create variable

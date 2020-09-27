@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.larsonapps.personalcookbook.R;
-import com.larsonapps.personalcookbook.data.CookbookIngredientViewModel;
+import com.larsonapps.personalcookbook.model.IngredientViewModel;
 
 import com.larsonapps.personalcookbook.databinding.CookbookDetailsFragmentBinding;
 import com.squareup.picasso.Picasso;
@@ -22,7 +22,7 @@ import java.util.Objects;
 
 public class CookbookDetailsFragment extends Fragment {
     // Declare variables
-    private CookbookIngredientViewModel mViewModel;
+    private IngredientViewModel mViewModel;
     private CookbookDetailsFragmentBinding mBinding;
 
     public static CookbookDetailsFragment newInstance() {
@@ -73,7 +73,7 @@ public class CookbookDetailsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(requireActivity())
-                .get(CookbookIngredientViewModel.class);
+                .get(IngredientViewModel.class);
         // TODO: Use the ViewModel
     }
 

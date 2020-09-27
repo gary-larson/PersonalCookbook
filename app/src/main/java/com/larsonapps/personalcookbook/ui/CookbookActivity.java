@@ -17,20 +17,30 @@ Copyright (C) 2020  Larson Apps - Gary Larson
  */
 package com.larsonapps.personalcookbook.ui;
 
+import android.content.Context;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.larsonapps.personalcookbook.AppContainer;
+import com.larsonapps.personalcookbook.CookbookApplication;
 import com.larsonapps.personalcookbook.R;
-import com.larsonapps.personalcookbook.data.CookbookRecipeViewModel;
+import com.larsonapps.personalcookbook.model.ImageViewModel;
+import com.larsonapps.personalcookbook.model.IngredientViewModel;
+import com.larsonapps.personalcookbook.model.KeywordViewModel;
+import com.larsonapps.personalcookbook.model.RecipeViewModel;
 import com.larsonapps.personalcookbook.data.ImageEntity;
 import com.larsonapps.personalcookbook.data.IngredientEntity;
 import com.larsonapps.personalcookbook.data.RecipeEntity;
 import com.larsonapps.personalcookbook.data.StepEntity;
 import com.larsonapps.personalcookbook.databinding.CookbookActivityBinding;
+import com.larsonapps.personalcookbook.model.StepViewModel;
 
 public class CookbookActivity extends AppCompatActivity implements
         RecipeFragment.OnListFragmentInteractionListener,
@@ -44,8 +54,13 @@ public class CookbookActivity extends AppCompatActivity implements
     public static final int STATE_MANUAL = 2;
     public static final int STATE_IMPORT = 3;
     // Declare variables
-    private CookbookRecipeViewModel mCookbookRecipeViewModel;
+    private RecipeViewModel mRecipeViewModel;
+    private IngredientViewModel mIngredientViewModel;
+    private StepViewModel mStepViewModel;
+    private ImageViewModel mImageViewModel;
+    private KeywordViewModel mKeywordViewModel;
     private CookbookActivityBinding mBinding;
+    private Context mContext;
     private int mHeight;
 
 
@@ -63,12 +78,20 @@ public class CookbookActivity extends AppCompatActivity implements
                     //.replace(mBinding.container.getId(), CookbookImportFragment.newInstance())
                     .commitNow();
         }
-
+        mContext = getApplicationContext();
+        mRecipeViewModel = new ViewModelProvider(this).get(RecipeViewModel.class);
+        mIngredientViewModel = new ViewModelProvider(this).get(IngredientViewModel.class);
+        mStepViewModel = new ViewModelProvider(this).get(StepViewModel.class);
+        mImageViewModel = new ViewModelProvider(this).get(ImageViewModel.class);
+        mKeywordViewModel = new ViewModelProvider(this).get(KeywordViewModel.class);
         int height;
         if (android.os.Build.VERSION.SDK_INT >= 30){
             height = getWindowManager().getMaximumWindowMetrics().getBounds().height();
         } else{
-            height = getWindowManager().getDefaultDisplay().getHeight();
+            Point size = new Point();
+            //noinspection deprecation
+            getWindowManager().getDefaultDisplay().getRealSize(size);
+            height = size.y;
         }
         mHeight = height;
     }
