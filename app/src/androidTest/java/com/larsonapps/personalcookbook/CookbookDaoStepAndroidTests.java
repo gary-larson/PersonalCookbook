@@ -2,6 +2,7 @@ package com.larsonapps.personalcookbook;
 
 import android.content.Context;
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.LiveData;
 import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
@@ -15,17 +16,23 @@ import com.larsonapps.personalcookbook.data.StepUpdateEntity;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
 
 @RunWith(AndroidJUnit4.class)
 public class CookbookDaoStepAndroidTests {
+    @Rule
+    public TestRule rule = new InstantTaskExecutorRule();
+
     // Declare constants
     private CookbookDao cookbookDao;
     private CookbookRoomDatabase db;
@@ -57,13 +64,12 @@ public class CookbookDaoStepAndroidTests {
     private static final int NUMBER_VALUE_3 = 7;
     private static final String INSTRUCTION_VALUE_3 = "cook for 30 minutes";
     // declare variables
-    // TODO add short description for database version 2
-    RecipeEntity recipeEntity1 = new RecipeEntity(0, NAME_VALUE_1, DESCRIPTION_VALUE_1,
-            SERVINGS_VALUE_1, PREP_TIME_VALUE_1, COOK_TIME_VALUE_1, TOTAL_TIME_VALUE_1,
-            NOTES_VALUE_1, COPYRIGHT_VALUE_1);
-    RecipeEntity recipeEntity2 = new RecipeEntity(0, NAME_VALUE_2, DESCRIPTION_VALUE_2,
-            SERVINGS_VALUE_2, PREP_TIME_VALUE_2, COOK_TIME_VALUE_2, TOTAL_TIME_VALUE_2,
-            NOTES_VALUE_2, COPYRIGHT_VALUE_2);
+    RecipeEntity recipeEntity1 = new RecipeEntity(0, NAME_VALUE_1, SHORT_DESCRIPTION_1,
+            DESCRIPTION_VALUE_1, SERVINGS_VALUE_1, PREP_TIME_VALUE_1, COOK_TIME_VALUE_1,
+            TOTAL_TIME_VALUE_1, NOTES_VALUE_1, COPYRIGHT_VALUE_1);
+    RecipeEntity recipeEntity2 = new RecipeEntity(0, NAME_VALUE_2, SHORT_DESCRIPTION_2,
+            DESCRIPTION_VALUE_2, SERVINGS_VALUE_2, PREP_TIME_VALUE_2, COOK_TIME_VALUE_2,
+            TOTAL_TIME_VALUE_2, NOTES_VALUE_2, COPYRIGHT_VALUE_2);
     StepEntity step1;
     StepEntity step2;
     StepEntity step3;
@@ -77,31 +83,17 @@ public class CookbookDaoStepAndroidTests {
         cookbookDao = db.cookbookDao();
         // insert recipe 1
         cookbookDao.insertRecipe(recipeEntity1);
-        // get all records
-        LiveData<List<RecipeEntity>> liveRecipes = cookbookDao.getAllRecipes();
-        List<RecipeEntity> recipes = liveRecipes.getValue();
-        // test size
-        assert recipes != null;
-        assertEquals(1, recipes.size());
-        // get recipe id 1
-        recipeId1 = recipes.get(0).getId();
+        recipeId1 = cookbookDao.getRecipeIdByName(NAME_VALUE_1);
         // add another recipe
         cookbookDao.insertRecipe((recipeEntity2));
-        // get all recipes
-        liveRecipes = cookbookDao.getAllRecipes();
-        recipes = liveRecipes.getValue();
-        // test size
-        assert recipes != null;
-        assertEquals(2, recipes.size());
-        // assign recipe id 3
-        if (recipes.get(0).getId() == recipeId1) {
-            recipeId2 = recipes.get(1).getId();
-        } else {
-            recipeId2 = recipes.get(0).getId();
-        }
+        recipeId2 = cookbookDao.getRecipeIdByName(NAME_VALUE_2);
         step1 = new StepEntity(STEP_ID_VALUE_1, recipeId1, NUMBER_VALUE_1, INSTRUCTION_VALUE_1);
         step2 = new StepEntity(STEP_ID_VALUE_2, recipeId1, NUMBER_VALUE_2, INSTRUCTION_VALUE_2);
         step3 = new StepEntity(STEP_ID_VALUE_3, recipeId2, NUMBER_VALUE_3, INSTRUCTION_VALUE_3);
+        // this tests insert step
+        cookbookDao.insertStep(step1);
+        cookbookDao.insertStep(step2);
+        cookbookDao.insertStep(step3);
     }
 
     @After
@@ -118,91 +110,53 @@ public class CookbookDaoStepAndroidTests {
         steps.add(step3);
         // add to database
         cookbookDao.insertAllSteps(steps);
-        // get all steps for recipe 1
-        LiveData<List<StepEntity>> liveSteps1 = cookbookDao.getAllSteps(recipeId1);
-        List<StepEntity> steps1 = liveSteps1.getValue();
-        // get all ingredients for recipe 2
-        LiveData<List<StepEntity>> liveSteps2 = cookbookDao.getAllSteps(recipeId2);
-        List<StepEntity> steps2 = liveSteps2.getValue();
-        // test
-        assert steps1 != null;
-        assertEquals(2, steps1.size());
-        assert steps2 != null;
-        assertEquals(1, steps2.size());
+        // get all steps for recipe 1 and test
+        cookbookDao.getAllSteps(recipeId1).observeForever(newSteps ->
+                assertEquals(4, newSteps.size()));
     }
 
     @Test
-    public void testInsetStep() {
-        // insert step to database
-        cookbookDao.insertStep(step1);
-        // get ingredients for recipe 1
-        LiveData<List<StepEntity>> liveSteps = cookbookDao.getAllSteps(recipeId1);
-        List<StepEntity> steps = liveSteps.getValue();
-        // test
-        assert steps != null;
-        assertEquals(1, steps.size());
-        assertEquals(recipeId1, steps.get(0).getRecipeId());
-        assertEquals(NUMBER_VALUE_1, steps.get(0).getNumber());
-        assertEquals(INSTRUCTION_VALUE_1, steps.get(0).getInstruction());
-        // get steps for recipe 2
-        LiveData<List<StepEntity>> liveSteps1 = cookbookDao.getAllSteps(recipeId2);
-        List<StepEntity> steps1 = liveSteps1.getValue();
-        // test
-        assert steps1 != null;
-        assertEquals(0, steps1.size());
-    }
-
-    @Test
-    public void testDeleteStep() {
-        // insert step into database
-        cookbookDao.insertStep(step1);
-        // get steps for recipe 1
-        LiveData<List<StepEntity>>liveSteps = cookbookDao.getAllSteps(recipeId1);
-        List<StepEntity> steps = liveSteps.getValue();
-        assert steps != null;
-        assertEquals(1, steps.size());
+    public void testDeleteStepAndGetStepIdByNumber() {
+        int stepId = cookbookDao.getStepIdByNumber(recipeId1, NUMBER_VALUE_1);
+        step1.setStepId(stepId);
         // delete step
-        cookbookDao.deleteStep(steps.get(0));
-        // get steps for recipe 1
-        LiveData<List<StepEntity>> liveSteps1 = cookbookDao.getAllSteps(recipeId1);
-        List<StepEntity> steps1 = liveSteps1.getValue();
-        // test
-        assert steps1 != null;
-        assertEquals(0, steps1.size());
+        cookbookDao.deleteStep(step1);
+        // get steps for recipe 1 and test
+        cookbookDao.getAllSteps(recipeId1).observeForever(newSteps -> {
+            for(StepEntity step : newSteps) {
+                assertNotEquals(stepId, step.getStepId());
+            }
+        });
     }
 
     @Test
     public void testUpdateStep() {
-        // insert step to database
-        cookbookDao.insertStep(step1);
-        // get steps for recipe 1
-        LiveData<List<StepEntity>> liveSteps = cookbookDao.getAllSteps(recipeId1);
-        List<StepEntity> steps = liveSteps.getValue();
-        assert steps != null;
-        assertEquals(1, steps.size());
+        int stepId = cookbookDao.getStepIdByNumber(recipeId1, NUMBER_VALUE_1);
+        step1.setStepId(stepId);
         // modify step
         String temp = "add dry ingredients";
-        steps.get(0).setInstruction(temp);
-        cookbookDao.updateStep(steps.get(0));
-        // get steps for recipe 1
-        LiveData<List<StepEntity>> liveSteps1 = cookbookDao.getAllSteps(recipeId1);
-        List<StepEntity> steps1 = liveSteps1.getValue();
-        // test
-        assert steps1 != null;
-        assertEquals(1, steps1.size());
-        assertEquals(temp, steps1.get(0).getInstruction());
+        step1.setInstruction(temp);
+        cookbookDao.updateStep(step1);
+        // get steps for recipe 1 and test
+        cookbookDao.getAllSteps(recipeId1).observeForever(newSteps -> {
+            boolean isAsserted = false;
+            for(StepEntity step : newSteps) {
+                if (stepId == step.getStepId()) {
+                    assertEquals(temp, step.getInstruction());
+                    isAsserted = true;
+                    break;
+                }
+            }
+            if (!isAsserted) {
+                assertEquals(1,2);
+            }
+        });
     }
 
     @Test
     public void testInsertStepUpdateAndGetStepUpdate() {
-        // insert step into database
-        cookbookDao.insertStep(step1);
         // get step id
-        LiveData<List<StepEntity>> liveSteps = cookbookDao.getAllSteps(recipeId1);
-        List<StepEntity> steps = liveSteps.getValue();
-        assert steps != null;
-        assertEquals(1, steps.size());
-        int stepId = steps.get(0).getStepId();
+        int stepId = cookbookDao.getStepIdByNumber(recipeId1, NUMBER_VALUE_1);
         // create variable
         String temp = "This is an update for this step.";
         // Create a step update
@@ -217,14 +171,8 @@ public class CookbookDaoStepAndroidTests {
 
     @Test
     public void testDeleteStepUpdate() {
-        // insert step into database
-        cookbookDao.insertStep(step1);
         // get step id
-        LiveData<List<StepEntity>> liveSteps = cookbookDao.getAllSteps(recipeId1);
-        List<StepEntity> steps = liveSteps.getValue();
-        assert steps != null;
-        assertEquals(1, steps.size());
-        int stepId = steps.get(0).getStepId();
+        int stepId = cookbookDao.getStepIdByNumber(recipeId1, NUMBER_VALUE_1);
         // create variable
         String temp = "This is an update for this step.";
         // Create an step update
@@ -243,14 +191,8 @@ public class CookbookDaoStepAndroidTests {
 
     @Test
     public void testUpdateStepUpdate() {
-        // insert step into database
-        cookbookDao.insertStep(step1);
         // get step id
-        LiveData<List<StepEntity>> liveSteps = cookbookDao.getAllSteps(recipeId1);
-        List<StepEntity> steps = liveSteps.getValue();
-        assert steps != null;
-        assertEquals(1, steps.size());
-        int stepId = steps.get(0).getStepId();
+        int stepId = cookbookDao.getStepIdByNumber(recipeId1, NUMBER_VALUE_1);
         // create variable
         String temp = "This is an update for this step.";
         // Create a step update

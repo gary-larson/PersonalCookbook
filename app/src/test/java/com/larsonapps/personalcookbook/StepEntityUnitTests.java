@@ -40,6 +40,19 @@ public class StepEntityUnitTests {
 
     // Test default constructor and setters
     @Test
+    public void testStepIdSetter() {
+        int temp = 84;
+        step.setStepId(temp);
+        assertEquals(temp, step.getStepId());
+    }
+
+    @Test
+    public void testStepRecipeIdSetter() {
+        int temp = 46;
+        step.setRecipeId(temp);
+        assertEquals(temp, step.getRecipeId());
+    }
+    @Test
     public void testStepInstructionSetter() {
         String temp = "put in oven";
         step.setInstruction(temp);

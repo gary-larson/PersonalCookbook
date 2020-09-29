@@ -1,11 +1,12 @@
 package com.larsonapps.personalcookbook.data;
 
 import androidx.room.ColumnInfo;
+import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+@Entity(tableName = "categories")
 public class CategoryEntity {
-    // TODO add for version 2 of database
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "category_id")
     private int categoryId;

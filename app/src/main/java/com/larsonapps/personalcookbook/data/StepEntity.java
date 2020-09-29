@@ -46,12 +46,24 @@ public class StepEntity {
     }
 
     /**
+     * Setter for step id
+     * @param id to set
+     */
+    public void setStepId(int id) {this.stepId = id;}
+
+    /**
      * Getter for recipe id
      * @return recipe id
      */
     public int getRecipeId() {
         return recipeId;
     }
+
+    /**
+     * Setter for recipe id
+     * @param id to set
+     */
+    public void setRecipeId(int id) {this.recipeId = id;}
 
     /**
      * Getter for number

@@ -22,71 +22,85 @@ public class ImageEntityUnitTests {
 
     // Tests for the constructor and Getters
     @Test
-    public void testRecipeImageIdGetter() {
+    public void testImageIdGetter() {
         assertEquals(IMAGE_ID_VALUE, image.getImageId());
     }
 
     @Test
-    public void testRecipeImageRecipeIdGetter() {
+    public void testImageRecipeIdGetter() {
         assertEquals(RECIPE_ID_VALUE, image.getRecipeId());
     }
 
     @Test
-    public void testRecipeImageTypeGetter() {
+    public void testImageTypeGetter() {
         assertEquals(TYPE_VALUE, image.getType());
     }
 
     @Test
-    public void testRecipeImageUrlGetter() {
+    public void testImageUrlGetter() {
         assertEquals(IMAGE_URL_VALUE, image.getImageUrl());
     }
 
     @Test
-    public void testRecipeImageHeightGetter() {
+    public void testImageHeightGetter() {
         assertEquals(HEIGHT_VALUE, image.getHeight());
     }
 
     @Test
-    public void testRecipeImageWidthGetter() {
+    public void testImageWidthGetter() {
         assertEquals(WIDTH_VALUE, image.getWidth());
     }
 
     @Test
-    public void testRecipeImageCaptionGetter() {
+    public void testImageCaptionGetter() {
         assertEquals(CAPTION_VALUE, image.getCaption());
     }
 
     // Test default constructor and setters
     @Test
-    public void testRecipeImageTypeSetter() {
+    public void testImageIdSetter() {
+        int temp = 255;
+        image.setImageId(temp);
+        assertEquals(temp, image.getImageId());
+    }
+
+    @Test
+    public void testImageRecipeIdSetter() {
+        int temp = 91;
+        image.setRecipeId(temp);
+        assertEquals(temp, image.getRecipeId());
+    }
+
+    @Test
+    public void testImageTypeSetter() {
         String temp = "local";
         image.setType(temp);
         assertEquals(temp, image.getType());
     }
 
     @Test
-    public void testRecipeImageUrlSetter() {
+    public void testImageUrlSetter() {
         String temp = "c:/4648486.jpg";
         image.setImageUrl(temp);
         assertEquals(temp, image.getImageUrl());
     }
 
     @Test
-    public void testRecipeImageHeightSetter() {
+    public void testImageHeightSetter() {
         int temp = 4000;
         image.setHeight(temp);
         assertEquals(temp, image.getHeight());
     }
 
     @Test
-    public void testRecipeImageWidthSetter() {
+    public void testImageWidthSetter() {
         int temp = 3000;
         image.setWidth(temp);
         assertEquals(temp, image.getWidth());
     }
 
     @Test
-    public void testRecipeImageCaptionSetter() {
+    public void testImageCaptionSetter() {
         String temp = "Great picture of meal";
         image.setCaption(temp);
         assertEquals(temp, image.getCaption());

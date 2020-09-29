@@ -15,9 +15,8 @@ public class RecipeEntity {
     private int id;
     @ColumnInfo(name = "name")
     private String name;
-    //TODO add for database version 2
-    //@ColumnInfo(name = "short_description")
-    //private String shortDescription;
+    @ColumnInfo(name = "short_description")
+    private String shortDescription;
     @ColumnInfo(name = "description")
     private String description;
     @ColumnInfo(name = "servings")
@@ -43,6 +42,7 @@ public class RecipeEntity {
      * Constructor for all arguments
      * @param id to set
      * @param name to set
+     * @param shortDescription to set
      * @param description to set
      * @param servings to set
      * @param prepTime to set
@@ -51,10 +51,12 @@ public class RecipeEntity {
      * @param notes to set
      * @param copyright to set
      */
-    public RecipeEntity(int id, String name, String description, int servings, int prepTime,
-                        int cookTime, int totalTime, String notes, String copyright) {
+    public RecipeEntity(int id, String name, String shortDescription, String description,
+                        int servings, int prepTime, int cookTime, int totalTime, String notes,
+                        String copyright) {
         this.id = id;
         this.name = name;
+        this.shortDescription = shortDescription;
         this.description = description;
         this.servings = servings;
         this.prepTime = prepTime;
@@ -73,6 +75,12 @@ public class RecipeEntity {
     }
 
     /**
+     * Setter for id
+     * @param id to set
+     */
+    public void setId(int id) {this.id = id;}
+
+    /**
      * Getter for name
      * @return name
      */
@@ -86,6 +94,22 @@ public class RecipeEntity {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * Getter for short description
+     * @return short description
+     */
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
+    /**
+     * Setter for short description
+     * @param shortDescription to set
+     */
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
     }
 
     /**

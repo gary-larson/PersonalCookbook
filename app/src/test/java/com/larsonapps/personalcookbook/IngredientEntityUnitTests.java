@@ -52,6 +52,20 @@ public class IngredientEntityUnitTests {
 
     // Test default constructor and setters
     @Test
+    public void testIngredientIdSetter() {
+        int temp = 846;
+        ingredient.setIngredientId(temp);
+        assertEquals(temp, ingredient.getIngredientId());
+    }
+
+    @Test
+    public void testIngredientRecipeIdSetter() {
+        int temp = 456;
+        ingredient.setRecipeId(temp);
+        assertEquals(temp, ingredient.getRecipeId());
+    }
+
+    @Test
     public void testIngredientAmountSetter() {
         double temp = 2.75;
         ingredient.setAmount(temp);

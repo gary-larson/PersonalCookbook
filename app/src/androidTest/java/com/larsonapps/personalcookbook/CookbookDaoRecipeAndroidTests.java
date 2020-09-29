@@ -2,6 +2,7 @@ package com.larsonapps.personalcookbook;
 
 import android.content.Context;
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.LiveData;
 import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
@@ -14,7 +15,9 @@ import com.larsonapps.personalcookbook.data.RecipeUpdateEntity;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 
 import java.util.List;
@@ -25,11 +28,14 @@ import static org.junit.Assert.assertNull;
 
 @RunWith(AndroidJUnit4.class)
 public class CookbookDaoRecipeAndroidTests {
+    @Rule
+    public TestRule rule = new InstantTaskExecutorRule();
+
     // Declare constants
     private CookbookDao cookbookDao;
     private CookbookRoomDatabase db;
     private static final String NAME_VALUE_1 = "Chocolate Cookies";
-    private static final String SHORT_DESCRIPTION_1 = "Short description";
+    private static final String SHORT_DESCRIPTION_VALUE_1 = "Short description";
     private static final String DESCRIPTION_VALUE_1 = "Sufficient description";
     private static final int SERVINGS_VALUE_1 = 12;
     private static final int PREP_TIME_VALUE_1 = 40;
@@ -38,7 +44,7 @@ public class CookbookDaoRecipeAndroidTests {
     private static final String NOTES_VALUE_1 = "These are the notes by the cook.";
     private static final String COPYRIGHT_VALUE_1 = "copyright 5201";
     private static final String NAME_VALUE_2 = "Apple Pie";
-    private static final String SHORT_DESCRIPTION_2 = "another short description";
+    private static final String SHORT_DESCRIPTION_VALUE_2 = "another short description";
     private static final String DESCRIPTION_VALUE_2 = "Old fashioned apple pie";
     private static final int SERVINGS_VALUE_2 = 8;
     private static final int PREP_TIME_VALUE_2 = 35;
@@ -47,13 +53,12 @@ public class CookbookDaoRecipeAndroidTests {
     private static final String NOTES_VALUE_2 = "These are apple pie notes by the cook.";
     private static final String COPYRIGHT_VALUE_2 = "copyright 2020";
     // declare variables
-    //TODO add short description in for database version 2
-    RecipeEntity recipeEntity1 = new RecipeEntity(0, NAME_VALUE_1, DESCRIPTION_VALUE_1,
-            SERVINGS_VALUE_1, PREP_TIME_VALUE_1, COOK_TIME_VALUE_1, TOTAL_TIME_VALUE_1,
-            NOTES_VALUE_1, COPYRIGHT_VALUE_1);
-    RecipeEntity recipeEntity2 = new RecipeEntity(0, NAME_VALUE_2, DESCRIPTION_VALUE_2,
-            SERVINGS_VALUE_2, PREP_TIME_VALUE_2, COOK_TIME_VALUE_2, TOTAL_TIME_VALUE_2,
-            NOTES_VALUE_2, COPYRIGHT_VALUE_2);
+    RecipeEntity recipeEntity1 = new RecipeEntity(0, NAME_VALUE_1, SHORT_DESCRIPTION_VALUE_1,
+            DESCRIPTION_VALUE_1, SERVINGS_VALUE_1, PREP_TIME_VALUE_1, COOK_TIME_VALUE_1,
+            TOTAL_TIME_VALUE_1, NOTES_VALUE_1, COPYRIGHT_VALUE_1);
+    RecipeEntity recipeEntity2 = new RecipeEntity(0, NAME_VALUE_2, SHORT_DESCRIPTION_VALUE_2,
+            DESCRIPTION_VALUE_2, SERVINGS_VALUE_2, PREP_TIME_VALUE_2, COOK_TIME_VALUE_2,
+            TOTAL_TIME_VALUE_2, NOTES_VALUE_2, COPYRIGHT_VALUE_2);
     int recipeId1;
     int recipeId2;
 
@@ -61,31 +66,15 @@ public class CookbookDaoRecipeAndroidTests {
     @Before
     public void createDb() {
         Context context = ApplicationProvider.getApplicationContext();
+        // this tests insert recipe
         db = Room.inMemoryDatabaseBuilder(context, CookbookRoomDatabase.class).build();
         cookbookDao = db.cookbookDao();
         // insert recipe 1
         cookbookDao.insertRecipe(recipeEntity1);
-        // get all records
-        LiveData<List<RecipeEntity>> liveRecipes = cookbookDao.getAllRecipes();
-        List<RecipeEntity> recipes = liveRecipes.getValue();
-        // test size
-        assert recipes != null;
-        assertEquals(1, recipes.size());
-        // get recipe id
-        recipeId1 = recipes.get(0).getId();
+        recipeId1 = cookbookDao.getRecipeIdByName(NAME_VALUE_1);
         // add another recipe
         cookbookDao.insertRecipe((recipeEntity2));
-        // get all recipes
-        liveRecipes = cookbookDao.getAllRecipes();
-        recipes = liveRecipes.getValue();
-        // test size
-        assert recipes != null;
-        assertEquals(2, recipes.size());
-        if (recipes.get(0).getId() == recipeId1) {
-            recipeId2 = recipes.get(1).getId();
-        } else {
-            recipeId2 = recipes.get(0).getId();
-        }
+        recipeId2 = cookbookDao.getRecipeIdByName(NAME_VALUE_2);
     }
 
     @After
@@ -94,39 +83,25 @@ public class CookbookDaoRecipeAndroidTests {
     }
 
     @Test
-    public void testInsertRecipeAndGetAllRecipes() {
-        // insert recipe 1
-        cookbookDao.insertRecipe(recipeEntity1);
+    public void testGetAllRecipes() {
         // get all recipes
-        LiveData<List<RecipeEntity>> liveRecipes = cookbookDao.getAllRecipes();
-        List<RecipeEntity> recipes = liveRecipes.getValue();
-        // test size
-        assert recipes != null;
-        assertEquals(3, recipes.size());
-        // test all variables except id which is auto generated
-        if (recipes.get(0).getId() == recipeId1) {
-            assertEquals(NAME_VALUE_1, recipes.get(0).getName());
-            //TODO ADD for database version 2
-            //assertEquals(SHORT_DESCRIPTION_1, recipes.get(0).getShortDescription);
-            assertEquals(DESCRIPTION_VALUE_1, recipes.get(0).getDescription());
-            assertEquals(SERVINGS_VALUE_1, recipes.get(0).getServings());
-            assertEquals(PREP_TIME_VALUE_1, recipes.get(0).getPrepTime());
-            assertEquals(COOK_TIME_VALUE_1, recipes.get(0).getCookTime());
-            assertEquals(TOTAL_TIME_VALUE_1, recipes.get(0).getTotalTime());
-            assertEquals(NOTES_VALUE_1, recipes.get(0).getNotes());
-            assertEquals(COPYRIGHT_VALUE_1, recipes.get(0).getCopyright());
-        } else {
-            assertEquals(NAME_VALUE_2, recipes.get(0).getName());
-            //TODO ADD for database version 2
-            //assertEquals(SHORT_DESCRIPTION_2, recipes.get(0).getShortDescription);
-            assertEquals(DESCRIPTION_VALUE_2, recipes.get(0).getDescription());
-            assertEquals(SERVINGS_VALUE_2, recipes.get(0).getServings());
-            assertEquals(PREP_TIME_VALUE_2, recipes.get(0).getPrepTime());
-            assertEquals(COOK_TIME_VALUE_2, recipes.get(0).getCookTime());
-            assertEquals(TOTAL_TIME_VALUE_2, recipes.get(0).getTotalTime());
-            assertEquals(NOTES_VALUE_2, recipes.get(0).getNotes());
-            assertEquals(COPYRIGHT_VALUE_2, recipes.get(0).getCopyright());
-        }
+        cookbookDao.getAllRecipes().observeForever(newRecipes -> {
+            assertEquals(2, newRecipes.size());
+            // test all variables except id which is auto generated
+            int position = 0;
+            if (newRecipes.get(0).getId() != recipeId1) {
+                    position = 1;
+            }
+            assertEquals(NAME_VALUE_1, newRecipes.get(position).getName());
+            assertEquals(SHORT_DESCRIPTION_VALUE_1, newRecipes.get(position).getShortDescription());
+            assertEquals(DESCRIPTION_VALUE_1, newRecipes.get(position).getDescription());
+            assertEquals(SERVINGS_VALUE_1, newRecipes.get(position).getServings());
+            assertEquals(PREP_TIME_VALUE_1, newRecipes.get(position).getPrepTime());
+            assertEquals(COOK_TIME_VALUE_1, newRecipes.get(position).getCookTime());
+            assertEquals(TOTAL_TIME_VALUE_1, newRecipes.get(position).getTotalTime());
+            assertEquals(NOTES_VALUE_1, newRecipes.get(position).getNotes());
+            assertEquals(COPYRIGHT_VALUE_1, newRecipes.get(position).getCopyright());
+        });
     }
 
     @Test
@@ -137,8 +112,7 @@ public class CookbookDaoRecipeAndroidTests {
         assertEquals(recipeId1, recipe.getId());
         assertEquals(NAME_VALUE_1, recipe.getName());
         assertEquals(DESCRIPTION_VALUE_1, recipe.getDescription());
-        //TODO add for database version 2
-        //assertEquals(SHORT_DESCRIPTION_VALUE_1, recipe.getShortDescription());
+        assertEquals(SHORT_DESCRIPTION_VALUE_1, recipe.getShortDescription());
         assertEquals(SERVINGS_VALUE_1, recipe.getServings());
         assertEquals(PREP_TIME_VALUE_1, recipe.getPrepTime());
         assertEquals(COOK_TIME_VALUE_1, recipe.getCookTime());
@@ -153,14 +127,11 @@ public class CookbookDaoRecipeAndroidTests {
         RecipeEntity recipe = cookbookDao.getRecipe(recipeId1);
         // delete recipe
         cookbookDao.deleteRecipe(recipe);
-        // get all recipes
-        LiveData<List<RecipeEntity>> liveRecipes = cookbookDao.getAllRecipes();
-        List<RecipeEntity> recipes = liveRecipes.getValue();
-        // test for recipe
-        assert recipes != null;
-        for (RecipeEntity recipe1 : recipes) {
-            assertNotEquals(recipeId1, recipe1.getId());
-        }
+        // get all recipes and test
+        cookbookDao.getAllRecipes().observeForever(newRecipes -> {
+            assertEquals(1, newRecipes.size());
+            assertNotEquals(recipeId1, newRecipes.get(0).getId());
+        });
     }
 
     @Test

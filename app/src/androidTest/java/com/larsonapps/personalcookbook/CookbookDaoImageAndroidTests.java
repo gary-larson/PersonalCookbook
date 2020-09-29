@@ -1,7 +1,9 @@
 package com.larsonapps.personalcookbook;
 
 import android.content.Context;
+import android.media.Image;
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.LiveData;
 import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
@@ -11,19 +13,26 @@ import com.larsonapps.personalcookbook.data.CookbookDao;
 import com.larsonapps.personalcookbook.data.CookbookRoomDatabase;
 import com.larsonapps.personalcookbook.data.ImageEntity;
 import com.larsonapps.personalcookbook.data.RecipeEntity;
+import com.larsonapps.personalcookbook.model.ImageViewModel;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 @RunWith(AndroidJUnit4.class)
 public class CookbookDaoImageAndroidTests {
+    @Rule
+    public TestRule rule = new InstantTaskExecutorRule();
+
     // Declare constants
     private CookbookDao cookbookDao;
     private CookbookRoomDatabase db;
@@ -64,13 +73,12 @@ public class CookbookDaoImageAndroidTests {
     private static final int WIDTH_VALUE_3 = 1400;
     private static final String CAPTION_VALUE_3 = "Great picture";
     // declare variables
-    //TODO add short description in for database version 2
-    RecipeEntity recipeEntity1 = new RecipeEntity(0, NAME_VALUE_1, DESCRIPTION_VALUE_1,
-            SERVINGS_VALUE_1, PREP_TIME_VALUE_1, COOK_TIME_VALUE_1, TOTAL_TIME_VALUE_1,
-            NOTES_VALUE_1, COPYRIGHT_VALUE_1);
-    RecipeEntity recipeEntity2 = new RecipeEntity(0, NAME_VALUE_2, DESCRIPTION_VALUE_2,
-            SERVINGS_VALUE_2, PREP_TIME_VALUE_2, COOK_TIME_VALUE_2, TOTAL_TIME_VALUE_2,
-            NOTES_VALUE_2, COPYRIGHT_VALUE_2);
+    RecipeEntity recipeEntity1 = new RecipeEntity(0, NAME_VALUE_1, SHORT_DESCRIPTION_1,
+            DESCRIPTION_VALUE_1, SERVINGS_VALUE_1, PREP_TIME_VALUE_1, COOK_TIME_VALUE_1,
+            TOTAL_TIME_VALUE_1, NOTES_VALUE_1, COPYRIGHT_VALUE_1);
+    RecipeEntity recipeEntity2 = new RecipeEntity(0, NAME_VALUE_2, SHORT_DESCRIPTION_2,
+            DESCRIPTION_VALUE_2, SERVINGS_VALUE_2, PREP_TIME_VALUE_2, COOK_TIME_VALUE_2,
+            TOTAL_TIME_VALUE_2, NOTES_VALUE_2, COPYRIGHT_VALUE_2);
     ImageEntity image1;
     ImageEntity image2;
     ImageEntity image3;
@@ -84,34 +92,20 @@ public class CookbookDaoImageAndroidTests {
         cookbookDao = db.cookbookDao();
         // insert recipe 1
         cookbookDao.insertRecipe(recipeEntity1);
-        // get all records
-        LiveData<List<RecipeEntity>> liveRecipes = cookbookDao.getAllRecipes();
-        List<RecipeEntity> recipes = liveRecipes.getValue();
-        // test size
-        assert recipes != null;
-        assertEquals(1, recipes.size());
-        // get recipe id 1
-        recipeId1 = recipes.get(0).getId();
+        recipeId1 = cookbookDao.getRecipeIdByName(NAME_VALUE_1);
         // add another recipe
         cookbookDao.insertRecipe((recipeEntity2));
-        // get all recipes
-        liveRecipes = cookbookDao.getAllRecipes();
-        recipes = liveRecipes.getValue();
-        // test size
-        assert recipes != null;
-        assertEquals(2, recipes.size());
-        // assign recipe id 3
-        if (recipes.get(0).getId() == recipeId1) {
-            recipeId2 = recipes.get(1).getId();
-        } else {
-            recipeId2 = recipes.get(0).getId();
-        }
+        recipeId2 = cookbookDao.getRecipeIdByName(NAME_VALUE_2);
         image1 = new ImageEntity(IMAGE_ID_VALUE_1, recipeId1, TYPE_VALUE_1,
                 IMAGE_URL_VALUE_1, HEIGHT_VALUE_1, WIDTH_VALUE_1, CAPTION_VALUE_1);
         image2 = new ImageEntity(IMAGE_ID_VALUE_2, recipeId1, TYPE_VALUE_2,
                 IMAGE_URL_VALUE_2, HEIGHT_VALUE_2, WIDTH_VALUE_2, CAPTION_VALUE_2);
         image3 = new ImageEntity(IMAGE_ID_VALUE_3, recipeId2, TYPE_VALUE_3,
                 IMAGE_URL_VALUE_3, HEIGHT_VALUE_3, WIDTH_VALUE_3, CAPTION_VALUE_3);
+        // this tests insert image
+        cookbookDao.insertImage(image1);
+        cookbookDao.insertImage(image2);
+        cookbookDao.insertImage(image3);
     }
 
     @After
@@ -128,80 +122,60 @@ public class CookbookDaoImageAndroidTests {
         images.add(image3);
         // add to database
         cookbookDao.insertAllImages(images);
-        // get all images for recipe 1
-        LiveData<List<ImageEntity>> liveImages1 = cookbookDao.getAllImages(recipeId1);
-        List<ImageEntity> images1 = liveImages1.getValue();
-        // get all images for recipe 2
-        LiveData<List<ImageEntity>> liveImages2 = cookbookDao.getAllImages(recipeId2);
-        List<ImageEntity> images2 = liveImages2.getValue();
-        // test
-        assert images1 != null;
-        assertEquals(2, images1.size());
-        assert images2 != null;
-        assertEquals(1, images2.size());
+        // get all images for recipe 1 and test
+        cookbookDao.getAllImages(recipeId1).observeForever(newImages -> {
+            boolean isAsserted = false;
+            assertEquals(4, newImages.size());
+            for (ImageEntity image : newImages) {
+                if (image.getCaption().equals(CAPTION_VALUE_1)) {
+                    assertEquals(TYPE_VALUE_1, image.getType());
+                    assertEquals(IMAGE_URL_VALUE_1, image.getImageUrl());
+                    assertEquals(HEIGHT_VALUE_1, image.getHeight());
+                    assertEquals(WIDTH_VALUE_1, image.getWidth());
+                    isAsserted = true;
+                    break;
+                }
+            }
+            if (!isAsserted) {
+                assertEquals(2,1);
+            }
+        });
     }
 
     @Test
-    public void testInsertImage() {
-        // insert image into database
-        cookbookDao.insertImage(image1);
-        // get images for recipe 1
-        LiveData<List<ImageEntity>> liveImages = cookbookDao.getAllImages(recipeId1);
-        List<ImageEntity> images = liveImages.getValue();
-        // test
-        assert images != null;
-        assertEquals(1, images.size());
-        assertEquals(recipeId1, images.get(0).getRecipeId());
-        assertEquals(TYPE_VALUE_1, images.get(0).getType());
-        assertEquals(IMAGE_URL_VALUE_1, images.get(0).getImageUrl());
-        assertEquals(HEIGHT_VALUE_1, images.get(0).getHeight());
-        assertEquals(WIDTH_VALUE_1, images.get(0).getWidth());
-        // get images for recipe 2
-        LiveData<List<ImageEntity>> liveImages1 = cookbookDao.getAllImages(recipeId2);
-        List<ImageEntity> images1 = liveImages1.getValue();
-        // test
-        assert images1 != null;
-        assertEquals(0, images1.size());
-    }
-
-    @Test
-    public void testDeleteImage() {
-        // insert image into database
-        cookbookDao.insertImage(image1);
-        // get images for recipe 1
-        LiveData<List<ImageEntity>> liveImages = cookbookDao.getAllImages(recipeId1);
-        List<ImageEntity> images = liveImages.getValue();
-        assert images != null;
-        assertEquals(1, images.size());
+    public void testDeleteImageAndGetImageIdByCaption() {
+        int imageId = cookbookDao.getImageIdByCaption(recipeId1, image1.getCaption());
+        image1.setImageId(imageId);
         // delete image
-        cookbookDao.deleteImage(images.get(0));
+        cookbookDao.deleteImage(image1);
         // get images for recipe 1
-        LiveData<List<ImageEntity>> liveImages1 = cookbookDao.getAllImages(recipeId1);
-        List<ImageEntity> images1 = liveImages1.getValue();
-        // test
-        assert images1 != null;
-        assertEquals(0, images1.size());
+        cookbookDao.getAllImages(recipeId1).observeForever(newImages -> {
+            for(ImageEntity image : newImages) {
+                assertNotEquals(imageId, image.getImageId());
+            }
+        });
     }
 
     @Test
-    public void testUpdateImage() {
-        // insert image into database
-        cookbookDao.insertImage(image1);
-        // get images for recipe 1
-        LiveData<List<ImageEntity>> liveImages = cookbookDao.getAllImages(recipeId1);
-        List<ImageEntity> images = liveImages.getValue();
-        assert images != null;
-        assertEquals(1, images.size());
+    public void testUpdateImageAndGetImageIdByCaption() {
+        int imageId = cookbookDao.getImageIdByCaption(recipeId1, CAPTION_VALUE_1);
         // modify image
         String temp = "https://54644645.jpg";
-        images.get(0).setImageUrl(temp);
-        cookbookDao.updateImage(images.get(0));
-        // get images for recipe 1
-        LiveData<List<ImageEntity>> liveImages1 = cookbookDao.getAllImages(recipeId1);
-        List<ImageEntity> images1 = liveImages1.getValue();
-        // test
-        assert images1 != null;
-        assertEquals(1, images1.size());
-        assertEquals(temp, images1.get(0).getImageUrl());
+        image1.setImageId(imageId);
+        image1.setImageUrl(temp);
+        cookbookDao.updateImage(image1);
+        // get images for recipe 1 and test
+        cookbookDao.getAllImages(recipeId1).observeForever(newImages -> {
+            boolean isAsserted = false;
+            for (ImageEntity image : newImages) {
+                if (image.getImageId() == imageId) {
+                    assertEquals(temp, image.getImageUrl());
+                    isAsserted = true;
+                }
+            }
+            if (!isAsserted) {
+                assertEquals(1, 2);
+            }
+        });
     }
 }

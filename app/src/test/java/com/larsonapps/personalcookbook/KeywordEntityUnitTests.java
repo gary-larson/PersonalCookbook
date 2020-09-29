@@ -7,12 +7,12 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class KeywordEntityUnitTests {
-    // step update data
+    // keyword update data
     private static final int KEYWORD_ID_VALUE = 48;
     private static final int RECIPE_ID_VALUE = 947;
     private static final String KEYWORD_VALUE = "rice";
 
-    // create step update
+    // create keyword
     KeywordEntity keywordEntity = new
             KeywordEntity(KEYWORD_ID_VALUE, RECIPE_ID_VALUE, KEYWORD_VALUE);
 

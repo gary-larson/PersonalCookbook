@@ -10,6 +10,7 @@ public class RecipeEntityUnitTests {
     // recipe data
     private static final int ID_VALUE = 1524;
     private static final String NAME_VALUE = "Chocolate Cookies";
+    private static final String SHORT_DESCRIPTION_VALUE = "Short description";
     private static final String DESCRIPTION_VALUE = "Sufficient description";
     private static final int SERVINGS_VALUE = 12;
     private static final int PREP_TIME_VALUE = 22;
@@ -24,9 +25,9 @@ public class RecipeEntityUnitTests {
 
 
     // Tests for the constructor and Getters
-    RecipeEntity recipe = new RecipeEntity(ID_VALUE, NAME_VALUE, DESCRIPTION_VALUE,
-            SERVINGS_VALUE, PREP_TIME_VALUE, COOK_TIME_VALUE, TOTAL_TIME_VALUE, NOTES_VALUE,
-            COPYRIGHT_VALUE);
+    RecipeEntity recipe = new RecipeEntity(ID_VALUE, NAME_VALUE, SHORT_DESCRIPTION_VALUE,
+            DESCRIPTION_VALUE, SERVINGS_VALUE, PREP_TIME_VALUE, COOK_TIME_VALUE, TOTAL_TIME_VALUE,
+            NOTES_VALUE, COPYRIGHT_VALUE);
 
     @Test
     public void testRecipeIdGetter() {
@@ -36,6 +37,11 @@ public class RecipeEntityUnitTests {
     @Test
     public void testRecipeNameGetter() {
         assertEquals(NAME_VALUE, recipe.getName());
+    }
+
+    @Test
+    public void testRecipeShortDescriptionGetter() {
+        assertEquals(SHORT_DESCRIPTION_VALUE, recipe.getShortDescription());
     }
 
     @Test
@@ -74,12 +80,25 @@ public class RecipeEntityUnitTests {
     }
 
     // Test setters
+    @Test
+    public void testRecipeIdSetter() {
+        int temp = 37;
+        recipe.setId(temp);
+        assertEquals(temp, recipe.getId());
+    }
 
     @Test
     public void testRecipeNameSetter() {
         String temp = "Apple Pie";
         recipe.setName(temp);
         assertEquals(temp, recipe.getName());
+    }
+
+    @Test
+    public void testReciprShortDescriptionSetter() {
+        String temp = "this is another short description";
+        recipe.setShortDescription(temp);
+        assertEquals(temp, recipe.getShortDescription());
     }
 
     @Test

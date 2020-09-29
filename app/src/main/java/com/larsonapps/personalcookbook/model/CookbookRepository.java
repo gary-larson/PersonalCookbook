@@ -6,6 +6,7 @@ import android.content.Context;
 import androidx.lifecycle.LiveData;
 
 import com.larsonapps.personalcookbook.CookbookApplication;
+import com.larsonapps.personalcookbook.data.CategoryEntity;
 import com.larsonapps.personalcookbook.data.CookbookDao;
 import com.larsonapps.personalcookbook.data.CookbookRoomDatabase;
 import com.larsonapps.personalcookbook.data.ImageEntity;
@@ -56,5 +57,9 @@ public class CookbookRepository {
 
     public LiveData<List<KeywordEntity>> getKeywords(int recipeId) {
         return mDao.getAllKeywords(recipeId);
+    }
+
+    public LiveData<List<CategoryEntity>> getCategories() {
+        return mDao.getAllCategories();
     }
 }

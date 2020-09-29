@@ -2,30 +2,37 @@ package com.larsonapps.personalcookbook;
 
 import android.content.Context;
 
-import androidx.lifecycle.LiveData;
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.larsonapps.personalcookbook.data.CookbookDao;
 import com.larsonapps.personalcookbook.data.CookbookRoomDatabase;
+import com.larsonapps.personalcookbook.data.ImageEntity;
 import com.larsonapps.personalcookbook.data.IngredientEntity;
 import com.larsonapps.personalcookbook.data.IngredientUpdateEntity;
 import com.larsonapps.personalcookbook.data.RecipeEntity;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
 
 @RunWith(AndroidJUnit4.class)
 public class CookbookDaoIngredientAndroidTests {
+    @Rule
+    public TestRule rule = new InstantTaskExecutorRule();
+
     // Declare constants
     private CookbookDao cookbookDao;
     private CookbookRoomDatabase db;
@@ -63,13 +70,12 @@ public class CookbookDaoIngredientAndroidTests {
     private static final String MEASURE_VALUE_3 = "teaspoon";
     private static final String PREPARATION_VALUE_3 = "";
     // declare variables
-    //TODO add short description in for database version 2
-    RecipeEntity recipeEntity1 = new RecipeEntity(0, NAME_VALUE_1, DESCRIPTION_VALUE_1,
-            SERVINGS_VALUE_1, PREP_TIME_VALUE_1, COOK_TIME_VALUE_1, TOTAL_TIME_VALUE_1,
-            NOTES_VALUE_1, COPYRIGHT_VALUE_1);
-    RecipeEntity recipeEntity2 = new RecipeEntity(0, NAME_VALUE_2, DESCRIPTION_VALUE_2,
-            SERVINGS_VALUE_2, PREP_TIME_VALUE_2, COOK_TIME_VALUE_2, TOTAL_TIME_VALUE_2,
-            NOTES_VALUE_2, COPYRIGHT_VALUE_2);
+    RecipeEntity recipeEntity1 = new RecipeEntity(0, NAME_VALUE_1, SHORT_DESCRIPTION_1,
+            DESCRIPTION_VALUE_1, SERVINGS_VALUE_1, PREP_TIME_VALUE_1, COOK_TIME_VALUE_1,
+            TOTAL_TIME_VALUE_1, NOTES_VALUE_1, COPYRIGHT_VALUE_1);
+    RecipeEntity recipeEntity2 = new RecipeEntity(0, NAME_VALUE_2, SHORT_DESCRIPTION_2,
+            DESCRIPTION_VALUE_2, SERVINGS_VALUE_2, PREP_TIME_VALUE_2, COOK_TIME_VALUE_2,
+            TOTAL_TIME_VALUE_2, NOTES_VALUE_2, COPYRIGHT_VALUE_2);
     IngredientEntity ingredient1;
     IngredientEntity ingredient2;
     IngredientEntity ingredient3;
@@ -83,34 +89,20 @@ public class CookbookDaoIngredientAndroidTests {
         cookbookDao = db.cookbookDao();
         // insert recipe 1
         cookbookDao.insertRecipe(recipeEntity1);
-        // get all records
-        LiveData<List<RecipeEntity>> liveRecipes = cookbookDao.getAllRecipes();
-        List<RecipeEntity> recipes = liveRecipes.getValue();
-        // test size
-        assert recipes != null;
-        assertEquals(1, recipes.size());
-        // get recipe id 1
-        recipeId1 = recipes.get(0).getId();
+        recipeId1 = cookbookDao.getRecipeIdByName(NAME_VALUE_1);
         // add another recipe
         cookbookDao.insertRecipe((recipeEntity2));
-        // get all recipes
-        liveRecipes = cookbookDao.getAllRecipes();
-        recipes = liveRecipes.getValue();
-        // test size
-        assert recipes != null;
-        assertEquals(2, recipes.size());
-        // assign recipe id 3
-        if (recipes.get(0).getId() == recipeId1) {
-            recipeId2 = recipes.get(1).getId();
-        } else {
-            recipeId2 = recipes.get(0).getId();
-        }
+        recipeId2 = cookbookDao.getRecipeIdByName(NAME_VALUE_2);
         ingredient1 = new IngredientEntity(INGREDIENT_ID_VALUE_1, recipeId1,
                 INGREDIENT_NAME_VALUE_1, AMOUNT_VALUE_1, MEASURE_VALUE_1, PREPARATION_VALUE_1);
         ingredient2 = new IngredientEntity(INGREDIENT_ID_VALUE_2, recipeId1,
                 INGREDIENT_NAME_VALUE_2, AMOUNT_VALUE_2, MEASURE_VALUE_2, PREPARATION_VALUE_2);
         ingredient3 = new IngredientEntity(INGREDIENT_ID_VALUE_3, recipeId2,
                 INGREDIENT_NAME_VALUE_3, AMOUNT_VALUE_3, MEASURE_VALUE_3, PREPARATION_VALUE_3);
+        // This tests insert ingredients
+        cookbookDao.insertIngredient(ingredient1);
+        cookbookDao.insertIngredient(ingredient2);
+        cookbookDao.insertIngredient(ingredient3);
     }
 
     @After
@@ -127,93 +119,66 @@ public class CookbookDaoIngredientAndroidTests {
         ingredients.add(ingredient3);
         // add to database
         cookbookDao.insertAllIngredients(ingredients);
-        // get all ingredient for recipe 1
-        LiveData<List<IngredientEntity>> liveIngredients1 = cookbookDao.getAllIngredients(recipeId1);
-        List<IngredientEntity> ingredients1 = liveIngredients1.getValue();
-        // get all ingredients for recipe 2
-        LiveData<List<IngredientEntity>> liveIngredients2 = cookbookDao.getAllIngredients(recipeId2);
-        List<IngredientEntity> ingredients2 = liveIngredients2.getValue();
-        // test
-        assert ingredients1 != null;
-        assertEquals(2, ingredients1.size());
-        assert ingredients2 != null;
-        assertEquals(1, ingredients2.size());
+        // get all ingredients for recipe 1 and test
+        cookbookDao.getAllIngredients(recipeId1).observeForever(newIngredients -> {
+            boolean isAsserted = false;
+            assertEquals(4, newIngredients.size());
+            for (IngredientEntity ingredient : newIngredients) {
+                if (ingredient.getName().equals(INGREDIENT_NAME_VALUE_1)) {
+                    assertEquals(AMOUNT_VALUE_1, ingredient.getAmount(), 0.01);
+                    assertEquals(MEASURE_VALUE_1, ingredient.getMeasure());
+                    assertEquals(PREPARATION_VALUE_1, ingredient.getPreparation());
+                    isAsserted = true;
+                    break;
+                }
+            }
+            if (!isAsserted) {
+                assertEquals(2,1);
+            }
+        });
     }
 
     @Test
-    public void testInsertIngredient() {
-        // insert ingredient into database
-        cookbookDao.insertIngredient(ingredient1);
-        // get ingredients for recipe 1
-        LiveData<List<IngredientEntity>> liveIngredients = cookbookDao.getAllIngredients(recipeId1);
-        List<IngredientEntity> ingredients = liveIngredients.getValue();
-        // test
-        assert ingredients != null;
-        assertEquals(1, ingredients.size());
-        assertEquals(recipeId1, ingredients.get(0).getRecipeId());
-        assertEquals(INGREDIENT_NAME_VALUE_1, ingredients.get(0).getName());
-        assertEquals(AMOUNT_VALUE_1, ingredients.get(0).getAmount(), .01);
-        assertEquals(MEASURE_VALUE_1, ingredients.get(0).getMeasure());
-        assertEquals(PREPARATION_VALUE_1, ingredients.get(0).getPreparation());
-        // get ingredients for recipe 2
-        LiveData<List<IngredientEntity>> liveIngredients1 = cookbookDao.getAllIngredients(recipeId2);
-        List<IngredientEntity> ingredients1 = liveIngredients1.getValue();
-        // test
-        assert ingredients1 != null;
-        assertEquals(0, ingredients1.size());
-    }
-
-    @Test
-    public void testDeleteIngredient() {
-        // insert ingredient into database
-        cookbookDao.insertIngredient(ingredient1);
-        // get ingredients for recipe 1
-        LiveData<List<IngredientEntity>> liveIngredients = cookbookDao.getAllIngredients(recipeId1);
-        List<IngredientEntity> ingredients = liveIngredients.getValue();
-        assert ingredients != null;
-        assertEquals(1, ingredients.size());
+    public void testDeleteIngredientAndGetIngredientIdByName() {
+        int ingredientId = cookbookDao.getIngredientIdByName(recipeId1, ingredient1.getName());
+        ingredient1.setIngredientId(ingredientId);
         // delete ingredient
-        cookbookDao.deleteIngredient(ingredients.get(0));
-        // get ingredients for recipe 1
-        LiveData<List<IngredientEntity>> liveIngredients1 = cookbookDao.getAllIngredients(recipeId1);
-        List<IngredientEntity> ingredients1 = liveIngredients1.getValue();
-        // test
-        assert ingredients1 != null;
-        assertEquals(0, ingredients1.size());
+        cookbookDao.deleteIngredient(ingredient1);
+        // get all ingredients for recipe 1 and test
+        cookbookDao.getAllIngredients(recipeId1).observeForever(newIngredients -> {
+            for(IngredientEntity ingredient : newIngredients) {
+                assertNotEquals(ingredientId, ingredient.getIngredientId());
+            }
+        });
     }
 
     @Test
     public void testUpdateIngredient() {
-        // insert ingredient into database
-        cookbookDao.insertIngredient(ingredient1);
-        // get ingredients for recipe 1
-        LiveData<List<IngredientEntity>> liveIngredients = cookbookDao.getAllIngredients(recipeId1);
-        List<IngredientEntity> ingredients = liveIngredients.getValue();
-        assert ingredients != null;
-        assertEquals(1, ingredients.size());
+        int ingredientId = cookbookDao.getIngredientIdByName(recipeId1, ingredient1.getName());
         // modify ingredient
-        String temp = "tablespoon";
-        ingredients.get(0).setMeasure(temp);
-        cookbookDao.updateIngredient(ingredients.get(0));
-        // get ingredients for recipe 1
-        LiveData<List<IngredientEntity>> liveIngredients1 = cookbookDao.getAllIngredients(recipeId1);
-        List<IngredientEntity> ingredients1 = liveIngredients1.getValue();
-        // test
-        assert ingredients1 != null;
-        assertEquals(1, ingredients1.size());
-        assertEquals(temp, ingredients1.get(0).getMeasure());
+        String temp = "Pudding";
+        ingredient1.setIngredientId(ingredientId);
+        ingredient1.setName(temp);
+        cookbookDao.updateIngredient(ingredient1);
+        // get ingredients for recipe 1 and test
+        cookbookDao.getAllIngredients(recipeId1).observeForever(newIngredients -> {
+            boolean isAsserted = false;
+            for (IngredientEntity ingredient : newIngredients) {
+                if (ingredient.getIngredientId() == ingredientId) {
+                    assertEquals(temp, ingredient.getName());
+                    isAsserted = true;
+                }
+            }
+            if (!isAsserted) {
+                assertEquals(1, 2);
+            }
+        });
     }
 
     @Test
     public void testInsertIngredientUpdateAndGetIngredientUpdate() {
-        // insert ingredient into database
-        cookbookDao.insertIngredient(ingredient1);
         // get ingredient id
-        LiveData<List<IngredientEntity>> liveIngredients = cookbookDao.getAllIngredients(recipeId1);
-        List<IngredientEntity> ingredients = liveIngredients.getValue();
-        assert ingredients != null;
-        assertEquals(1, ingredients.size());
-        int ingredientId = ingredients.get(0).getIngredientId();
+        int ingredientId = cookbookDao.getIngredientIdByName(recipeId1, ingredient1.getName());
         // create variable
         String temp = "This is an update for this ingredient.";
         // Create a ingredient update
@@ -233,52 +198,48 @@ public class CookbookDaoIngredientAndroidTests {
         // insert ingredient into database
         cookbookDao.insertIngredient(ingredient1);
         // get ingredient id
-        LiveData<List<IngredientEntity>> liveIngredients = cookbookDao.getAllIngredients(recipeId1);
-        List<IngredientEntity> ingredients = liveIngredients.getValue();
-        assert ingredients != null;
-        assertEquals(1, ingredients.size());
-        int ingredientId = ingredients.get(0).getIngredientId();
+        int ingredientId = cookbookDao.getIngredientIdByName(recipeId1, ingredient1.getName());
         // create variable
         String temp = "This is an update for this ingredient.";
         // Create an ingredient update
-        IngredientUpdateEntity ingredientUpdate = new IngredientUpdateEntity(0, ingredientId, temp);
+        IngredientUpdateEntity ingredientUpdate = new IngredientUpdateEntity(0,
+                ingredientId, temp);
         // insert the ingredient update
         cookbookDao.insertIngredientUpdate(ingredientUpdate);
         // get ingredient update
-        IngredientUpdateEntity ingredientUpdateEntity = cookbookDao.getIngredientUpdate(ingredientId);
+        IngredientUpdateEntity ingredientUpdateEntity =
+                cookbookDao.getIngredientUpdate(ingredientId);
         // delete the ingredient update
         cookbookDao.deleteIngredientUpdate(ingredientUpdateEntity);
         // get the update
-        IngredientUpdateEntity ingredientUpdateEntity1 = cookbookDao.getIngredientUpdate(ingredientId);
+        IngredientUpdateEntity ingredientUpdateEntity1 =
+                cookbookDao.getIngredientUpdate(ingredientId);
         // test
         assertNull(ingredientUpdateEntity1);
     }
 
     @Test
     public void testUpdateIngredientUpdate() {
-        // insert ingredient into database
-        cookbookDao.insertIngredient(ingredient1);
         // get ingredient id
-        LiveData<List<IngredientEntity>> liveIngredients = cookbookDao.getAllIngredients(recipeId1);
-        List<IngredientEntity> ingredients = liveIngredients.getValue();
-        assert ingredients != null;
-        assertEquals(1, ingredients.size());
-        int ingredientId = ingredients.get(0).getIngredientId();
+        int ingredientId = cookbookDao.getIngredientIdByName(recipeId1, ingredient1.getName());
         // create variable
         String temp = "This is an update for this ingredient.";
         // Create a ingredient update
-        IngredientUpdateEntity ingredientUpdate = new IngredientUpdateEntity(0, ingredientId, temp);
+        IngredientUpdateEntity ingredientUpdate = new IngredientUpdateEntity(0,
+                ingredientId, temp);
         // insert the ingredient update
         cookbookDao.insertIngredientUpdate(ingredientUpdate);
         // get ingredient update
-        IngredientUpdateEntity ingredientUpdateEntity = cookbookDao.getIngredientUpdate(ingredientId);
+        IngredientUpdateEntity ingredientUpdateEntity =
+                cookbookDao.getIngredientUpdate(ingredientId);
         // modify the update
         String temp1 = "Updated update";
         ingredientUpdateEntity.setUpdate(temp1);
         // save to database
         cookbookDao.updateIngredientUpdate(ingredientUpdateEntity);
         // get modified update
-        IngredientUpdateEntity ingredientUpdateEntity1 = cookbookDao.getIngredientUpdate(ingredientId);
+        IngredientUpdateEntity ingredientUpdateEntity1 =
+                cookbookDao.getIngredientUpdate(ingredientId);
         // test
         assertEquals(temp1, ingredientUpdateEntity1.getUpdate());
     }

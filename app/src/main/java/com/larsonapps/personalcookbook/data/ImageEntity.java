@@ -59,12 +59,24 @@ public class ImageEntity {
     }
 
     /**
+     * Setter for imageId
+     * @param id to set
+     */
+    public void setImageId(int id) {this.imageId = id;}
+
+    /**
      * Getter for recipe id
      * @return recipe id
      */
     public int getRecipeId() {
         return recipeId;
     }
+
+    /**
+     * Setter for recipe id
+     * @param id to set
+     */
+    public void setRecipeId(int id) {this.recipeId = id;}
 
     /**
      * Getter for image url

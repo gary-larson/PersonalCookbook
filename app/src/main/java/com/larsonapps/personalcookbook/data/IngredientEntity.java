@@ -55,12 +55,24 @@ public class IngredientEntity {
     }
 
     /**
+     * Setter for ingredient id
+     * @param id to set
+     */
+    public void setIngredientId(int id) {this.ingredientId = id;}
+
+    /**
      * Getter for recipe id
      * @return recipe id
      */
     public int getRecipeId() {
         return recipeId;
     }
+
+    /**
+     * Setter for recipe id
+     * @param id to set
+     */
+    public void setRecipeId(int id) {this.recipeId = id;}
 
     /**
      * Getter for name

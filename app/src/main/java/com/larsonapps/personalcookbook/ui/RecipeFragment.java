@@ -23,6 +23,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,13 +34,18 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.larsonapps.personalcookbook.R;
+import com.larsonapps.personalcookbook.data.CategoryEntity;
 import com.larsonapps.personalcookbook.model.RecipeViewModel;
 import com.larsonapps.personalcookbook.adapter.RecipeRecyclerViewAdapter;
 import com.larsonapps.personalcookbook.data.RecipeEntity;
 import com.larsonapps.personalcookbook.databinding.RecipeFragmentItemListBinding;
-import com.larsonapps.personalcookbook.ui.dummy.DummyContent;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import static android.text.TextUtils.isEmpty;
 
 
 public class RecipeFragment extends Fragment {
@@ -47,6 +54,17 @@ public class RecipeFragment extends Fragment {
     private com.larsonapps.personalcookbook.databinding.RecipeFragmentBinding mBinding;
     private RecipeFragmentItemListBinding mListBinding;
     private OnListFragmentInteractionListener mListener;
+    private String mMealSpinnerSelection;
+    private String mProteinSpinnerSelection;
+    private String mCategorySpinnerSelection;
+    private boolean isMealSpinnerInitialized = false;
+    private boolean isProteinSpinnerInitialized = false;
+    private boolean isCategorySpinnerInitialized = false;
+
+    /**
+     * Method to create a new instance of recipe fragment
+     * @return recipe fragment
+     */
     public static RecipeFragment newInstance() {
         return new RecipeFragment();
     }
@@ -63,6 +81,7 @@ public class RecipeFragment extends Fragment {
         mRecipeViewModel = new ViewModelProvider(requireActivity()).get(RecipeViewModel.class);
         mBinding.shareFab.setOnClickListener(v -> {
             Toast.makeText(getContext(), "Shared FAB Clicked", Toast.LENGTH_LONG).show();
+
         });
         // Create the observer which updates the UI and sets the adapter
         final Observer<List<RecipeEntity>> recipeObserver = newRecipes -> {
@@ -71,7 +90,132 @@ public class RecipeFragment extends Fragment {
             }
         };
         mRecipeViewModel.getRecipes(false).observe(getViewLifecycleOwner(), recipeObserver);
+        mRecipeViewModel.getCategories().observe(getViewLifecycleOwner(), newCategories -> {
+            if (newCategories != null) {
+                List<String> categories = new ArrayList<>();
+                categories.add("Category");
+                categories.add("Favorite");
+                for (CategoryEntity category : newCategories) {
+                    if (!isEmpty(category.getCategoryName())) {
+                        categories.add(category.getCategoryName());
+                    }
+                }
+                if (getActivity() != null) {
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+                            android.R.layout.simple_spinner_item, categories);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    mBinding.categorySpinner.setAdapter(adapter);
+                }
+            }
+        });
+        mBinding.mealSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (!isMealSpinnerInitialized) {
+                    isMealSpinnerInitialized = true;
+                    return;
+                }
+                if (position == 0) {
+                    mMealSpinnerSelection = "";
+                } else {
+                    String[] temp = getResources().getStringArray(R.array.meal_array);
+                    mMealSpinnerSelection = temp[position];
+                }
+                List<String> keywords = getKeywords(null);
+                if (keywords.size() == 0) {
+                    mRecipeViewModel.getRecipes(true)
+                            .observe(getViewLifecycleOwner(), recipeObserver);
+                } else if (keywords.size() == 1) {
+                    mRecipeViewModel.getRecipes(true, keywords.get(0))
+                            .observe(getViewLifecycleOwner(), recipeObserver);
+                } else {
+                    mRecipeViewModel.getRecipes(true, (String[]) keywords.toArray())
+                            .observe(getViewLifecycleOwner(), recipeObserver);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+        mBinding.proteinSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (!isProteinSpinnerInitialized) {
+                    isProteinSpinnerInitialized = true;
+                    return;
+                }
+                if (position == 0) {
+                    mProteinSpinnerSelection = "";
+                } else {
+                    String[] temp = getResources().getStringArray(R.array.meal_array);
+                    mProteinSpinnerSelection = temp[position];
+                }
+                List<String> keywords = getKeywords(null);
+                if (keywords.size() == 0) {
+                    mRecipeViewModel.getRecipes(true)
+                            .observe(getViewLifecycleOwner(), recipeObserver);
+                } else if (keywords.size() == 1) {
+                    mRecipeViewModel.getRecipes(true, keywords.get(0))
+                            .observe(getViewLifecycleOwner(), recipeObserver);
+                } else {
+                    mRecipeViewModel.getRecipes(true, (String[]) keywords.toArray())
+                            .observe(getViewLifecycleOwner(), recipeObserver);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+        mBinding.categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (!isCategorySpinnerInitialized) {
+                    isCategorySpinnerInitialized = true;
+                    return;
+                }
+                if (position == 0) {
+                    mCategorySpinnerSelection = "";
+                } else {
+                    String[] temp = getResources().getStringArray(R.array.meal_array);
+                    mCategorySpinnerSelection = temp[position];
+                }
+                List<String> keywords = getKeywords(null);
+                if (keywords.size() == 0) {
+                    mRecipeViewModel.getRecipes(true)
+                            .observe(getViewLifecycleOwner(), recipeObserver);
+                } else if (keywords.size() == 1) {
+                    mRecipeViewModel.getRecipes(true, keywords.get(0))
+                            .observe(getViewLifecycleOwner(), recipeObserver);
+                } else {
+                    mRecipeViewModel.getRecipes(true, (String[]) keywords.toArray())
+                            .observe(getViewLifecycleOwner(), recipeObserver);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
         return mBinding.getRoot();
+    }
+
+    private List<String> getKeywords(String[] strings) {
+        List<String> temp = new ArrayList<>();
+        if (strings != null && strings.length > 0) {
+            temp.addAll(Arrays.asList(strings));
+        }
+        if (!isEmpty(mMealSpinnerSelection)) {
+            temp.add(mMealSpinnerSelection);
+        }
+        if(!isEmpty(mCategorySpinnerSelection)) {
+            temp.add(mCategorySpinnerSelection);
+        }
+        if(!isEmpty(mProteinSpinnerSelection)) {
+            temp.add(mProteinSpinnerSelection);
+        }
+        return temp;
     }
 
     /**

@@ -24,6 +24,7 @@ import androidx.lifecycle.LiveData;
 
 import com.larsonapps.personalcookbook.AppContainer;
 import com.larsonapps.personalcookbook.CookbookApplication;
+import com.larsonapps.personalcookbook.data.CategoryEntity;
 import com.larsonapps.personalcookbook.data.RecipeEntity;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public class RecipeViewModel extends AndroidViewModel {
     // Declare variables
     CookbookRepository mRepository;
     LiveData<List<RecipeEntity>> mRecipes;
+    LiveData<List<CategoryEntity>> mCategories;
 
     public RecipeViewModel(Application application) {
         super(application);
@@ -58,5 +60,12 @@ public class RecipeViewModel extends AndroidViewModel {
             mRecipes = mRepository.getRecipes(keywords);
         }
         return mRecipes;
+    }
+
+    public LiveData<List<CategoryEntity>> getCategories() {
+        if (mCategories == null) {
+            mCategories = mRepository.getCategories();
+        }
+        return mCategories;
     }
 }

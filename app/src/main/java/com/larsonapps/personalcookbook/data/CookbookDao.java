@@ -97,6 +97,13 @@ public interface CookbookDao {
     void insertAllKeywords(List<KeywordEntity> keywords);
 
     /**
+     * Method to insert a category
+     * @param category to insert
+     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertCategory(CategoryEntity category);
+
+    /**
      * Method to delete a recipe
      * @param recipe to delete
      */
@@ -153,6 +160,12 @@ public interface CookbookDao {
     void deleteKeyword(KeywordEntity keyword);
 
     /**
+     * Method to delete a cayegory
+     */
+    @Delete
+    void deleteCategory(CategoryEntity category);
+
+    /**
      * Method to update a recipe
      * @param recipe to update
      */
@@ -207,6 +220,13 @@ public interface CookbookDao {
      */
     @Update
     void updateKeyword(KeywordEntity keyword);
+
+    /**
+     * Method to update a category
+     * @param category to update
+     */
+    @Update
+    void updateCategory(CategoryEntity category);
 
     /**
      * Method to retrieve all recipes
@@ -293,5 +313,70 @@ public interface CookbookDao {
     @Query("SELECT * FROM keywords WHERE recipe_id = :recipeId")
     LiveData<List<KeywordEntity>> getAllKeywords(int recipeId);
 
-    //TODO add category entity for version 2 of database
+    /**
+     * Method to get all categories
+     * @return a list of categories
+     */
+    @Query("SELECT * FROM categories")
+    LiveData<List<CategoryEntity>> getAllCategories();
+
+    /**
+     * Method to get a category by category id
+     * @param categoryId of the category to get
+     * @return category
+     */
+    @Query("SELECT * FROM categories WHERE category_id = :categoryId")
+    CategoryEntity getCategory(int categoryId);
+
+    /**
+     * Method to get recipe id by recipe name
+     * @param name of recipe to get id
+     * @return recipe id
+     */
+    @Query("SELECT recipe_id FROM recipes WHERE name = :name")
+    int getRecipeIdByName(String name);
+
+    /**
+     * Method to get image id by caption
+     * @param recipeId of image to get
+     * @param caption of image to get
+     * @return image id
+     */
+    @Query("SELECT image_id FROM images WHERE caption = :caption AND recipe_id = :recipeId")
+    int getImageIdByCaption(int recipeId, String caption);
+
+    /**
+     * Method to get ingredient id by name
+     * @param recipeId recipe of ingredient to get
+     * @param name of ingredient to get
+     * @return ingredient id
+     */
+    @Query("SELECT ingredient_id FROM ingredients WHERE name = :name AND recipe_id = :recipeId")
+    int getIngredientIdByName(int recipeId, String name);
+
+    /**
+     * Method to get keyword id by keyword
+     * @param recipeId of recipe to get id for
+     * @param keyword to get id for
+     * @return keyword id
+     */
+    @Query("SELECT keyword_id FROM keywords WHERE keyword = :keyword AND recipe_id = :recipeId")
+    int getKeywordIdByKeyword(int recipeId, String keyword);
+
+    /**
+     * Method to get step id by number
+     * @param recipeId of step to get id for
+     * @param number of step to get id for
+     * @return step id
+     */
+    @Query("SELECT step_id FROM steps WHERE number = :number AND recipe_id = :recipeId")
+    int getStepIdByNumber(int recipeId, int number);
+
+    /**
+     * Method to get category id
+     * @param name of category to get category id for
+     * @return category id
+     */
+    @Query("SELECT category_id FROM categories WHERE category_name = :name")
+    int getCategoryIdByName(String name);
 }
