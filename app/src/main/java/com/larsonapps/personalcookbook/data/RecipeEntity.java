@@ -1,5 +1,8 @@
 package com.larsonapps.personalcookbook.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -8,7 +11,7 @@ import androidx.room.PrimaryKey;
 import java.util.Locale;
 
 @Entity(tableName = "recipes")
-public class RecipeEntity {
+public class RecipeEntity implements Parcelable {
     // Declare Variables
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "recipe_id")
@@ -65,6 +68,21 @@ public class RecipeEntity {
         this.notes = notes;
         this.copyright = copyright;
     }
+
+    /**
+     * Method to create a parcel
+     */
+    public static final Creator<RecipeEntity> CREATOR = new Creator<RecipeEntity>() {
+        @Override
+        public RecipeEntity createFromParcel(Parcel in) {
+            return new RecipeEntity(in);
+        }
+
+        @Override
+        public RecipeEntity[] newArray(int size) {
+            return new RecipeEntity[size];
+        }
+    };
 
     /**
      * Getter for id
@@ -184,6 +202,11 @@ public class RecipeEntity {
         return getString(cookTime);
     }
 
+    /**
+     * Method to convert a time in minutes to a string
+     * @param time to convert
+     * @return string representation of the time
+     */
     private String getString(int time) {
         String temp;
         int days = time / 1440;
@@ -287,5 +310,51 @@ public class RecipeEntity {
      */
     public void setCopyright(String copyright) {
         this.copyright = copyright;
+    }
+
+    /**
+     * Constructor to read a parcel
+     * @param in parcel of data
+     */
+    @Ignore
+    public RecipeEntity(Parcel in) {
+        this.id = in.readInt();
+        this.name = in.readString();
+        this.shortDescription = in.readString();
+        this.description = in.readString();
+        this.servings = in.readInt();
+        this.prepTime = in.readInt();
+        this.cookTime = in.readInt();
+        this.totalTime = in.readInt();
+        this.notes = in.readString();
+        this.copyright = in.readString();
+    }
+
+    /**
+     * Method to descripe contents of the parce
+     * @return parcel description
+     */
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    /**
+     * Method to write to a parcel
+     * @param dest parcel
+     * @param flags for parcel
+     */
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.shortDescription);
+        dest.writeString(this.description);
+        dest.writeInt(this.servings);
+        dest.writeInt(this.prepTime);
+        dest.writeInt(this.cookTime);
+        dest.writeInt(this.totalTime);
+        dest.writeString(this.notes);
+        dest.writeString(this.copyright);
     }
 }

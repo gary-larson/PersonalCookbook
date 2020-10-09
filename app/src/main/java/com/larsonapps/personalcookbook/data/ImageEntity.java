@@ -1,12 +1,15 @@
 package com.larsonapps.personalcookbook.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "images")
-public class ImageEntity {
+public class ImageEntity implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "image_id")
     private int imageId;
@@ -49,6 +52,21 @@ public class ImageEntity {
         this.width = width;
         this.caption = caption;
     }
+
+    /**
+     * Method to create a parcel
+     */
+    public static final Creator<ImageEntity> CREATOR = new Creator<ImageEntity>() {
+        @Override
+        public ImageEntity createFromParcel(Parcel in) {
+            return new ImageEntity(in);
+        }
+
+        @Override
+        public ImageEntity[] newArray(int size) {
+            return new ImageEntity[size];
+        }
+    };
 
     /**
      * Getter for image id
@@ -156,5 +174,44 @@ public class ImageEntity {
      */
     public void setCaption(String caption) {
         this.caption = caption;
+    }
+
+    /**
+     * Constructor for Parcelable
+     * @param in parcel
+     */
+    public ImageEntity(Parcel in) {
+        this.imageId = in.readInt();
+        this.recipeId = in.readInt();
+        this.type = in.readString();
+        this.imageUrl = in.readString();
+        this.height = in.readInt();
+        this.width = in.readInt();
+        this.caption = in.readString();
+    }
+
+    /**
+     * Method to descrip contents of parcel
+     * @return description
+     */
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    /**
+     * Methor to wrie to parcel
+     * @param dest parcel
+     * @param flags for  parcel
+     */
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(imageId);
+        dest.writeInt(recipeId);
+        dest.writeString(type);
+        dest.writeString(imageUrl);
+        dest.writeInt(height);
+        dest.writeInt(width);
+        dest.writeString(caption);
     }
 }

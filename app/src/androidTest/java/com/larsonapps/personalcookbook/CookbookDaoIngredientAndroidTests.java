@@ -9,7 +9,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.larsonapps.personalcookbook.data.CookbookDao;
 import com.larsonapps.personalcookbook.data.CookbookRoomDatabase;
-import com.larsonapps.personalcookbook.data.ImageEntity;
 import com.larsonapps.personalcookbook.data.IngredientEntity;
 import com.larsonapps.personalcookbook.data.IngredientUpdateEntity;
 import com.larsonapps.personalcookbook.data.RecipeEntity;

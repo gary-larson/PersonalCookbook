@@ -34,6 +34,7 @@ public class RecipeViewModel extends AndroidViewModel {
     CookbookRepository mRepository;
     LiveData<List<RecipeEntity>> mRecipes;
     LiveData<List<CategoryEntity>> mCategories;
+    LiveData<RecipeEntity> mRecipe;
 
     public RecipeViewModel(Application application) {
         super(application);
@@ -67,5 +68,16 @@ public class RecipeViewModel extends AndroidViewModel {
             mCategories = mRepository.getCategories();
         }
         return mCategories;
+    }
+
+    public void addCategory(String category) {
+        mRepository.addCategory(category);
+    }
+
+    public LiveData<RecipeEntity> getRecipe(int recipeId) {
+        if (mRecipe == null) {
+            mRecipe = mRepository.getRecipe(recipeId);
+        }
+        return mRecipe;
     }
 }

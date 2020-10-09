@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
 
+import com.larsonapps.personalcookbook.data.RecipeEntity;
 import com.larsonapps.personalcookbook.model.IngredientViewModel;
 import com.larsonapps.personalcookbook.model.StepViewModel;
 import com.larsonapps.personalcookbook.databinding.CookbookEditFragmentBinding;
@@ -31,6 +32,7 @@ public class CookbookEditFragment extends Fragment {
     private IngredientViewModel mIngredientsViewModel;
     private StepViewModel mStepsViewModel;
     private CookbookEditFragmentBinding mBinding;
+    private RecipeEntity mRecipe;
 
     public static CookbookEditFragment newInstance() {
         return new CookbookEditFragment();
@@ -40,16 +42,18 @@ public class CookbookEditFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         mBinding = CookbookEditFragmentBinding.inflate(inflater, container, false);
+
         String assetUrl = "file:///android_asset/ApplePie.jpg";
        // mBinding.toolbar.setTitle(getString(R.string.app_name));
         getChildFragmentManager().beginTransaction()
                 .replace(mBinding.editContentContainer.getId(), ContentFragment
-                        .newInstance(CookbookActivity.STATE_EDIT))
+                        .newInstance(CookbookActivity.STATE_EDIT, mRecipe))
                 .replace(mBinding.editIngredientListContainer.getId(), IngredientFragment
-                        .newInstance(CookbookActivity.STATE_EDIT))
+                        .newInstance(CookbookActivity.STATE_EDIT, mRecipe.getId()))
                 .replace(mBinding.editStepListContainer.getId(), StepFragment
-                        .newInstance(CookbookActivity.STATE_EDIT))
-                .replace(mBinding.editImageListContainer.getId(), ImageFragment.newInstance(1))
+                        .newInstance(CookbookActivity.STATE_EDIT, mRecipe.getId()))
+                .replace(mBinding.editImageListContainer.getId(), ImageFragment
+                        .newInstance(CookbookActivity.STATE_EDIT, mRecipe.getId()))
                 .commit();
         mBinding.editRecipeNameEditText.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE || event != null) {

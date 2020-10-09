@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.larsonapps.personalcookbook.R;
+import com.larsonapps.personalcookbook.data.RecipeEntity;
 import com.larsonapps.personalcookbook.model.IngredientViewModel;
 
 import com.larsonapps.personalcookbook.databinding.CookbookDetailsFragmentBinding;
@@ -21,12 +22,47 @@ import com.squareup.picasso.Picasso;
 import java.util.Objects;
 
 public class CookbookDetailsFragment extends Fragment {
-    // Declare variables
-    private IngredientViewModel mViewModel;
-    private CookbookDetailsFragmentBinding mBinding;
+    // Declare constants
+    private static final String ARG_STATE = "state";
+    private static final String ARG_RECIPE = "recipe";
 
-    public static CookbookDetailsFragment newInstance() {
-        return new CookbookDetailsFragment();
+    // Declare variables
+    private CookbookDetailsFragmentBinding mBinding;
+    private RecipeEntity mRecipe;
+    private int mState;
+
+    /**
+     * Default constructor
+     */
+    public CookbookDetailsFragment() {}
+
+    /**
+     * Method to create a new instance of this fragment
+     * @param state of the app
+     * @param recipe of data
+     * @return the new fragment
+     */
+    public static CookbookDetailsFragment newInstance(int state, RecipeEntity recipe) {
+        CookbookDetailsFragment fragment = new CookbookDetailsFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_STATE, state);
+        args.putParcelable(ARG_RECIPE, recipe);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    /**
+     * Method to save the state of the instance
+     * @param savedInstanceState to save
+     */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            mState = getArguments().getInt(ARG_STATE);
+            mRecipe = getArguments().getParcelable(ARG_RECIPE);
+        }
     }
 
     @Override
@@ -43,11 +79,11 @@ public class CookbookDetailsFragment extends Fragment {
         mBinding.toolbar.setTitle(getString(R.string.app_name));
         getChildFragmentManager().beginTransaction()
                 .replace(mBinding.contentContainer.getId(), ContentFragment
-                        .newInstance(CookbookActivity.STATE_DISPLAY))
+                        .newInstance(mState, mRecipe))
                 .replace(mBinding.ingredientListContainer.getId(), IngredientFragment
-                        .newInstance(CookbookActivity.STATE_DISPLAY))
+                        .newInstance(mState, mRecipe.getId()))
                 .replace(mBinding.stepListContainer.getId(), StepFragment
-                        .newInstance(CookbookActivity.STATE_DISPLAY))
+                        .newInstance(mState, mRecipe.getId()))
                 .commit();
         CookbookActivity activity = (CookbookActivity) getActivity();
         int height = 0;
@@ -67,14 +103,6 @@ public class CookbookDetailsFragment extends Fragment {
             Toast.makeText(getContext(), "Edit FAB clicked", Toast.LENGTH_LONG).show();
         });
         return mBinding.getRoot();
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(requireActivity())
-                .get(IngredientViewModel.class);
-        // TODO: Use the ViewModel
     }
 
     @Override

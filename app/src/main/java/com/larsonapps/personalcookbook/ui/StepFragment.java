@@ -8,12 +8,13 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.larsonapps.personalcookbook.adapter.StepRecyclerViewAdapter;
 import com.larsonapps.personalcookbook.data.StepEntity;
 import com.larsonapps.personalcookbook.databinding.StepFragmentItemListBinding;
-import com.larsonapps.personalcookbook.ui.dummy.DummyContent;
+import com.larsonapps.personalcookbook.model.StepViewModel;
 
 /**
  * A fragment representing a list of Items.
@@ -22,10 +23,13 @@ public class StepFragment extends Fragment {
 
     // Declare constants
     private static final String ARG_STATE= "state";
+    private static final String ARG_RECIPE_ID = "recipeId";
     // Declare variables
     private int mState;
+    private int mRecipeId;
     private StepFragmentItemListBinding mBinding;
     private OnListFragmentInteractionListener mListener;
+    private StepViewModel mStepViewModel;
 
     /**
      * Default constructor
@@ -33,11 +37,11 @@ public class StepFragment extends Fragment {
     public StepFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    public static StepFragment newInstance(int state) {
+    public static StepFragment newInstance(int state, int recipeId) {
         StepFragment fragment = new StepFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_STATE, state);
+        args.putInt(ARG_RECIPE_ID, recipeId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -48,6 +52,7 @@ public class StepFragment extends Fragment {
 
         if (getArguments() != null) {
             mState = getArguments().getInt(ARG_STATE);
+            mRecipeId = getArguments().getInt(ARG_RECIPE_ID);
         }
     }
 
@@ -60,11 +65,14 @@ public class StepFragment extends Fragment {
         Context context = mBinding.getRoot().getContext();
 
         mBinding.stepList.setLayoutManager(new LinearLayoutManager(context));
-        if (mState == CookbookActivity.STATE_DISPLAY || mState == CookbookActivity.STATE_EDIT) {
-            mBinding.stepList.setAdapter(new StepRecyclerViewAdapter(mListener, DummyContent.ITEMS, mState));
-        } else if (mState == CookbookActivity.STATE_MANUAL) {
-            mBinding.stepList.setAdapter((new StepRecyclerViewAdapter(mListener, null, mState)));
-        }
+        mStepViewModel = new ViewModelProvider(requireActivity()).get(StepViewModel.class);
+        StepRecyclerViewAdapter adapter = new StepRecyclerViewAdapter(mListener, mState);
+        mBinding.stepList.setAdapter(adapter);
+        mStepViewModel.getSteps(mRecipeId).observe(getViewLifecycleOwner(), newSteps -> {
+            if (newSteps != null && newSteps.size() > 0) {
+                adapter.setData(newSteps);
+            }
+        });
 
         return mBinding.getRoot();
     }

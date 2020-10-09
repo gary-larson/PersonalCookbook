@@ -1,10 +1,8 @@
 package com.larsonapps.personalcookbook;
 
 import android.content.Context;
-import android.media.Image;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
-import androidx.lifecycle.LiveData;
 import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -13,7 +11,6 @@ import com.larsonapps.personalcookbook.data.CookbookDao;
 import com.larsonapps.personalcookbook.data.CookbookRoomDatabase;
 import com.larsonapps.personalcookbook.data.ImageEntity;
 import com.larsonapps.personalcookbook.data.RecipeEntity;
-import com.larsonapps.personalcookbook.model.ImageViewModel;
 
 import org.junit.After;
 import org.junit.Before;

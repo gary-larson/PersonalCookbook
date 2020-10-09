@@ -8,69 +8,87 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.larsonapps.personalcookbook.adapter.IngredientRecyclerViewAdapter;
 import com.larsonapps.personalcookbook.data.IngredientEntity;
 import com.larsonapps.personalcookbook.databinding.IngredientFragmentItemListBinding;
-import com.larsonapps.personalcookbook.ui.dummy.DummyContent;
+import com.larsonapps.personalcookbook.model.IngredientViewModel;
 
 
 /**
  * A fragment representing a list of Items.
  */
 public class IngredientFragment extends Fragment {
-
     // Declare constants
     private static final String ARG_STATE = "state";
-    private static final int STATE_EDIT= 1;
-    private static final int STATE_MANUAL = 2;
-    private static final int STATE_IMPORT = 3;
+    private static final String ARG_RECIPE_ID = "recipeId";
+
     // Declare variables
     private int mState = 0;
+    private int mRecipeId = 0;
     private IngredientFragmentItemListBinding mBinding;
     private OnListFragmentInteractionListener mListener;
+    private IngredientViewModel mIngredientViewModel;
 
 
     /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
+     * Default constructor
      */
-    public IngredientFragment() {
-    }
+    public IngredientFragment() {}
 
-    // TODO: Customize parameter initialization
-    public static IngredientFragment newInstance(int state) {
+    /**
+     * Method to create a new instance of this fragment
+     * @param state of the app
+     * @param recipeId of the ingredients
+     * @return the new fragment
+     */
+    public static IngredientFragment newInstance(int state, int recipeId) {
         IngredientFragment fragment = new IngredientFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_STATE, state);
+        args.putInt(ARG_RECIPE_ID, recipeId);
         fragment.setArguments(args);
         return fragment;
     }
 
+    /**
+     * Method to save the state of the instance
+     * @param savedInstanceState to save
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
             mState = getArguments().getInt(ARG_STATE);
+            mRecipeId = getArguments().getInt(ARG_RECIPE_ID);
         }
     }
 
+    /**
+     * Method to create the view of the fragment
+     * @param inflater to inflate the view
+     * @param container the view is created in
+     * @param savedInstanceState of the app
+     * @return the created view
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mBinding = IngredientFragmentItemListBinding.inflate(inflater, container, false);
         Context context = mBinding.getRoot().getContext();
-
+        mIngredientViewModel = new ViewModelProvider(requireActivity()).get(IngredientViewModel.class);
         // Set the adapter
         mBinding.ingredientList.setLayoutManager(new LinearLayoutManager(context));
-        if (mState == CookbookActivity.STATE_DISPLAY || mState == CookbookActivity.STATE_EDIT) {
-            mBinding.ingredientList.setAdapter(new IngredientRecyclerViewAdapter(mListener, DummyContent.ITEMS, mState));
-        } else if (mState == CookbookActivity.STATE_MANUAL) {
-            mBinding.ingredientList.setAdapter(new IngredientRecyclerViewAdapter(mListener, null, mState));
-        }
-
+        IngredientRecyclerViewAdapter adapter = new IngredientRecyclerViewAdapter(mListener, mState);
+        mBinding.ingredientList.setAdapter(adapter);
+        mIngredientViewModel.getIngredients(mRecipeId).observe(getViewLifecycleOwner(), newIngredients -> {
+            if (newIngredients != null && newIngredients.size() > 0) {
+                 adapter.setData(newIngredients);
+            }
+        });
         return mBinding.getRoot();
     }
 

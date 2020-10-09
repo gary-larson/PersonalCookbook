@@ -1,12 +1,21 @@
 package com.larsonapps.personalcookbook.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.util.Locale;
+
+/**
+ * Class to deal with ingredient data for parcels and room database
+ */
 @Entity(tableName = "ingredients")
-public class IngredientEntity {
+public class IngredientEntity implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "ingredient_id")
     private int ingredientId;
@@ -45,6 +54,35 @@ public class IngredientEntity {
         this.measure = measure;
         this.preparation = preparation;
     }
+
+    /**
+     * Constructor for parcelable
+     * @param in for parcelable
+     */
+    @Ignore
+    protected IngredientEntity(Parcel in) {
+        ingredientId = in.readInt();
+        recipeId = in.readInt();
+        name = in.readString();
+        amount = in.readDouble();
+        measure = in.readString();
+        preparation = in.readString();
+    }
+
+    /**
+     * Method for parcelable
+     */
+    public static final Creator<IngredientEntity> CREATOR = new Creator<IngredientEntity>() {
+        @Override
+        public IngredientEntity createFromParcel(Parcel in) {
+            return new IngredientEntity(in);
+        }
+
+        @Override
+        public IngredientEntity[] newArray(int size) {
+            return new IngredientEntity[size];
+        }
+    };
 
     /**
      * Getter for id
@@ -136,5 +174,40 @@ public class IngredientEntity {
      */
     public void setPreparation(String preparation) {
         this.preparation = preparation;
+    }
+
+    /**
+     * Method for string representation of class
+     * @return string representation
+     */
+    @NonNull
+    @Override
+    public String toString() {
+        return String.format(Locale.getDefault(), "%s %.1f %s\n%s", name, amount, measure,
+                preparation);
+    }
+
+    /**
+     * Method for Parcelable description
+     * @return description
+     */
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    /**
+     * Method to write to parcelable
+     * @param dest of parcel
+     * @param flags for parcel
+     */
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(ingredientId);
+        dest.writeInt(recipeId);
+        dest.writeString(name);
+        dest.writeDouble(amount);
+        dest.writeString(measure);
+        dest.writeString(preparation);
     }
 }

@@ -38,4 +38,10 @@
     <string name="enter_recipe_description_hint">Enter Recipe Description</string>
     <string name="submit">Submit</string>
     <string name="enter_url_of_recipe_hint">Enter url of recipe</string>
+    <string name="manual_entry_menu_title">Manual Entry</string>
+    <string name="import_recipe_menu_title">Import Recipe</string>
+    <string name="about_menu_title">About</string>
+    <string name="add_category_enter_category">Enter Category</string>
+    <string name="add_category_label_text">Enter a category to search by.</string>
+    <string name="add_category_menu_title">Add Category</string>
 </resources>

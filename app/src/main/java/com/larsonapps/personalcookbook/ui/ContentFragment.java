@@ -1,51 +1,51 @@
 package com.larsonapps.personalcookbook.ui;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.larsonapps.personalcookbook.data.RecipeEntity;
 import com.larsonapps.personalcookbook.databinding.ContentFragmentBinding;
+import com.larsonapps.personalcookbook.model.RecipeViewModel;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link ContentFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Class to handle content
  */
 public class ContentFragment extends Fragment {
 
-    // Constants for parameter initialization
-    private static final String ARG_STATE= "state";
-    private  static final int STATE_NONE = 0;
-    private static final int STATE_EDIT= 1;
-    private static final int STATE_MANUAL = 2;
-    private static final int STATE_IMPORT = 3;
+    // Constants
+    private static final String ARG_STATE = "state";
+    private static final String ARG_RECIPE = "recipe";
+    private static final String RECIPE = "mRecipe";
 
     // Declare variables
     private int mState;
+    private RecipeEntity mRecipe;
     private ContentFragmentBinding mBinding;
-
-    public ContentFragment() {
-        // Required empty public constructor
-    }
+    private RecipeViewModel mRecipeViewModel;
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
+     * Default constructor
+     */
+    public ContentFragment() {}
+
+    /**
+     * Method to create an instance of this fragment
      * @param state the state of fragment
+     * @param recipe to use
      * @return A new instance of fragment CookbookDetailsContentFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static ContentFragment newInstance(int state) {
+    public static ContentFragment newInstance(int state, RecipeEntity recipe) {
         ContentFragment fragment = new ContentFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_STATE, state);
+        args.putParcelable(ARG_RECIPE, recipe);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,6 +55,7 @@ public class ContentFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mState = getArguments().getInt(ARG_STATE);
+            mRecipe = getArguments().getParcelable(ARG_RECIPE);
         }
     }
 
@@ -63,14 +64,35 @@ public class ContentFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mBinding = ContentFragmentBinding.inflate(inflater, container, false);
-        if (mState == STATE_NONE) {
+        mRecipeViewModel = new ViewModelProvider(requireActivity()).get(RecipeViewModel.class);
+        if (savedInstanceState != null) {
+            mRecipe = savedInstanceState.getParcelable(RECIPE);
+        }
+        if (mState == CookbookActivity.STATE_DISPLAY) {
             mBinding.descriptionImageButton.setVisibility(View.GONE);
-        } else if (mState == STATE_EDIT) {
+        } else if (mState == CookbookActivity.STATE_EDIT) {
             mBinding.descriptionImageButton.setOnClickListener(v -> {
                 Toast.makeText(getContext(), "Description Clicked", Toast.LENGTH_LONG).show();
             });
             mBinding.descriptionImageButton.setVisibility(View.VISIBLE);
         }
+        if (mRecipe != null) {
+            mBinding.nameTextView.setText(mRecipe.getName());
+            mBinding.shortDescriptionTextView.setText(mRecipe.getShortDescription());
+            mBinding.servingsTextView.setText(mRecipe.getServings());
+            mBinding.prepTimeTextView.setText(mRecipe.getPrepTimeString());
+            mBinding.cookTimeTextView.setText(mRecipe.getCookTimeString());
+            mBinding.totalTimeTextView.setText(mRecipe.getTotalTimeString());
+            mBinding.descriptionTextView.setText(mRecipe.getDescription());
+            mBinding.notesTextView.setText((mRecipe.getNotes()));
+            mBinding.copyrightTextView.setText(mRecipe.getCopyright());
+        }
         return mBinding.getRoot();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(RECIPE, mRecipe);
     }
 }

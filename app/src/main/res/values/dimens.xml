@@ -45,4 +45,8 @@
 
     <!-- cookbook import fragment -->
     <dimen name="import_fragment_height">150dp</dimen>
+
+    <!-- cookbook dialog fragments -->
+    <dimen name="dialog_margin">24dp</dimen>
+    <dimen name="dialog_vertical_margin">8dp</dimen>
 </resources>

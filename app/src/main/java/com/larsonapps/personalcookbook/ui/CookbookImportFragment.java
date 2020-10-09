@@ -23,18 +23,41 @@ import java.util.Objects;
  * create an instance of this fragment.
  */
 public class CookbookImportFragment extends Fragment {
+    // Declare constants
+    private static final String ARG_STATE = "state";
     // Declare variables
     CookbookImportFragmentBinding mBinding;
+    int mState;
 
+    /**
+     * Default constructor
+     */
+    public CookbookImportFragment() {}
 
-
-    public CookbookImportFragment() {
-        // Required empty public constructor
+    /**
+     * Method to create a new instance of this fragment
+     * @param state of the app
+     * @return the new fragment
+     */
+    public static CookbookImportFragment newInstance(int state) {
+        CookbookImportFragment fragment = new CookbookImportFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_STATE, state);
+        fragment.setArguments(args);
+        return fragment;
     }
 
+    /**
+     * Method to save the state of the instance
+     * @param savedInstanceState to save
+     */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-    public static CookbookImportFragment newInstance() {
-        return new CookbookImportFragment();
+        if (getArguments() != null) {
+            mState = getArguments().getInt(ARG_STATE);
+        }
     }
 
     @Override

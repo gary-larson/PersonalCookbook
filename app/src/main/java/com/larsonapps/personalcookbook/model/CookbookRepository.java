@@ -1,11 +1,9 @@
 package com.larsonapps.personalcookbook.model;
 
-import android.app.Application;
 import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
-import com.larsonapps.personalcookbook.CookbookApplication;
 import com.larsonapps.personalcookbook.data.CategoryEntity;
 import com.larsonapps.personalcookbook.data.CookbookDao;
 import com.larsonapps.personalcookbook.data.CookbookRoomDatabase;
@@ -14,7 +12,6 @@ import com.larsonapps.personalcookbook.data.IngredientEntity;
 import com.larsonapps.personalcookbook.data.KeywordEntity;
 import com.larsonapps.personalcookbook.data.RecipeEntity;
 import com.larsonapps.personalcookbook.data.StepEntity;
-import com.larsonapps.personalcookbook.ui.CookbookActivity;
 import com.larsonapps.personalcookbook.utilities.CookbookExecutor;
 
 import java.util.List;
@@ -62,4 +59,16 @@ public class CookbookRepository {
     public LiveData<List<CategoryEntity>> getCategories() {
         return mDao.getAllCategories();
     }
+
+    public void addCategory(String category) {
+        CategoryEntity categoryEntity = new CategoryEntity();
+        categoryEntity.setCategoryName(category);
+        CookbookRoomDatabase.databaseWriteExecutor.execute(() -> {
+            if (mDao.categoryExists(category) == 0) {
+                mDao.insertCategory(categoryEntity);
+            }
+        });
+    }
+
+    public LiveData<RecipeEntity> getRecipe(int recipeId) { return mDao.getRecipe(recipeId);}
 }

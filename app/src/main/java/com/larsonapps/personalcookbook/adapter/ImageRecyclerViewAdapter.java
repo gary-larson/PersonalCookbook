@@ -14,28 +14,38 @@ import com.larsonapps.personalcookbook.data.ImageEntity;
 import com.larsonapps.personalcookbook.databinding.ImageFragmentItemBinding;
 import com.larsonapps.personalcookbook.ui.CookbookActivity;
 import com.larsonapps.personalcookbook.ui.ImageFragment;
-import com.larsonapps.personalcookbook.ui.dummy.DummyContent.DummyItem;
 import com.squareup.picasso.Picasso;
 
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem}.
- * TODO: Replace the implementation with code for your data type.
+ * Class to deal with the display of images
  */
-public class ImageRecyclerViewAdapter extends RecyclerView.Adapter<ImageRecyclerViewAdapter.ViewHolder> {
+public class ImageRecyclerViewAdapter extends
+        RecyclerView.Adapter<ImageRecyclerViewAdapter.ViewHolder> {
     // Declare variables
-    private final List<ImageEntity> mValues;
+    private List<ImageEntity> mValues = null;
     private final ImageFragment.OnListFragmentInteractionListener mListener;
     private final int mState;
 
-    public ImageRecyclerViewAdapter(ImageFragment.OnListFragmentInteractionListener listener, List<ImageEntity> images, int state) {
-        mValues = images;
+    /**
+     * Constructor for image recycler view adapter
+     * @param listener to handle clicks
+     * @param state of the app
+     */
+    public ImageRecyclerViewAdapter(ImageFragment.OnListFragmentInteractionListener listener,
+                                    int state) {
         mListener = listener;
         mState = state;
     }
 
+    /**
+     * Method to create a view holder
+     * @param parent of the view holder
+     * @param viewType of the view holder
+     * @return created view holder
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -43,6 +53,11 @@ public class ImageRecyclerViewAdapter extends RecyclerView.Adapter<ImageRecycler
                 parent, false));
     }
 
+    /**
+     * Method to bind date to the view holder
+     * @param holder to bind
+     * @param position of the date
+     */
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mImage = mValues.get(position);
@@ -73,6 +88,10 @@ public class ImageRecyclerViewAdapter extends RecyclerView.Adapter<ImageRecycler
         }
     }
 
+    /**
+     * Method to get the amount of the data
+     * @return the amount of the data
+     */
     @Override
     public int getItemCount() {
         if (mValues == null) {
@@ -81,24 +100,50 @@ public class ImageRecyclerViewAdapter extends RecyclerView.Adapter<ImageRecycler
         return mValues.size();
     }
 
+    /**
+     * Method to set the adapter data
+     * @param lists of the data to set
+     */
+    public void setData(List<ImageEntity> lists) {
+        mValues = lists;
+        notifyDataSetChanged();
+    }
+
+    /**
+     * Method to get the item id
+     * @param position position of the data
+     * @return item id
+     */
     @Override
     public long getItemId(int position) {
         return position;
     }
 
+    /**
+     * Method to get the view type
+     * @param position position of the view
+     * @return view type
+     */
     @Override
     public int getItemViewType(int position) {
         return position;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    /**
+     * Class for the view holder
+     */
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        // Declare variables
         public final View mView;
         public ImageView mImageView;
         public ImageView mImageButton;
         public ImageEntity mImage;
         public CheckBox mCheckbox;
 
-
+        /**
+         * Constructor for the view holder
+         * @param binding binding of the layout
+         */
         public ViewHolder(ImageFragmentItemBinding binding) {
             super(binding.getRoot());
             mView = binding.getRoot();

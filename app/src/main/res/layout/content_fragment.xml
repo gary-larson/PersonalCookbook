@@ -1,30 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.ContentFragment">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        tools:context=".ui.ContentFragment">
 
-    <TextView
-        android:id="@+id/edit_content_text_view"
-        android:layout_width="wrap_content"
-        style="@style/DetailTextView"
-        android:text="@string/hello_blank_fragment" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/description_image_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/edit_icon_padding"
-        android:layout_gravity="end"
-        android:layout_marginBottom="@dimen/edit_description_margin"
-        android:background="@drawable/button_selector"
-        android:src="@drawable/ic_edit_24px" />
+            <TextView
+                android:id="@+id/name_text_view"
+                style="@style/DetailTextView"
+                android:layout_width="wrap_content" />
+
+            <TextView
+                android:id="@+id/short_description_text_view"
+                style="@style/DetailTextView"
+                android:layout_width="wrap_content" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/description_image_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginBottom="@dimen/edit_description_margin"
+                android:background="@drawable/button_selector"
+                android:padding="@dimen/edit_icon_padding"
+                android:src="@drawable/ic_edit_24px" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/servings_text_view"
+                style="@style/DetailTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/prep_time_text_view"
+                style="@style/DetailTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/cook_time_text_view"
+                style="@style/DetailTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/total_time_text_view"
+                style="@style/DetailTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/description_text_view"
+            style="@style/DetailTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/notes_text_view"
+            style="@style/DetailTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/copyright_text_view"
+            style="@style/DetailTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
-
-</FrameLayout>
+</ScrollView>

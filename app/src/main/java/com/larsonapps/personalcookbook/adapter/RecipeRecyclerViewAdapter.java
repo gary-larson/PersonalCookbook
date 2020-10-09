@@ -28,7 +28,6 @@ import android.widget.TextView;
 import com.larsonapps.personalcookbook.data.RecipeEntity;
 import com.larsonapps.personalcookbook.databinding.RecipeFragmentItemBinding;
 import com.larsonapps.personalcookbook.ui.RecipeFragment;
-import com.larsonapps.personalcookbook.ui.dummy.DummyContent.DummyItem;
 
 import java.util.List;
 import java.util.Locale;

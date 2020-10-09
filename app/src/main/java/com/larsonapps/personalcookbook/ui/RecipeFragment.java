@@ -21,6 +21,8 @@ package com.larsonapps.personalcookbook.ui;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -30,6 +32,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -102,7 +105,7 @@ public class RecipeFragment extends Fragment {
                 }
                 if (getActivity() != null) {
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                            android.R.layout.simple_spinner_item, categories);
+                            R.layout.spinner_custom_item, categories);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     mBinding.categorySpinner.setAdapter(adapter);
                 }

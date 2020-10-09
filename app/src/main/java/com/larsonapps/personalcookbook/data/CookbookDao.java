@@ -255,7 +255,7 @@ public interface CookbookDao {
      * @return recipe
      */
     @Query("SELECT * FROM recipes WHERE recipe_id = :recipeId")
-    RecipeEntity getRecipe(int recipeId);
+    LiveData<RecipeEntity> getRecipe(int recipeId);
 
     /**
      * Method to retrieve a recipe update by recipe id
@@ -327,6 +327,9 @@ public interface CookbookDao {
      */
     @Query("SELECT * FROM categories WHERE category_id = :categoryId")
     CategoryEntity getCategory(int categoryId);
+
+    @Query("SELECT category_id FROM categories WHERE category_name = :name")
+    int categoryExists(String name);
 
     /**
      * Method to get recipe id by recipe name

@@ -12,6 +12,7 @@ public class StepEntityUnitTests {
     private static final int RECIPE_ID_VALUE = 78;
     private static final String INSTRUCTION_VALUE = "Sufficient instruction";
     private static final int NUMBER_VALUE = 5;
+    private static final String TO_STRING_VALUE = "5) Sufficient instruction";
 
     // Create step
     StepEntity step = new StepEntity(STEP_ID_VALUE, RECIPE_ID_VALUE, NUMBER_VALUE,
@@ -64,5 +65,10 @@ public class StepEntityUnitTests {
         int temp = 55;
         step.setNumber(temp);
         assertEquals(temp, step.getNumber());
+    }
+
+    @Test
+    public void testToString() {
+        assertEquals(TO_STRING_VALUE, step.toString());
     }
 }

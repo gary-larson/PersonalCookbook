@@ -1,8 +1,5 @@
 package com.larsonapps.personalcookbook.adapter;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,27 +7,29 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.larsonapps.personalcookbook.data.StepEntity;
 import com.larsonapps.personalcookbook.databinding.StepFragmentItemBinding;
 import com.larsonapps.personalcookbook.ui.CookbookActivity;
 import com.larsonapps.personalcookbook.ui.StepFragment;
-import com.larsonapps.personalcookbook.ui.dummy.DummyContent.DummyItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem}.
- * TODO: Replace the implementation with code for your data type.
+ * Class to display atep information
  */
 public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerViewAdapter.ViewHolder> {
     // Declare variables
-    private final List<DummyItem> mValues;
+    private List<StepEntity> mValues = new ArrayList<>();
     private StepFragment.OnListFragmentInteractionListener mListener;
     private final int mState;
 
-    public StepRecyclerViewAdapter(StepFragment.OnListFragmentInteractionListener listener, List<DummyItem> items, int state) {
+    public StepRecyclerViewAdapter(StepFragment.OnListFragmentInteractionListener listener,
+                                   int state) {
         mListener = listener;
-        mValues = items;
         mState = state;
     }
 
@@ -44,8 +43,7 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mStepView.setText(mValues.get(position).toString());
         if (mState == CookbookActivity.STATE_EDIT) {
             holder.mEditImageButton.setOnClickListener(v -> {
                 if (null != mListener) {
@@ -83,30 +81,31 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
         return mValues.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    /**
+     * Method to set data and notify adapter
+     * @param steps to set
+     */
+    public void setData(List<StepEntity> steps) {
+        mValues = steps;
+        notifyDataSetChanged();
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
+        public final TextView mStepView;
         public final ImageView mEditImageButton;
         public final ImageView mDeleteImageButton;
         public final CheckBox mCheckbox;
-        public DummyItem mItem;
+        public StepEntity mItem;
 
         public ViewHolder(StepFragmentItemBinding binding) {
             super(binding.getRoot());
             mView = binding.getRoot();
-            mIdView = binding.itemNumber;
-            mContentView = binding.content;
+            mStepView = binding.stepTextView;
             mEditImageButton = binding.stepEditImageButton;
             mDeleteImageButton = binding.stepDeleteImageButton;
             mCheckbox = binding.stepCheckbox;
 
-        }
-
-        @NonNull
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
         }
     }
 }

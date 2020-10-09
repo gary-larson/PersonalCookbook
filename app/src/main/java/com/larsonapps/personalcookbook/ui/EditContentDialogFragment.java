@@ -2,5 +2,5 @@ package com.larsonapps.personalcookbook.ui;
 
 import androidx.fragment.app.DialogFragment;
 
-public class AddImageDialogFragment extends DialogFragment {
+public class EditContentDialogFragment extends DialogFragment {
 }

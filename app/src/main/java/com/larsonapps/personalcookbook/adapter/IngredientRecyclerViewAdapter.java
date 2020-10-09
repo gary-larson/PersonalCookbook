@@ -1,8 +1,5 @@
 package com.larsonapps.personalcookbook.adapter;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,27 +7,30 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.larsonapps.personalcookbook.data.IngredientEntity;
 import com.larsonapps.personalcookbook.databinding.IngredientFragmentItemBinding;
 import com.larsonapps.personalcookbook.ui.CookbookActivity;
 import com.larsonapps.personalcookbook.ui.IngredientFragment;
-import com.larsonapps.personalcookbook.ui.dummy.DummyContent.DummyItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem}.
- * TODO: Replace the implementation with code for your data type.
+ * Class to display ingredients list
  */
-public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<IngredientRecyclerViewAdapter.ViewHolder> {
+public class IngredientRecyclerViewAdapter extends
+        RecyclerView.Adapter<IngredientRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private List<IngredientEntity> mValues = new ArrayList<>();
     private final int mState;
     private final IngredientFragment.OnListFragmentInteractionListener mListener;
 
-    public IngredientRecyclerViewAdapter(IngredientFragment.OnListFragmentInteractionListener listener, List<DummyItem> items, int state) {
+    public IngredientRecyclerViewAdapter(
+            IngredientFragment.OnListFragmentInteractionListener listener, int state) {
         mListener = listener;
-        mValues = items;
         mState = state;
     }
 
@@ -44,8 +44,7 @@ public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<Ingredie
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mIngredientView.setText(mValues.get(position).toString());
         if (mState == CookbookActivity.STATE_EDIT) {
             holder.mEditImageButton.setOnClickListener(v -> {
                 if (null != mListener) {
@@ -75,6 +74,15 @@ public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<Ingredie
         }
     }
 
+    /**
+     * Method to set data and notify adapter
+     * @param ingredients to set
+     */
+    public void setData(List<IngredientEntity> ingredients) {
+        mValues = ingredients;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         if (mValues == null) {
@@ -85,27 +93,19 @@ public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<Ingredie
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
+        public final TextView mIngredientView;
         public final ImageView mEditImageButton;
         public final ImageView mDeleteImageButton;
         public final CheckBox mCheckbox;
-        public DummyItem mItem;
+        public IngredientEntity mItem;
 
         public ViewHolder(IngredientFragmentItemBinding binding) {
             super(binding.getRoot());
             mView = binding.getRoot();
-            mIdView = binding.itemNumber;
-            mContentView = binding.content;
+            mIngredientView = binding.ingredientTextView;
             mEditImageButton = binding.ingredientEditImageButton;
             mDeleteImageButton = binding.ingredientDeleteImageButton;
             mCheckbox = binding.ingredientCheckbox;
-        }
-
-        @NonNull
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
         }
     }
 }

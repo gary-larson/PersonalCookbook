@@ -3,7 +3,6 @@ package com.larsonapps.personalcookbook;
 import android.content.Context;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
-import androidx.lifecycle.LiveData;
 import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -19,8 +18,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
-
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -107,26 +104,28 @@ public class CookbookDaoRecipeAndroidTests {
     @Test
     public void testGetRecipe() {
         // get recipe by id
-        RecipeEntity recipe = cookbookDao.getRecipe(recipeId1);
-        // test all variables
-        assertEquals(recipeId1, recipe.getId());
-        assertEquals(NAME_VALUE_1, recipe.getName());
-        assertEquals(DESCRIPTION_VALUE_1, recipe.getDescription());
-        assertEquals(SHORT_DESCRIPTION_VALUE_1, recipe.getShortDescription());
-        assertEquals(SERVINGS_VALUE_1, recipe.getServings());
-        assertEquals(PREP_TIME_VALUE_1, recipe.getPrepTime());
-        assertEquals(COOK_TIME_VALUE_1, recipe.getCookTime());
-        assertEquals(TOTAL_TIME_VALUE_1, recipe.getTotalTime());
-        assertEquals(NOTES_VALUE_1, recipe.getNotes());
-        assertEquals(COPYRIGHT_VALUE_1, recipe.getCopyright());
+        cookbookDao.getRecipe(recipeId1).observeForever(newRecipe -> {
+            // test all variables
+            assertEquals(recipeId1, newRecipe.getId());
+            assertEquals(NAME_VALUE_1, newRecipe.getName());
+            assertEquals(DESCRIPTION_VALUE_1, newRecipe.getDescription());
+            assertEquals(SHORT_DESCRIPTION_VALUE_1, newRecipe.getShortDescription());
+            assertEquals(SERVINGS_VALUE_1, newRecipe.getServings());
+            assertEquals(PREP_TIME_VALUE_1, newRecipe.getPrepTime());
+            assertEquals(COOK_TIME_VALUE_1, newRecipe.getCookTime());
+            assertEquals(TOTAL_TIME_VALUE_1, newRecipe.getTotalTime());
+            assertEquals(NOTES_VALUE_1, newRecipe.getNotes());
+            assertEquals(COPYRIGHT_VALUE_1, newRecipe.getCopyright());
+        });
     }
 
     @Test
     public void testDeleteRecipe() {
-        // get recipe
-        RecipeEntity recipe = cookbookDao.getRecipe(recipeId1);
+        // get recipe id
+        int recipeId = cookbookDao.getRecipeIdByName(NAME_VALUE_1);
+        recipeEntity1.setId(recipeId);
         // delete recipe
-        cookbookDao.deleteRecipe(recipe);
+        cookbookDao.deleteRecipe(recipeEntity1);
         // get all recipes and test
         cookbookDao.getAllRecipes().observeForever(newRecipes -> {
             assertEquals(1, newRecipes.size());
@@ -136,16 +135,16 @@ public class CookbookDaoRecipeAndroidTests {
 
     @Test
     public void testUpdateRecipe() {
-        // get recipe
-        RecipeEntity recipe = cookbookDao.getRecipe(recipeId1);
+        // get recipe id
+        int recipeId = cookbookDao.getRecipeIdByName(NAME_VALUE_1);
+        recipeEntity1.setId(recipeId);
         // change recipe
-        recipe.setCookTime(500);
+        recipeEntity1.setCookTime(500);
         // update database
-        cookbookDao.updateRecipe(recipe);
-        // get updated record
-        RecipeEntity recipe1 = cookbookDao.getRecipe(recipeId1);
-        // test record
-        assertEquals(500, recipe1.getCookTime());
+        cookbookDao.updateRecipe(recipeEntity1);
+        // get updated record and test
+        cookbookDao.getRecipe(recipeId1).observeForever(newRecipe ->
+            assertEquals(500, newRecipe.getCookTime()));
     }
 
     @Test

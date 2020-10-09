@@ -14,6 +14,7 @@ public class IngredientEntityUnitTests {
     private static final String MEASURE_VALUE = "Tablespoon";
     private static final String NAME_VALUE = "Milk";
     private static final String PREPARATION_VALUE = "Pour into container";
+    private static final String TO_STRING_VALUE = "Milk 20.5 Tablespoon\nPour into container";
 
     // Create ingredient
     IngredientEntity ingredient = new IngredientEntity(ID_VALUE, RECIPE_ID_VALUE, NAME_VALUE,
@@ -91,5 +92,10 @@ public class IngredientEntityUnitTests {
         String temp = "This is a preparation statement";
         ingredient.setName(temp);
         assertEquals(temp, ingredient.getName());
+    }
+
+    @Test
+    public void testIngredientToString() {
+        assertEquals(TO_STRING_VALUE, ingredient.toString());
     }
 }

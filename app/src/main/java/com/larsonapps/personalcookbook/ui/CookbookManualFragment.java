@@ -19,22 +19,44 @@ import com.larsonapps.personalcookbook.databinding.CookbookManualFragmentBinding
 import java.util.Objects;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link CookbookManualFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Class to deal with manual entry of an ingredient
  */
 public class CookbookManualFragment extends Fragment {
+    // Declare constants
+    private static final String ARG_STATE = "state";
+    private static final String STATE = "mState";
+    private static final String RECIPE = "mRecipe";
     // Declare variables
     IngredientViewModel mIngredientsViewModel;
     StepViewModel mStepsViewModel;
     CookbookManualFragmentBinding mBinding;
+    private int mState;
+    private int mRecipeId = -1;
 
-    public CookbookManualFragment() {
-        // Required empty public constructor
+    /**
+     * Default constructor
+     */
+    public CookbookManualFragment() {}
+
+    public static CookbookManualFragment newInstance(int state) {
+        CookbookManualFragment fragment = new CookbookManualFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_STATE, state);
+        fragment.setArguments(args);
+        return fragment;
     }
 
-    public static CookbookManualFragment newInstance() {
-       return new CookbookManualFragment();
+    /**
+     * Method to save the state of the instance
+     * @param savedInstanceState to save
+     */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            mState = getArguments().getInt(ARG_STATE);
+        }
     }
 
     @Override
@@ -42,13 +64,17 @@ public class CookbookManualFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mBinding = CookbookManualFragmentBinding.inflate(inflater, container, false);
-
+        if (savedInstanceState != null) {
+            mState = savedInstanceState.getInt(STATE);
+            mRecipeId = savedInstanceState.getInt(RECIPE);
+        }
         getChildFragmentManager().beginTransaction()
                 .replace(mBinding.manualIngredientListContainer.getId(), IngredientFragment
-                        .newInstance(CookbookActivity.STATE_MANUAL))
+                        .newInstance(CookbookActivity.STATE_MANUAL, mRecipeId))
                 .replace(mBinding.manualStepListContainer.getId(), StepFragment
-                        .newInstance(CookbookActivity.STATE_MANUAL))
-                .replace(mBinding.manualImageListContainer.getId(), ImageFragment.newInstance(CookbookActivity.STATE_MANUAL))
+                        .newInstance(CookbookActivity.STATE_MANUAL, mRecipeId))
+                .replace(mBinding.manualImageListContainer.getId(), ImageFragment
+                        .newInstance(CookbookActivity.STATE_MANUAL, mRecipeId))
                 .commit();
         mBinding.manualRecipeNameEditText.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE || event != null) {
@@ -79,6 +105,13 @@ public class CookbookManualFragment extends Fragment {
             Toast.makeText(getContext(), "Submit clicked", Toast.LENGTH_LONG).show();
         });
         return mBinding.getRoot();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(STATE, mState);
+        outState.putInt(RECIPE, mRecipeId);
     }
 
     @Override

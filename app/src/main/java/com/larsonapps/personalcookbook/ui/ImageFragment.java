@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,6 +17,9 @@ import com.larsonapps.personalcookbook.R;
 import com.larsonapps.personalcookbook.adapter.ImageRecyclerViewAdapter;
 import com.larsonapps.personalcookbook.data.ImageEntity;
 import com.larsonapps.personalcookbook.databinding.ImageFragmentItemListBinding;
+import com.larsonapps.personalcookbook.databinding.IngredientFragmentItemListBinding;
+import com.larsonapps.personalcookbook.model.ImageViewModel;
+import com.larsonapps.personalcookbook.model.IngredientViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,60 +28,79 @@ import java.util.List;
  * A fragment representing a list of Items.
  */
 public class ImageFragment extends Fragment {
-
     // Declare constants
-    private static final String ARG_STATE= "state";
+    private static final String ARG_STATE = "state";
+    private static final String ARG_RECIPE_ID = "recipeId";
     // Declare variables
     private int mState;
+    private int mRecipeId;
     private ImageFragmentItemListBinding mBinding;
     private ImageFragment.OnListFragmentInteractionListener mListener;
+    private ImageViewModel mImageViewModel;
 
     /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
+     * Default constructor
      */
     public ImageFragment() {
     }
 
-    public static ImageFragment newInstance(int state) {
+    /**
+     * Method to create a new image fragment
+     *
+     * @param state    to save
+     * @param recipeId to set
+     * @return new image fragment
+     */
+    public static ImageFragment newInstance(int state, int recipeId) {
         ImageFragment fragment = new ImageFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_STATE, state);
+        args.putInt(ARG_RECIPE_ID, recipeId);
         fragment.setArguments(args);
         return fragment;
     }
 
+    /**
+     * Method to initialize when activity is created
+     *
+     * @param savedInstanceState for state changes
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
             mState = getArguments().getInt(ARG_STATE);
+            mRecipeId = getArguments().getInt(ARG_RECIPE_ID);
         }
     }
 
+    /**
+     * Method to create the view(s) of the image fragment
+     *
+     * @param inflater           to inflate the views
+     * @param container          to hold the views
+     * @param savedInstanceState of the fragment
+     * @return the created view(s)
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.image_fragment_item_list, container, false);
+        mBinding = ImageFragmentItemListBinding.inflate(inflater, container, false);
+        mImageViewModel = new ViewModelProvider(requireActivity()).get(ImageViewModel.class);
 
         // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            // TODO remove when data is in
-            List<ImageEntity> images = new ArrayList<>();
-            ImageEntity image = new ImageEntity();
-            image.setImageUrl("file:///android_asset/ApplePie.jpg");
-            images.add(image);
-            if (mState == CookbookActivity.STATE_EDIT) {
-                recyclerView.setAdapter(new ImageRecyclerViewAdapter(mListener, images, mState));
-            } else if (mState == CookbookActivity.STATE_MANUAL) {
-                recyclerView.setAdapter(new ImageRecyclerViewAdapter(mListener, null, mState));
+        Context context = mBinding.getRoot().getContext();
+        RecyclerView recyclerView = mBinding.list;
+        ImageRecyclerViewAdapter adapter = new ImageRecyclerViewAdapter(mListener, mState);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setAdapter(adapter);
+        mImageViewModel.getImages(mRecipeId).observe(getViewLifecycleOwner(), newImages -> {
+            if (newImages != null && newImages.size() > 0) {
+                adapter.setData(newImages);
             }
-        }
-        return view;
+        });
+        return mBinding.getRoot();
     }
 
     /**
