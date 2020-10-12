@@ -4,6 +4,9 @@
     <dimen name="text_margin">16dp</dimen>
     <dimen name="fab_elevation">6dp</dimen>
     <dimen name="app_bar_elevation">4dp</dimen>
+    <dimen name="text_margin_start">20dp</dimen>
+    <dimen name="button_padding">8dp</dimen>
+    <dimen name="fragment_bottom_margin">16dp</dimen>
 
     <!-- cookbook fragment -->
     <dimen name="app_bar_height">140dp</dimen>
@@ -11,7 +14,7 @@
     <dimen name="list_toolbar_side_margin">0dp</dimen>
     <dimen name="logo_padding">24dp</dimen>
     <dimen name="label_padding">16dp</dimen>
-    <dimen name="spinner_padding">16dp</dimen>
+    <dimen name="spinner_padding">8dp</dimen>
     <dimen name="fragment_height">100dp</dimen>
 
     <!-- fab -->
@@ -24,23 +27,19 @@
     <dimen name="details_photo_width">182dp</dimen>
     <dimen name="details_minimum_app_bar_height">250dp</dimen>
     <dimen name="details_default_container_height">250dp</dimen>
-    <dimen name="details_text_margin_start">20dp</dimen>
     <dimen name="details_fragment_height">75dp</dimen>
 
     <!-- cookbook edit fragment -->
-    <dimen name="edit_button_padding">8dp</dimen>
     <dimen name="edit_delete_icon_size">56dp</dimen>
     <dimen name="edit_delete_icon_margin">16dp</dimen>
     <dimen name="edit_icon_size">24dp</dimen>
     <dimen name="edit_icon_padding">4dp</dimen>
     <dimen name="edit_icon_margin">4dp</dimen>
     <dimen name="edit_description_margin">0dp</dimen>
-    <dimen name="edit_vertical_button_padding">4dp</dimen>
     <dimen name="edit_fragment_height">150dp</dimen>
 
 
     <!-- cookbook manual fragment -->
-    <dimen name="manual_button_padding">8dp</dimen>
     <dimen name="manual_fragment_height">150dp</dimen>
 
     <!-- cookbook import fragment -->

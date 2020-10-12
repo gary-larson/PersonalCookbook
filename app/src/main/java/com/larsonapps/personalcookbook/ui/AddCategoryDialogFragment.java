@@ -6,7 +6,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -17,7 +16,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.larsonapps.personalcookbook.databinding.AddCategoryFragmentBinding;
-import com.larsonapps.personalcookbook.databinding.ContentFragmentBinding;
 
 /**
  * Class to deal with add category dialog fragment
@@ -75,8 +73,10 @@ public class AddCategoryDialogFragment extends DialogFragment implements
         // set focus
         mBinding.addCategoryEditText.requestFocus();
         // display the virtual keyboard
-        getDialog().getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        if (getDialog() != null && getDialog().getWindow() != null) {
+            getDialog().getWindow().setSoftInputMode(
+                    WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        }
     }
 
     @NonNull
@@ -95,7 +95,9 @@ public class AddCategoryDialogFragment extends DialogFragment implements
         if (EditorInfo.IME_ACTION_DONE == actionId) {
             // Return input text back to activity through the implemented listener
             OnAddCategoryDialogListener listener = (OnAddCategoryDialogListener) getActivity();
-            listener.onFinishedAddDialog(mBinding.addCategoryEditText.getText().toString());
+            if (listener != null) {
+                listener.onFinishedAddDialog(mBinding.addCategoryEditText.getText().toString());
+            }
             // Close the dialog and return back to the parent activity
             dismiss();
             return true;

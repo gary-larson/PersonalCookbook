@@ -2,6 +2,7 @@ package com.larsonapps.personalcookbook.ui;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,9 @@ import com.larsonapps.personalcookbook.data.IngredientEntity;
 import com.larsonapps.personalcookbook.databinding.IngredientFragmentItemListBinding;
 import com.larsonapps.personalcookbook.model.IngredientViewModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * A fragment representing a list of Items.
@@ -24,10 +28,14 @@ public class IngredientFragment extends Fragment {
     // Declare constants
     private static final String ARG_STATE = "state";
     private static final String ARG_RECIPE_ID = "recipeId";
-
+    private static final String ARG_INGREDIENTS = "ingredients";
+    private static final String STATE = "mState";
+    private static final String RECIPE_ID = "mRecipeId";
+    private static final String INGREDIENTS = "mIngredientList";
     // Declare variables
     private int mState = 0;
     private int mRecipeId = 0;
+    private List<IngredientEntity> mIngredientList;
     private IngredientFragmentItemListBinding mBinding;
     private OnListFragmentInteractionListener mListener;
     private IngredientViewModel mIngredientViewModel;
@@ -53,6 +61,15 @@ public class IngredientFragment extends Fragment {
         return fragment;
     }
 
+    public static IngredientFragment newInstance(int state, List<IngredientEntity> list) {
+        IngredientFragment fragment = new IngredientFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_STATE, state);
+        args.putParcelableArrayList(ARG_INGREDIENTS, (ArrayList<IngredientEntity>) list);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     /**
      * Method to save the state of the instance
      * @param savedInstanceState to save
@@ -63,7 +80,12 @@ public class IngredientFragment extends Fragment {
 
         if (getArguments() != null) {
             mState = getArguments().getInt(ARG_STATE);
-            mRecipeId = getArguments().getInt(ARG_RECIPE_ID);
+            if (getArguments().containsKey(ARG_RECIPE_ID)) {
+                mRecipeId = getArguments().getInt(ARG_RECIPE_ID);
+            }
+            if (getArguments().containsKey(ARG_INGREDIENTS)) {
+                mIngredientList = getArguments().getParcelableArrayList(ARG_INGREDIENTS);
+            }
         }
     }
 
@@ -80,16 +102,33 @@ public class IngredientFragment extends Fragment {
         mBinding = IngredientFragmentItemListBinding.inflate(inflater, container, false);
         Context context = mBinding.getRoot().getContext();
         mIngredientViewModel = new ViewModelProvider(requireActivity()).get(IngredientViewModel.class);
+        if (savedInstanceState != null) {
+            mState = savedInstanceState.getInt(STATE);
+            mRecipeId = savedInstanceState.getInt(RECIPE_ID);
+            mIngredientList = savedInstanceState.getParcelableArrayList(INGREDIENTS);
+        }
         // Set the adapter
         mBinding.ingredientList.setLayoutManager(new LinearLayoutManager(context));
         IngredientRecyclerViewAdapter adapter = new IngredientRecyclerViewAdapter(mListener, mState);
         mBinding.ingredientList.setAdapter(adapter);
-        mIngredientViewModel.getIngredients(mRecipeId).observe(getViewLifecycleOwner(), newIngredients -> {
-            if (newIngredients != null && newIngredients.size() > 0) {
-                 adapter.setData(newIngredients);
-            }
-        });
+        if (mState == CookbookActivity.STATE_MANUAL || mState == CookbookActivity.STATE_IMPORT) {
+            adapter.setData(mIngredientList);
+        } else {
+            mIngredientViewModel.getIngredients(mRecipeId).observe(getViewLifecycleOwner(), newIngredients -> {
+                if (newIngredients != null && newIngredients.size() > 0) {
+                    adapter.setData(newIngredients);
+                }
+            });
+        }
         return mBinding.getRoot();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(STATE, mState);
+        outState.putInt(RECIPE_ID, mRecipeId);
+        outState.putParcelableArrayList(INGREDIENTS, (ArrayList<IngredientEntity>) mIngredientList);
     }
 
     /**

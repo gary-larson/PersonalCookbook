@@ -70,5 +70,15 @@ public class CookbookRepository {
         });
     }
 
-    public LiveData<RecipeEntity> getRecipe(int recipeId) { return mDao.getRecipe(recipeId);}
+    public LiveData<RecipeEntity> getRecipe(int recipeId) {
+        return mDao.getRecipe(recipeId);
+    }
+
+    public void addRwcipe(RecipeEntity recipe) {
+        CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.insertRecipe(recipe));
+    }
+
+    public int getRecipeId(String name) {
+        return mDao.getRecipeIdByName(name);
+    }
 }

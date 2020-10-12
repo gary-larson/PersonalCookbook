@@ -1,169 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/details_coordinator_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
     tools:context=".ui.CookbookEditFragment">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/edit_toolbar"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/details_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        app:layout_constraintTop_toTopOf="parent">
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-        <EditText
-            android:id="@+id/edit_recipe_name_edit_text"
-            style="@style/TextAppearance.MaterialComponents.Headline4"
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/details_nested"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/text_margin"
-            android:hint="@string/enter_recipe_name_hint"
-            android:imeOptions="actionDone"
-            android:importantForAutofill="no"
-            android:inputType="textCapWords"
-            android:text="@string/apple_pie"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white" />
-    </androidx.appcompat.widget.Toolbar>
+            android:layout_height="wrap_content">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/edit_content_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edit_toolbar"
-        tools:context="com.larsonapps.personalcookbook.CoobookDetailsContentFragment" />
+            <TextView
+                android:id="@+id/edit_content_label"
+                style="@style/HeadingTextView"
+                android:text="@string/content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/edit_ingredient_label"
-        style="@style/TextAppearance.MaterialComponents.Headline5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/text_margin"
-        android:text="@string/ingredients"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edit_content_container" />
+            <Button
+                android:id="@+id/edit_content_button"
+                style="@style/AppButton"
+                android:text="@string/edit"
+                app:icon="@drawable/ic_edit_24px"
+                app:layout_constraintBottom_toTopOf="@id/edit_content_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edit_content_label" />
 
-    <Button
-        android:id="@+id/edit_reorder_ingredient_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:paddingStart="@dimen/edit_button_padding"
-        android:paddingTop="@dimen/edit_vertical_button_padding"
-        android:paddingEnd="@dimen/edit_button_padding"
-        android:paddingBottom="@dimen/edit_vertical_button_padding"
-        android:text="@string/reorder_button_text"
-        app:icon="@drawable/ic_reorder_24px"
-        app:layout_constraintBottom_toTopOf="@id/edit_ingredient_label"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edit_ingredient_label" />
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/edit_content_container"
+                android:layout_width="match_parent"
+                style="@style/AppFragmentContainer"
+                app:layout_constraintTop_toBottomOf="@id/edit_content_label"
+                tools:context="com.larsonapps.personalcookbook.ContentFragment" />
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/edit_ingredient_list_container"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/edit_fragment_height"
-        app:layout_constraintTop_toBottomOf="@id/edit_ingredient_label"
-        tools:context="com.larsonapps.personalcookbook.IngredientFragment" />
+            <TextView
+                android:id="@+id/edit_ingredient_label"
+                style="@style/HeadingTextView"
+                android:text="@string/ingredients"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edit_content_container" />
 
-    <Button
-        android:id="@+id/edit_add_ingredient_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:paddingStart="@dimen/edit_button_padding"
-        android:paddingEnd="@dimen/edit_button_padding"
-        android:text="@string/add_button_text"
-        app:icon="@drawable/ic_add_24px"
-        app:layout_constraintBottom_toTopOf="@id/edit_ingredient_label"
-        app:layout_constraintEnd_toStartOf="@id/edit_reorder_ingredient_button"
-        app:layout_constraintStart_toEndOf="@id/edit_ingredient_label"
-        app:layout_constraintTop_toBottomOf="@id/edit_ingredient_label" />
+            <Button
+                android:id="@+id/edit_reorder_ingredient_button"
+                style="@style/AppButton"
+                android:text="@string/reorder_button_text"
+                app:icon="@drawable/ic_reorder_24px"
+                app:layout_constraintBottom_toTopOf="@id/edit_ingredient_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edit_ingredient_label" />
 
-    <TextView
-        android:id="@+id/edit_step_label"
-        style="@style/TextAppearance.MaterialComponents.Headline5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/text_margin"
-        android:text="@string/steps"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edit_ingredient_list_container" />
+            <Button
+                android:id="@+id/edit_add_ingredient_button"
+                style="@style/AppButton"
+                android:text="@string/add_button_text"
+                app:icon="@drawable/ic_add_24px"
+                app:layout_constraintBottom_toTopOf="@id/edit_ingredient_label"
+                app:layout_constraintEnd_toStartOf="@id/edit_reorder_ingredient_button"
+                app:layout_constraintStart_toEndOf="@id/edit_ingredient_label"
+                app:layout_constraintTop_toBottomOf="@id/edit_ingredient_label" />
 
-    <Button
-        android:id="@+id/edit_reorder_step_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:paddingStart="@dimen/edit_button_padding"
-        android:paddingEnd="@dimen/edit_button_padding"
-        android:text="@string/reorder_button_text"
-        app:icon="@drawable/ic_reorder_24px"
-        app:layout_constraintBottom_toTopOf="@id/edit_step_label"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edit_step_label" />
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/edit_ingredient_list_container"
+                android:layout_width="match_parent"
+                style="@style/AppFragmentContainer"
+                app:layout_constraintTop_toBottomOf="@id/edit_ingredient_label"
+                tools:context="com.larsonapps.personalcookbook.IngredientFragment" />
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/edit_step_list_container"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/edit_fragment_height"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edit_step_label"
-        tools:context="com.larsonapps.personalcookbook.StepFragment" />
 
-    <Button
-        android:id="@+id/edit_add_step_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:paddingStart="@dimen/edit_button_padding"
-        android:paddingEnd="@dimen/edit_button_padding"
-        android:text="@string/add_button_text"
-        app:icon="@drawable/ic_add_24px"
-        app:layout_constraintBottom_toTopOf="@id/edit_step_label"
-        app:layout_constraintEnd_toStartOf="@id/edit_reorder_step_button"
-        app:layout_constraintStart_toEndOf="@id/edit_step_label"
-        app:layout_constraintTop_toBottomOf="@id/edit_step_label" />
+            <TextView
+                android:id="@+id/edit_step_label"
+                style="@style/HeadingTextView"
+                android:text="@string/steps"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edit_ingredient_list_container" />
 
-    <TextView
-        android:id="@+id/edit_image_label"
-        style="@style/TextAppearance.MaterialComponents.Headline5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/text_margin"
-        android:text="@string/images"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@id/edit_image_list_container"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edit_step_list_container" />
+            <Button
+                android:id="@+id/edit_reorder_step_button"
+                style="@style/AppButton"
+                android:text="@string/reorder_button_text"
+                app:icon="@drawable/ic_reorder_24px"
+                app:layout_constraintBottom_toTopOf="@id/edit_step_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edit_step_label" />
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/edit_image_list_container"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edit_image_label"
-        tools:context="com.larsonapps.personalcookbook.ImageFragment" />
+            <Button
+                android:id="@+id/edit_add_step_button"
+                style="@style/AppButton"
+                android:text="@string/add_button_text"
+                app:icon="@drawable/ic_add_24px"
+                app:layout_constraintBottom_toTopOf="@id/edit_step_label"
+                app:layout_constraintEnd_toStartOf="@id/edit_reorder_step_button"
+                app:layout_constraintStart_toEndOf="@id/edit_step_label"
+                app:layout_constraintTop_toBottomOf="@id/edit_step_label" />
 
-    <Button
-        android:id="@+id/edit_add_image_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:paddingStart="@dimen/edit_button_padding"
-        android:paddingEnd="@dimen/edit_button_padding"
-        android:text="@string/add_button_text"
-        app:icon="@drawable/ic_add_24px"
-        app:layout_constraintBottom_toTopOf="@id/edit_image_label"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edit_image_label" />
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/edit_step_list_container"
+                android:layout_width="match_parent"
+                style="@style/AppFragmentContainer"
+                app:layout_constraintTop_toBottomOf="@id/edit_step_label"
+                tools:context="com.larsonapps.personalcookbook.StepFragment" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/edit_image_label"
+                style="@style/HeadingTextView"
+                android:text="@string/images"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edit_step_list_container" />
+
+            <Button
+                android:id="@+id/edit_add_image_button"
+                style="@style/AppButton"
+                android:text="@string/add_button_text"
+                app:icon="@drawable/ic_add_24px"
+                app:layout_constraintBottom_toTopOf="@id/edit_image_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edit_image_label" />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/edit_image_list_container"
+                android:layout_width="match_parent"
+                style="@style/AppFragmentContainer"
+                app:layout_constraintTop_toBottomOf="@id/edit_image_label"
+                tools:context="com.larsonapps.personalcookbook.ImageFragment" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

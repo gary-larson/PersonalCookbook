@@ -1,14 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/recipe_list"
-    android:name="com.larsonapps.personalcookbook.ui.main.RecipeFragment"
+    android:id="@+id/recipr_coordinator_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-    app:layoutManager="LinearLayoutManager"
-    tools:context=".ui.RecipeFragment"
-    tools:listitem="@layout/recipe_fragment_item" />
+    android:background="@color/colorPrimaryDark"
+    tools:context=".ui.RecipeFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/app_bar_elevation"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/recipe_nested"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/meal_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/meal_array"
+                    android:paddingTop="@dimen/spinner_padding"
+                    android:backgroundTint="@color/white"
+                    android:paddingBottom="@dimen/spinner_padding"
+                    android:spinnerMode="dropdown" />
+
+                <Spinner
+                    android:id="@+id/protein_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/protein_array"
+                    android:paddingTop="@dimen/spinner_padding"
+                    android:backgroundTint="@color/white"
+                    android:paddingBottom="@dimen/spinner_padding"
+                    android:spinnerMode="dropdown" />
+
+                <Spinner
+                    android:id="@+id/category_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/category_array"
+                    android:paddingTop="@dimen/spinner_padding"
+                    android:backgroundTint="@color/white"
+                    android:paddingBottom="@dimen/spinner_padding"
+                    android:spinnerMode="dropdown" />
+
+            </LinearLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recipe_list"
+                android:name="com.larsonapps.personalcookbook.ui.main.RecipeFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:layoutManager="LinearLayoutManager"
+                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+                tools:context=".ui.RecipeFragment"
+                tools:listitem="@layout/recipe_fragment_item" />
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/share_fab"
+        android:layout_width="@dimen/fab_size"
+        android:layout_height="@dimen/fab_size"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/fab_margin"
+        android:background="@drawable/fab_background"
+        android:contentDescription="@string/search"
+        android:elevation="@dimen/fab_elevation"
+        android:src="@drawable/ic_search_24px" />
+    <!--</LinearLayout>-->
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

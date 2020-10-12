@@ -28,6 +28,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="recipe_content_description">Photo of Recipe</string>
     <string name="edit">Edit</string>
+    <string name="content">Content</string>
     <string name="ingredients">Ingredients</string>
     <string name="steps">Steps</string>
     <string name="apple_pie">Apple Pie</string>
@@ -42,6 +43,17 @@
     <string name="import_recipe_menu_title">Import Recipe</string>
     <string name="about_menu_title">About</string>
     <string name="add_category_enter_category">Enter Category</string>
-    <string name="add_category_label_text">Enter a category to search by.</string>
+    <string name="add_category_edit_text_hint">Enter a category to search by.</string>
     <string name="add_category_menu_title">Add Category</string>
+    <string name="edit_content_total_time_hint">Total Time</string>
+    <string name="edit_content_cook_time_hint">Cook Time</string>
+    <string name="edit_content_prep_time_hint">Prep Time</string>
+    <string name="edit_content_servings_hint">Servings</string>
+    <string name="edit_content_short_description_hint">Short Description</string>
+    <string name="edit_content_recipe_name_hint">Recipe Name</string>
+    <string name="edit_content_description_hint">Enter description to be same as short description leave blank</string>
+    <string name="edit_content_notes_hint">Enter cook\'s or personal notes</string>
+    <string name="edit_content_copyright_hint">Enter copyright info if any</string>
+    <string name="edit_content_second_line_label_text">Enter the following as numbers and times in minutes</string>
+
 </resources>

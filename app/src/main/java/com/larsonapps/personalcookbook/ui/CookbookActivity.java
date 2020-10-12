@@ -42,18 +42,20 @@ import com.larsonapps.personalcookbook.model.RecipeViewModel;
 import com.larsonapps.personalcookbook.model.StepViewModel;
 
 public class CookbookActivity extends AppCompatActivity implements
+        FragmentManager.OnBackStackChangedListener,
         RecipeFragment.OnListFragmentInteractionListener,
         StepFragment.OnListFragmentInteractionListener,
         IngredientFragment.OnListFragmentInteractionListener,
         ImageFragment.OnListFragmentInteractionListener,
-        FragmentManager.OnBackStackChangedListener,
-        AddCategoryDialogFragment.OnAddCategoryDialogListener {
+        AddCategoryDialogFragment.OnAddCategoryDialogListener,
+        CookbookDetailsFragment.OnCookbookDetailsEditFabListener {
     // Declare constants
     public static final int STATE_DISPLAY = 0;
     public static final int STATE_EDIT= 1;
     public static final int STATE_MANUAL = 2;
     public static final int STATE_IMPORT = 3;
     private static final String DETAILS_FRAGMENT = "DetailsFragment";
+    private static final String EDIT_FRAGMENT = "EditFragment";
     private static final String MANUAL_FRAGMENT = "ManualFragment";
     private static final String IMPORT_FRAGMENT = "ImportFragment";
     private static final String ABOUT_FRAGMENT = "AboutFragment";
@@ -81,7 +83,7 @@ public class CookbookActivity extends AppCompatActivity implements
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .replace(mBinding.container.getId(), RecipeFragment.newInstance())
-                    .commitNow();
+                    .commit();
         }
         // get an application context
         mContext = getApplicationContext();
@@ -91,6 +93,10 @@ public class CookbookActivity extends AppCompatActivity implements
         mStepViewModel = new ViewModelProvider(this).get(StepViewModel.class);
         mImageViewModel = new ViewModelProvider(this).get(ImageViewModel.class);
         mKeywordViewModel = new ViewModelProvider(this).get(KeywordViewModel.class);
+        // set on back stack listener
+        getSupportFragmentManager().addOnBackStackChangedListener(this);
+        // display up button
+        displayUpButton();
         // get the height of the screen
         int height;
         if (android.os.Build.VERSION.SDK_INT >= 30){
@@ -104,6 +110,17 @@ public class CookbookActivity extends AppCompatActivity implements
         // set the height of the screen
         mHeight = height;
     }
+
+    /**
+     * Method to display upo button if back stack is greater than 0
+     */
+    private void displayUpButton() {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(
+                    getSupportFragmentManager().getBackStackEntryCount() > 0);
+        }
+    }
+
 
     /**
      * Inflate the main menu
@@ -129,10 +146,10 @@ public class CookbookActivity extends AppCompatActivity implements
         // take action depending on item selected
         switch (menuItemThatWasSelected) {
             case R.id.action_add_category:
-                FragmentManager fm = getSupportFragmentManager();
+                FragmentManager fragmentManager = getSupportFragmentManager();
                 AddCategoryDialogFragment addCategoryDialogFragment =
                         AddCategoryDialogFragment.newInstance("Add Category");
-                addCategoryDialogFragment.show(fm, "add_category_fragment");
+                addCategoryDialogFragment.show(fragmentManager, "add_category_fragment");
                 return true;
             case R.id.action_manual:
                 getSupportFragmentManager()
@@ -140,14 +157,14 @@ public class CookbookActivity extends AppCompatActivity implements
                         .replace(mBinding.container.getId(),
                                 CookbookManualFragment.newInstance(STATE_MANUAL))
                         .addToBackStack(MANUAL_FRAGMENT)
-                        .commitNow();
+                        .commit();
                 return true;
             case R.id.action_import:
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(mBinding.container.getId(), CookbookImportFragment.newInstance(STATE_IMPORT))
                         .addToBackStack(IMPORT_FRAGMENT)
-                        .commitNow();
+                        .commit();
                 return true;
             case R.id.action_about:
                 // Get fragment manager and open about fragment
@@ -168,7 +185,7 @@ public class CookbookActivity extends AppCompatActivity implements
     }
 
     /**
-     * Getter fo height
+     * Getter for height
      * @return height
      */
     public int getHeight() {return mHeight;}
@@ -184,7 +201,7 @@ public class CookbookActivity extends AppCompatActivity implements
                 .replace(mBinding.container.getId(), CookbookDetailsFragment
                         .newInstance(STATE_DISPLAY, recipe   ))
                 .addToBackStack(DETAILS_FRAGMENT)
-                .commitNow();
+                .commit();
     }
 
     /**
@@ -238,11 +255,14 @@ public class CookbookActivity extends AppCompatActivity implements
     }
 
     /**
-     * Method to handle the listener for the back button
+     * Method to process up button
+     * @return true
      */
     @Override
-    public void onBackStackChanged() {
+    public boolean onSupportNavigateUp() {
+        //This method is called when the up button is pressed. Just the pop back stack.
         getSupportFragmentManager().popBackStack();
+        return true;
     }
 
     /**
@@ -254,5 +274,20 @@ public class CookbookActivity extends AppCompatActivity implements
         if (!(category.equals("Category") || category.equals("Favorite"))) {
             mRecipeViewModel.addCategory(category);
         }
+    }
+
+    @Override
+    public void onBackStackChanged() {
+        displayUpButton();
+    }
+
+    @Override
+    public void onEditFabClickListener(RecipeEntity recipe) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(mBinding.container.getId(),
+                        CookbookEditFragment.newInstance(STATE_EDIT, recipe))
+                .addToBackStack(EDIT_FRAGMENT)
+                .commit();
     }
 }

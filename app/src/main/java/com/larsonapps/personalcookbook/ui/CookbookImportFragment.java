@@ -13,6 +13,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
 
 
+import com.larsonapps.personalcookbook.R;
 import com.larsonapps.personalcookbook.databinding.CookbookImportFragmentBinding;
 
 import java.util.Objects;
@@ -65,6 +66,8 @@ public class CookbookImportFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mBinding = CookbookImportFragmentBinding.inflate(inflater, container, false);
+        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity()))
+                .getSupportActionBar()).setTitle(getString(R.string.import_recipe_menu_title));
         mBinding.importUrlEditText.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE || event != null) {
                 String text = v.getText().toString();
@@ -77,15 +80,5 @@ public class CookbookImportFragment extends Fragment {
             Toast.makeText(getContext(), "Submit clicked", Toast.LENGTH_LONG).show();
         });
         return mBinding.getRoot();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (getActivity() != null) {
-            ((AppCompatActivity) getActivity()).setSupportActionBar(mBinding.importToolbar);
-            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar())
-                    .setDisplayHomeAsUpEnabled(true);
-        }
     }
 }

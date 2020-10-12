@@ -1,25 +1,15 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.AppCompat" parent="Theme.MaterialComponents.DayNight">
+    <style name="Theme.AppCompat" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-       <!-- <item name="textAppearanceButton">@style/TextAppearance.App.Button</item> -->
+        <item name="android:itemBackground">@color/colorPrimaryDark</item>
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
-        <item name="colorControlNormal">@color/black</item>
         <!-- Apply default style for dialogs -->
         <item name="android:dialogTheme">@style/AppDialogTheme</item>
-        <item name="actionOverflowButtonStyle">@style/CookbookOverflowButtonStyle</item>
-        <item name="toolbarStyle">@style/CookbookToolBarStyle</item>
-    </style>
 
-    <style name="CookbookOverflowButtonStyle" parent="Widget.AppCompat.ActionButton.Overflow">
-        <item name="android:tint">@color/white</item>
-    </style>
-
-    <style name="CookbookToolBarStyle" parent="@style/Widget.AppCompat.Toolbar">
-        <item name="titleTextColor">@color/white</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -46,26 +36,50 @@
         <item name="android:windowCloseOnTouchOutside">true</item>
     </style>
 
-<!--    <style name="TextAppearance.App.Button" parent="TextAppearance.MaterialComponents.Button">
-        <item name="fontFamily">@font/sans-serif-medium</item>
-        <item name="android:fontFamily">@font/sans-serif-medium</item>
-    </style> -->
-
     <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">20dp</item>
     </style>
 
-   <!-- <style name="AppTheme.Detail">
-        <item name="android:statusBarColor">@android:color/transparent</item>
-    </style> -->
-
     <style name="DetailTextView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginStart">@dimen/details_text_margin_start</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline5</item>
+        <item name="android:layout_marginStart">@dimen/text_margin_start</item>
         <item name="android:layout_marginEnd">@dimen/text_margin</item>
         <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="ContentTextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body1</item>
+        <item name="android:layout_marginStart">@dimen/text_margin_start</item>
+        <item name="android:layout_marginEnd">@dimen/text_margin</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="HeadingTextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline5</item>
+        <item name="android:layout_marginTop">@dimen/text_margin</item>
+        <item name="android:layout_marginStart">@dimen/text_margin_start</item>
+        <item name="android:layout_marginEnd">@dimen/text_margin</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="AppButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/text_margin</item>
+        <item name="android:paddingStart">@dimen/button_padding</item>
+        <item name="android:paddingEnd">@dimen/button_padding</item>
+    </style>
+
+    <style name="AppFragmentContainer">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">@dimen/fragment_bottom_margin</item>
     </style>
 
 </resources>

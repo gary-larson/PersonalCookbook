@@ -1,25 +1,18 @@
 package com.larsonapps.personalcookbook.ui;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
 
-import com.larsonapps.personalcookbook.data.RecipeEntity;
-import com.larsonapps.personalcookbook.model.IngredientViewModel;
-import com.larsonapps.personalcookbook.model.StepViewModel;
-import com.larsonapps.personalcookbook.databinding.CookbookEditFragmentBinding;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
-import java.util.Objects;
+import com.larsonapps.personalcookbook.data.RecipeEntity;
+import com.larsonapps.personalcookbook.databinding.CookbookEditFragmentBinding;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,42 +20,57 @@ import java.util.Objects;
  * create an instance of this fragment.
  */
 public class CookbookEditFragment extends Fragment {
-
+    // Declare constants
+    private static final String ARG_STATE = "state";
+    private static final String ARG_RECIPE = "recipe";
+    private static final String STATE = "mState";
+    private static final String RECIPE = "mRecipe";
     // Declare variables
-    private IngredientViewModel mIngredientsViewModel;
-    private StepViewModel mStepsViewModel;
     private CookbookEditFragmentBinding mBinding;
     private RecipeEntity mRecipe;
+    private int mState;
 
-    public static CookbookEditFragment newInstance() {
-        return new CookbookEditFragment();
+    public static CookbookEditFragment newInstance(int state, RecipeEntity recipe) {
+        CookbookEditFragment fragment = new CookbookEditFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_STATE, state);
+        args.putParcelable(ARG_RECIPE, recipe);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    /**
+     * Method to save the state of the instance
+     * @param savedInstanceState to save
+     */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            mState = getArguments().getInt(ARG_STATE);
+            mRecipe = getArguments().getParcelable(ARG_RECIPE);
+        }
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         mBinding = CookbookEditFragmentBinding.inflate(inflater, container, false);
-
-        String assetUrl = "file:///android_asset/ApplePie.jpg";
-       // mBinding.toolbar.setTitle(getString(R.string.app_name));
+        if (savedInstanceState != null) {
+            mState = savedInstanceState.getInt(STATE);
+            mRecipe = savedInstanceState.getParcelable(RECIPE);
+        }
         getChildFragmentManager().beginTransaction()
                 .replace(mBinding.editContentContainer.getId(), ContentFragment
-                        .newInstance(CookbookActivity.STATE_EDIT, mRecipe))
+                        .newInstance(mState, mRecipe))
                 .replace(mBinding.editIngredientListContainer.getId(), IngredientFragment
-                        .newInstance(CookbookActivity.STATE_EDIT, mRecipe.getId()))
+                        .newInstance(mState, mRecipe.getId()))
                 .replace(mBinding.editStepListContainer.getId(), StepFragment
-                        .newInstance(CookbookActivity.STATE_EDIT, mRecipe.getId()))
+                        .newInstance(mState, mRecipe.getId()))
                 .replace(mBinding.editImageListContainer.getId(), ImageFragment
-                        .newInstance(CookbookActivity.STATE_EDIT, mRecipe.getId()))
+                        .newInstance(mState, mRecipe.getId()))
                 .commit();
-        mBinding.editRecipeNameEditText.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_DONE || event != null) {
-                String text = v.getText().toString();
-                Toast.makeText(getContext(), text, Toast.LENGTH_LONG).show();
-                return true;
-            }
-            return false;
-        });
         mBinding.editReorderIngredientButton.setOnClickListener(v -> {
             Toast.makeText(getContext(), "Reorder Ingredient clicked", Toast.LENGTH_LONG).show();
         });
@@ -82,21 +90,10 @@ public class CookbookEditFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mIngredientsViewModel = new ViewModelProvider(requireActivity())
-                .get(IngredientViewModel.class);
-        // TODO: Use the ViewModel
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (getActivity() != null) {
-            ((AppCompatActivity) getActivity()).setSupportActionBar(mBinding.editToolbar);
-            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar())
-                    .setDisplayHomeAsUpEnabled(true);
-        }
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(STATE, mState);
+        outState.putParcelable(RECIPE, mRecipe);
     }
 
 }

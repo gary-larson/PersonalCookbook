@@ -13,13 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.larsonapps.personalcookbook.R;
 import com.larsonapps.personalcookbook.adapter.ImageRecyclerViewAdapter;
 import com.larsonapps.personalcookbook.data.ImageEntity;
+import com.larsonapps.personalcookbook.data.IngredientEntity;
 import com.larsonapps.personalcookbook.databinding.ImageFragmentItemListBinding;
-import com.larsonapps.personalcookbook.databinding.IngredientFragmentItemListBinding;
 import com.larsonapps.personalcookbook.model.ImageViewModel;
-import com.larsonapps.personalcookbook.model.IngredientViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +29,14 @@ public class ImageFragment extends Fragment {
     // Declare constants
     private static final String ARG_STATE = "state";
     private static final String ARG_RECIPE_ID = "recipeId";
+    private static final String ARG_IMAGES = "images";
+    private static final String STATE = "mState";
+    private static final String RECIPE_ID = "mRecipeId";
+    private static final String IMAGES = "mImages";
     // Declare variables
     private int mState;
     private int mRecipeId;
+    private List<ImageEntity> mImageList;
     private ImageFragmentItemListBinding mBinding;
     private ImageFragment.OnListFragmentInteractionListener mListener;
     private ImageViewModel mImageViewModel;
@@ -60,6 +63,15 @@ public class ImageFragment extends Fragment {
         return fragment;
     }
 
+    public static ImageFragment newInstance(int state, List<ImageEntity> list) {
+        ImageFragment fragment = new ImageFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_STATE, state);
+        args.putParcelableArrayList(ARG_IMAGES, (ArrayList<ImageEntity>) list);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     /**
      * Method to initialize when activity is created
      *
@@ -71,7 +83,12 @@ public class ImageFragment extends Fragment {
 
         if (getArguments() != null) {
             mState = getArguments().getInt(ARG_STATE);
-            mRecipeId = getArguments().getInt(ARG_RECIPE_ID);
+            if (getArguments().containsKey(ARG_RECIPE_ID)) {
+                mRecipeId = getArguments().getInt(ARG_RECIPE_ID);
+            }
+            if (getArguments().containsKey(ARG_IMAGES)) {
+                mImageList = getArguments().getParcelableArrayList(ARG_IMAGES);
+            }
         }
     }
 
@@ -84,23 +101,40 @@ public class ImageFragment extends Fragment {
      * @return the created view(s)
      */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mBinding = ImageFragmentItemListBinding.inflate(inflater, container, false);
         mImageViewModel = new ViewModelProvider(requireActivity()).get(ImageViewModel.class);
 
         // Set the adapter
         Context context = mBinding.getRoot().getContext();
-        RecyclerView recyclerView = mBinding.list;
+        RecyclerView recyclerView = mBinding.imageList;
+        if (savedInstanceState != null) {
+            mState = savedInstanceState.getInt(STATE);
+            mRecipeId = savedInstanceState.getInt(RECIPE_ID);
+            mImageList = savedInstanceState.getParcelableArrayList(IMAGES);
+        }
         ImageRecyclerViewAdapter adapter = new ImageRecyclerViewAdapter(mListener, mState);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(adapter);
-        mImageViewModel.getImages(mRecipeId).observe(getViewLifecycleOwner(), newImages -> {
-            if (newImages != null && newImages.size() > 0) {
-                adapter.setData(newImages);
-            }
-        });
+        if (mState == CookbookActivity.STATE_MANUAL || mState == CookbookActivity.STATE_IMPORT) {
+            adapter.setData(mImageList);
+        } else {
+            mImageViewModel.getImages(mRecipeId).observe(getViewLifecycleOwner(), newImages -> {
+                if (newImages != null && newImages.size() > 0) {
+                    adapter.setData(newImages);
+                }
+            });
+        }
         return mBinding.getRoot();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(STATE, mState);
+        outState.putInt(RECIPE_ID, mRecipeId);
+        outState.putParcelableArrayList(IMAGES, (ArrayList<ImageEntity>) mImageList);
     }
 
     /**

@@ -1,23 +1,19 @@
 package com.larsonapps.personalcookbook.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.larsonapps.personalcookbook.R;
 import com.larsonapps.personalcookbook.data.RecipeEntity;
-import com.larsonapps.personalcookbook.model.IngredientViewModel;
-
 import com.larsonapps.personalcookbook.databinding.CookbookDetailsFragmentBinding;
-import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
@@ -25,11 +21,13 @@ public class CookbookDetailsFragment extends Fragment {
     // Declare constants
     private static final String ARG_STATE = "state";
     private static final String ARG_RECIPE = "recipe";
-
+    private static final String STATE = "mState";
+    private static final String RECIPE = "mRecipe";
     // Declare variables
     private CookbookDetailsFragmentBinding mBinding;
     private RecipeEntity mRecipe;
     private int mState;
+    private OnCookbookDetailsEditFabListener mListener;
 
     /**
      * Default constructor
@@ -69,20 +67,20 @@ public class CookbookDetailsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         mBinding = CookbookDetailsFragmentBinding.inflate(inflater, container, false);
-        String assetUrl = "file:///android_asset/ApplePie.jpg";
-        Picasso.get().load(assetUrl)
-                //.error(R.mipmap.error)
-                .noPlaceholder()
-                //.resize((int) mContext.getResources().getDimension(R.dimen.details_photo_height),
-                //        (int)mContext.getResources().getDimension(R.dimen.details_photo_height))
-                .into(mBinding.photo);
-        mBinding.toolbar.setTitle(getString(R.string.app_name));
+        if (savedInstanceState != null) {
+            mState = savedInstanceState.getInt(STATE);
+            mRecipe = savedInstanceState.getParcelable(RECIPE);
+        }
+        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity()))
+                .getSupportActionBar()).setTitle(mRecipe.getName());
         getChildFragmentManager().beginTransaction()
-                .replace(mBinding.contentContainer.getId(), ContentFragment
+                .replace(mBinding.detailsContentContainer.getId(), ContentFragment
                         .newInstance(mState, mRecipe))
-                .replace(mBinding.ingredientListContainer.getId(), IngredientFragment
+                .replace(mBinding.detailsIngredientListContainer.getId(), IngredientFragment
                         .newInstance(mState, mRecipe.getId()))
-                .replace(mBinding.stepListContainer.getId(), StepFragment
+                .replace(mBinding.detailsStepListContainer.getId(), StepFragment
+                        .newInstance(mState, mRecipe.getId()))
+                .replace(mBinding.detailsImageListContainer.getId(), ImageFragment
                         .newInstance(mState, mRecipe.getId()))
                 .commit();
         CookbookActivity activity = (CookbookActivity) getActivity();
@@ -93,26 +91,51 @@ public class CookbookDetailsFragment extends Fragment {
             height -= h - getResources().getInteger(R.integer.list_size_adjuster);
             height /= getResources().getInteger(R.integer.list_size_divisor);
         }
-        ViewGroup.LayoutParams params = mBinding.ingredientListContainer.getLayoutParams();
+        ViewGroup.LayoutParams params = mBinding.detailsIngredientListContainer.getLayoutParams();
         params.height = height;
-        mBinding.ingredientListContainer.setLayoutParams(params);
-        params = mBinding.stepListContainer.getLayoutParams();
+        mBinding.detailsIngredientListContainer.setLayoutParams(params);
+        params = mBinding.detailsStepListContainer.getLayoutParams();
         params.height = height;
-        mBinding.stepListContainer.setLayoutParams(params);
+        mBinding.detailsStepListContainer.setLayoutParams(params);
         mBinding.editFab.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Edit FAB clicked", Toast.LENGTH_LONG).show();
+            if (null != mListener) {
+                mListener.onEditFabClickListener(mRecipe);
+            }
         });
         return mBinding.getRoot();
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        if (getActivity() != null) {
-            ((AppCompatActivity) getActivity()).setSupportActionBar(mBinding.toolbar);
-            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar())
-                    .setDisplayHomeAsUpEnabled(true);
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(STATE, mState);
+        outState.putParcelable(RECIPE, mRecipe);
+    }
+
+    /**
+     * Method that initializes the listener
+     * @param context to use
+     */
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof IngredientFragment.OnListFragmentInteractionListener) {
+            mListener = (CookbookDetailsFragment.OnCookbookDetailsEditFabListener) context;
+        } else {
+            throw new RuntimeException(context.toString() );
         }
     }
 
+    /**
+     * Method to remove listener
+     */
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    public interface OnCookbookDetailsEditFabListener {
+        void onEditFabClickListener(RecipeEntity recipe);
+    }
 }

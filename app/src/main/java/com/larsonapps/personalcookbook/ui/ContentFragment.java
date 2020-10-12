@@ -22,6 +22,7 @@ public class ContentFragment extends Fragment {
     // Constants
     private static final String ARG_STATE = "state";
     private static final String ARG_RECIPE = "recipe";
+    private static final String STATE = "mState";
     private static final String RECIPE = "mRecipe";
 
     // Declare variables
@@ -66,20 +67,13 @@ public class ContentFragment extends Fragment {
         mBinding = ContentFragmentBinding.inflate(inflater, container, false);
         mRecipeViewModel = new ViewModelProvider(requireActivity()).get(RecipeViewModel.class);
         if (savedInstanceState != null) {
+            mState = savedInstanceState.getInt(STATE);
             mRecipe = savedInstanceState.getParcelable(RECIPE);
-        }
-        if (mState == CookbookActivity.STATE_DISPLAY) {
-            mBinding.descriptionImageButton.setVisibility(View.GONE);
-        } else if (mState == CookbookActivity.STATE_EDIT) {
-            mBinding.descriptionImageButton.setOnClickListener(v -> {
-                Toast.makeText(getContext(), "Description Clicked", Toast.LENGTH_LONG).show();
-            });
-            mBinding.descriptionImageButton.setVisibility(View.VISIBLE);
         }
         if (mRecipe != null) {
             mBinding.nameTextView.setText(mRecipe.getName());
             mBinding.shortDescriptionTextView.setText(mRecipe.getShortDescription());
-            mBinding.servingsTextView.setText(mRecipe.getServings());
+            mBinding.servingsTextView.setText(String.valueOf(mRecipe.getServings()));
             mBinding.prepTimeTextView.setText(mRecipe.getPrepTimeString());
             mBinding.cookTimeTextView.setText(mRecipe.getCookTimeString());
             mBinding.totalTimeTextView.setText(mRecipe.getTotalTimeString());
@@ -93,6 +87,7 @@ public class ContentFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putInt(STATE, mState);
         outState.putParcelable(RECIPE, mRecipe);
     }
 }

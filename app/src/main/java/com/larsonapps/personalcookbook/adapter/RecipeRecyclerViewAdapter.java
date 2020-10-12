@@ -38,7 +38,7 @@ import java.util.Locale;
 public class RecipeRecyclerViewAdapter extends
         RecyclerView.Adapter<RecipeRecyclerViewAdapter.ViewHolder> {
 
-    private final List<RecipeEntity> mValues;
+    private List<RecipeEntity> mValues;
     private RecipeFragment.OnListFragmentInteractionListener mListener;
 
     public RecipeRecyclerViewAdapter(RecipeFragment.OnListFragmentInteractionListener listener,
@@ -78,6 +78,11 @@ public class RecipeRecyclerViewAdapter extends
             return 0;
         }
         return mValues.size();
+    }
+
+    public void setData(List<RecipeEntity> list) {
+        mValues = list;
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -80,4 +80,12 @@ public class RecipeViewModel extends AndroidViewModel {
         }
         return mRecipe;
     }
+
+    public void addRecipe(RecipeEntity recipe) {
+        mRepository.addRwcipe(recipe);
+    }
+
+    public int getRecipeId(String name) {
+        return mRepository.getRecipeId(name);
+    }
 }
