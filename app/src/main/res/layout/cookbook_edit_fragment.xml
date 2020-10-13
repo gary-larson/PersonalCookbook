@@ -20,11 +20,13 @@
         android:id="@+id/details_nested"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_anchor="@+id/details_nested"
+        app:layout_anchorGravity="center"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/edit_content_label"
@@ -36,16 +38,18 @@
             <Button
                 android:id="@+id/edit_content_button"
                 style="@style/AppButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/edit"
                 app:icon="@drawable/ic_edit_24px"
-                app:layout_constraintBottom_toTopOf="@id/edit_content_label"
+                app:layout_constraintTop_toTopOf="@id/edit_content_label"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/edit_content_label" />
+                app:layout_constraintBottom_toBottomOf="@id/edit_content_label" />
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/edit_content_container"
-                android:layout_width="match_parent"
                 style="@style/AppFragmentContainer"
+                android:layout_width="match_parent"
                 app:layout_constraintTop_toBottomOf="@id/edit_content_label"
                 tools:context="com.larsonapps.personalcookbook.ContentFragment" />
 
@@ -61,24 +65,24 @@
                 style="@style/AppButton"
                 android:text="@string/reorder_button_text"
                 app:icon="@drawable/ic_reorder_24px"
-                app:layout_constraintBottom_toTopOf="@id/edit_ingredient_label"
+                app:layout_constraintTop_toTopOf="@id/edit_ingredient_label"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/edit_ingredient_label" />
+                app:layout_constraintBottom_toBottomOf="@id/edit_ingredient_label" />
 
             <Button
                 android:id="@+id/edit_add_ingredient_button"
                 style="@style/AppButton"
                 android:text="@string/add_button_text"
                 app:icon="@drawable/ic_add_24px"
-                app:layout_constraintBottom_toTopOf="@id/edit_ingredient_label"
+                app:layout_constraintTop_toTopOf="@id/edit_ingredient_label"
                 app:layout_constraintEnd_toStartOf="@id/edit_reorder_ingredient_button"
                 app:layout_constraintStart_toEndOf="@id/edit_ingredient_label"
-                app:layout_constraintTop_toBottomOf="@id/edit_ingredient_label" />
+                app:layout_constraintBottom_toBottomOf="@id/edit_ingredient_label" />
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/edit_ingredient_list_container"
-                android:layout_width="match_parent"
                 style="@style/AppFragmentContainer"
+                android:layout_width="match_parent"
                 app:layout_constraintTop_toBottomOf="@id/edit_ingredient_label"
                 tools:context="com.larsonapps.personalcookbook.IngredientFragment" />
 
@@ -95,24 +99,24 @@
                 style="@style/AppButton"
                 android:text="@string/reorder_button_text"
                 app:icon="@drawable/ic_reorder_24px"
-                app:layout_constraintBottom_toTopOf="@id/edit_step_label"
+                app:layout_constraintTop_toTopOf="@id/edit_step_label"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/edit_step_label" />
+                app:layout_constraintBottom_toBottomOf="@id/edit_step_label" />
 
             <Button
                 android:id="@+id/edit_add_step_button"
                 style="@style/AppButton"
                 android:text="@string/add_button_text"
                 app:icon="@drawable/ic_add_24px"
-                app:layout_constraintBottom_toTopOf="@id/edit_step_label"
+                app:layout_constraintTop_toTopOf="@id/edit_step_label"
                 app:layout_constraintEnd_toStartOf="@id/edit_reorder_step_button"
                 app:layout_constraintStart_toEndOf="@id/edit_step_label"
-                app:layout_constraintTop_toBottomOf="@id/edit_step_label" />
+                app:layout_constraintBottom_toBottomOf="@id/edit_step_label" />
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/edit_step_list_container"
-                android:layout_width="match_parent"
                 style="@style/AppFragmentContainer"
+                android:layout_width="match_parent"
                 app:layout_constraintTop_toBottomOf="@id/edit_step_label"
                 tools:context="com.larsonapps.personalcookbook.StepFragment" />
 
@@ -129,14 +133,14 @@
                 style="@style/AppButton"
                 android:text="@string/add_button_text"
                 app:icon="@drawable/ic_add_24px"
-                app:layout_constraintBottom_toTopOf="@id/edit_image_label"
+                app:layout_constraintTop_toTopOf="@id/edit_image_label"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/edit_image_label" />
+                app:layout_constraintBottom_toBottomOf="@id/edit_image_label" />
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/edit_image_list_container"
-                android:layout_width="match_parent"
                 style="@style/AppFragmentContainer"
+                android:layout_width="match_parent"
                 app:layout_constraintTop_toBottomOf="@id/edit_image_label"
                 tools:context="com.larsonapps.personalcookbook.ImageFragment" />
 

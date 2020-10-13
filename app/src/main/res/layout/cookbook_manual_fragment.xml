@@ -38,9 +38,9 @@
                 style="@style/AppButton"
                 android:text="@string/add_button_text"
                 app:icon="@drawable/ic_add_24px"
-                app:layout_constraintBottom_toTopOf="@id/manual_content_label"
+                app:layout_constraintTop_toTopOf="@id/manual_content_label"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/manual_content_label" />
+                app:layout_constraintBottom_toBottomOf="@id/manual_content_label" />
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/manual_content_container"
@@ -62,9 +62,9 @@
                 style="@style/AppButton"
                 android:text="@string/add_button_text"
                 app:icon="@drawable/ic_add_24px"
-                app:layout_constraintBottom_toTopOf="@id/manual_ingredient_label"
+                app:layout_constraintTop_toTopOf="@id/manual_ingredient_label"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/manual_ingredient_label" />
+                app:layout_constraintBottom_toBottomOf="@id/manual_ingredient_label" />
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/manual_ingredient_list_container"
@@ -86,9 +86,9 @@
                 style="@style/AppButton"
                 android:text="@string/add_button_text"
                 app:icon="@drawable/ic_add_24px"
-                app:layout_constraintBottom_toTopOf="@id/manual_step_label"
+                app:layout_constraintTop_toTopOf="@id/manual_step_label"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/manual_step_label" />
+                app:layout_constraintBottom_toBottomOf="@id/manual_step_label" />
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/manual_step_list_container"
@@ -113,9 +113,9 @@
                 style="@style/AppButton"
                 android:text="@string/add_button_text"
                 app:icon="@drawable/ic_add_24px"
-                app:layout_constraintBottom_toTopOf="@id/manual_image_label"
+                app:layout_constraintTop_toTopOf="@id/manual_image_label"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/manual_image_label" />
+                app:layout_constraintBottom_toBottomOf="@id/manual_image_label" />
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/manual_image_list_container"

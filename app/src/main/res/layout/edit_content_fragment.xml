@@ -1,137 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <EditText
+        android:id="@+id/edit_content_name_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginStart="@dimen/dialog_margin"
+        android:layout_marginEnd="@dimen/dialog_margin"
+        android:layout_marginBottom="@dimen/dialog_vertical_margin"
+        android:hint="@string/edit_content_recipe_name_hint"
+        android:imeOptions="actionDone"
+        android:importantForAutofill="no"
+        android:inputType="textCapWords"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
 
-        <EditText
-            android:id="@+id/edit_content_name_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:imeOptions="actionDone"
-            android:hint="@string/edit_content_recipe_name_hint"
-            android:layout_marginBottom="@dimen/dialog_vertical_margin"
-            android:layout_marginStart="@dimen/dialog_margin"
-            android:layout_marginEnd="@dimen/dialog_margin"
-            android:inputType="textCapWords"
-            android:importantForAutofill="no" />
-
-        <EditText
-            android:id="@+id/edit_content_short_description_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:imeOptions="actionDone"
-            android:hint="@string/edit_content_short_description_hint"
-            android:layout_marginBottom="@dimen/dialog_vertical_margin"
-            android:layout_marginStart="@dimen/dialog_margin"
-            android:layout_marginEnd="@dimen/dialog_margin"
-            android:inputType="textCapWords"
-            android:importantForAutofill="no" />
-    </LinearLayout>
+    <EditText
+        android:id="@+id/edit_content_short_description_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dialog_margin"
+        android:layout_marginEnd="@dimen/dialog_margin"
+        android:layout_marginBottom="@dimen/dialog_vertical_margin"
+        android:hint="@string/edit_content_short_description_hint"
+        android:imeOptions="actionDone"
+        android:importantForAutofill="no"
+        android:inputType="textCapWords"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/edit_content_second_line_label_text"
         android:layout_gravity="center_horizontal"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+        android:text="@string/edit_content_second_line_label_text"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        android:textColor="@color/white" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/serv"
+            android:textColor="@color/white"/>
 
         <EditText
             android:id="@+id/edit_content_servings_edit_text"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:imeOptions="actionDone"
-            android:hint="@string/edit_content_servings_hint"
-            android:layout_marginBottom="@dimen/dialog_vertical_margin"
             android:layout_marginStart="@dimen/dialog_margin"
             android:layout_marginEnd="@dimen/dialog_margin"
+            android:layout_marginBottom="@dimen/dialog_vertical_margin"
+            android:layout_weight="1"
+            android:hint="@string/edit_content_servings_hint"
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
             android:inputType="number"
-            android:importantForAutofill="no" />
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/prep"
+            android:textColor="@color/white"/>
 
         <EditText
             android:id="@+id/edit_content_prep_time_edit_text"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:imeOptions="actionDone"
-            android:hint="@string/edit_content_prep_time_hint"
-            android:layout_marginBottom="@dimen/dialog_vertical_margin"
             android:layout_marginStart="@dimen/dialog_margin"
             android:layout_marginEnd="@dimen/dialog_margin"
+            android:layout_marginBottom="@dimen/dialog_vertical_margin"
+            android:layout_weight="1"
+            android:hint="@string/edit_content_prep_time_hint"
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
             android:inputType="number"
-            android:importantForAutofill="no" />
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cook"
+            android:textColor="@color/white"/>
 
         <EditText
             android:id="@+id/edit_content_cook_time_edit_text"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:imeOptions="actionDone"
-            android:hint="@string/edit_content_cook_time_hint"
-            android:layout_marginBottom="@dimen/dialog_vertical_margin"
             android:layout_marginStart="@dimen/dialog_margin"
             android:layout_marginEnd="@dimen/dialog_margin"
+            android:layout_marginBottom="@dimen/dialog_vertical_margin"
+            android:layout_weight="1"
+            android:hint="@string/edit_content_cook_time_hint"
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
             android:inputType="number"
-            android:importantForAutofill="no" />
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/total"
+            android:textColor="@color/white"/>
 
         <EditText
             android:id="@+id/edit_content_total_time_edit_text"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:imeOptions="actionDone"
-            android:hint="@string/edit_content_total_time_hint"
-            android:layout_marginBottom="@dimen/dialog_vertical_margin"
             android:layout_marginStart="@dimen/dialog_margin"
             android:layout_marginEnd="@dimen/dialog_margin"
+            android:layout_marginBottom="@dimen/dialog_vertical_margin"
+            android:layout_weight="1"
+            android:hint="@string/edit_content_total_time_hint"
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
             android:inputType="number"
-            android:importantForAutofill="no" />
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
     </LinearLayout>
 
     <EditText
         android:id="@+id/edit_content_description_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:imeOptions="actionDone"
-        android:hint="@string/edit_content_description_hint"
-        android:layout_marginBottom="@dimen/dialog_vertical_margin"
         android:layout_marginStart="@dimen/dialog_margin"
         android:layout_marginEnd="@dimen/dialog_margin"
+        android:layout_marginBottom="@dimen/dialog_vertical_margin"
+        android:hint="@string/edit_content_description_hint"
+        android:imeOptions="actionDone"
+        android:importantForAutofill="no"
         android:inputType="textCapWords"
-        android:importantForAutofill="no" />
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
 
     <EditText
         android:id="@+id/edit_content_notes_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:imeOptions="actionDone"
-        android:hint="@string/edit_content_notes_hint"
-        android:layout_marginBottom="@dimen/dialog_vertical_margin"
         android:layout_marginStart="@dimen/dialog_margin"
         android:layout_marginEnd="@dimen/dialog_margin"
+        android:layout_marginBottom="@dimen/dialog_vertical_margin"
+        android:hint="@string/edit_content_notes_hint"
+        android:imeOptions="actionDone"
+        android:importantForAutofill="no"
         android:inputType="textCapWords"
-        android:importantForAutofill="no" />
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
 
     <EditText
         android:id="@+id/edit_content_copyright_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:imeOptions="actionDone"
-        android:hint="@string/edit_content_copyright_hint"
-        android:layout_marginBottom="@dimen/dialog_vertical_margin"
         android:layout_marginStart="@dimen/dialog_margin"
         android:layout_marginEnd="@dimen/dialog_margin"
+        android:layout_marginBottom="@dimen/dialog_vertical_margin"
+        android:hint="@string/edit_content_copyright_hint"
+        android:imeOptions="actionDone"
+        android:importantForAutofill="no"
         android:inputType="textCapWords"
-        android:importantForAutofill="no" />
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
 
     <Button
         android:id="@+id/edit_content_submit_button"
+        style="@style/AppButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

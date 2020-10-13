@@ -75,7 +75,7 @@ public class CookbookDetailsFragment extends Fragment {
                 .getSupportActionBar()).setTitle(mRecipe.getName());
         getChildFragmentManager().beginTransaction()
                 .replace(mBinding.detailsContentContainer.getId(), ContentFragment
-                        .newInstance(mState, mRecipe))
+                        .newInstance(mState, mRecipe.getId()))
                 .replace(mBinding.detailsIngredientListContainer.getId(), IngredientFragment
                         .newInstance(mState, mRecipe.getId()))
                 .replace(mBinding.detailsStepListContainer.getId(), StepFragment

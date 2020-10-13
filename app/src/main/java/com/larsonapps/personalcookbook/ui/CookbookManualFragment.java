@@ -107,7 +107,7 @@ public class CookbookManualFragment extends Fragment implements
                 .commit();
         mBinding.manualAddContentButton.setOnClickListener(v -> {
             EditContentDialogFragment editContentDialogFragment = EditContentDialogFragment
-                    .newInstance("Add Manual", mState);
+                    .newInstance("Add Manual", mState, mRecipe);
             editContentDialogFragment.setTargetFragment(this, 100);
             if (getActivity() != null) {
                 editContentDialogFragment.show(getActivity().getSupportFragmentManager(),

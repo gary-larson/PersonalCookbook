@@ -55,5 +55,9 @@
     <string name="edit_content_notes_hint">Enter cook\'s or personal notes</string>
     <string name="edit_content_copyright_hint">Enter copyright info if any</string>
     <string name="edit_content_second_line_label_text">Enter the following as numbers and times in minutes</string>
+    <string name="serv">Serv</string>
+    <string name="prep">Prep</string>
+    <string name="cook">Cook</string>
+    <string name="total">Total</string>
 
 </resources>

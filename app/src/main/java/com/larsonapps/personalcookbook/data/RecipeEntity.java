@@ -154,6 +154,10 @@ public class RecipeEntity implements Parcelable {
         return servings;
     }
 
+    public String getServingsString() {
+        return String.format(Locale.getDefault(), "%d Servings", servings);
+    }
+
     /**
      * Setter for servings
      * @param servings to set
@@ -179,6 +183,12 @@ public class RecipeEntity implements Parcelable {
     }
 
     /**
+     * Getter for preparation time in minutes
+     * @return preparation time string
+     */
+    public String getPrepTimeMinutesString() {return getString(prepTime, "Prep");}
+
+    /**
      * Setter for prepTime in minutes
      * @param prepTime to set
      */
@@ -201,6 +211,12 @@ public class RecipeEntity implements Parcelable {
     public String getCookTimeString() {
         return getString(cookTime);
     }
+
+    /**
+     * Getter for cook time in minutes
+     * @return cook time string
+     */
+    public String getCookTimeMinutesString() {return getString(cookTime, "Cook");}
 
     /**
      * Method to convert a time in minutes to a string
@@ -249,6 +265,16 @@ public class RecipeEntity implements Parcelable {
     }
 
     /**
+     * Method to get time string in minutes
+     * @param time in minutes
+     * @param string for type of time
+     * @return string representation
+     */
+    private String getString(int time, String string) {
+        return String.format(Locale.getDefault(), "%d %s mins", time, string);
+    }
+
+    /**
      * Setter for cookTime in minutes
      * @param cookTime to set
      */
@@ -271,6 +297,12 @@ public class RecipeEntity implements Parcelable {
     public String getTotalTimeString() {
         return getString(totalTime);
     }
+
+    /**
+     * Getter for total time in minutes
+     * @return total time string
+     */
+    public String getTotalTimeMinutesString() {return getString(totalTime, "Total");}
 
     /**
      * Setter for totalTime in minutes

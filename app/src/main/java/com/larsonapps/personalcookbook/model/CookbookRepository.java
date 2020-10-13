@@ -81,4 +81,8 @@ public class CookbookRepository {
     public int getRecipeId(String name) {
         return mDao.getRecipeIdByName(name);
     }
+
+    public void updateRecipe(RecipeEntity recipe) {
+        CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.updateRecipe(recipe));
+    }
 }

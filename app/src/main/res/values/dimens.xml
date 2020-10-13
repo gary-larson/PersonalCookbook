@@ -7,6 +7,8 @@
     <dimen name="text_margin_start">20dp</dimen>
     <dimen name="button_padding">8dp</dimen>
     <dimen name="fragment_bottom_margin">16dp</dimen>
+    <dimen name="list_text_margin">4dp</dimen>
+    <dimen name="list_root_margin">16dp</dimen>
 
     <!-- cookbook fragment -->
     <dimen name="app_bar_height">140dp</dimen>
@@ -46,6 +48,6 @@
     <dimen name="import_fragment_height">150dp</dimen>
 
     <!-- cookbook dialog fragments -->
-    <dimen name="dialog_margin">24dp</dimen>
+    <dimen name="dialog_margin">8dp</dimen>
     <dimen name="dialog_vertical_margin">8dp</dimen>
 </resources>

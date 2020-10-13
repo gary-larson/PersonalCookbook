@@ -88,4 +88,8 @@ public class RecipeViewModel extends AndroidViewModel {
     public int getRecipeId(String name) {
         return mRepository.getRecipeId(name);
     }
+
+    public void updateRecipe(RecipeEntity recipe) {
+        mRepository.updateRecipe(recipe);
+    }
 }

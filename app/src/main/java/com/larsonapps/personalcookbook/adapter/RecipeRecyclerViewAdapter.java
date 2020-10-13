@@ -59,10 +59,11 @@ public class RecipeRecyclerViewAdapter extends
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mNameView.setText(mValues.get(position).getName());
-        String temp = String.format(Locale.getDefault(), "Servings %d",
+        holder.mShortDescriptionView.setText(mValues.get(position).getShortDescription());
+        String temp = String.format(Locale.getDefault(), "Servings: %d",
                 holder.mItem.getServings());
         holder.mServingsView.setText(temp);
-        temp = String.format(Locale.getDefault(),"Time = %s",
+        temp = String.format(Locale.getDefault(),"Time: %s",
                 holder.mItem.getTotalTimeString());
         holder.mTotalTimeView.setText(temp);
         holder.mView.setOnClickListener(v -> {
@@ -88,6 +89,7 @@ public class RecipeRecyclerViewAdapter extends
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mNameView;
+        public final TextView mShortDescriptionView;
         public final TextView mServingsView;
         public final TextView mTotalTimeView;
         public RecipeEntity mItem;
@@ -96,6 +98,7 @@ public class RecipeRecyclerViewAdapter extends
             super(binding.getRoot());
             mView = binding.getRoot();
             mNameView = binding.recipeNameTextView;
+            mShortDescriptionView = binding.recipeShortDescriptionView;
             mServingsView = binding.recipeServingsTextView;
             mTotalTimeView = binding.recipeTotalTimeTextView;
         }
