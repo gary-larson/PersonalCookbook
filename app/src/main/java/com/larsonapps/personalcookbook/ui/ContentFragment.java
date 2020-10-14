@@ -115,7 +115,7 @@ public class ContentFragment extends Fragment {
         if (!(temp == null || temp.isEmpty())) {
             mBinding.shortDescriptionTextView.setText(temp);
         }
-        temp = mRecipe.getServingsString();
+        temp = String.valueOf(mRecipe.getServings());
         mBinding.servingsTextView.setText(temp);
         temp = mRecipe.getPrepTimeString();
         mBinding.prepTimeTextView.setText(temp);

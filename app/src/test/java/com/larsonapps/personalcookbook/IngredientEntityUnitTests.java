@@ -10,11 +10,11 @@ public class IngredientEntityUnitTests {
     // ingredient data
     private static final int ID_VALUE = 11245;
     private static final int RECIPE_ID_VALUE = 6;
-    private static final double AMOUNT_VALUE = 20.45;
+    private static final String AMOUNT_VALUE = "20 1/2";
     private static final String MEASURE_VALUE = "Tablespoon";
     private static final String NAME_VALUE = "Milk";
     private static final String PREPARATION_VALUE = "Pour into container";
-    private static final String TO_STRING_VALUE = "Milk 20.5 Tablespoon\nPour into container";
+    private static final String TO_STRING_VALUE = "Milk 20 1/2 Tablespoon\nPour into container";
 
     // Create ingredient
     IngredientEntity ingredient = new IngredientEntity(ID_VALUE, RECIPE_ID_VALUE, NAME_VALUE,
@@ -33,7 +33,7 @@ public class IngredientEntityUnitTests {
 
     @Test
     public void testIngredientAmountGetter() {
-        assertEquals(AMOUNT_VALUE, ingredient.getAmount(), 0.01);
+        assertEquals(AMOUNT_VALUE, ingredient.getAmount());
     }
 
     @Test
@@ -68,9 +68,9 @@ public class IngredientEntityUnitTests {
 
     @Test
     public void testIngredientAmountSetter() {
-        double temp = 2.75;
+        String temp = "2 3/4";
         ingredient.setAmount(temp);
-        assertEquals(temp, ingredient.getAmount(), 0.01);
+        assertEquals(temp, ingredient.getAmount());
     }
 
     @Test

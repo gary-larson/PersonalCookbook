@@ -24,7 +24,7 @@ public class IngredientEntity implements Parcelable {
     @ColumnInfo(name = "name")
     private String name;
     @ColumnInfo(name = "amount")
-    private double amount;
+    private String amount;
     @ColumnInfo(name = "measure")
     private String measure;
     @ColumnInfo(name = "preparation")
@@ -45,7 +45,7 @@ public class IngredientEntity implements Parcelable {
      * @param measure to set
      * @param preparation to set
      */
-    public IngredientEntity(int ingredientId, int recipeId, String name, double amount,
+    public IngredientEntity(int ingredientId, int recipeId, String name, String amount,
                             String measure, String preparation) {
         this.ingredientId = ingredientId;
         this.recipeId = recipeId;
@@ -64,7 +64,7 @@ public class IngredientEntity implements Parcelable {
         ingredientId = in.readInt();
         recipeId = in.readInt();
         name = in.readString();
-        amount = in.readDouble();
+        amount = in.readString();
         measure = in.readString();
         preparation = in.readString();
     }
@@ -132,7 +132,7 @@ public class IngredientEntity implements Parcelable {
      * Getter for amount
      * @return amount
      */
-    public double getAmount() {
+    public String getAmount() {
         return amount;
     }
 
@@ -140,7 +140,7 @@ public class IngredientEntity implements Parcelable {
      * Setter for amount
      * @param amount to set
      */
-    public void setAmount(double amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 
@@ -183,7 +183,7 @@ public class IngredientEntity implements Parcelable {
     @NonNull
     @Override
     public String toString() {
-        return String.format(Locale.getDefault(), "%s %.1f %s\n%s", name, amount, measure,
+        return String.format(Locale.getDefault(), "%s %s %s\n%s", name, amount, measure,
                 preparation);
     }
 
@@ -206,7 +206,7 @@ public class IngredientEntity implements Parcelable {
         dest.writeInt(ingredientId);
         dest.writeInt(recipeId);
         dest.writeString(name);
-        dest.writeDouble(amount);
+        dest.writeString(amount);
         dest.writeString(measure);
         dest.writeString(preparation);
     }

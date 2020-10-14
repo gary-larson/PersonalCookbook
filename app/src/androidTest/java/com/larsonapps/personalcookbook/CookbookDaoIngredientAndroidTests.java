@@ -55,17 +55,17 @@ public class CookbookDaoIngredientAndroidTests {
     private static final String COPYRIGHT_VALUE_2 = "copyright 2020";
     private static final int INGREDIENT_ID_VALUE_1 = 0;
     private static final String INGREDIENT_NAME_VALUE_1 = "Milk";
-    private static final double AMOUNT_VALUE_1 = 1.56;
+    private static final String AMOUNT_VALUE_1 = "1 1/2";
     private static final String MEASURE_VALUE_1 = "cup";
     private static final String PREPARATION_VALUE_1 = "pour into a bowl";
     private static final int INGREDIENT_ID_VALUE_2 = 0;
     private static final String INGREDIENT_NAME_VALUE_2 = "flour";
-    private static final double AMOUNT_VALUE_2 = 3.5;
+    private static final String AMOUNT_VALUE_2 = "3 1/2";
     private static final String MEASURE_VALUE_2 = "cups";
     private static final String PREPARATION_VALUE_2 = "sift";
     private static final int INGREDIENT_ID_VALUE_3 = 0;
     private static final String INGREDIENT_NAME_VALUE_3 = "vanilla";
-    private static final double AMOUNT_VALUE_3 = 1.5;
+    private static final String AMOUNT_VALUE_3 = "1 1/4";
     private static final String MEASURE_VALUE_3 = "teaspoon";
     private static final String PREPARATION_VALUE_3 = "";
     // declare variables
@@ -124,7 +124,7 @@ public class CookbookDaoIngredientAndroidTests {
             assertEquals(4, newIngredients.size());
             for (IngredientEntity ingredient : newIngredients) {
                 if (ingredient.getName().equals(INGREDIENT_NAME_VALUE_1)) {
-                    assertEquals(AMOUNT_VALUE_1, ingredient.getAmount(), 0.01);
+                    assertEquals(AMOUNT_VALUE_1, ingredient.getAmount());
                     assertEquals(MEASURE_VALUE_1, ingredient.getMeasure());
                     assertEquals(PREPARATION_VALUE_1, ingredient.getPreparation());
                     isAsserted = true;

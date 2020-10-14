@@ -12,35 +12,44 @@
         tools:context=".ui.ContentFragment">
 
 
+        <TextView
+            android:id="@+id/name_text_view"
+            style="@style/ContentTextView" />
 
-            <TextView
-                android:id="@+id/name_text_view"
-                style="@style/ContentTextView"
-                android:layout_width="match_parent" />
-
-            <TextView
-                android:id="@+id/short_description_text_view"
-                style="@style/ContentTextView"
-                android:layout_width="match_parent" />
+        <TextView
+            android:id="@+id/short_description_text_view"
+            style="@style/ContentTextView" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                style="@style/ContentTextView"
+                android:text="@string/servings"
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/servings_text_view"
                 style="@style/ContentTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                style="@style/ContentTextView"
+                android:text="@string/prep"
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/prep_time_text_view"
                 style="@style/ContentTextView"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
         </LinearLayout>
 
         <LinearLayout
@@ -49,37 +58,43 @@
             android:orientation="horizontal">
 
             <TextView
+                android:layout_width="wrap_content"
+                style="@style/ContentTextView"
+                android:text="@string/cook"
+                android:textColor="@color/white" />
+
+            <TextView
                 android:id="@+id/cook_time_text_view"
                 style="@style/ContentTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                style="@style/ContentTextView"
+                android:text="@string/total"
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/total_time_text_view"
                 style="@style/ContentTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/description_text_view"
-            style="@style/DetailTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            style="@style/ContentTextView" />
 
         <TextView
             android:id="@+id/notes_text_view"
-            style="@style/DetailTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            style="@style/ContentTextView" />
 
         <TextView
             android:id="@+id/copyright_text_view"
-            style="@style/DetailTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            style="@style/ContentTextView" />
 
     </LinearLayout>
 </ScrollView>

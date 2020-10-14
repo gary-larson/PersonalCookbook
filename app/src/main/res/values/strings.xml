@@ -51,13 +51,14 @@
     <string name="edit_content_servings_hint">Servings</string>
     <string name="edit_content_short_description_hint">Short Description</string>
     <string name="edit_content_recipe_name_hint">Recipe Name</string>
-    <string name="edit_content_description_hint">Enter description to be same as short description leave blank</string>
+    <string name="edit_content_description_hint">Enter description</string>
     <string name="edit_content_notes_hint">Enter cook\'s or personal notes</string>
     <string name="edit_content_copyright_hint">Enter copyright info if any</string>
-    <string name="edit_content_second_line_label_text">Enter the following as numbers and times in minutes</string>
+    <string name="edit_content_second_line_label_text">Enter as numbers and times in mins</string>
     <string name="serv">Serv</string>
     <string name="prep">Prep</string>
     <string name="cook">Cook</string>
     <string name="total">Total</string>
+    <string name="servings">Servings</string>
 
 </resources>
