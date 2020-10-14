@@ -12,18 +12,15 @@ import com.larsonapps.personalcookbook.data.IngredientEntity;
 import com.larsonapps.personalcookbook.data.KeywordEntity;
 import com.larsonapps.personalcookbook.data.RecipeEntity;
 import com.larsonapps.personalcookbook.data.StepEntity;
-import com.larsonapps.personalcookbook.utilities.CookbookExecutor;
 
 import java.util.List;
 
 public class CookbookRepository {
     // Declare variables
-    private CookbookExecutor mExecutor;
     private CookbookDao mDao;
 
     public CookbookRepository(Context context) {
         // Initialize variables
-        mExecutor = new CookbookExecutor();
         CookbookRoomDatabase cookbookRoomDatabase = CookbookRoomDatabase.getDatabase(context);
         mDao = cookbookRoomDatabase.cookbookDao();
     }

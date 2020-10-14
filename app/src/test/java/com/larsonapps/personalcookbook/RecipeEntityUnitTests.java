@@ -22,9 +22,10 @@ public class RecipeEntityUnitTests {
     private static final String COOK_TIME_STRING_VALUE = "2 hours 22 mins";
     private static final String TOTAL_TIME_STRING_VALUE = "1 day 1 hour 1 min";
     private static final String SERVINGS_STRING_VALUE = "12 Servings";
-    private static final String PREP_TIME_MINUTES_STRING_VALUE = "22 mins";
-    private static final String COOK_TIME_MINUTES_STRING_VALUE = "142 mins";
-    private static final String TOTAL_TIME_MINUTES_STRING_VALUE = "1501 min";
+    private static final String PREP_TIME_MINUTES_STRING_VALUE = "22 Prep mins";
+    private static final String COOK_TIME_MINUTES_STRING_VALUE = "142 Cook mins";
+    private static final String TOTAL_TIME_MINUTES_STRING_VALUE = "1501 Total mins";
+
 
 
 
@@ -169,23 +170,23 @@ public class RecipeEntityUnitTests {
         assertEquals(TOTAL_TIME_STRING_VALUE, recipe.getTotalTimeString());
     }
 
-//    @Test
-//    public void testRecipeServingsStringGetter() {
-//        assertEquals(SERVINGS_STRING_VALUE, recipe.getServingsString());
-//    }
-//
-//    @Test
-//    public void testRecipePrepTimeMinutesStringGetter() {
-//        assertEquals(PREP_TIME_MINUTES_STRING_VALUE, recipe.getPrepTimeMinutesString());
-//    }
-//
-//    @Test
-//    public void testRecipeCookTimeMinutesStringGetter() {
-//        assertEquals(COOK_TIME_MINUTES_STRING_VALUE, recipe.getCookTimeMinutesString());
-//    }
-//
-//    @Test
-//    public void testRecipeTotalTimeMinutesStringGetter() {
-//        assertEquals(TOTAL_TIME_MINUTES_STRING_VALUE, recipe.getTotalTimeMinutesString());
-//    }
+    @Test
+    public void testRecipeServingsStringGetter() {
+        assertEquals(SERVINGS_STRING_VALUE, recipe.getServingsString());
+    }
+
+    @Test
+    public void testRecipePrepTimeMinutesStringGetter() {
+        assertEquals(PREP_TIME_MINUTES_STRING_VALUE, recipe.getPrepTimeMinutesString());
+    }
+
+    @Test
+    public void testRecipeCookTimeMinutesStringGetter() {
+        assertEquals(COOK_TIME_MINUTES_STRING_VALUE, recipe.getCookTimeMinutesString());
+    }
+
+    @Test
+    public void testRecipeTotalTimeMinutesStringGetter() {
+        assertEquals(TOTAL_TIME_MINUTES_STRING_VALUE, recipe.getTotalTimeMinutesString());
+    }
 }

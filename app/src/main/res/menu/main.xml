@@ -12,12 +12,6 @@
         android:title="@string/manual_entry_menu_title" />
 
     <item
-        android:id="@+id/action_import"
-        android:enabled="true"
-        android:orderInCategory="3"
-        android:title="@string/import_recipe_menu_title" />
-
-    <item
         android:id="@+id/action_about"
         android:enabled="true"
         android:orderInCategory="4"

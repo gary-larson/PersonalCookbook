@@ -159,13 +159,6 @@ public class CookbookActivity extends AppCompatActivity implements
                         .addToBackStack(MANUAL_FRAGMENT)
                         .commit();
                 return true;
-            case R.id.action_import:
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(mBinding.container.getId(), CookbookImportFragment.newInstance(STATE_IMPORT))
-                        .addToBackStack(IMPORT_FRAGMENT)
-                        .commit();
-                return true;
             case R.id.action_about:
                 // Get fragment manager and open about fragment
                 getSupportFragmentManager()
