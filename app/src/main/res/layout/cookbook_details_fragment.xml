@@ -82,6 +82,20 @@
                 app:layout_constraintTop_toBottomOf="@id/details_image_label"
                 tools:context="com.larsonapps.personalcookbook.StepFragment" />
 
+            <TextView
+                android:id="@+id/details_keywords_label"
+                style="@style/HeadingTextView"
+                android:text="@string/keywords"
+                app:layout_constraintTop_toBottomOf="@id/details_image_list_container"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/details_keyword_list_container"
+                android:layout_width="match_parent"
+                style="@style/AppFragmentContainer"
+                app:layout_constraintTop_toBottomOf="@id/details_keywords_label"
+                tools:context="com.larsonapps.personalcookbook.StepFragment" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>

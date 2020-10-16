@@ -89,7 +89,7 @@ public class ContentFragment extends Fragment {
             mRecipeId = savedInstanceState.getInt(RECIPE_ID);
             mRecipe = savedInstanceState.getParcelable(RECIPE);
         }
-        if (mState == CookbookActivity.STATE_MANUAL || mState == CookbookActivity.STATE_IMPORT) {
+        if (mState == CookbookActivity.STATE_MANUAL) {
             if (mRecipe == null) {
                 mRecipe = new RecipeEntity();
             } else {

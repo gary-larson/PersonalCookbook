@@ -117,7 +117,7 @@ public class ImageFragment extends Fragment {
         ImageRecyclerViewAdapter adapter = new ImageRecyclerViewAdapter(mListener, mState);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(adapter);
-        if (mState == CookbookActivity.STATE_MANUAL || mState == CookbookActivity.STATE_IMPORT) {
+        if (mState == CookbookActivity.STATE_MANUAL) {
             adapter.setData(mImageList);
         } else {
             mImageViewModel.getImages(mRecipeId).observe(getViewLifecycleOwner(), newImages -> {

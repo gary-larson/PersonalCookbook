@@ -5,7 +5,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:itemBackground">@color/colorPrimaryDark</item>
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
         <!-- Apply default style for dialogs -->
         <item name="android:dialogTheme">@style/AppDialogTheme</item>
@@ -21,7 +20,7 @@
     </style>
 
     <!-- Define your custom dialog theme here extending from base -->
-    <style name="AppDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+    <style name="AppDialogTheme" parent="Theme.MaterialComponents.Dialog">
         <!-- Define color properties as desired -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>

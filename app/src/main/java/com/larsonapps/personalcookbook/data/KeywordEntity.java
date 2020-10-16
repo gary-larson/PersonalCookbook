@@ -1,13 +1,15 @@
 package com.larsonapps.personalcookbook.data;
 
-import android.view.ViewDebug;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "keywords")
-public class KeywordEntity {
+public class KeywordEntity implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "keyword_id")
     private int keywordId;
@@ -15,6 +17,12 @@ public class KeywordEntity {
     private int recipeId;
     @ColumnInfo(name = "keyword")
     private String keyword;
+
+    /**
+     * Default constructor
+     */
+    @Ignore
+    public KeywordEntity() {}
 
     /**
      * Constructor with all variables
@@ -27,6 +35,32 @@ public class KeywordEntity {
         this.recipeId = recipeId;
         this.keyword = keyword;
     }
+
+    /**
+     * Constructor for parcelable
+     * @param in to get parcel data
+     */
+    @Ignore
+    protected KeywordEntity(Parcel in) {
+        keywordId = in.readInt();
+        recipeId = in.readInt();
+        keyword = in.readString();
+    }
+
+    /**
+     * Method for pacelable
+     */
+    public static final Creator<KeywordEntity> CREATOR = new Creator<KeywordEntity>() {
+        @Override
+        public KeywordEntity createFromParcel(Parcel in) {
+            return new KeywordEntity(in);
+        }
+
+        @Override
+        public KeywordEntity[] newArray(int size) {
+            return new KeywordEntity[size];
+        }
+    };
 
     /**
      * Getter for keyword id
@@ -74,5 +108,26 @@ public class KeywordEntity {
      */
     public void setKeyword(String keyword) {
         this.keyword = keyword;
+    }
+
+    /**
+     * Method to describe parcel description
+     * @return parcel description
+     */
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    /**
+     * Method to write class to a parcel
+     * @param dest parcel
+     * @param flags to use
+     */
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(keywordId);
+        dest.writeInt(recipeId);
+        dest.writeString(keyword);
     }
 }

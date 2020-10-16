@@ -25,7 +25,11 @@ import androidx.lifecycle.LiveData;
 import com.larsonapps.personalcookbook.AppContainer;
 import com.larsonapps.personalcookbook.CookbookApplication;
 import com.larsonapps.personalcookbook.data.CategoryEntity;
+import com.larsonapps.personalcookbook.data.ImageEntity;
+import com.larsonapps.personalcookbook.data.IngredientEntity;
+import com.larsonapps.personalcookbook.data.KeywordEntity;
 import com.larsonapps.personalcookbook.data.RecipeEntity;
+import com.larsonapps.personalcookbook.data.StepEntity;
 
 import java.util.List;
 
@@ -91,5 +95,11 @@ public class RecipeViewModel extends AndroidViewModel {
 
     public void updateRecipe(RecipeEntity recipe) {
         mRepository.updateRecipe(recipe);
+    }
+
+    public void insertAll(RecipeEntity recipe, List<IngredientEntity> ingredients,
+                          List<StepEntity> steps, List<ImageEntity> images,
+                          List<KeywordEntity> keywords) {
+        mRepository.insertAll(recipe, ingredients, steps, images, keywords);
     }
 }

@@ -82,4 +82,65 @@ public class CookbookRepository {
     public void updateRecipe(RecipeEntity recipe) {
         CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.updateRecipe(recipe));
     }
+
+    public void insertIngredient(IngredientEntity ingredient) {
+        CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.insertIngredient(ingredient));
+    }
+
+    public void insertStep(StepEntity step) {
+        CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.insertStep(step));
+    }
+
+    public void insertImage(ImageEntity image) {
+        CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.insertImage(image));
+    }
+
+    public void updateIngredient(IngredientEntity ingredient) {
+        CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.updateIngredient(ingredient));
+    }
+
+    public void updateStep(StepEntity step) {
+        CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.updateStep(step));
+    }
+
+    public void updateImage(ImageEntity image) {
+        CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.updateImage(image));
+    }
+
+    public void insertAll(RecipeEntity recipe, List<IngredientEntity> ingredients,
+                          List<StepEntity> steps, List<ImageEntity> images,
+                          List<KeywordEntity> keywords) {
+        CookbookRoomDatabase.databaseWriteExecutor.execute(() -> {
+            mDao.insertRecipe(recipe);
+            int recipeId = mDao.getRecipeIdByName(recipe.getName());
+            if (ingredients.size() > 0) {
+                for (IngredientEntity ingredient : ingredients) {
+                    ingredient.setRecipeId(recipeId);
+                }
+                mDao.insertAllIngredients(ingredients);
+            }
+            if (steps.size() > 0) {
+                for (StepEntity step : steps) {
+                    step.setRecipeId(recipeId);
+                }
+                mDao.insertAllSteps(steps);
+            }
+            if (images.size() > 0) {
+                for (ImageEntity image : images) {
+                    image.setRecipeId(recipeId);
+                }
+                mDao.insertAllImages(images);
+            }
+            if (keywords.size() > 0) {
+                for (KeywordEntity keyword : keywords) {
+                    keyword.setRecipeId(recipeId);
+                }
+                mDao.insertAllKeywords(keywords);
+            }
+        });
+    }
+
+    public void insertKeyword(KeywordEntity keyword) {
+        CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.insertKeyword(keyword));
+    }
 }

@@ -32,6 +32,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.larsonapps.personalcookbook.R;
 import com.larsonapps.personalcookbook.data.ImageEntity;
 import com.larsonapps.personalcookbook.data.IngredientEntity;
+import com.larsonapps.personalcookbook.data.KeywordEntity;
 import com.larsonapps.personalcookbook.data.RecipeEntity;
 import com.larsonapps.personalcookbook.data.StepEntity;
 import com.larsonapps.personalcookbook.databinding.CookbookActivityBinding;
@@ -47,17 +48,17 @@ public class CookbookActivity extends AppCompatActivity implements
         StepFragment.OnListFragmentInteractionListener,
         IngredientFragment.OnListFragmentInteractionListener,
         ImageFragment.OnListFragmentInteractionListener,
+        KeywordFragment.OnListFragmentInteractionListener,
         AddCategoryDialogFragment.OnAddCategoryDialogListener,
         CookbookDetailsFragment.OnCookbookDetailsEditFabListener {
     // Declare constants
     public static final int STATE_DISPLAY = 0;
     public static final int STATE_EDIT= 1;
     public static final int STATE_MANUAL = 2;
-    public static final int STATE_IMPORT = 3;
     private static final String DETAILS_FRAGMENT = "DetailsFragment";
     private static final String EDIT_FRAGMENT = "EditFragment";
     private static final String MANUAL_FRAGMENT = "ManualFragment";
-    private static final String IMPORT_FRAGMENT = "ImportFragment";
+
     private static final String ABOUT_FRAGMENT = "AboutFragment";
     // Declare variables
     private RecipeViewModel mRecipeViewModel;
@@ -103,7 +104,6 @@ public class CookbookActivity extends AppCompatActivity implements
             height = getWindowManager().getMaximumWindowMetrics().getBounds().height();
         } else{
             Point size = new Point();
-            //noinspection deprecation
             getWindowManager().getDefaultDisplay().getRealSize(size);
             height = size.y;
         }
@@ -282,5 +282,16 @@ public class CookbookActivity extends AppCompatActivity implements
                         CookbookEditFragment.newInstance(STATE_EDIT, recipe))
                 .addToBackStack(EDIT_FRAGMENT)
                 .commit();
+    }
+
+    @Override
+    public void onListFragmentInteraction(KeywordEntity keyword, int state, View view) {
+        if (view.getId() == R.id.keyword_edit_image_button) {
+            Toast.makeText(this, "Keyword edit clicked", Toast.LENGTH_LONG).show();
+        } else if (view.getId() == R.id.keyword_delete_image_button) {
+            Toast.makeText(this, "Keyword delete clicked", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "Keyword clicked", Toast.LENGTH_LONG).show();
+        }
     }
 }

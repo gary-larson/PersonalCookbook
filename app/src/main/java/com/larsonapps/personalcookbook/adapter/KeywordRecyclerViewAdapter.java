@@ -9,26 +9,26 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.larsonapps.personalcookbook.data.IngredientEntity;
-import com.larsonapps.personalcookbook.databinding.IngredientFragmentItemBinding;
+import com.larsonapps.personalcookbook.data.KeywordEntity;
+import com.larsonapps.personalcookbook.databinding.KeywordFragmentItemBinding;
 import com.larsonapps.personalcookbook.ui.CookbookActivity;
-import com.larsonapps.personalcookbook.ui.IngredientFragment;
+import com.larsonapps.personalcookbook.ui.KeywordFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class to display ingredients list
+ * Class to display keyword list
  */
-public class IngredientRecyclerViewAdapter extends
-        RecyclerView.Adapter<IngredientRecyclerViewAdapter.ViewHolder> {
+public class KeywordRecyclerViewAdapter extends
+        RecyclerView.Adapter<KeywordRecyclerViewAdapter.ViewHolder> {
 
-    private List<IngredientEntity> mValues = new ArrayList<>();
+    private List<KeywordEntity> mValues = new ArrayList<>();
     private final int mState;
-    private final IngredientFragment.OnListFragmentInteractionListener mListener;
+    private final KeywordFragment.OnListFragmentInteractionListener mListener;
 
-    public IngredientRecyclerViewAdapter(
-            IngredientFragment.OnListFragmentInteractionListener listener, int state) {
+    public KeywordRecyclerViewAdapter(KeywordFragment.OnListFragmentInteractionListener listener,
+                                      int state) {
         mListener = listener;
         mState = state;
     }
@@ -36,36 +36,27 @@ public class IngredientRecyclerViewAdapter extends
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(IngredientFragmentItemBinding.inflate(
+        return new ViewHolder(KeywordFragmentItemBinding.inflate(
                 LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-
-        holder.mNameView.setText(holder.mItem.getName());
-        holder.mAmountView.setText(holder.mItem.getAmount());
-        holder.mMeasureView.setText(holder.mItem.getMeasure());
-        if (holder.mItem.getPreparation() == null || holder.mItem.getPreparation().isEmpty()) {
-            holder.mPreparationView.setVisibility(View.GONE);
-        } else {
-            holder.mPreparationView.setVisibility(View.VISIBLE);
-            holder.mPreparationView.setText(holder.mItem.getPreparation());
-        }
+        holder.mKeywordView.setText(mValues.get(position).getKeyword());
         if (mState == CookbookActivity.STATE_EDIT) {
             holder.mEditImageButton.setOnClickListener(v -> {
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(new IngredientEntity(), mState, v);
+                    mListener.onListFragmentInteraction(new KeywordEntity(), mState, v);
                 }
             });
             holder.mDeleteImageButton.setOnClickListener(v -> {
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(new IngredientEntity(), mState, v);
+                    mListener.onListFragmentInteraction(new KeywordEntity(), mState, v);
                 }
             });
             holder.mEditImageButton.setVisibility(View.VISIBLE);
@@ -76,12 +67,8 @@ public class IngredientRecyclerViewAdapter extends
         }
     }
 
-    /**
-     * Method to set data and notify adapter
-     * @param ingredients to set
-     */
-    public void setData(List<IngredientEntity> ingredients) {
-        mValues = ingredients;
+    public void setData(List<KeywordEntity> keywords) {
+        mValues = keywords;
         notifyDataSetChanged();
     }
 
@@ -95,23 +82,17 @@ public class IngredientRecyclerViewAdapter extends
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mNameView;
-        public final TextView mAmountView;
-        public final TextView mMeasureView;
-        public final TextView mPreparationView;
+        public final TextView mKeywordView;
         public final ImageView mEditImageButton;
         public final ImageView mDeleteImageButton;
-        public IngredientEntity mItem;
+        public KeywordEntity mItem;
 
-        public ViewHolder(IngredientFragmentItemBinding binding) {
+        public ViewHolder(KeywordFragmentItemBinding binding) {
             super(binding.getRoot());
             mView = binding.getRoot();
-            mNameView = binding.ingredientNameTextView;
-            mAmountView = binding.ingredientAmountTextView;
-            mMeasureView = binding.ingredientMeasureTextView;
-            mPreparationView = binding.ingredientPreparationTextView;
-            mEditImageButton = binding.ingredientEditImageButton;
-            mDeleteImageButton = binding.ingredientDeleteImageButton;
+            mKeywordView = binding.keywordTextView;
+            mEditImageButton = binding.keywordEditImageButton;
+            mDeleteImageButton = binding.keywordDeleteImageButton;
         }
     }
 }

@@ -121,9 +121,33 @@
                 android:id="@+id/manual_image_list_container"
                 android:layout_width="match_parent"
                 style="@style/AppFragmentContainer"
-                app:layout_constraintBottom_toTopOf="@id/manual_submit_button"
+                app:layout_constraintBottom_toTopOf="@id/manual_keyword_label"
                 app:layout_constraintTop_toBottomOf="@id/manual_image_label"
                 tools:context="com.larsonapps.personalcookbook.ImageFragment" />
+
+            <TextView
+                android:id="@+id/manual_keyword_label"
+                style="@style/HeadingTextView"
+                android:text="@string/keywords"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/manual_image_list_container" />
+
+            <Button
+                android:id="@+id/manual_add_keyword_button"
+                style="@style/AppButton"
+                android:text="@string/add_button_text"
+                app:icon="@drawable/ic_add_24px"
+                app:layout_constraintTop_toTopOf="@id/manual_keyword_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/manual_keyword_label" />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/manual_keyword_list_container"
+                android:layout_width="match_parent"
+                style="@style/AppFragmentContainer"
+                app:layout_constraintBottom_toTopOf="@id/manual_submit_button"
+                app:layout_constraintTop_toBottomOf="@id/manual_keyword_label"
+                tools:context="com.larsonapps.personalcookbook.KeywordFragment" />
 
            <Button
                 android:id="@+id/manual_submit_button"

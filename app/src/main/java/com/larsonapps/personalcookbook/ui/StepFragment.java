@@ -74,7 +74,7 @@ public class StepFragment extends Fragment {
                 mRecipeId = getArguments().getInt(ARG_RECIPE_ID);
             }
             if (getArguments().containsKey(ARG_STEPS)) {
-                mStepList = getArguments().getParcelableArrayList(STEPS);
+                mStepList = getArguments().getParcelableArrayList(ARG_STEPS);
             }
         }
     }
@@ -96,7 +96,7 @@ public class StepFragment extends Fragment {
         }
         StepRecyclerViewAdapter adapter = new StepRecyclerViewAdapter(mListener, mState);
         mBinding.stepList.setAdapter(adapter);
-        if (mState == CookbookActivity.STATE_IMPORT || mState == CookbookActivity.STATE_MANUAL) {
+        if (mState == CookbookActivity.STATE_MANUAL) {
             adapter.setData(mStepList);
         } else {
             mStepViewModel.getSteps(mRecipeId).observe(getViewLifecycleOwner(), newSteps -> {

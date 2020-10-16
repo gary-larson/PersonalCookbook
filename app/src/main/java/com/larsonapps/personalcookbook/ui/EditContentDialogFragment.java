@@ -36,6 +36,8 @@ public class EditContentDialogFragment extends DialogFragment {
     /**
      * Method to create a new instance of edit content dialog fragment
      * @param title to display
+     * @param state to save
+     * @param recipe to use
      * @return created dialog fragment
      */
     public static EditContentDialogFragment newInstance(String title, int state, RecipeEntity recipe) {
@@ -105,6 +107,8 @@ public class EditContentDialogFragment extends DialogFragment {
             if (temp != null && !temp.isEmpty()) {
                 mBinding.editContentCopyrightEditText.setText(temp);
             }
+        } else {
+            mRecipe = new RecipeEntity();
         }
         mBinding.editContentSubmitButton.setOnClickListener(v -> sendRecipeToParent());
         return mBinding.getRoot();
@@ -119,12 +123,8 @@ public class EditContentDialogFragment extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // set title
-        if (getArguments() != null) {
-            String title = getArguments().getString(ARG_TITLE);
-            if (getDialog() != null) {
-                getDialog().setTitle(title);
-            }
-            mState = getArguments().getInt(ARG_STATE);
+        if (getDialog() != null) {
+            getDialog().setTitle(mTitle);
         }
         // set focus
         mBinding.editContentNameEditText.requestFocus();

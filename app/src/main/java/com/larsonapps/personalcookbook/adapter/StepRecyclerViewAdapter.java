@@ -61,15 +61,9 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
             });
             holder.mEditImageButton.setVisibility(View.VISIBLE);
             holder.mDeleteImageButton.setVisibility(View.VISIBLE);
-            holder.mCheckbox.setVisibility(View.GONE);
-        } else if (mState == CookbookActivity.STATE_IMPORT) {
-            holder.mEditImageButton.setVisibility(View.GONE);
-            holder.mDeleteImageButton.setVisibility(View.GONE);
-            holder.mCheckbox.setVisibility(View.VISIBLE);
         } else {
             holder.mEditImageButton.setVisibility(View.GONE);
             holder.mDeleteImageButton.setVisibility(View.GONE);
-            holder.mCheckbox.setVisibility(View.GONE);
         }
     }
 
@@ -95,7 +89,6 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
         public final TextView mStepView;
         public final ImageView mEditImageButton;
         public final ImageView mDeleteImageButton;
-        public final CheckBox mCheckbox;
         public StepEntity mItem;
 
         public ViewHolder(StepFragmentItemBinding binding) {
@@ -104,8 +97,6 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
             mStepView = binding.stepTextView;
             mEditImageButton = binding.stepEditImageButton;
             mDeleteImageButton = binding.stepDeleteImageButton;
-            mCheckbox = binding.stepCheckbox;
-
         }
     }
 }

@@ -3,6 +3,7 @@ package com.larsonapps.personalcookbook.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -38,7 +39,7 @@ public class StepEntity implements Parcelable {
      * @param number to set
      * @param instruction to set
      */
-    public StepEntity(int stepId, int recipeId,int number, String instruction) {
+    public StepEntity(int stepId, int recipeId, int number, String instruction) {
         this.stepId = stepId;
         this.recipeId = recipeId;
         this.number = number;
@@ -136,6 +137,7 @@ public class StepEntity implements Parcelable {
      * To string method to give strin representation of class
      * @return string representation
      */
+    @NonNull
     @Override
     public String toString() {
         return String.format(Locale.getDefault(), "%d) %s",number, instruction);

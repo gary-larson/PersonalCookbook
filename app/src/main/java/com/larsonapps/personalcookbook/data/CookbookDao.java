@@ -286,7 +286,7 @@ public interface CookbookDao {
      * @param recipeId of the recipe to retrieve
      * @return list of steps
      */
-    @Query("SELECT * FROM steps WHERE recipe_id = :recipeId")
+    @Query("SELECT * FROM steps WHERE recipe_id = :recipeId ORDER BY number")
     LiveData<List<StepEntity>> getAllSteps(int recipeId);
 
     /**

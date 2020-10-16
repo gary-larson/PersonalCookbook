@@ -29,4 +29,12 @@ public class StepViewModel extends AndroidViewModel {
         }
         return mSteps;
     }
+
+    public void insertStep(StepEntity step) {
+        mRepository.insertStep(step);
+    }
+
+    public void updateStep(StepEntity step) {
+        mRepository.updateStep(step);
+    }
 }

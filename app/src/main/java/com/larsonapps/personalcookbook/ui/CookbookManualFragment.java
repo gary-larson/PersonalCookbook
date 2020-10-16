@@ -18,10 +18,13 @@ import android.widget.Toast;
 import com.larsonapps.personalcookbook.R;
 import com.larsonapps.personalcookbook.data.ImageEntity;
 import com.larsonapps.personalcookbook.data.IngredientEntity;
+import com.larsonapps.personalcookbook.data.KeywordEntity;
 import com.larsonapps.personalcookbook.data.RecipeEntity;
 import com.larsonapps.personalcookbook.data.StepEntity;
+import com.larsonapps.personalcookbook.databinding.ImageFragmentItemListBinding;
 import com.larsonapps.personalcookbook.model.ImageViewModel;
 import com.larsonapps.personalcookbook.model.IngredientViewModel;
+import com.larsonapps.personalcookbook.model.KeywordViewModel;
 import com.larsonapps.personalcookbook.model.RecipeViewModel;
 import com.larsonapps.personalcookbook.model.StepViewModel;
 import com.larsonapps.personalcookbook.databinding.CookbookManualFragmentBinding;
@@ -34,7 +37,10 @@ import java.util.Objects;
  * Class to deal with manual entry of an ingredient
  */
 public class CookbookManualFragment extends Fragment implements
-        EditContentDialogFragment.EditContentDialogListener {
+        EditContentDialogFragment.EditContentDialogListener,
+        EditIngredientDialogFragment.EditIngredientDialogListener,
+        EditStepDialogFragment.EditStepDialogListener,
+        EditKeywordDialogFragment.EditKeywordDialogListener {
     // Declare constants
     private static final String ARG_STATE = "state";
     private static final String STATE = "mState";
@@ -42,16 +48,20 @@ public class CookbookManualFragment extends Fragment implements
     private static final String IMAGES = "mImageList";
     private static final String INGREDIENTS = "mIngredientList";
     private static final String STEPS = "mStepList";
+    private static final String EDIT_CONTENT_TAG = "edit_content_fragment";
+    private static final String EDIT_INGREDIENT_TAG = "edit_ingredient_fragment";
+    private static final String EDIT_STEP_TAG = "edit_step_fragment";
+    private static final String EDIT_IMAGE_TAG = "edit_image_fragment";
+    private static final String EDIT_KEYWORD_TAG = "edit_keyword_fragment";
     // Declare variables
-    RecipeViewModel mRecipeViewModel;
-    IngredientViewModel mIngredientsViewModel;
-    StepViewModel mStepsViewModel;
+    private RecipeViewModel mRecipeViewModel;
     CookbookManualFragmentBinding mBinding;
     private int mState;
     private RecipeEntity mRecipe;
     private List<ImageEntity> mImageList = new ArrayList<>();
     private List<IngredientEntity> mIngredientList = new ArrayList<>();
     private List<StepEntity> mStepList = new ArrayList<>();
+    private List<KeywordEntity> mKeywordList = new ArrayList<>();
 
     /**
      * Default constructor
@@ -104,27 +114,51 @@ public class CookbookManualFragment extends Fragment implements
                         .newInstance(mState, mStepList))
                 .replace(mBinding.manualImageListContainer.getId(), ImageFragment
                         .newInstance(mState, mImageList))
+                .replace(mBinding.manualKeywordListContainer.getId(), KeywordFragment
+                        .newInstance(mState, mKeywordList))
                 .commit();
         mBinding.manualAddContentButton.setOnClickListener(v -> {
             EditContentDialogFragment editContentDialogFragment = EditContentDialogFragment
                     .newInstance("Add Manual", mState, mRecipe);
-            editContentDialogFragment.setTargetFragment(this, 100);
+            editContentDialogFragment.setTargetFragment(this, 200);
             if (getActivity() != null) {
                 editContentDialogFragment.show(getActivity().getSupportFragmentManager(),
-                        "edit_content_fragment");
+                        EDIT_CONTENT_TAG);
             }
         });
         mBinding.manualAddIngredientButton.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Add Ingredient clicked", Toast.LENGTH_LONG).show();
+            EditIngredientDialogFragment editIngredientDialogFragment = EditIngredientDialogFragment
+                    .newInstance("Add Manual", mState, null);
+            editIngredientDialogFragment.setTargetFragment(this, 210);
+            if (getActivity() != null) {
+                editIngredientDialogFragment.show(getActivity().getSupportFragmentManager(),
+                        EDIT_INGREDIENT_TAG);
+            }
         });
         mBinding.manualAddStepButton.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Add Step clicked", Toast.LENGTH_LONG).show();
+            EditStepDialogFragment editStepDialogFragment = EditStepDialogFragment
+                    .newInstance("Add Manual", mState, null);
+            editStepDialogFragment.setTargetFragment(this, 220);
+            if (getActivity() != null) {
+                editStepDialogFragment.show(getActivity().getSupportFragmentManager(),
+                        EDIT_STEP_TAG);
+            }
         });
         mBinding.manualAddImageButton.setOnClickListener(v -> {
             Toast.makeText(getContext(), "Add Image clicked", Toast.LENGTH_LONG).show();
         });
+        mBinding.manualAddKeywordButton.setOnClickListener(v -> {
+            EditKeywordDialogFragment editKeywordDialogFragment = EditKeywordDialogFragment
+                    .newInstance("Add manual", mState, null);
+            editKeywordDialogFragment.setTargetFragment(this, 240);
+            if (getActivity() != null) {
+                editKeywordDialogFragment.show(getActivity().getSupportFragmentManager(),
+                        EDIT_KEYWORD_TAG);
+            }
+        });
         mBinding.manualSubmitButton.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Submit clicked", Toast.LENGTH_LONG).show();
+            mRecipeViewModel.insertAll(mRecipe, mIngredientList, mStepList, mImageList,
+                    mKeywordList);
         });
         return mBinding.getRoot();
     }
@@ -140,17 +174,36 @@ public class CookbookManualFragment extends Fragment implements
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-//        if (getActivity() != null) {
-//            ((AppCompatActivity) getActivity()).setSupportActionBar(mBinding.manualToolbar);
-//            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar())
-//                    .setDisplayHomeAsUpEnabled(true);
-//        }
+    public void onFinishEditContentDialog(RecipeEntity recipe) {
+        mRecipe = recipe;
     }
 
     @Override
-    public void onFinishEditContentDialog(RecipeEntity recipe) {
-        mRecipe = recipe;
+    public void onFinishEditIngredientDialog(IngredientEntity ingredient) {
+        mIngredientList.add(ingredient);
+        getChildFragmentManager().beginTransaction()
+                .replace(mBinding.manualIngredientListContainer.getId(),
+                        IngredientFragment.newInstance(mState, mIngredientList))
+                .commit();
+    }
+
+    @Override
+    public void onFinishEditStepDialog(StepEntity step) {
+        mStepList.add(step);
+        getChildFragmentManager()
+                .beginTransaction()
+                .replace(mBinding.manualStepListContainer.getId(),
+                        StepFragment.newInstance(mState, mStepList))
+                .commit();
+    }
+
+    @Override
+    public void onFinishEditKeywordDialog(KeywordEntity keyword) {
+        mKeywordList.add(keyword);
+        getChildFragmentManager()
+                .beginTransaction()
+                .replace(mBinding.manualKeywordListContainer.getId(),
+                        KeywordFragment.newInstance(mState, mKeywordList))
+                .commit();
     }
 }

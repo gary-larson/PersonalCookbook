@@ -7,7 +7,6 @@ import androidx.lifecycle.LiveData;
 
 import com.larsonapps.personalcookbook.AppContainer;
 import com.larsonapps.personalcookbook.CookbookApplication;
-import com.larsonapps.personalcookbook.data.IngredientEntity;
 import com.larsonapps.personalcookbook.data.KeywordEntity;
 
 import java.util.List;
@@ -28,5 +27,9 @@ public class KeywordViewModel extends AndroidViewModel {
             mKeywords = mRepository.getKeywords(recipeId);
         }
         return mKeywords;
+    }
+
+    public void insertKeyword(KeywordEntity keyword) {
+        mRepository.insertKeyword(keyword);
     }
 }

@@ -78,13 +78,8 @@ public class ImageRecyclerViewAdapter extends
                 }
             });
             holder.mImageButton.setVisibility(View.VISIBLE);
-            holder.mCheckbox.setVisibility(View.GONE);
-        } else if (mState == CookbookActivity.STATE_IMPORT) {
-            holder.mCheckbox.setVisibility(View.VISIBLE);
-            holder.mImageButton.setVisibility(View.GONE);
         } else {
                 holder.mImageButton.setVisibility(View.GONE);
-                holder.mCheckbox.setVisibility(View.GONE);
         }
     }
 
@@ -138,7 +133,6 @@ public class ImageRecyclerViewAdapter extends
         public ImageView mImageView;
         public ImageView mImageButton;
         public ImageEntity mImage;
-        public CheckBox mCheckbox;
 
         /**
          * Constructor for the view holder
@@ -149,7 +143,6 @@ public class ImageRecyclerViewAdapter extends
             mView = binding.getRoot();
             mImageView = binding.image;
             mImageButton = binding.imageButton;
-            mCheckbox = binding.imageCheckbox;
         }
     }
 }

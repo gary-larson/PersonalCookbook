@@ -2,7 +2,6 @@ package com.larsonapps.personalcookbook.ui;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,41 +9,42 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.room.Ignore;
 
-import com.larsonapps.personalcookbook.adapter.IngredientRecyclerViewAdapter;
-import com.larsonapps.personalcookbook.data.IngredientEntity;
-import com.larsonapps.personalcookbook.databinding.IngredientFragmentItemListBinding;
-import com.larsonapps.personalcookbook.model.IngredientViewModel;
+import com.larsonapps.personalcookbook.R;
+import com.larsonapps.personalcookbook.adapter.KeywordRecyclerViewAdapter;
+import com.larsonapps.personalcookbook.data.KeywordEntity;
+import com.larsonapps.personalcookbook.databinding.KeywordFragmentItemListBinding;
+import com.larsonapps.personalcookbook.model.KeywordViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * A fragment representing a list of Items.
  */
-public class IngredientFragment extends Fragment {
+public class KeywordFragment extends Fragment {
     // Declare constants
     private static final String ARG_STATE = "state";
     private static final String ARG_RECIPE_ID = "recipeId";
-    private static final String ARG_INGREDIENTS = "ingredients";
+    private static final String ARG_KEYWORDS = "keywords";
     private static final String STATE = "mState";
     private static final String RECIPE_ID = "mRecipeId";
-    private static final String INGREDIENTS = "mIngredientList";
+    private static final String KEYWORDS = "mKeywordList";
     // Declare variables
     private int mState = 0;
     private int mRecipeId = 0;
-    private List<IngredientEntity> mIngredientList;
-    private IngredientFragmentItemListBinding mBinding;
-    private OnListFragmentInteractionListener mListener;
-    private IngredientViewModel mIngredientViewModel;
+    private List<KeywordEntity> mKeywordList;
+    private KeywordFragment.OnListFragmentInteractionListener mListener;
 
 
     /**
      * Default constructor
      */
-    public IngredientFragment() {}
+    @Ignore
+    public KeywordFragment() {}
 
     /**
      * Method to create a new instance of this fragment
@@ -52,8 +52,8 @@ public class IngredientFragment extends Fragment {
      * @param recipeId of the ingredients
      * @return the new fragment
      */
-    public static IngredientFragment newInstance(int state, int recipeId) {
-        IngredientFragment fragment = new IngredientFragment();
+    public static KeywordFragment newInstance(int state, int recipeId) {
+        KeywordFragment fragment = new KeywordFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_STATE, state);
         args.putInt(ARG_RECIPE_ID, recipeId);
@@ -61,11 +61,11 @@ public class IngredientFragment extends Fragment {
         return fragment;
     }
 
-    public static IngredientFragment newInstance(int state, List<IngredientEntity> list) {
-        IngredientFragment fragment = new IngredientFragment();
+    public static KeywordFragment newInstance(int state, List<KeywordEntity> list) {
+        KeywordFragment fragment = new KeywordFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_STATE, state);
-        args.putParcelableArrayList(ARG_INGREDIENTS, (ArrayList<IngredientEntity>) list);
+        args.putParcelableArrayList(ARG_KEYWORDS, (ArrayList<KeywordEntity>) list);
         fragment.setArguments(args);
         return fragment;
     }
@@ -83,8 +83,8 @@ public class IngredientFragment extends Fragment {
             if (getArguments().containsKey(ARG_RECIPE_ID)) {
                 mRecipeId = getArguments().getInt(ARG_RECIPE_ID);
             }
-            if (getArguments().containsKey(ARG_INGREDIENTS)) {
-                mIngredientList = getArguments().getParcelableArrayList(ARG_INGREDIENTS);
+            if (getArguments().containsKey(ARG_KEYWORDS)) {
+                mKeywordList = getArguments().getParcelableArrayList(ARG_KEYWORDS);
             }
         }
     }
@@ -99,24 +99,26 @@ public class IngredientFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mBinding = IngredientFragmentItemListBinding.inflate(inflater, container, false);
+        com.larsonapps.personalcookbook.databinding.KeywordFragmentItemListBinding mBinding =
+                KeywordFragmentItemListBinding.inflate(inflater, container, false);
         Context context = mBinding.getRoot().getContext();
-        mIngredientViewModel = new ViewModelProvider(requireActivity()).get(IngredientViewModel.class);
+        KeywordViewModel mKeywordViewModel = new ViewModelProvider(requireActivity()).get(KeywordViewModel.class);
         if (savedInstanceState != null) {
             mState = savedInstanceState.getInt(STATE);
             mRecipeId = savedInstanceState.getInt(RECIPE_ID);
-            mIngredientList = savedInstanceState.getParcelableArrayList(INGREDIENTS);
+            mKeywordList = savedInstanceState.getParcelableArrayList(KEYWORDS);
         }
         // Set the adapter
-        mBinding.ingredientList.setLayoutManager(new LinearLayoutManager(context));
-        IngredientRecyclerViewAdapter adapter = new IngredientRecyclerViewAdapter(mListener, mState);
-        mBinding.ingredientList.setAdapter(adapter);
+        mBinding.keywordList.setLayoutManager(new GridLayoutManager(context,
+                getResources().getInteger(R.integer.keyword_list_column_count)));
+        KeywordRecyclerViewAdapter adapter = new KeywordRecyclerViewAdapter(mListener, mState);
+        mBinding.keywordList.setAdapter(adapter);
         if (mState == CookbookActivity.STATE_MANUAL) {
-            adapter.setData(mIngredientList);
+            adapter.setData(mKeywordList);
         } else {
-            mIngredientViewModel.getIngredients(mRecipeId).observe(getViewLifecycleOwner(), newIngredients -> {
-                if (newIngredients != null && newIngredients.size() > 0) {
-                    adapter.setData(newIngredients);
+            mKeywordViewModel.getKeywords(mRecipeId).observe(getViewLifecycleOwner(), newKeywords -> {
+                if (newKeywords != null && newKeywords.size() > 0) {
+                    adapter.setData(newKeywords);
                 }
             });
         }
@@ -128,7 +130,7 @@ public class IngredientFragment extends Fragment {
         super.onSaveInstanceState(outState);
         outState.putInt(STATE, mState);
         outState.putInt(RECIPE_ID, mRecipeId);
-        outState.putParcelableArrayList(INGREDIENTS, (ArrayList<IngredientEntity>) mIngredientList);
+        outState.putParcelableArrayList(KEYWORDS, (ArrayList<KeywordEntity>) mKeywordList);
     }
 
     /**
@@ -138,8 +140,8 @@ public class IngredientFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
+        if (context instanceof KeywordFragment.OnListFragmentInteractionListener) {
+            mListener = (KeywordFragment.OnListFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString() );
         }
@@ -159,6 +161,6 @@ public class IngredientFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // set arguments type and name
-        void onListFragmentInteraction(IngredientEntity ingredient, int state, View view);
+        void onListFragmentInteraction(KeywordEntity keyword, int state, View view);
     }
 }

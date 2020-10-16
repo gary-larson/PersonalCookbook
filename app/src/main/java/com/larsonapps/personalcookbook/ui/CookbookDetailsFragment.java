@@ -48,7 +48,7 @@ public class CookbookDetailsFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
+// TODO create keyword fragments and connect to this fragment
     /**
      * Method to save the state of the instance
      * @param savedInstanceState to save

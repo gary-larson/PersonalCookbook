@@ -30,4 +30,8 @@ public class IngredientViewModel extends AndroidViewModel {
         }
         return mIngredients;
     }
+
+    public void insertIngredient(IngredientEntity ingredient) {
+        mRepository.insertIngredient(ingredient);
+    }
 }

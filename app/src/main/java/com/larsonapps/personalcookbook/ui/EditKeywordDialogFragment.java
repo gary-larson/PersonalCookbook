@@ -10,43 +10,43 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.larsonapps.personalcookbook.data.StepEntity;
-import com.larsonapps.personalcookbook.databinding.EditStepFragmentBinding;
+import com.larsonapps.personalcookbook.data.KeywordEntity;
+import com.larsonapps.personalcookbook.databinding.EditKeywordFragmentBinding;
 
-public class EditStepDialogFragment extends DialogFragment {
+public class EditKeywordDialogFragment extends DialogFragment {
     // Declare constants
     private static final String ARG_TITLE = "title";
     private static final String ARG_STATE = "state";
-    private static final String ARG_STEP = "step";
+    private static final String ARG_KEYWORD = "keyword";
     private static final String TITLE = "mTitle";
     private static final String STATE = "mState";
-    private static final String STEP = "mStep";
+    private static final String KEYWORD = "mKeyword";
     // Declare variables
-    private EditStepFragmentBinding mBinding;
+    private EditKeywordFragmentBinding mBinding;
     private int mState;
-    private StepEntity mStep;
+    private KeywordEntity mKeyword;
     private String mTitle;
 
 
     /**
      * Default constructor
      */
-    public EditStepDialogFragment() {}
+    public EditKeywordDialogFragment() {}
 
     /**
-     * Method to create a new instance of edit keyword dialog fragment
+     * Method to create a new instance of edit ingredient dialog fragment
      * @param title to display
      * @param state to save
-     * @param step to use
+     * @param keyword to use
      * @return created dialog fragment
      */
-    public static EditStepDialogFragment newInstance(String title, int state,
-                                                           StepEntity step) {
-        EditStepDialogFragment dialogFragment = new EditStepDialogFragment();
+    public static EditKeywordDialogFragment newInstance(String title, int state,
+                                                     KeywordEntity keyword) {
+        EditKeywordDialogFragment dialogFragment = new EditKeywordDialogFragment();
         Bundle args = new Bundle();
         args.putString(ARG_TITLE, title);
         args.putInt(ARG_STATE, state);
-        args.putParcelable(ARG_STEP, step);
+        args.putParcelable(ARG_KEYWORD, keyword);
         dialogFragment.setArguments(args);
         return dialogFragment;
     }
@@ -57,12 +57,12 @@ public class EditStepDialogFragment extends DialogFragment {
         if (getArguments() != null) {
             mTitle = getArguments().getString(ARG_TITLE);
             mState = getArguments().getInt(ARG_STATE);
-            mStep = getArguments().getParcelable(ARG_STEP);
+            mKeyword = getArguments().getParcelable(ARG_KEYWORD);
         }
     }
 
     /**
-     * Method to create the view for edit ingredient dialog fragment
+     * Method to create the view for edit keyword dialog fragment
      * @param inflater to inflate the view
      * @param container the view is in
      * @param savedInstanceState of the fragment
@@ -73,23 +73,19 @@ public class EditStepDialogFragment extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mBinding = EditStepFragmentBinding.inflate(inflater, container, false);
+        mBinding = EditKeywordFragmentBinding.inflate(inflater, container, false);
         if (savedInstanceState != null) {
             mTitle = savedInstanceState.getString(TITLE);
             mState = savedInstanceState.getInt(STATE);
-            mStep = savedInstanceState.getParcelable(STEP);
+            mKeyword = savedInstanceState.getParcelable(KEYWORD);
         }
-        if (mStep != null) {
-            String temp = String.valueOf(mStep.getNumber());
-            mBinding.editStepNumberEditText.setText(temp);
-            temp = mStep.getInstruction();
-            if (temp != null && !temp.isEmpty()) {
-                mBinding.editStepInstructionEditText.setText(temp);
-            }
+        if (mKeyword != null) {
+            String temp = String.valueOf(mKeyword.getKeyword());
+            mBinding.editKeywordEditText.setText(temp);
         } else {
-            mStep = new StepEntity();
+            mKeyword = new KeywordEntity();
         }
-        mBinding.editStepSubmitButton.setOnClickListener(v -> sendStepToParent());
+        mBinding.editKeywordSubmitButton.setOnClickListener(v -> sendKeywordToParent());
         return mBinding.getRoot();
     }
 
@@ -106,7 +102,7 @@ public class EditStepDialogFragment extends DialogFragment {
             getDialog().setTitle(mTitle);
         }
         // set focus
-        mBinding.editStepNumberEditText.requestFocus();
+        mBinding.editKeywordEditText.requestFocus();
         // display the virtual keyboard
         if (getDialog() != null && getDialog().getWindow() != null) {
             getDialog().getWindow().setSoftInputMode(
@@ -119,34 +115,24 @@ public class EditStepDialogFragment extends DialogFragment {
         super.onSaveInstanceState(outState);
         outState.putString(TITLE, mTitle);
         outState.putInt(STATE, mState);
-        outState.putParcelable(STEP, mStep);
+        outState.putParcelable(KEYWORD, mKeyword);
     }
 
     /**
-     * Method to send the step to the calling fragment
+     * Method to send the keyword to the calling fragment
      */
-    public void sendStepToParent() {
+    public void sendKeywordToParent() {
         // set listener
-        EditStepDialogFragment.EditStepDialogListener listener =
-                (EditStepDialogFragment.EditStepDialogListener) getTargetFragment();
-        // build step
-        String tempString = mBinding.editStepNumberEditText.getText().toString();
-        int tempInt;
-        try {
-            tempInt = Integer.parseInt(tempString);
-        } catch (NumberFormatException e) {
-            tempInt = 0;
+        EditKeywordDialogFragment.EditKeywordDialogListener listener =
+                (EditKeywordDialogFragment.EditKeywordDialogListener) getTargetFragment();
+        // build keyword
+        String tempString = mBinding.editKeywordEditText.getText().toString();
+        if (!(tempString.isEmpty() || tempString.equals(mKeyword.getKeyword()))) {
+            mKeyword.setKeyword(tempString);
         }
-        if (!(tempInt == 0 || tempInt == mStep.getNumber())) {
-            mStep.setNumber(tempInt);
-        }
-        tempString = mBinding.editStepInstructionEditText.getText().toString();
-        if (!(tempString.isEmpty() || tempString.equals(mStep.getInstruction()))) {
-            mStep.setInstruction(tempString);
-        }
-        // send step
+        // send keyword
         if (listener != null) {
-            listener.onFinishEditStepDialog(mStep);
+            listener.onFinishEditKeywordDialog(mKeyword);
         }
         dismiss();
     }
@@ -154,7 +140,7 @@ public class EditStepDialogFragment extends DialogFragment {
     /**
      * Interface for the listener
      */
-    public interface EditStepDialogListener {
-        void onFinishEditStepDialog(StepEntity step);
+    public interface EditKeywordDialogListener {
+        void onFinishEditKeywordDialog(KeywordEntity keyword);
     }
 }
