@@ -90,10 +90,8 @@
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="@dimen/fab_margin"
-        android:background="@drawable/fab_background"
         android:contentDescription="@string/search"
         android:elevation="@dimen/fab_elevation"
         android:src="@drawable/ic_search_24px" />
-    <!--</LinearLayout>-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

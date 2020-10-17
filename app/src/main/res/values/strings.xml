@@ -55,10 +55,10 @@
     <string name="edit_content_notes_hint">Enter cook\'s or personal notes</string>
     <string name="edit_content_copyright_hint">Enter copyright info if any</string>
     <string name="edit_content_second_line_label_text">Enter as numbers and times in mins</string>
-    <string name="serv">Serv</string>
-    <string name="prep">Prep</string>
-    <string name="cook">Cook</string>
-    <string name="total">Total</string>
+    <string name="serv">Servings</string>
+    <string name="prep">Prep Time</string>
+    <string name="cook">Cook Time</string>
+    <string name="total">Total Time</string>
     <string name="servings">Servings</string>
     <string name="edit_ingredient_name_hint">Enter Ingredient Name</string>
     <string name="edit_ingredient_amount_hint">Enter Ingredient Amount</string>
@@ -68,5 +68,17 @@
     <string name="edit_step_number_hint">Enter Step Number</string>
     <string name="keywords">Keywords</string>
     <string name="edit_keyword_hint">Enter Keyword</string>
+    <string name="add_image_press_button_text">Press button to select from your photos</string>
+    <string name="add_image_gallery_button_text">Pick from Gallery</string>
+    <string name="add_image_content_description_text">Photo for recipe</string>
+    <string name="add_image_url_text">Enter an address for an image on the internet</string>
+    <string name="add_image_url_hint">Enter URL</string>
+    <string name="add_gallery">Gallery</string>
+    <string name="add_internet">Internet</string>
+    <string name="content_recipe_name">Recipe Name</string>
+    <string name="content_short_description">Short Description</string>
+    <string name="content_description">Description</string>
+    <string name="content_notes">Cook\'s Notes</string>
+    <string name="content_copyright">Copyright</string>
 
 </resources>

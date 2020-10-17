@@ -34,7 +34,7 @@ public class EditStepDialogFragment extends DialogFragment {
     public EditStepDialogFragment() {}
 
     /**
-     * Method to create a new instance of edit keyword dialog fragment
+     * Method to create a new instance of edit step dialog fragment
      * @param title to display
      * @param state to save
      * @param step to use
@@ -62,7 +62,7 @@ public class EditStepDialogFragment extends DialogFragment {
     }
 
     /**
-     * Method to create the view for edit ingredient dialog fragment
+     * Method to create the view for edit step dialog fragment
      * @param inflater to inflate the view
      * @param container the view is in
      * @param savedInstanceState of the fragment

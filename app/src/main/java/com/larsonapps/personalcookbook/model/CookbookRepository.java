@@ -1,6 +1,9 @@
 package com.larsonapps.personalcookbook.model;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -12,16 +15,24 @@ import com.larsonapps.personalcookbook.data.IngredientEntity;
 import com.larsonapps.personalcookbook.data.KeywordEntity;
 import com.larsonapps.personalcookbook.data.RecipeEntity;
 import com.larsonapps.personalcookbook.data.StepEntity;
+import com.larsonapps.personalcookbook.utilities.CookbookExecutor;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 
 public class CookbookRepository {
+    // Declare constants
+    private static final String INTERNET_TYPE = "Internet";
+    private static final String TAG = CookbookRepository.class.getSimpleName();
     // Declare variables
     private CookbookDao mDao;
+    private CookbookExecutor mExecutor;
 
     public CookbookRepository(Context context) {
         // Initialize variables
         CookbookRoomDatabase cookbookRoomDatabase = CookbookRoomDatabase.getDatabase(context);
+        mExecutor = new CookbookExecutor();
         mDao = cookbookRoomDatabase.cookbookDao();
     }
 
@@ -92,7 +103,19 @@ public class CookbookRepository {
     }
 
     public void insertImage(ImageEntity image) {
-        CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.insertImage(image));
+        if (image.getType().equals(INTERNET_TYPE)) {
+            mExecutor.execute(() -> {
+                try {
+                    URL url = new URL(image.getImageUrl());
+                    Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                    image.setHeight(bmp.getHeight());
+                    image.setWidth(bmp.getWidth());
+                } catch (IOException e) {
+                    Log.e(TAG, "Exception for image: " + e.getMessage());
+                }
+                CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.insertImage(image));
+            });
+        }
     }
 
     public void updateIngredient(IngredientEntity ingredient) {

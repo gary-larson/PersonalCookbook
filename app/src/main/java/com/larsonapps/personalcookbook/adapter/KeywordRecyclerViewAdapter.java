@@ -45,13 +45,6 @@ public class KeywordRecyclerViewAdapter extends
         holder.mItem = mValues.get(position);
         holder.mKeywordView.setText(mValues.get(position).getKeyword());
         if (mState == CookbookActivity.STATE_EDIT) {
-            holder.mEditImageButton.setOnClickListener(v -> {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(new KeywordEntity(), mState, v);
-                }
-            });
             holder.mDeleteImageButton.setOnClickListener(v -> {
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
@@ -59,10 +52,8 @@ public class KeywordRecyclerViewAdapter extends
                     mListener.onListFragmentInteraction(new KeywordEntity(), mState, v);
                 }
             });
-            holder.mEditImageButton.setVisibility(View.VISIBLE);
             holder.mDeleteImageButton.setVisibility(View.VISIBLE);
         } else {
-            holder.mEditImageButton.setVisibility(View.GONE);
             holder.mDeleteImageButton.setVisibility(View.GONE);
         }
     }
@@ -83,7 +74,6 @@ public class KeywordRecyclerViewAdapter extends
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mKeywordView;
-        public final ImageView mEditImageButton;
         public final ImageView mDeleteImageButton;
         public KeywordEntity mItem;
 
@@ -91,7 +81,6 @@ public class KeywordRecyclerViewAdapter extends
             super(binding.getRoot());
             mView = binding.getRoot();
             mKeywordView = binding.keywordTextView;
-            mEditImageButton = binding.keywordEditImageButton;
             mDeleteImageButton = binding.keywordDeleteImageButton;
         }
     }

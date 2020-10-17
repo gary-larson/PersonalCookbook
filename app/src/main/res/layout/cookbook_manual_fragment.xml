@@ -99,8 +99,6 @@
                 app:layout_constraintTop_toBottomOf="@id/manual_step_label"
                 tools:context="com.larsonapps.personalcookbook.StepFragment" />
 
-
-
             <TextView
                 android:id="@+id/manual_image_label"
                 style="@style/HeadingTextView"
@@ -109,9 +107,19 @@
                 app:layout_constraintTop_toBottomOf="@id/manual_step_list_container" />
 
             <Button
-                android:id="@+id/manual_add_image_button"
+                android:id="@+id/manual_add_image_gallery_button"
                 style="@style/AppButton"
-                android:text="@string/add_button_text"
+                android:text="@string/add_gallery"
+                app:icon="@drawable/ic_add_24px"
+                app:layout_constraintTop_toTopOf="@id/manual_image_label"
+                app:layout_constraintStart_toEndOf="@id/manual_image_label"
+                app:layout_constraintEnd_toStartOf="@id/manual_add_image_internet_button"
+                app:layout_constraintBottom_toBottomOf="@id/manual_image_label" />
+
+            <Button
+                android:id="@+id/manual_add_image_internet_button"
+                style="@style/AppButton"
+                android:text="@string/add_internet"
                 app:icon="@drawable/ic_add_24px"
                 app:layout_constraintTop_toTopOf="@id/manual_image_label"
                 app:layout_constraintEnd_toEndOf="parent"

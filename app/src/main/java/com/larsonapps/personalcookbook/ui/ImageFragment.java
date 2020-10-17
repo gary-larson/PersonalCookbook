@@ -115,7 +115,8 @@ public class ImageFragment extends Fragment {
             mImageList = savedInstanceState.getParcelableArrayList(IMAGES);
         }
         ImageRecyclerViewAdapter adapter = new ImageRecyclerViewAdapter(mListener, mState);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setLayoutManager(new LinearLayoutManager(context,
+                LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(adapter);
         if (mState == CookbookActivity.STATE_MANUAL) {
             adapter.setData(mImageList);

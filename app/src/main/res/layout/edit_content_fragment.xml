@@ -33,23 +33,30 @@
         android:textColor="@color/white"
         android:textColorHint="@color/white" />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/edit_content_second_line_label_text"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-        android:textColor="@color/white" />
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/ContentHeadingTextView"
+            android:text="@string/servings"
+            android:layout_width="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            style="@style/ContentHeadingTextView"
+            android:text="@string/prep"
+            android:layout_width="0dp"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/serv"
-            android:textColor="@color/white"/>
 
         <EditText
             android:id="@+id/edit_content_servings_edit_text"
@@ -65,12 +72,6 @@
             android:inputType="number"
             android:textColor="@color/white"
             android:textColorHint="@color/white" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/prep"
-            android:textColor="@color/white"/>
 
         <EditText
             android:id="@+id/edit_content_prep_time_edit_text"
@@ -94,10 +95,23 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/ContentHeadingTextView"
             android:text="@string/cook"
-            android:textColor="@color/white"/>
+            android:layout_width="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            style="@style/ContentHeadingTextView"
+            android:text="@string/total"
+            android:layout_width="0dp"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/edit_content_cook_time_edit_text"
@@ -113,12 +127,6 @@
             android:inputType="number"
             android:textColor="@color/white"
             android:textColorHint="@color/white" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/total"
-            android:textColor="@color/white"/>
 
         <EditText
             android:id="@+id/edit_content_total_time_edit_text"

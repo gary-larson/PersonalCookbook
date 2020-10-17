@@ -48,7 +48,7 @@ public class CookbookDetailsFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-// TODO create keyword fragments and connect to this fragment
+
     /**
      * Method to save the state of the instance
      * @param savedInstanceState to save
@@ -82,21 +82,9 @@ public class CookbookDetailsFragment extends Fragment {
                         .newInstance(mState, mRecipe.getId()))
                 .replace(mBinding.detailsImageListContainer.getId(), ImageFragment
                         .newInstance(mState, mRecipe.getId()))
+                .replace(mBinding.detailsKeywordListContainer.getId(), KeywordFragment
+                        .newInstance(mState, mRecipe.getId()))
                 .commit();
-        CookbookActivity activity = (CookbookActivity) getActivity();
-        int height = 0;
-        if (activity != null) {
-            height = activity.getHeight();
-            float h = getResources().getDimension(R.dimen.details_photo_height);
-            height -= h - getResources().getInteger(R.integer.list_size_adjuster);
-            height /= getResources().getInteger(R.integer.list_size_divisor);
-        }
-        ViewGroup.LayoutParams params = mBinding.detailsIngredientListContainer.getLayoutParams();
-        params.height = height;
-        mBinding.detailsIngredientListContainer.setLayoutParams(params);
-        params = mBinding.detailsStepListContainer.getLayoutParams();
-        params.height = height;
-        mBinding.detailsStepListContainer.setLayoutParams(params);
         mBinding.editFab.setOnClickListener(v -> {
             if (null != mListener) {
                 mListener.onEditFabClickListener(mRecipe);

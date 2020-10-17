@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 
+import com.larsonapps.personalcookbook.R;
 import com.larsonapps.personalcookbook.data.ImageEntity;
 
 import com.larsonapps.personalcookbook.databinding.ImageFragmentItemBinding;
@@ -62,12 +63,21 @@ public class ImageRecyclerViewAdapter extends
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mImage = mValues.get(position);
         if (holder.mImage.getImageUrl() != null) {
-            Picasso.get().load(holder.mImage.getImageUrl())
-                    //.error(R.mipmap.error)
-                    .noPlaceholder()
-                    //.resize((int) mContext.getResources().getDimension(R.dimen.details_photo_height),
-                    //        (int)mContext.getResources().getDimension(R.dimen.details_photo_height))
-                    .into(holder.mImageView);
+            if (holder.mImage.getWidth() > holder.mView.getResources()
+                    .getDimension(R.dimen.image_max_width) || holder.mImage.getHeight() >
+                    holder.mView.getResources().getDimension(R.dimen.image_max_height)) {
+                Picasso.get().load(holder.mImage.getImageUrl())
+                        .noPlaceholder()
+                        .resize((int) holder.mView.getResources()
+                                        .getDimension(R.dimen.image_max_width),
+                                (int) holder.mView.getResources()
+                                        .getDimension(R.dimen.image_max_height))
+                        .into(holder.mImageView);
+            } else {
+                Picasso.get().load(holder.mImage.getImageUrl())
+                        .noPlaceholder()
+                        .into(holder.mImageView);
+            }
         }
         if (mState == CookbookActivity.STATE_EDIT) {
             holder.mImageButton.setOnClickListener(v -> {

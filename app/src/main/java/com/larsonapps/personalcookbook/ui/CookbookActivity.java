@@ -18,6 +18,7 @@ Copyright (C) 2020  Larson Apps - Gary Larson
 package com.larsonapps.personalcookbook.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Menu;
@@ -25,6 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
@@ -68,7 +70,6 @@ public class CookbookActivity extends AppCompatActivity implements
     private KeywordViewModel mKeywordViewModel;
     private CookbookActivityBinding mBinding;
     private Context mContext;
-    private int mHeight;
 
     /**
      * Method to create cookbook activity
@@ -98,17 +99,6 @@ public class CookbookActivity extends AppCompatActivity implements
         getSupportFragmentManager().addOnBackStackChangedListener(this);
         // display up button
         displayUpButton();
-        // get the height of the screen
-        int height;
-        if (android.os.Build.VERSION.SDK_INT >= 30){
-            height = getWindowManager().getMaximumWindowMetrics().getBounds().height();
-        } else{
-            Point size = new Point();
-            getWindowManager().getDefaultDisplay().getRealSize(size);
-            height = size.y;
-        }
-        // set the height of the screen
-        mHeight = height;
     }
 
     /**
@@ -178,12 +168,6 @@ public class CookbookActivity extends AppCompatActivity implements
     }
 
     /**
-     * Getter for height
-     * @return height
-     */
-    public int getHeight() {return mHeight;}
-
-    /**
      * Method to handle listener for the recipe recyclerview adapter
      * @param recipe of the list item
      */
@@ -209,8 +193,6 @@ public class CookbookActivity extends AppCompatActivity implements
             Toast.makeText(this, "Ingredient edit clicked", Toast.LENGTH_LONG).show();
         } else if (view.getId() == R.id.ingredient_delete_image_button) {
             Toast.makeText(this, "Ingredient delete clicked", Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(this, "Ingredient clicked", Toast.LENGTH_LONG).show();
         }
 
     }
@@ -227,8 +209,6 @@ public class CookbookActivity extends AppCompatActivity implements
             Toast.makeText(this, "Step edit clicked", Toast.LENGTH_LONG).show();
         } else if (view.getId() == R.id.step_delete_image_button) {
             Toast.makeText(this, "Step delete clicked", Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(this, "Step clicked", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -242,8 +222,6 @@ public class CookbookActivity extends AppCompatActivity implements
     public void onListFragmentInteraction(ImageEntity image, int state, View view) {
         if (view.getId() == R.id.image_button) {
             Toast.makeText(this, "Image delete clicked", Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(this, "Image clicked", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -286,12 +264,8 @@ public class CookbookActivity extends AppCompatActivity implements
 
     @Override
     public void onListFragmentInteraction(KeywordEntity keyword, int state, View view) {
-        if (view.getId() == R.id.keyword_edit_image_button) {
-            Toast.makeText(this, "Keyword edit clicked", Toast.LENGTH_LONG).show();
-        } else if (view.getId() == R.id.keyword_delete_image_button) {
+        if (view.getId() == R.id.keyword_delete_image_button) {
             Toast.makeText(this, "Keyword delete clicked", Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(this, "Keyword clicked", Toast.LENGTH_LONG).show();
         }
     }
 }

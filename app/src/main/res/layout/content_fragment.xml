@@ -11,14 +11,39 @@
         android:orientation="vertical"
         tools:context=".ui.ContentFragment">
 
+        <TextView
+            style="@style/ContentHeadingTextView"
+            android:text="@string/content_recipe_name"/>
 
         <TextView
             android:id="@+id/name_text_view"
             style="@style/ContentTextView" />
 
         <TextView
+            style="@style/ContentHeadingTextView"
+            android:text="@string/content_short_description"/>
+
+        <TextView
             android:id="@+id/short_description_text_view"
             style="@style/ContentTextView" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/ContentHeadingTextView"
+            android:text="@string/servings"
+            android:layout_width="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            style="@style/ContentHeadingTextView"
+            android:text="@string/prep"
+            android:layout_width="0dp"
+            android:layout_weight="1" />
+    </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,23 +51,11 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
-                style="@style/ContentTextView"
-                android:text="@string/servings"
-                android:textColor="@color/white" />
-
-            <TextView
                 android:id="@+id/servings_text_view"
                 style="@style/ContentTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                style="@style/ContentTextView"
-                android:text="@string/prep"
-                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/prep_time_text_view"
@@ -58,10 +71,22 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
-                style="@style/ContentTextView"
+                style="@style/ContentHeadingTextView"
                 android:text="@string/cook"
-                android:textColor="@color/white" />
+                android:layout_width="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                style="@style/ContentHeadingTextView"
+                android:text="@string/total"
+                android:layout_width="0dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/cook_time_text_view"
@@ -69,12 +94,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                style="@style/ContentTextView"
-                android:text="@string/total"
-                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/total_time_text_view"
@@ -85,12 +104,24 @@
         </LinearLayout>
 
         <TextView
+            style="@style/ContentHeadingTextView"
+            android:text="@string/content_description"/>
+
+        <TextView
             android:id="@+id/description_text_view"
             style="@style/ContentTextView" />
 
         <TextView
+            style="@style/ContentHeadingTextView"
+            android:text="@string/content_notes"/>
+
+        <TextView
             android:id="@+id/notes_text_view"
             style="@style/ContentTextView" />
+
+        <TextView
+            style="@style/ContentHeadingTextView"
+            android:text="@string/content_copyright" />
 
         <TextView
             android:id="@+id/copyright_text_view"

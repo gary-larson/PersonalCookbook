@@ -6,12 +6,16 @@
     <dimen name="app_bar_elevation">4dp</dimen>
     <dimen name="text_margin_start">20dp</dimen>
     <dimen name="button_padding">8dp</dimen>
+    <dimen name="fragment_top_margin">8dp</dimen>
     <dimen name="fragment_bottom_margin">16dp</dimen>
     <dimen name="list_text_margin">4dp</dimen>
     <dimen name="list_text_padding">8dp</dimen>
     <dimen name="list_top_text_margin">8dp</dimen>
     <dimen name="list_horizontal_text_margin">8dp</dimen>
     <dimen name="list_root_margin">16dp</dimen>
+    <dimen name="image_max_height">250dp</dimen>
+    <dimen name="image_max_width">250dp</dimen>
+    <dimen name="image_margin">4dp</dimen>
 
     <!-- cookbook fragment -->
     <dimen name="app_bar_height">140dp</dimen>
@@ -53,4 +57,6 @@
     <!-- cookbook dialog fragments -->
     <dimen name="dialog_margin">8dp</dimen>
     <dimen name="dialog_vertical_margin">8dp</dimen>
+
+
 </resources>

@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.larsonapps.personalcookbook.data.ImageEntity;
 import com.larsonapps.personalcookbook.data.IngredientEntity;
 import com.larsonapps.personalcookbook.data.KeywordEntity;
 import com.larsonapps.personalcookbook.data.RecipeEntity;
@@ -34,6 +35,7 @@ public class CookbookEditFragment extends Fragment implements
         EditContentDialogFragment.EditContentDialogListener,
         EditIngredientDialogFragment.EditIngredientDialogListener,
         EditStepDialogFragment.EditStepDialogListener,
+        AddImageDialogFragment.AddImageDialogListener,
         EditKeywordDialogFragment.EditKeywordDialogListener {
     // Declare constants
     private static final String ARG_STATE = "state";
@@ -43,7 +45,7 @@ public class CookbookEditFragment extends Fragment implements
     private static final String EDIT_CONTENT_TAG = "edit_content_fragment";
     private static final String EDIT_INGREDIENT_TAG = "edit_ingredient_fragment";
     private static final String EDIT_STEP_TAG = "edit_step_fragment";
-    private static final String EDIT_IMAGE_TAG = "edit_image_fragment";
+    private static final String EDIT_IMAGE_TAG = "add_image_fragment";
     private static final String EDIT_KEYWORD_TAG = "edit_keyword_fragment";
     // Declare variables
     private CookbookEditFragmentBinding mBinding;
@@ -103,6 +105,8 @@ public class CookbookEditFragment extends Fragment implements
                         .newInstance(mState, mRecipe.getId()))
                 .replace(mBinding.editImageListContainer.getId(), ImageFragment
                         .newInstance(mState, mRecipe.getId()))
+                .replace(mBinding.editKeywordListContainer.getId(), KeywordFragment
+                        .newInstance(mState, mRecipe.getId()))
                 .commit();
         mBinding.editContentButton.setOnClickListener(v -> {
             EditContentDialogFragment editContentDialogFragment = EditContentDialogFragment
@@ -113,9 +117,6 @@ public class CookbookEditFragment extends Fragment implements
                         EDIT_CONTENT_TAG);
             }
         });
-        mBinding.editReorderIngredientButton.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Reorder Ingredient clicked", Toast.LENGTH_LONG).show();
-        });
         mBinding.editAddIngredientButton.setOnClickListener(v -> {
             EditIngredientDialogFragment editIngredientDialogFragment = EditIngredientDialogFragment
                     .newInstance("Add Ingredient", mState, null);
@@ -124,9 +125,6 @@ public class CookbookEditFragment extends Fragment implements
                 editIngredientDialogFragment.show(getActivity().getSupportFragmentManager(),
                         EDIT_INGREDIENT_TAG);
             }
-        });
-        mBinding.editReorderStepButton.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Reorder Step clicked", Toast.LENGTH_LONG).show();
         });
         mBinding.editAddStepButton.setOnClickListener(v -> {
             EditStepDialogFragment editStepDialogFragment = EditStepDialogFragment
@@ -138,7 +136,13 @@ public class CookbookEditFragment extends Fragment implements
             }
         });
         mBinding.editAddImageButton.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Add Image clicked", Toast.LENGTH_LONG).show();
+            AddImageDialogFragment addImageDialogFragment = AddImageDialogFragment
+                    .newInstance("Add Image", mState, null);
+            addImageDialogFragment.setTargetFragment(this, 130);
+            if (getActivity() != null) {
+                addImageDialogFragment.show(getActivity().getSupportFragmentManager(),
+                        EDIT_IMAGE_TAG);
+            }
         });
         mBinding.editAddKeywordButton.setOnClickListener(v -> {
             EditKeywordDialogFragment editKeywordDialogFragment = EditKeywordDialogFragment
@@ -181,5 +185,11 @@ public class CookbookEditFragment extends Fragment implements
     public void onFinishEditKeywordDialog(KeywordEntity keyword) {
         keyword.setRecipeId(mRecipe.getId());
         mKeywordViewModel.insertKeyword(keyword);
+    }
+
+    @Override
+    public void onFinishAddImageDialog(ImageEntity image) {
+        image.setRecipeId(mRecipe.getId());
+        mImageViewModel.insertImage(image);
     }
 }
