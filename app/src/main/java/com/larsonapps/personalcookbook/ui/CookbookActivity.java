@@ -17,16 +17,12 @@ Copyright (C) 2020  Larson Apps - Gary Larson
  */
 package com.larsonapps.personalcookbook.ui;
 
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
-import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
@@ -52,16 +48,27 @@ public class CookbookActivity extends AppCompatActivity implements
         ImageFragment.OnListFragmentInteractionListener,
         KeywordFragment.OnListFragmentInteractionListener,
         AddCategoryDialogFragment.OnAddCategoryDialogListener,
+        EditIngredientDialogFragment.EditIngredientDialogEditListener,
+        EditStepDialogFragment.EditStepDialogEditListener,
         CookbookDetailsFragment.OnCookbookDetailsEditFabListener {
     // Declare constants
     public static final int STATE_DISPLAY = 0;
     public static final int STATE_EDIT= 1;
     public static final int STATE_MANUAL = 2;
+    public static final int STATE_ADD = 3;
     private static final String DETAILS_FRAGMENT = "DetailsFragment";
     private static final String EDIT_FRAGMENT = "EditFragment";
     private static final String MANUAL_FRAGMENT = "ManualFragment";
-
     private static final String ABOUT_FRAGMENT = "AboutFragment";
+    public static final String EDIT_CONTENT_DIALOG = "EditContentDialogFragment";
+    public static final String EDIT_INGREDIENT_DIALOG = "EditIngredientDialogFragment";
+    public static final String EDIT_STEP_DIALOG = "EditStepDialogFragment";
+    public static final String ADD_IMAGE_DIALOG = "AddImageDialogFragment";
+    public static final String ADD_KEYWORD_DIALOG = "AddKeywordDialogFragment";
+    public static final String ADD_CATEGORY_DIALOG = "AddCategoryDialogFragment";
+    private static final String CATEGORY_TITLE = "Add Category";
+    private static final String INGREDIENT_TITLE = "Edit Ingredient";
+    private static final String STEP_TITLE = "Edit Step";
     // Declare variables
     private RecipeViewModel mRecipeViewModel;
     private IngredientViewModel mIngredientViewModel;
@@ -69,7 +76,6 @@ public class CookbookActivity extends AppCompatActivity implements
     private ImageViewModel mImageViewModel;
     private KeywordViewModel mKeywordViewModel;
     private CookbookActivityBinding mBinding;
-    private Context mContext;
 
     /**
      * Method to create cookbook activity
@@ -87,8 +93,6 @@ public class CookbookActivity extends AppCompatActivity implements
                     .replace(mBinding.container.getId(), RecipeFragment.newInstance())
                     .commit();
         }
-        // get an application context
-        mContext = getApplicationContext();
         // Get the view models used by fragments
         mRecipeViewModel = new ViewModelProvider(this).get(RecipeViewModel.class);
         mIngredientViewModel = new ViewModelProvider(this).get(IngredientViewModel.class);
@@ -136,10 +140,9 @@ public class CookbookActivity extends AppCompatActivity implements
         // take action depending on item selected
         switch (menuItemThatWasSelected) {
             case R.id.action_add_category:
-                FragmentManager fragmentManager = getSupportFragmentManager();
                 AddCategoryDialogFragment addCategoryDialogFragment =
-                        AddCategoryDialogFragment.newInstance("Add Category");
-                addCategoryDialogFragment.show(fragmentManager, "add_category_fragment");
+                        AddCategoryDialogFragment.newInstance(CATEGORY_TITLE);
+                addCategoryDialogFragment.show(getSupportFragmentManager(), ADD_CATEGORY_DIALOG);
                 return true;
             case R.id.action_manual:
                 getSupportFragmentManager()
@@ -176,7 +179,7 @@ public class CookbookActivity extends AppCompatActivity implements
         // open detail fragment for the recipe in question
         getSupportFragmentManager().beginTransaction()
                 .replace(mBinding.container.getId(), CookbookDetailsFragment
-                        .newInstance(STATE_DISPLAY, recipe   ))
+                        .newInstance(STATE_DISPLAY, recipe))
                 .addToBackStack(DETAILS_FRAGMENT)
                 .commit();
     }
@@ -190,11 +193,22 @@ public class CookbookActivity extends AppCompatActivity implements
     @Override
     public void onListFragmentInteraction(IngredientEntity ingredient, int state, View view) {
         if (view.getId() == R.id.ingredient_edit_image_button) {
-            Toast.makeText(this, "Ingredient edit clicked", Toast.LENGTH_LONG).show();
+            EditIngredientDialogFragment editIngredientDialogFragment =
+                    EditIngredientDialogFragment.newInstance(INGREDIENT_TITLE, STATE_EDIT,
+                            ingredient);
+            editIngredientDialogFragment.show(getSupportFragmentManager(), EDIT_INGREDIENT_DIALOG);
         } else if (view.getId() == R.id.ingredient_delete_image_button) {
-            Toast.makeText(this, "Ingredient delete clicked", Toast.LENGTH_LONG).show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.alert_ingredient_message)
+                    .setTitle(R.string.alert_ingredient_title);
+            builder.setPositiveButton(R.string.alert_delete, (dialog, id) ->
+                    mIngredientViewModel.deleteIngredient(ingredient));
+            builder.setNegativeButton(R.string.alert_cancel, (dialog, id) -> {
+                // User cancelled the dialog do nothing
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
         }
-
     }
 
     /**
@@ -206,9 +220,20 @@ public class CookbookActivity extends AppCompatActivity implements
     @Override
     public void onListFragmentInteraction(StepEntity step, int state, View view) {
         if (view.getId() == R.id.step_edit_image_button) {
-            Toast.makeText(this, "Step edit clicked", Toast.LENGTH_LONG).show();
+            EditStepDialogFragment editStepDialogFragment = EditStepDialogFragment
+                    .newInstance(STEP_TITLE, STATE_EDIT, step);
+            editStepDialogFragment.show(getSupportFragmentManager(), EDIT_STEP_DIALOG);
         } else if (view.getId() == R.id.step_delete_image_button) {
-            Toast.makeText(this, "Step delete clicked", Toast.LENGTH_LONG).show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.alert_step_message)
+                    .setTitle(R.string.alert_step_title);
+            builder.setPositiveButton(R.string.alert_delete, (dialog, id) ->
+                    mStepViewModel.deleteStep(step));
+            builder.setNegativeButton(R.string.alert_cancel, (dialog, id) -> {
+                // User cancelled the dialog do nothing
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
         }
     }
 
@@ -221,7 +246,16 @@ public class CookbookActivity extends AppCompatActivity implements
     @Override
     public void onListFragmentInteraction(ImageEntity image, int state, View view) {
         if (view.getId() == R.id.image_button) {
-            Toast.makeText(this, "Image delete clicked", Toast.LENGTH_LONG).show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.alert_image_message)
+                    .setTitle(R.string.alert_image_title);
+            builder.setPositiveButton(R.string.alert_delete, (dialog, id) ->
+                    mImageViewModel.deleteImage(image));
+            builder.setNegativeButton(R.string.alert_cancel, (dialog, id) -> {
+                // User cancelled the dialog do nothing
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
         }
     }
 
@@ -265,7 +299,26 @@ public class CookbookActivity extends AppCompatActivity implements
     @Override
     public void onListFragmentInteraction(KeywordEntity keyword, int state, View view) {
         if (view.getId() == R.id.keyword_delete_image_button) {
-            Toast.makeText(this, "Keyword delete clicked", Toast.LENGTH_LONG).show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.alert_keyword_message)
+                    .setTitle(R.string.alert_keyword_title);
+            builder.setPositiveButton(R.string.alert_delete, (dialog, id) ->
+                    mKeywordViewModel.deleteKeyword(keyword));
+            builder.setNegativeButton(R.string.alert_cancel, (dialog, id) -> {
+                // User cancelled the dialog do nothing
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
         }
+    }
+
+    @Override
+    public void onFinishEditIngredientDialog(IngredientEntity ingredient) {
+        mIngredientViewModel.updateIngredient(ingredient);
+    }
+
+    @Override
+    public void onFinishEditStepDialog(StepEntity step) {
+        mStepViewModel.updateStep(step);
     }
 }

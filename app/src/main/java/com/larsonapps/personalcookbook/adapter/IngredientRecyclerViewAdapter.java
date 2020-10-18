@@ -43,10 +43,9 @@ public class IngredientRecyclerViewAdapter extends
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-
-        holder.mNameView.setText(holder.mItem.getName());
-        holder.mAmountView.setText(holder.mItem.getAmount());
-        holder.mMeasureView.setText(holder.mItem.getMeasure());
+        String tempString = holder.mItem.getAmount() + " " + holder.mItem.getMeasure() +
+                holder.mItem.getName();
+        holder.mTextView.setText(tempString);
         if (holder.mItem.getPreparation() == null || holder.mItem.getPreparation().isEmpty()) {
             holder.mPreparationView.setVisibility(View.GONE);
         } else {
@@ -58,14 +57,14 @@ public class IngredientRecyclerViewAdapter extends
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(new IngredientEntity(), mState, v);
+                    mListener.onListFragmentInteraction(holder.mItem, mState, v);
                 }
             });
             holder.mDeleteImageButton.setOnClickListener(v -> {
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(new IngredientEntity(), mState, v);
+                    mListener.onListFragmentInteraction(holder.mItem, mState, v);
                 }
             });
             holder.mEditImageButton.setVisibility(View.VISIBLE);
@@ -95,9 +94,7 @@ public class IngredientRecyclerViewAdapter extends
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mNameView;
-        public final TextView mAmountView;
-        public final TextView mMeasureView;
+        public final TextView mTextView;
         public final TextView mPreparationView;
         public final ImageView mEditImageButton;
         public final ImageView mDeleteImageButton;
@@ -106,9 +103,7 @@ public class IngredientRecyclerViewAdapter extends
         public ViewHolder(IngredientFragmentItemBinding binding) {
             super(binding.getRoot());
             mView = binding.getRoot();
-            mNameView = binding.ingredientNameTextView;
-            mAmountView = binding.ingredientAmountTextView;
-            mMeasureView = binding.ingredientMeasureTextView;
+            mTextView = binding.ingredientTextView;
             mPreparationView = binding.ingredientPreparationTextView;
             mEditImageButton = binding.ingredientEditImageButton;
             mDeleteImageButton = binding.ingredientDeleteImageButton;

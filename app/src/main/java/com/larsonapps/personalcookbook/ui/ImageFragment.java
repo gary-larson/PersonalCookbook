@@ -17,6 +17,7 @@ import com.larsonapps.personalcookbook.adapter.ImageRecyclerViewAdapter;
 import com.larsonapps.personalcookbook.data.ImageEntity;
 import com.larsonapps.personalcookbook.data.IngredientEntity;
 import com.larsonapps.personalcookbook.databinding.ImageFragmentItemListBinding;
+import com.larsonapps.personalcookbook.model.CookbookRepository;
 import com.larsonapps.personalcookbook.model.ImageViewModel;
 
 import java.util.ArrayList;
@@ -122,8 +123,13 @@ public class ImageFragment extends Fragment {
             adapter.setData(mImageList);
         } else {
             mImageViewModel.getImages(mRecipeId).observe(getViewLifecycleOwner(), newImages -> {
-                if (newImages != null && newImages.size() > 0) {
+                if (newImages != null) {
                     adapter.setData(newImages);
+                    for (ImageEntity image : newImages) {
+                        if (!image.getType().equals(CookbookRepository.FILE_TYPE)) {
+                            mImageViewModel.addImage(image);
+                        }
+                    }
                 }
             });
         }

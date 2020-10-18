@@ -1,8 +1,10 @@
 package com.larsonapps.personalcookbook.model;
 
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -16,24 +18,34 @@ import com.larsonapps.personalcookbook.data.KeywordEntity;
 import com.larsonapps.personalcookbook.data.RecipeEntity;
 import com.larsonapps.personalcookbook.data.StepEntity;
 import com.larsonapps.personalcookbook.utilities.CookbookExecutor;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Locale;
 
 public class CookbookRepository {
     // Declare constants
     private static final String INTERNET_TYPE = "Internet";
     private static final String TAG = CookbookRepository.class.getSimpleName();
+    public final String IMAGE_DIRECTORY = "images";
+    public static final String FILE_TYPE = "File";
     // Declare variables
     private CookbookDao mDao;
     private CookbookExecutor mExecutor;
+    private Context mContext;
 
     public CookbookRepository(Context context) {
         // Initialize variables
         CookbookRoomDatabase cookbookRoomDatabase = CookbookRoomDatabase.getDatabase(context);
         mExecutor = new CookbookExecutor();
         mDao = cookbookRoomDatabase.cookbookDao();
+        mContext = context;
     }
 
     public LiveData<List<RecipeEntity>> getRecipes () {
@@ -115,6 +127,8 @@ public class CookbookRepository {
                 }
                 CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.insertImage(image));
             });
+        } else {
+            CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.insertImage(image));
         }
     }
 
@@ -124,10 +138,6 @@ public class CookbookRepository {
 
     public void updateStep(StepEntity step) {
         CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.updateStep(step));
-    }
-
-    public void updateImage(ImageEntity image) {
-        CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.updateImage(image));
     }
 
     public void insertAll(RecipeEntity recipe, List<IngredientEntity> ingredients,
@@ -165,5 +175,154 @@ public class CookbookRepository {
 
     public void insertKeyword(KeywordEntity keyword) {
         CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.insertKeyword(keyword));
+    }
+
+    public void deleteIngredient(IngredientEntity ingredient) {
+        CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.deleteIngredient(ingredient));
+    }
+
+    public void deleteStep(StepEntity step) {
+        CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.deleteStep(step));
+    }
+
+    public void deleteImage(ImageEntity image) {
+        if (image.getType().equals(FILE_TYPE)) {
+            // remove image file and database entry
+            removeImage(image);
+        } else {
+            CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.deleteImage(image));
+        }
+    }
+
+    public void deleteKeyword(KeywordEntity keyword) {
+        CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.deleteKeyword(keyword));
+    }
+
+    public void deleteCategory(CategoryEntity category) {
+        CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.deleteCategory(category));
+    }
+
+    /**
+     * Method to add image file with picasso
+     * @param image to save
+     */
+    public void addImage(ImageEntity image) {
+        if (image == null || image.getImageId() == 0 || image.getImageUrl() == null ||
+                image.getImageUrl().isEmpty()) {
+            Log.i(TAG, "No id or url");
+            return;
+        }
+        // create url
+        String urlString = image.getImageUrl();
+
+        // use picasso to initialize save
+        Picasso.get().load(urlString)
+                .memoryPolicy(MemoryPolicy.NO_CACHE)
+                .into(saveImage(image));
+    }
+
+    /**
+     * Method to remove image and update database
+     * @param image to remove
+     */
+    public void removeImage(ImageEntity image) {
+        if (image == null || image.getImageId() == 0 || image.getImageUrl() == null ||
+                image.getImageUrl().isEmpty()) {
+            Log.i(TAG, "No id or url");
+            return;
+        }
+        // start on database thread
+        CookbookRoomDatabase.databaseWriteExecutor.execute(() -> {
+            // delete image file
+            if (deleteFile(image)) {
+                // delete image from database
+                mDao.deleteImage(image);
+            } else {
+                Log.e(TAG, "image not deleted");
+            }
+        });
+    }
+
+    /**
+     * Method to save image file with picasso and update database entry
+     * @param image to save
+     * @return target
+     */
+    private Target saveImage(final ImageEntity image) {
+        // Put context in a wrapper
+        ContextWrapper contextWrapper = new ContextWrapper(mContext);
+        // Get directory
+        final File directory = contextWrapper.getDir(IMAGE_DIRECTORY, Context.MODE_PRIVATE);
+        // get image file name
+        String imageName = String.format(Locale.getDefault(), "image%d", image.getImageId());
+        // save file
+        return new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                // Create file that will be saved
+                final File imageFile = new File(directory, imageName);
+                // Create file stream
+                FileOutputStream fileOutputStream = null;
+                try {
+                    // make new file stream
+                    fileOutputStream = new FileOutputStream(imageFile);
+                    // compress and save image file
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
+                    CookbookRoomDatabase.databaseWriteExecutor.execute(() -> {
+                    image.setImageUrl(imageFile.getAbsolutePath());
+                    image.setType(FILE_TYPE);
+                    mDao.updateImage(image);
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (fileOutputStream != null) {
+                            // close file stream
+                            fileOutputStream.close();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            /**
+             * Method to deal with failure
+             * @param e exception thrown
+             * @param errorDrawable that failed
+             */
+            @Override
+            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+            }
+
+            /**
+             * Method to deal with placeholder (Not used)
+             * @param placeHolderDrawable to set
+             */
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+            }
+        };
+    }
+
+    /**
+     * Method to delete image file
+     * @param image to delete
+     * @return true if deleted false otherwise
+     */
+    private boolean deleteFile (ImageEntity image) {
+        // get context wrapper
+        ContextWrapper contextWrapper = new ContextWrapper(mContext);
+        // set directory
+        File directory = contextWrapper.getDir(IMAGE_DIRECTORY, Context.MODE_PRIVATE);
+        // declare variable
+        String fileName = String.format(Locale.getDefault(), "image%d", image.getImageId());
+        // get image file
+        File imageFile = new File(directory, fileName);
+        // delete image file
+        return imageFile.delete();
     }
 }

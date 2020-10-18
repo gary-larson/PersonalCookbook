@@ -127,8 +127,34 @@ public class EditStepDialogFragment extends DialogFragment {
      */
     public void sendStepToParent() {
         // set listener
-        EditStepDialogFragment.EditStepDialogListener listener =
-                (EditStepDialogFragment.EditStepDialogListener) getTargetFragment();
+        if (mState == CookbookActivity.STATE_ADD) {
+            // fragment listener
+            EditStepDialogFragment.EditStepDialogAddListener listener =
+                    (EditStepDialogFragment.EditStepDialogAddListener) getTargetFragment();
+            // build step
+            buildStep();
+            // send step
+            if (listener != null) {
+                listener.onFinishEditStepDialog(mStep);
+            }
+        } else {
+            // activity listener
+            EditStepDialogFragment.EditStepDialogEditListener listener =
+                    (EditStepDialogFragment.EditStepDialogEditListener) getActivity();
+            // build step
+            buildStep();
+            // send step
+            if (listener != null) {
+                listener.onFinishEditStepDialog(mStep);
+            }
+        }
+        dismiss();
+    }
+
+    /**
+     * Method to build the step
+     */
+    private void buildStep() {
         // build step
         String tempString = mBinding.editStepNumberEditText.getText().toString();
         int tempInt;
@@ -144,17 +170,19 @@ public class EditStepDialogFragment extends DialogFragment {
         if (!(tempString.isEmpty() || tempString.equals(mStep.getInstruction()))) {
             mStep.setInstruction(tempString);
         }
-        // send step
-        if (listener != null) {
-            listener.onFinishEditStepDialog(mStep);
-        }
-        dismiss();
     }
 
     /**
-     * Interface for the listener
+     * Interface for the fragment listener
      */
-    public interface EditStepDialogListener {
+    public interface EditStepDialogAddListener {
+        void onFinishEditStepDialog(StepEntity step);
+    }
+
+    /**
+     * Interface for the activity listener
+     */
+    public interface EditStepDialogEditListener {
         void onFinishEditStepDialog(StepEntity step);
     }
 }

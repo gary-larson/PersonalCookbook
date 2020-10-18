@@ -31,12 +31,14 @@ public class EditIngredientDialogFragment extends DialogFragment {
     /**
      * Default constructor
      */
-    public EditIngredientDialogFragment() {}
+    public EditIngredientDialogFragment() {
+    }
 
     /**
      * Method to create a new instance of edit ingredient dialog fragment
-     * @param title to display
-     * @param state to save
+     *
+     * @param title      to display
+     * @param state      to save
      * @param ingredient to use
      * @return created dialog fragment
      */
@@ -63,8 +65,9 @@ public class EditIngredientDialogFragment extends DialogFragment {
 
     /**
      * Method to create the view for edit ingredient dialog fragment
-     * @param inflater to inflate the view
-     * @param container the view is in
+     *
+     * @param inflater           to inflate the view
+     * @param container          the view is in
      * @param savedInstanceState of the fragment
      * @return that created view
      */
@@ -105,7 +108,8 @@ public class EditIngredientDialogFragment extends DialogFragment {
 
     /**
      * Method to display the dialog fragment
-     * @param view to display
+     *
+     * @param view               to display
      * @param savedInstanceState of the fragment
      */
     @Override
@@ -137,8 +141,44 @@ public class EditIngredientDialogFragment extends DialogFragment {
      */
     public void sendIngredientToParent() {
         // set listener
-        EditIngredientDialogFragment.EditIngredientDialogListener listener =
-                (EditIngredientDialogFragment.EditIngredientDialogListener) getTargetFragment();
+        if (mState == CookbookActivity.STATE_ADD) {
+            // Fragment listener
+            EditIngredientDialogFragment.EditIngredientDialogAddListener listener =
+                    (EditIngredientDialogFragment.EditIngredientDialogAddListener)
+                            getTargetFragment();
+            // build ingredient
+            buildIngredient();
+            // send ingredient
+            if (listener != null) {
+                listener.onFinishEditIngredientDialog(mIngredient);
+            }
+        } else {
+            // Activity Listener
+            EditIngredientDialogFragment.EditIngredientDialogEditListener listener =
+                    (EditIngredientDialogFragment.EditIngredientDialogEditListener) getActivity();
+            // build ingredient
+            buildIngredient();
+            // send ingredient
+            if (listener != null) {
+                listener.onFinishEditIngredientDialog(mIngredient);
+            }
+        }
+        // close dialog
+        dismiss();
+    }
+
+    /**
+     * Interface for the fragment listener
+     */
+    public interface EditIngredientDialogAddListener {
+        void onFinishEditIngredientDialog(IngredientEntity ingredient);
+    }
+
+    public interface EditIngredientDialogEditListener {
+        void onFinishEditIngredientDialog(IngredientEntity ingredient);
+    }
+
+    private void buildIngredient() {
         // build ingredient
         String tempString = mBinding.editIngredientNameEditText.getText().toString();
         if (!(tempString.isEmpty() || tempString.equals(mIngredient.getName()))) {
@@ -157,17 +197,5 @@ public class EditIngredientDialogFragment extends DialogFragment {
         if (!(tempString.isEmpty() || tempString.equals(mIngredient.getPreparation()))) {
             mIngredient.setPreparation(tempString);
         }
-        // send ingredient
-        if (listener != null) {
-            listener.onFinishEditIngredientDialog(mIngredient);
-        }
-        dismiss();
-    }
-
-    /**
-     * Interface for the listener
-     */
-    public interface EditIngredientDialogListener {
-        void onFinishEditIngredientDialog(IngredientEntity ingredient);
     }
 }

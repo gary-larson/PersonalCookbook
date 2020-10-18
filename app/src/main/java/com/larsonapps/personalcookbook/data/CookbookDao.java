@@ -215,20 +215,6 @@ public interface CookbookDao {
     void updateImage(ImageEntity image);
 
     /**
-     * Method to update a keyword
-     * @param keyword to update
-     */
-    @Update
-    void updateKeyword(KeywordEntity keyword);
-
-    /**
-     * Method to update a category
-     * @param category to update
-     */
-    @Update
-    void updateCategory(CategoryEntity category);
-
-    /**
      * Method to retrieve all recipes
      * @return list of recipes
      */
@@ -328,6 +314,11 @@ public interface CookbookDao {
     @Query("SELECT * FROM categories WHERE category_id = :categoryId")
     CategoryEntity getCategory(int categoryId);
 
+    /**
+     * Method to see if category exists by category name
+     * @param name to check
+     * @return true if exists false otherwise
+     */
     @Query("SELECT category_id FROM categories WHERE category_name = :name")
     int categoryExists(String name);
 
@@ -347,6 +338,15 @@ public interface CookbookDao {
      */
     @Query("SELECT image_id FROM images WHERE caption = :caption AND recipe_id = :recipeId")
     int getImageIdByCaption(int recipeId, String caption);
+
+    /**
+     * Method to get image id by url
+     * @param recipeId of the image to get
+     * @param url of the image
+     * @return image id
+     */
+    @Query("SELECT image_id FROM images WHERE image_url = :url AND recipe_id = :recipeId")
+    int getImageIdByUrl(int recipeId, String url);
 
     /**
      * Method to get ingredient id by name

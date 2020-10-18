@@ -34,4 +34,12 @@ public class IngredientViewModel extends AndroidViewModel {
     public void insertIngredient(IngredientEntity ingredient) {
         mRepository.insertIngredient(ingredient);
     }
+
+    public void updateIngredient(IngredientEntity ingredient) {
+        mRepository.updateIngredient(ingredient);
+    }
+
+    public void deleteIngredient(IngredientEntity ingredient) {
+        mRepository.deleteIngredient(ingredient);
+    }
 }

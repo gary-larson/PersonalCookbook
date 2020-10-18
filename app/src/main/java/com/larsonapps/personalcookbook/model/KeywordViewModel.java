@@ -32,4 +32,8 @@ public class KeywordViewModel extends AndroidViewModel {
     public void insertKeyword(KeywordEntity keyword) {
         mRepository.insertKeyword(keyword);
     }
+
+    public void deleteKeyword(KeywordEntity keyword) {
+        mRepository.deleteKeyword(keyword);
+    }
 }

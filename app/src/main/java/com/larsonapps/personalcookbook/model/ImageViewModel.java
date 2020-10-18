@@ -34,7 +34,11 @@ public class ImageViewModel extends AndroidViewModel {
         mRepository.insertImage(image);
     }
 
-    public void updateImage(ImageEntity image) {
-        mRepository.updateImage(image);
+    public void deleteImage(ImageEntity image) {
+        mRepository.deleteImage(image);
+    }
+
+    public void addImage(ImageEntity image) {
+        mRepository.addImage(image);
     }
 }

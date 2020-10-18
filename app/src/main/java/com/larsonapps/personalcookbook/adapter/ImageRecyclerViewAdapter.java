@@ -13,11 +13,13 @@ import com.larsonapps.personalcookbook.R;
 import com.larsonapps.personalcookbook.data.ImageEntity;
 
 import com.larsonapps.personalcookbook.databinding.ImageFragmentItemBinding;
+import com.larsonapps.personalcookbook.model.CookbookRepository;
 import com.larsonapps.personalcookbook.ui.CookbookActivity;
 import com.larsonapps.personalcookbook.ui.ImageFragment;
 import com.squareup.picasso.Picasso;
 
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -63,20 +65,38 @@ public class ImageRecyclerViewAdapter extends
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mImage = mValues.get(position);
         if (holder.mImage.getImageUrl() != null) {
-            if (holder.mImage.getWidth() > holder.mView.getResources()
-                    .getDimension(R.dimen.image_max_width) || holder.mImage.getHeight() >
-                    holder.mView.getResources().getDimension(R.dimen.image_max_height)) {
-                Picasso.get().load(holder.mImage.getImageUrl())
-                        .noPlaceholder()
-                        .resize((int) holder.mView.getResources()
-                                        .getDimension(R.dimen.image_max_width),
-                                (int) holder.mView.getResources()
-                                        .getDimension(R.dimen.image_max_height))
-                        .into(holder.mImageView);
+            if (holder.mImage.getType().equals(CookbookRepository.FILE_TYPE)) {
+                if (holder.mImage.getWidth() > holder.mView.getResources()
+                        .getDimension(R.dimen.image_max_width) || holder.mImage.getHeight() >
+                        holder.mView.getResources().getDimension(R.dimen.image_max_height)) {
+                    Picasso.get().load(new File(holder.mImage.getImageUrl()))
+                            .noPlaceholder()
+                            .resize((int) holder.mView.getResources()
+                                            .getDimension(R.dimen.image_max_width),
+                                    (int) holder.mView.getResources()
+                                            .getDimension(R.dimen.image_max_height))
+                            .into(holder.mImageView);
+                } else {
+                    Picasso.get().load(new File(holder.mImage.getImageUrl()))
+                            .noPlaceholder()
+                            .into(holder.mImageView);
+                }
             } else {
-                Picasso.get().load(holder.mImage.getImageUrl())
-                        .noPlaceholder()
-                        .into(holder.mImageView);
+                if (holder.mImage.getWidth() > holder.mView.getResources()
+                        .getDimension(R.dimen.image_max_width) || holder.mImage.getHeight() >
+                        holder.mView.getResources().getDimension(R.dimen.image_max_height)) {
+                    Picasso.get().load(holder.mImage.getImageUrl())
+                            .noPlaceholder()
+                            .resize((int) holder.mView.getResources()
+                                            .getDimension(R.dimen.image_max_width),
+                                    (int) holder.mView.getResources()
+                                            .getDimension(R.dimen.image_max_height))
+                            .into(holder.mImageView);
+                } else {
+                    Picasso.get().load(holder.mImage.getImageUrl())
+                            .noPlaceholder()
+                            .into(holder.mImageView);
+                }
             }
         }
         if (mState == CookbookActivity.STATE_EDIT) {

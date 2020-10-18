@@ -37,4 +37,8 @@ public class StepViewModel extends AndroidViewModel {
     public void updateStep(StepEntity step) {
         mRepository.updateStep(step);
     }
+
+    public void deleteStep(StepEntity step) {
+        mRepository.deleteStep(step);
+    }
 }

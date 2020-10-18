@@ -1,10 +1,13 @@
 package com.larsonapps.personalcookbook.ui;
 
+import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,7 +27,10 @@ import com.larsonapps.personalcookbook.model.KeywordViewModel;
 import com.larsonapps.personalcookbook.model.RecipeViewModel;
 import com.larsonapps.personalcookbook.model.StepViewModel;
 
+import java.io.IOException;
 import java.util.Objects;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,22 +39,29 @@ import java.util.Objects;
  */
 public class CookbookEditFragment extends Fragment implements
         EditContentDialogFragment.EditContentDialogListener,
-        EditIngredientDialogFragment.EditIngredientDialogListener,
-        EditStepDialogFragment.EditStepDialogListener,
+        EditIngredientDialogFragment.EditIngredientDialogAddListener,
+        EditStepDialogFragment.EditStepDialogAddListener,
         AddImageDialogFragment.AddImageDialogListener,
-        EditKeywordDialogFragment.EditKeywordDialogListener {
+        AddKeywordDialogFragment.EditKeywordDialogListener {
     // Declare constants
     private static final String ARG_STATE = "state";
     private static final String ARG_RECIPE = "recipe";
     private static final String STATE = "mState";
     private static final String RECIPE = "mRecipe";
-    private static final String EDIT_CONTENT_TAG = "edit_content_fragment";
-    private static final String EDIT_INGREDIENT_TAG = "edit_ingredient_fragment";
-    private static final String EDIT_STEP_TAG = "edit_step_fragment";
-    private static final String EDIT_IMAGE_TAG = "add_image_fragment";
-    private static final String EDIT_KEYWORD_TAG = "edit_keyword_fragment";
-    // Declare variables
-    private CookbookEditFragmentBinding mBinding;
+    private static final String CONTENT_TITLE = "Edit Content";
+    private static final String INGREDIENT_TITLE = "Add Ingredient";
+    private static final String STEP_TITLE = "Add Step";
+    private static final String IMAGE_TITLE = "Add Image";
+    private static final String KEYWORD_TITLE = "Add Keyword";
+    private static final String GALLERY_TYPE = "Gallery";
+    private static final String GALLERY_TITLE = "Select Picture";
+    private static final int GALLERY_CODE = 170;
+    private static final int CONTENT_CODE = 110;
+    private static final int INGREDIENT_CODE = 120;
+    private static final int STEP_CODE = 130;
+    private static final int IMAGE_CODE = 140;
+    private static final int KEYWORD_CODE = 150;
+    private static final String TAG = CookbookEditFragment.class.getSimpleName();
     private RecipeEntity mRecipe;
     private int mState;
     private RecipeViewModel mRecipeViewModel;
@@ -83,7 +96,9 @@ public class CookbookEditFragment extends Fragment implements
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mBinding = CookbookEditFragmentBinding.inflate(inflater, container, false);
+        // Declare variables
+        com.larsonapps.personalcookbook.databinding.CookbookEditFragmentBinding mBinding =
+                CookbookEditFragmentBinding.inflate(inflater, container, false);
         mRecipeViewModel = new ViewModelProvider(requireActivity()).get(RecipeViewModel.class);
         mIngredientViewModel = new ViewModelProvider(requireActivity())
                 .get(IngredientViewModel.class);
@@ -110,50 +125,91 @@ public class CookbookEditFragment extends Fragment implements
                 .commit();
         mBinding.editContentButton.setOnClickListener(v -> {
             EditContentDialogFragment editContentDialogFragment = EditContentDialogFragment
-                    .newInstance("Edit Content", mState, mRecipe);
-            editContentDialogFragment.setTargetFragment(this, 100);
+                    .newInstance(CONTENT_TITLE, mState, mRecipe);
+            editContentDialogFragment.setTargetFragment(this, CONTENT_CODE);
             if (getActivity() != null) {
                 editContentDialogFragment.show(getActivity().getSupportFragmentManager(),
-                        EDIT_CONTENT_TAG);
+                        CookbookActivity.EDIT_CONTENT_DIALOG);
             }
         });
         mBinding.editAddIngredientButton.setOnClickListener(v -> {
             EditIngredientDialogFragment editIngredientDialogFragment = EditIngredientDialogFragment
-                    .newInstance("Add Ingredient", mState, null);
-            editIngredientDialogFragment.setTargetFragment(this, 110);
+                    .newInstance(INGREDIENT_TITLE, CookbookActivity.STATE_ADD, null);
+            editIngredientDialogFragment.setTargetFragment(this, INGREDIENT_CODE);
             if (getActivity() != null) {
                 editIngredientDialogFragment.show(getActivity().getSupportFragmentManager(),
-                        EDIT_INGREDIENT_TAG);
+                        CookbookActivity.EDIT_INGREDIENT_DIALOG);
             }
         });
         mBinding.editAddStepButton.setOnClickListener(v -> {
             EditStepDialogFragment editStepDialogFragment = EditStepDialogFragment
-                    .newInstance("Add Step", mState, null);
-            editStepDialogFragment.setTargetFragment(this, 120);
+                    .newInstance(STEP_TITLE, CookbookActivity.STATE_ADD, null);
+            editStepDialogFragment.setTargetFragment(this, STEP_CODE);
             if (getActivity() != null) {
                 editStepDialogFragment.show(getActivity().getSupportFragmentManager(),
-                        EDIT_STEP_TAG);
+                        CookbookActivity.EDIT_STEP_DIALOG);
             }
         });
-        mBinding.editAddImageButton.setOnClickListener(v -> {
+        mBinding.editAddImageGalleryButton.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intent, GALLERY_TITLE), GALLERY_CODE);
+        });
+        mBinding.editAddImageInternetButton.setOnClickListener(v -> {
             AddImageDialogFragment addImageDialogFragment = AddImageDialogFragment
-                    .newInstance("Add Image", mState, null);
-            addImageDialogFragment.setTargetFragment(this, 130);
-            if (getActivity() != null) {
+                    .newInstance(IMAGE_TITLE, CookbookActivity.STATE_ADD, null);
+            addImageDialogFragment.setTargetFragment(this, IMAGE_CODE);
+            if(getActivity() != null) {
                 addImageDialogFragment.show(getActivity().getSupportFragmentManager(),
-                        EDIT_IMAGE_TAG);
+                        CookbookActivity.ADD_IMAGE_DIALOG);
             }
         });
         mBinding.editAddKeywordButton.setOnClickListener(v -> {
-            EditKeywordDialogFragment editKeywordDialogFragment = EditKeywordDialogFragment
-                    .newInstance("Add Keyword", mState, null);
-            editKeywordDialogFragment.setTargetFragment(this, 140);
+            AddKeywordDialogFragment addKeywordDialogFragment = AddKeywordDialogFragment
+                    .newInstance(KEYWORD_TITLE, CookbookActivity.STATE_ADD, null);
+            addKeywordDialogFragment.setTargetFragment(this, KEYWORD_CODE);
             if (getActivity() != null) {
-                editKeywordDialogFragment.show(getActivity().getSupportFragmentManager(),
-                        EDIT_KEYWORD_TAG);
+                addKeywordDialogFragment.show(getActivity().getSupportFragmentManager(),
+                        CookbookActivity.ADD_KEYWORD_DIALOG);
             }
         });
         return mBinding.getRoot();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == GALLERY_CODE) {
+                if (data != null) {
+                    Uri uri = data.getData();
+                    ImageEntity image = new ImageEntity();
+                    if (uri != null) {
+                        image.setImageUrl(uri.toString());
+                        image.setType(GALLERY_TYPE);
+                        BitmapFactory.Options options = new BitmapFactory.Options();
+                        options.inJustDecodeBounds = true;
+                        if (uri.getPath() != null) {
+                            try {
+                                if (getContext() != null) {
+                                    BitmapFactory.decodeStream(
+                                            getContext().getContentResolver().openInputStream(uri),
+                                            null,
+                                            options);
+                                    image.setHeight(options.outHeight);
+                                    image.setWidth(options.outWidth);
+                                }
+                            } catch (IOException e) {
+                                Log.e(TAG, " error" + e.getMessage());
+                            }
+                        }
+                        image.setRecipeId(mRecipe.getId());
+                        mImageViewModel.insertImage(image);
+                    }
+                }
+            }
+        }
     }
 
     @Override

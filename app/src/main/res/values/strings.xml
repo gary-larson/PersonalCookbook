@@ -80,5 +80,14 @@
     <string name="content_description">Description</string>
     <string name="content_notes">Cook\'s Notes</string>
     <string name="content_copyright">Copyright</string>
-
+    <string name="alert_ingredient_message">Deleting this ingredient cannot be undone are you sure you want to?</string>
+    <string name="alert_ingredient_title">Delete Ingredient</string>
+    <string name="alert_delete">Delete</string>
+    <string name="alert_cancel">Cancel</string>
+    <string name="alert_step_message">Deleting this step cannot be undone are you sure you want to?</string>
+    <string name="alert_step_title">Delete Step</string>
+    <string name="alert_image_message">Deleting this image cannot be undone are you sure you want to?</string>
+    <string name="alert_image_title">Delete Image</string>
+    <string name="alert_keyword_message">Deleting this keyword cannot be undone are you sure you want to?</string>
+    <string name="alert_keyword_title">Delete Keyword</string>
 </resources>

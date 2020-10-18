@@ -6,16 +6,18 @@
 
     <TextView
         android:id="@+id/step_text_view"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="7"
         android:layout_marginStart="@dimen/list_horizontal_text_margin"
         android:layout_marginTop="@dimen/list_top_text_margin"
         android:textColor="@color/white"/>
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/step_edit_image_button"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:padding="@dimen/edit_icon_padding"
         android:layout_margin="@dimen/edit_icon_margin"
         android:background="@drawable/button_selector"
@@ -23,8 +25,9 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/step_delete_image_button"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:padding="@dimen/edit_icon_padding"
         android:layout_margin="@dimen/edit_icon_margin"
         android:background="@drawable/button_selector"
