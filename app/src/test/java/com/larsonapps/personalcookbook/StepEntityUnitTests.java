@@ -13,10 +13,11 @@ public class StepEntityUnitTests {
     private static final String INSTRUCTION_VALUE = "Sufficient instruction";
     private static final int NUMBER_VALUE = 5;
     private static final String TO_STRING_VALUE = "5) Sufficient instruction";
+    private static final String PERSONAL_NOTE_VALUE = "This is a personal note.";
 
     // Create step
     StepEntity step = new StepEntity(STEP_ID_VALUE, RECIPE_ID_VALUE, NUMBER_VALUE,
-            INSTRUCTION_VALUE);
+            INSTRUCTION_VALUE, PERSONAL_NOTE_VALUE);
 
     // Tests for the constructor and Getters
     @Test
@@ -37,6 +38,10 @@ public class StepEntityUnitTests {
     @Test
     public void testStepNumberGetter() {
         assertEquals(NUMBER_VALUE, step.getNumber());
+    }
+
+    public void testStepPersonalNoteGetter() {
+        assertEquals(PERSONAL_NOTE_VALUE, step.getPersonalNote());
     }
 
     // Test default constructor and setters
@@ -65,6 +70,13 @@ public class StepEntityUnitTests {
         int temp = 55;
         step.setNumber(temp);
         assertEquals(temp, step.getNumber());
+    }
+
+    @Test
+    public void testStepPersonalNoteSetter() {
+        String temp = "Another personal note.";
+        step.setPersonalNote(temp);
+        assertEquals(temp, step.getPersonalNote());
     }
 
     @Test

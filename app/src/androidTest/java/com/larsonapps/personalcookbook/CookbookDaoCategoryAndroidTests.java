@@ -77,15 +77,4 @@ public class CookbookDaoCategoryAndroidTests {
             }
         });
     }
-
-    @Test
-    public void testUpdateCategory() {
-        // modify category
-        String temp = "Healthy";
-        category2.setCategoryName(temp);
-        cookbookDao.updateCategory(category2);
-        // get categories and test
-        cookbookDao.getAllCategories().observeForever(newCategories ->
-                assertEquals(temp, newCategories.get(1).getCategoryName()));
-    }
 }

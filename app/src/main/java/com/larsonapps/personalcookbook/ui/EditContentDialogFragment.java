@@ -99,7 +99,7 @@ public class EditContentDialogFragment extends DialogFragment {
             if (temp != null && !temp.isEmpty()) {
                 mBinding.editContentDescriptionEditText.setText(temp);
             }
-            temp = mRecipe.getNotes();
+            temp = mRecipe.getCookNotes();
             if (temp != null && !temp.isEmpty()) {
                 mBinding.editContentNotesEditText.setText(temp);
             }
@@ -203,8 +203,8 @@ public class EditContentDialogFragment extends DialogFragment {
             mRecipe.setDescription(tempString);
         }
         tempString = mBinding.editContentNotesEditText.getText().toString();
-        if (!(tempString.isEmpty() || tempString.equals(mRecipe.getNotes()))) {
-            mRecipe.setNotes(tempString);
+        if (!(tempString.isEmpty() || tempString.equals(mRecipe.getCookNotes()))) {
+            mRecipe.setCookNotes(tempString);
         }
         tempString = mBinding.editContentCopyrightEditText.getText().toString();
         if (!(tempString.isEmpty() || tempString.equals(mRecipe.getName()))) {

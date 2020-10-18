@@ -15,9 +15,8 @@ import java.util.concurrent.Executors;
 /**
  * Class to handle a room database cookbook_database
  */
-@Database(entities = {IngredientEntity.class, IngredientUpdateEntity.class, RecipeEntity.class,
-        RecipeUpdateEntity.class, ImageEntity.class, StepEntity.class,
-        StepUpdateEntity.class, KeywordEntity.class, CategoryEntity.class}, version = 3)
+@Database(entities = {IngredientEntity.class, RecipeEntity.class, ImageEntity.class,
+        StepEntity.class, KeywordEntity.class, CategoryEntity.class}, version = 4)
 public abstract class CookbookRoomDatabase extends RoomDatabase {
     // register DAO
     public abstract CookbookDao cookbookDao();

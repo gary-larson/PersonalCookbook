@@ -29,6 +29,8 @@ public class IngredientEntity implements Parcelable {
     private String measure;
     @ColumnInfo(name = "preparation")
     private String preparation;
+    @ColumnInfo(name = "personal_note")
+    private String personalNote;
 
     /**
      * Default Constructor
@@ -44,15 +46,17 @@ public class IngredientEntity implements Parcelable {
      * @param amount to set
      * @param measure to set
      * @param preparation to set
+     * @param personalNote to set
      */
     public IngredientEntity(int ingredientId, int recipeId, String name, String amount,
-                            String measure, String preparation) {
+                            String measure, String preparation, String personalNote) {
         this.ingredientId = ingredientId;
         this.recipeId = recipeId;
         this.name = name;
         this.amount = amount;
         this.measure = measure;
         this.preparation = preparation;
+        this.personalNote = personalNote;
     }
 
     /**
@@ -67,6 +71,7 @@ public class IngredientEntity implements Parcelable {
         amount = in.readString();
         measure = in.readString();
         preparation = in.readString();
+        personalNote = in.readString();
     }
 
     /**
@@ -209,5 +214,22 @@ public class IngredientEntity implements Parcelable {
         dest.writeString(amount);
         dest.writeString(measure);
         dest.writeString(preparation);
+        dest.writeString(personalNote);
+    }
+
+    /**
+     * Getter for personal note
+     * @return personal note
+     */
+    public String getPersonalNote() {
+        return personalNote;
+    }
+
+    /**
+     * Setter for personal note
+     * @param personalNote to set
+     */
+    public void setPersonalNote(String personalNote) {
+        this.personalNote = personalNote;
     }
 }

@@ -15,10 +15,11 @@ public class IngredientEntityUnitTests {
     private static final String NAME_VALUE = "Milk";
     private static final String PREPARATION_VALUE = "Pour into container";
     private static final String TO_STRING_VALUE = "Milk 20 1/2 Tablespoon\nPour into container";
+    private static final String PERSONAL_NOTE_VALUE = "This is a personal note";
 
     // Create ingredient
     IngredientEntity ingredient = new IngredientEntity(ID_VALUE, RECIPE_ID_VALUE, NAME_VALUE,
-            AMOUNT_VALUE, MEASURE_VALUE, PREPARATION_VALUE);
+            AMOUNT_VALUE, MEASURE_VALUE, PREPARATION_VALUE, PERSONAL_NOTE_VALUE);
 
     // Tests for the constructor and Getters
     @Test
@@ -49,6 +50,11 @@ public class IngredientEntityUnitTests {
     @Test
     public void testIngredientPreparationGetter() {
         assertEquals(PREPARATION_VALUE, ingredient.getPreparation());
+    }
+
+    @Test
+    public void testIngredientPersonalNoteGetter() {
+        assertEquals(PERSONAL_NOTE_VALUE, ingredient.getPersonalNote());
     }
 
     // Test default constructor and setters
@@ -92,6 +98,13 @@ public class IngredientEntityUnitTests {
         String temp = "This is a preparation statement";
         ingredient.setName(temp);
         assertEquals(temp, ingredient.getName());
+    }
+
+    @Test
+    public void testIngredientPersonalNoteSetter() {
+        String temp = "Another personal note";
+        ingredient.setPersonalNote(temp);
+        assertEquals(temp, ingredient.getPersonalNote());
     }
 
     @Test

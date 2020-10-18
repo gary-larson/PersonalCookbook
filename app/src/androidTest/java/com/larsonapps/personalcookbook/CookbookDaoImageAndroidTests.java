@@ -42,6 +42,7 @@ public class CookbookDaoImageAndroidTests {
     private static final int TOTAL_TIME_VALUE_1 = 52;
     private static final String NOTES_VALUE_1 = "These are the notes by the cook.";
     private static final String COPYRIGHT_VALUE_1 = "copyright 5201";
+    private static final String PERSONAL_NOTES_VALUE_1 = "Personal note";
     private static final String NAME_VALUE_2 = "Apple Pie";
     private static final String SHORT_DESCRIPTION_2 = "another short description";
     private static final String DESCRIPTION_VALUE_2 = "Old fashioned apple pie";
@@ -51,31 +52,29 @@ public class CookbookDaoImageAndroidTests {
     private static final int TOTAL_TIME_VALUE_2 = 95;
     private static final String NOTES_VALUE_2 = "These are apple pie notes by the cook.";
     private static final String COPYRIGHT_VALUE_2 = "copyright 2020";
+    private static final String PERSONAL_NOTES_VALUE_2 = "Personal note two";
     private static final int IMAGE_ID_VALUE_1 = 0;
     private static final String TYPE_VALUE_1 = "Local";
     private static final String IMAGE_URL_VALUE_1 = "c:\646486468.jpg";
     private static final int HEIGHT_VALUE_1 = 250;
     private static final int WIDTH_VALUE_1 = 250;
-    private static final String CAPTION_VALUE_1 = "Picture of apple pie";
     private static final int IMAGE_ID_VALUE_2 = 0;
     private static final String TYPE_VALUE_2 = "Internet";
     private static final String IMAGE_URL_VALUE_2 = "https://88686448.jpg";
     private static final int HEIGHT_VALUE_2 = 640;
     private static final int WIDTH_VALUE_2 = 480;
-    private static final String CAPTION_VALUE_2 = "Picture of cookies";
     private static final int IMAGE_ID_VALUE_3 = 0;
     private static final String TYPE_VALUE_3 = "Internet";
     private static final String IMAGE_URL_VALUE_3 = "https://4894848.jpg";
     private static final int HEIGHT_VALUE_3 = 1200;
     private static final int WIDTH_VALUE_3 = 1400;
-    private static final String CAPTION_VALUE_3 = "Great picture";
     // declare variables
     RecipeEntity recipeEntity1 = new RecipeEntity(0, NAME_VALUE_1, SHORT_DESCRIPTION_1,
             DESCRIPTION_VALUE_1, SERVINGS_VALUE_1, PREP_TIME_VALUE_1, COOK_TIME_VALUE_1,
-            TOTAL_TIME_VALUE_1, NOTES_VALUE_1, COPYRIGHT_VALUE_1);
+            TOTAL_TIME_VALUE_1, NOTES_VALUE_1, COPYRIGHT_VALUE_1, PERSONAL_NOTES_VALUE_1);
     RecipeEntity recipeEntity2 = new RecipeEntity(0, NAME_VALUE_2, SHORT_DESCRIPTION_2,
             DESCRIPTION_VALUE_2, SERVINGS_VALUE_2, PREP_TIME_VALUE_2, COOK_TIME_VALUE_2,
-            TOTAL_TIME_VALUE_2, NOTES_VALUE_2, COPYRIGHT_VALUE_2);
+            TOTAL_TIME_VALUE_2, NOTES_VALUE_2, COPYRIGHT_VALUE_2, PERSONAL_NOTES_VALUE_2);
     ImageEntity image1;
     ImageEntity image2;
     ImageEntity image3;
@@ -94,11 +93,11 @@ public class CookbookDaoImageAndroidTests {
         cookbookDao.insertRecipe((recipeEntity2));
         recipeId2 = cookbookDao.getRecipeIdByName(NAME_VALUE_2);
         image1 = new ImageEntity(IMAGE_ID_VALUE_1, recipeId1, TYPE_VALUE_1,
-                IMAGE_URL_VALUE_1, HEIGHT_VALUE_1, WIDTH_VALUE_1, CAPTION_VALUE_1);
+                IMAGE_URL_VALUE_1, HEIGHT_VALUE_1, WIDTH_VALUE_1);
         image2 = new ImageEntity(IMAGE_ID_VALUE_2, recipeId1, TYPE_VALUE_2,
-                IMAGE_URL_VALUE_2, HEIGHT_VALUE_2, WIDTH_VALUE_2, CAPTION_VALUE_2);
+                IMAGE_URL_VALUE_2, HEIGHT_VALUE_2, WIDTH_VALUE_2);
         image3 = new ImageEntity(IMAGE_ID_VALUE_3, recipeId2, TYPE_VALUE_3,
-                IMAGE_URL_VALUE_3, HEIGHT_VALUE_3, WIDTH_VALUE_3, CAPTION_VALUE_3);
+                IMAGE_URL_VALUE_3, HEIGHT_VALUE_3, WIDTH_VALUE_3);
         // this tests insert image
         cookbookDao.insertImage(image1);
         cookbookDao.insertImage(image2);
@@ -124,9 +123,8 @@ public class CookbookDaoImageAndroidTests {
             boolean isAsserted = false;
             assertEquals(4, newImages.size());
             for (ImageEntity image : newImages) {
-                if (image.getCaption().equals(CAPTION_VALUE_1)) {
+                if (image.getImageUrl().equals(IMAGE_URL_VALUE_1)) {
                     assertEquals(TYPE_VALUE_1, image.getType());
-                    assertEquals(IMAGE_URL_VALUE_1, image.getImageUrl());
                     assertEquals(HEIGHT_VALUE_1, image.getHeight());
                     assertEquals(WIDTH_VALUE_1, image.getWidth());
                     isAsserted = true;
@@ -141,7 +139,7 @@ public class CookbookDaoImageAndroidTests {
 
     @Test
     public void testDeleteImageAndGetImageIdByCaption() {
-        int imageId = cookbookDao.getImageIdByCaption(recipeId1, image1.getCaption());
+        int imageId = cookbookDao.getImageIdByUrl(recipeId1, image1.getImageUrl());
         image1.setImageId(imageId);
         // delete image
         cookbookDao.deleteImage(image1);
@@ -155,7 +153,7 @@ public class CookbookDaoImageAndroidTests {
 
     @Test
     public void testUpdateImageAndGetImageIdByCaption() {
-        int imageId = cookbookDao.getImageIdByCaption(recipeId1, CAPTION_VALUE_1);
+        int imageId = cookbookDao.getImageIdByUrl(recipeId1, IMAGE_URL_VALUE_1);
         // modify image
         String temp = "https://54644645.jpg";
         image1.setImageId(imageId);

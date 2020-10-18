@@ -20,25 +20,11 @@ public interface CookbookDao {
     void insertRecipe(RecipeEntity recipe);
 
     /**
-     * Method to Insert a recipe update
-     * @param recipeUpdate to insert
-     */
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertRecipeUpdate(RecipeUpdateEntity recipeUpdate);
-
-    /**
      * Method to insert an ingredient
      * @param ingredient to insert
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertIngredient(IngredientEntity ingredient);
-
-    /**
-     * Method to insert an ingredient update
-     * @param ingredientUpdate to insert
-     */
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertIngredientUpdate(IngredientUpdateEntity ingredientUpdate);
 
     /**
      * Method to insert a list of ingredients
@@ -53,13 +39,6 @@ public interface CookbookDao {
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertStep(StepEntity step);
-
-    /**
-     * Method to insert a step update
-     * @param stepUpdate to insert
-     */
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertStepUpdate(StepUpdateEntity stepUpdate);
 
     /**
      * Method to insert a list of steps
@@ -111,13 +90,6 @@ public interface CookbookDao {
     void deleteRecipe(RecipeEntity recipe);
 
     /**
-     * Method to delete a recipe update
-     * @param recipeUpdate to delete
-     */
-    @Delete
-    void deleteRecipeUpdate(RecipeUpdateEntity recipeUpdate);
-
-    /**
      * Method to delete an ingredient
      * @param ingredient to delete
      */
@@ -125,25 +97,11 @@ public interface CookbookDao {
     void deleteIngredient(IngredientEntity ingredient);
 
     /**
-     * Method to delete an ingredient update
-     * @param ingredientUpdate to delete
-     */
-    @Delete
-    void deleteIngredientUpdate(IngredientUpdateEntity ingredientUpdate);
-
-    /**
      * Method to delete a step
      * @param step to delete
      */
     @Delete
     void deleteStep(StepEntity step);
-
-    /**
-     * Method to delete a step update
-     * @param stepUpdate to delete
-     */
-    @Delete
-    void deleteStepUpdate(StepUpdateEntity stepUpdate);
 
     /**
      * Method to delete an image
@@ -173,13 +131,6 @@ public interface CookbookDao {
     void updateRecipe(RecipeEntity recipe);
 
     /**
-     * Method to update a recipe update
-     * @param recipeUpdate to update
-     */
-    @Update
-    void updateRecipeUpdate(RecipeUpdateEntity recipeUpdate);
-
-    /**
      * Method to update an ingredient
      * @param ingredient to update
      */
@@ -187,25 +138,11 @@ public interface CookbookDao {
     void updateIngredient(IngredientEntity ingredient);
 
     /**
-     * Method to update an ingredient update
-     * @param ingredientUpdate to update
-     */
-    @Update
-    void updateIngredientUpdate(IngredientUpdateEntity ingredientUpdate);
-
-    /**
      * Method to update a step
      * @param step to update
      */
     @Update
     void updateStep(StepEntity step);
-
-    /**
-     * Method to update a step update
-     * @param stepUpdate to update
-     */
-    @Update
-    void updateStepUpdate(StepUpdateEntity stepUpdate);
 
     /**
      * Method to update an image
@@ -244,14 +181,6 @@ public interface CookbookDao {
     LiveData<RecipeEntity> getRecipe(int recipeId);
 
     /**
-     * Method to retrieve a recipe update by recipe id
-     * @param recipeId of recipe to retrieve the update for
-     * @return recipe update
-     */
-    @Query("SELECT * FROM recipe_updates WHERE recipe_id = :recipeId")
-    RecipeUpdateEntity getRecipeUpdate(int recipeId);
-
-    /**
      * Method to retrieve all of a recipes ingredients
      * @param recipeId of the recipe to retrieve
      * @return list of ingredients
@@ -260,28 +189,12 @@ public interface CookbookDao {
     LiveData<List<IngredientEntity>> getAllIngredients(int recipeId);
 
     /**
-     * Method to retrieve an ingredient update by ingredient id
-     * @param ingredientId of ingredient to retrieve the update
-     * @return ingredient update
-     */
-    @Query("SELECT * FROM ingredient_updates WHERE ingredient_id = :ingredientId")
-    IngredientUpdateEntity getIngredientUpdate(int ingredientId);
-
-    /**
      * Method to retrieve all of a recipes steps
      * @param recipeId of the recipe to retrieve
      * @return list of steps
      */
     @Query("SELECT * FROM steps WHERE recipe_id = :recipeId ORDER BY number")
     LiveData<List<StepEntity>> getAllSteps(int recipeId);
-
-    /**
-     * Method to retrieve a step update by step id
-     * @param stepId of step to retrieve the update
-     * @return step update
-     */
-    @Query("SELECT * FROM step_updates WHERE step_id = :stepId")
-    StepUpdateEntity getStepUpdate(int stepId);
 
     /**
      * Method to retrieve all of a recipes images
@@ -329,15 +242,6 @@ public interface CookbookDao {
      */
     @Query("SELECT recipe_id FROM recipes WHERE name = :name")
     int getRecipeIdByName(String name);
-
-    /**
-     * Method to get image id by caption
-     * @param recipeId of image to get
-     * @param caption of image to get
-     * @return image id
-     */
-    @Query("SELECT image_id FROM images WHERE caption = :caption AND recipe_id = :recipeId")
-    int getImageIdByCaption(int recipeId, String caption);
 
     /**
      * Method to get image id by url

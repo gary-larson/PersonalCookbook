@@ -23,8 +23,6 @@ public class ImageEntity implements Parcelable {
     private int height;
     @ColumnInfo(name = "width")
     private int width;
-    @ColumnInfo(name = "caption")
-    private String caption;
 
     /**
      * Default constructor
@@ -40,17 +38,15 @@ public class ImageEntity implements Parcelable {
      * @param imageUrl to set
      * @param height to set
      * @param width to set
-     * @param caption to set
      */
     public ImageEntity(int imageId, int recipeId, String type, String imageUrl, int height,
-                       int width, String caption) {
+                       int width) {
         this.imageId = imageId;
         this.recipeId = recipeId;
         this.type = type;
         this.imageUrl = imageUrl;
         this.height = height;
         this.width = width;
-        this.caption = caption;
     }
 
     /**
@@ -161,22 +157,6 @@ public class ImageEntity implements Parcelable {
     }
 
     /**
-     * Getter for caption
-     * @return caption
-     */
-    public String getCaption() {
-        return caption;
-    }
-
-    /**
-     * Setter for caption
-     * @param caption to set
-     */
-    public void setCaption(String caption) {
-        this.caption = caption;
-    }
-
-    /**
      * Constructor for Parcelable
      * @param in parcel
      */
@@ -187,7 +167,6 @@ public class ImageEntity implements Parcelable {
         this.imageUrl = in.readString();
         this.height = in.readInt();
         this.width = in.readInt();
-        this.caption = in.readString();
     }
 
     /**
@@ -212,6 +191,5 @@ public class ImageEntity implements Parcelable {
         dest.writeString(imageUrl);
         dest.writeInt(height);
         dest.writeInt(width);
-        dest.writeString(caption);
     }
 }

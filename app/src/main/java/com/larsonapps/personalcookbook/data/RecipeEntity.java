@@ -30,10 +30,12 @@ public class RecipeEntity implements Parcelable {
     private int cookTime;
     @ColumnInfo(name = "total_time")
     private int totalTime;
-    @ColumnInfo(name = "notes")
-    private String notes;
+    @ColumnInfo(name = "cook_notes")
+    private String cookNotes;
     @ColumnInfo(name = "copyright")
     private String copyright;
+    @ColumnInfo(name = "personal_note")
+    private String personalNote;
 
     /**
      * Default Constructor
@@ -51,12 +53,13 @@ public class RecipeEntity implements Parcelable {
      * @param prepTime to set
      * @param cookTime to set
      * @param totalTime to set
-     * @param notes to set
+     * @param cookNotes to set
      * @param copyright to set
+     * @param personalNote to set
      */
     public RecipeEntity(int id, String name, String shortDescription, String description,
-                        int servings, int prepTime, int cookTime, int totalTime, String notes,
-                        String copyright) {
+                        int servings, int prepTime, int cookTime, int totalTime, String cookNotes,
+                        String copyright, String personalNote) {
         this.id = id;
         this.name = name;
         this.shortDescription = shortDescription;
@@ -65,8 +68,9 @@ public class RecipeEntity implements Parcelable {
         this.prepTime = prepTime;
         this.cookTime = cookTime;
         this.totalTime = totalTime;
-        this.notes = notes;
+        this.cookNotes = cookNotes;
         this.copyright = copyright;
+        this.personalNote = personalNote;
     }
 
     /**
@@ -316,16 +320,16 @@ public class RecipeEntity implements Parcelable {
      * Getter for notes
      * @return to set
      */
-    public String getNotes() {
-        return notes;
+    public String getCookNotes() {
+        return cookNotes;
     }
 
     /**
      * Setter for notes
-     * @param notes to set
+     * @param cookNotes to set
      */
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public void setCookNotes(String cookNotes) {
+        this.cookNotes = cookNotes;
     }
 
     /**
@@ -358,8 +362,9 @@ public class RecipeEntity implements Parcelable {
         this.prepTime = in.readInt();
         this.cookTime = in.readInt();
         this.totalTime = in.readInt();
-        this.notes = in.readString();
+        this.cookNotes = in.readString();
         this.copyright = in.readString();
+        this.personalNote = in.readString();
     }
 
     /**
@@ -386,7 +391,24 @@ public class RecipeEntity implements Parcelable {
         dest.writeInt(this.prepTime);
         dest.writeInt(this.cookTime);
         dest.writeInt(this.totalTime);
-        dest.writeString(this.notes);
+        dest.writeString(this.cookNotes);
         dest.writeString(this.copyright);
+        dest.writeString(this.personalNote);
+    }
+
+    /**
+     * Getter for personal note
+     * @return personal note
+     */
+    public String getPersonalNote() {
+        return personalNote;
+    }
+
+    /**
+     * Setter for personal note
+     * @param personalNote to set
+     */
+    public void setPersonalNote(String personalNote) {
+        this.personalNote = personalNote;
     }
 }

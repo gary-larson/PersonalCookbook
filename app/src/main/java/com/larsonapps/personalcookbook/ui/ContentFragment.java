@@ -13,8 +13,6 @@ import com.larsonapps.personalcookbook.data.RecipeEntity;
 import com.larsonapps.personalcookbook.databinding.ContentFragmentBinding;
 import com.larsonapps.personalcookbook.model.RecipeViewModel;
 
-import java.util.Locale;
-
 /**
  * Class to handle content
  */
@@ -127,7 +125,7 @@ public class ContentFragment extends Fragment {
         if (!(temp == null || temp.isEmpty())) {
             mBinding.descriptionTextView.setText(temp);
         }
-        temp = mRecipe.getNotes();
+        temp = mRecipe.getCookNotes();
         if (!(temp == null || temp.isEmpty())) {
             mBinding.notesTextView.setText(temp);
         }

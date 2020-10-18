@@ -14,11 +14,10 @@ public class ImageEntityUnitTests {
     private static final String IMAGE_URL_VALUE = "https://somewhere.com/5486946.jpg";
     private static final int HEIGHT_VALUE = 1720;
     private static final int WIDTH_VALUE = 2200;
-    private static final String CAPTION_VALUE = "picture of chocolate chip cookies";
 
     // Create RecipeImage
     ImageEntity image = new ImageEntity(IMAGE_ID_VALUE, RECIPE_ID_VALUE, TYPE_VALUE,
-            IMAGE_URL_VALUE, HEIGHT_VALUE, WIDTH_VALUE, CAPTION_VALUE);
+            IMAGE_URL_VALUE, HEIGHT_VALUE, WIDTH_VALUE);
 
     // Tests for the constructor and Getters
     @Test
@@ -49,11 +48,6 @@ public class ImageEntityUnitTests {
     @Test
     public void testImageWidthGetter() {
         assertEquals(WIDTH_VALUE, image.getWidth());
-    }
-
-    @Test
-    public void testImageCaptionGetter() {
-        assertEquals(CAPTION_VALUE, image.getCaption());
     }
 
     // Test default constructor and setters
@@ -97,12 +91,5 @@ public class ImageEntityUnitTests {
         int temp = 3000;
         image.setWidth(temp);
         assertEquals(temp, image.getWidth());
-    }
-
-    @Test
-    public void testImageCaptionSetter() {
-        String temp = "Great picture of meal";
-        image.setCaption(temp);
-        assertEquals(temp, image.getCaption());
     }
 }

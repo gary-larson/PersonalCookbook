@@ -25,6 +25,8 @@ public class StepEntity implements Parcelable {
     private int number;
     @ColumnInfo(name = "instruction")
     private String instruction;
+    @ColumnInfo(name = "personal_note")
+    private String personalNote;
 
     /**
      * Default Constructor
@@ -38,12 +40,15 @@ public class StepEntity implements Parcelable {
      * @param recipeId to set
      * @param number to set
      * @param instruction to set
+     * @param personalNote to set
      */
-    public StepEntity(int stepId, int recipeId, int number, String instruction) {
+    public StepEntity(int stepId, int recipeId, int number, String instruction,
+                      String personalNote) {
         this.stepId = stepId;
         this.recipeId = recipeId;
         this.number = number;
         this.instruction = instruction;
+        this.personalNote = personalNote;
     }
 
     /**
@@ -131,6 +136,7 @@ public class StepEntity implements Parcelable {
         this.recipeId = in.readInt();
         this.number = in.readInt();
         this.instruction = in.readString();
+        this.personalNote = in.readString();
     }
 
     /**
@@ -163,5 +169,22 @@ public class StepEntity implements Parcelable {
         dest.writeInt(this.recipeId);
         dest.writeInt(this.number);
         dest.writeString(this.instruction);
+        dest.writeString(this.personalNote);
+    }
+
+    /**
+     * Getter for personal note
+     * @return personal note
+     */
+    public String getPersonalNote() {
+        return personalNote;
+    }
+
+    /**
+     * Setter for personal note
+     * @param personalNote to set
+     */
+    public void setPersonalNote(String personalNote) {
+        this.personalNote = personalNote;
     }
 }

@@ -16,7 +16,7 @@ public class RecipeEntityUnitTests {
     private static final int PREP_TIME_VALUE = 22;
     private static final int COOK_TIME_VALUE = 142;
     private static final int TOTAL_TIME_VALUE = 1501;
-    private static final String NOTES_VALUE = "These are the notes by the cook.";
+    private static final String COOK_NOTES_VALUE = "These are the notes by the cook.";
     private static final String COPYRIGHT_VALUE = "copyright 5201";
     private static final String PREP_TIME_STRING_VALUE = "22 minutes";
     private static final String COOK_TIME_STRING_VALUE = "2 hours 22 mins";
@@ -25,6 +25,7 @@ public class RecipeEntityUnitTests {
     private static final String PREP_TIME_MINUTES_STRING_VALUE = "22 Prep mins";
     private static final String COOK_TIME_MINUTES_STRING_VALUE = "142 Cook mins";
     private static final String TOTAL_TIME_MINUTES_STRING_VALUE = "1501 Total mins";
+    private static final String PERSONAL_NOTE_VALUE = "Personal note";
 
 
 
@@ -32,7 +33,7 @@ public class RecipeEntityUnitTests {
     // Tests for the constructor and Getters
     RecipeEntity recipe = new RecipeEntity(ID_VALUE, NAME_VALUE, SHORT_DESCRIPTION_VALUE,
             DESCRIPTION_VALUE, SERVINGS_VALUE, PREP_TIME_VALUE, COOK_TIME_VALUE, TOTAL_TIME_VALUE,
-            NOTES_VALUE, COPYRIGHT_VALUE);
+            COOK_NOTES_VALUE, COPYRIGHT_VALUE, PERSONAL_NOTE_VALUE);
 
     @Test
     public void testRecipeIdGetter() {
@@ -76,12 +77,17 @@ public class RecipeEntityUnitTests {
 
     @Test
     public void testRecipeNotesGetter() {
-        assertEquals(NOTES_VALUE, recipe.getNotes());
+        assertEquals(COOK_NOTES_VALUE, recipe.getCookNotes());
     }
 
     @Test
     public void testRecipeCopyrightGetter() {
         assertEquals(COPYRIGHT_VALUE, recipe.getCopyright());
+    }
+
+    @Test
+    public void testRecipePersonalNoteGetter() {
+        assertEquals(PERSONAL_NOTE_VALUE, recipe.getPersonalNote());
     }
 
     // Test setters
@@ -144,8 +150,8 @@ public class RecipeEntityUnitTests {
     @Test
     public void testRecipeNotesSetter() {
         String temp = "This is another note";
-        recipe.setNotes(temp);
-        assertEquals(temp, recipe.getNotes());
+        recipe.setCookNotes(temp);
+        assertEquals(temp, recipe.getCookNotes());
     }
 
     @Test
@@ -153,6 +159,13 @@ public class RecipeEntityUnitTests {
         String temp = "copyright of something";
         recipe.setCopyright(temp);
         assertEquals(temp, recipe.getCopyright());
+    }
+
+    @Test
+    public void testRecipePersonalNoteSetter() {
+        String temp = "another personal note";
+        recipe.setPersonalNote(temp);
+        assertEquals(temp, recipe.getPersonalNote());
     }
 
     @Test
