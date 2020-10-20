@@ -43,11 +43,25 @@
                 tools:context="com.larsonapps.personalcookbook.ContentFragment" />
 
             <TextView
+                android:id="@+id/details_cook_note_label"
+                style="@style/HeadingTextView"
+                android:text="@string/cook_notes_label_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/details_content_container" />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/details_cook_note_list_container"
+                style="@style/AppFragmentContainer"
+                android:layout_width="match_parent"
+                app:layout_constraintTop_toBottomOf="@id/details_cook_note_label"
+                tools:context="com.larsonapps.personalcookbook.CookNoteFragment" />
+
+            <TextView
                 android:id="@+id/details_ingredient_label"
                 style="@style/HeadingTextView"
                 android:text="@string/ingredients"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/details_content_container" />
+                app:layout_constraintTop_toBottomOf="@id/details_cook_note_list_container" />
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/details_ingredient_list_container"

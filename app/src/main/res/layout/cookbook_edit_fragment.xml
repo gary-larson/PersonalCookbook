@@ -54,11 +54,34 @@
                 tools:context="com.larsonapps.personalcookbook.ContentFragment" />
 
             <TextView
+                android:id="@+id/edit_cook_note_label"
+                style="@style/HeadingTextView"
+                android:text="@string/cook_notes_label_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edit_content_container" />
+
+            <Button
+                android:id="@+id/edit_add_cook_note_button"
+                style="@style/AppButton"
+                android:text="@string/add_button_text"
+                app:icon="@drawable/ic_add_24px"
+                app:layout_constraintTop_toTopOf="@id/edit_cook_note_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/edit_cook_note_label" />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/edit_cook_note_list_container"
+                style="@style/AppFragmentContainer"
+                android:layout_width="match_parent"
+                app:layout_constraintTop_toBottomOf="@id/edit_cook_note_label"
+                tools:context="com.larsonapps.personalcookbook.CookNoteFragment" />
+
+            <TextView
                 android:id="@+id/edit_ingredient_label"
                 style="@style/HeadingTextView"
                 android:text="@string/ingredients"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/edit_content_container" />
+                app:layout_constraintTop_toBottomOf="@id/edit_cook_note_list_container" />
 
             <Button
                 android:id="@+id/edit_add_ingredient_button"

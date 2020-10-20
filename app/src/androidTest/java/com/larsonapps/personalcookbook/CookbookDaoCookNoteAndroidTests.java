@@ -7,10 +7,10 @@ import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.larsonapps.personalcookbook.data.CookNoteEntity;
 import com.larsonapps.personalcookbook.data.CookbookDao;
 import com.larsonapps.personalcookbook.data.CookbookRoomDatabase;
 import com.larsonapps.personalcookbook.data.RecipeEntity;
-import com.larsonapps.personalcookbook.data.StepEntity;
 
 import org.junit.After;
 import org.junit.Before;
@@ -26,7 +26,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 @RunWith(AndroidJUnit4.class)
-public class CookbookDaoStepAndroidTests {
+public class CookbookDaoCookNoteAndroidTests {
     @Rule
     public TestRule rule = new InstantTaskExecutorRule();
 
@@ -51,18 +51,15 @@ public class CookbookDaoStepAndroidTests {
     private static final int TOTAL_TIME_VALUE_2 = 95;
     private static final String COPYRIGHT_VALUE_2 = "copyright 2020";
     private static final String PERSONAL_NOTE_VALUE_2 = "Personal note two";
-    private static final int STEP_ID_VALUE_1 = 0;
-    private static final int NUMBER_VALUE_1 = 5;
-    private static final String INSTRUCTION_VALUE_1 = "please follow instruction";
-    private static final String STEP_PERSONAL_NOTE_VALUE_1 = "Step Personal note";
-    private static final int STEP_ID_VALUE_2 = 0;
-    private static final int NUMBER_VALUE_2 = 6;
-    private static final String INSTRUCTION_VALUE_2 = "combine ingredients";
-    private static final String STEP_PERSONAL_NOTE_VALUE_2 = "Step Personal note two";
-    private static final int STEP_ID_VALUE_3 = 0;
-    private static final int NUMBER_VALUE_3 = 7;
-    private static final String INSTRUCTION_VALUE_3 = "cook for 30 minutes";
-    private static final String STEP_PERSONAL_NOTE_VALUE_3 = "Step Personal note three";
+    private static final int COOK_NOTE_ID_VALUE_1 = 0;
+    private static final int NUMBER_VALUE_1 = 15;
+    private static final String NOTE_VALUE_1 = "sprinkle sparely";
+    private static final int COOK_NOTE_ID_VALUE_2 = 0;
+    private static final int NUMBER_VALUE_2 = 106;
+    private static final String NOTE_VALUE_2 = "combine ingredients by flipping";
+    private static final int COOK_NOTE_ID_VALUE_3 = 0;
+    private static final int NUMBER_VALUE_3 = 107;
+    private static final String NOTE_VALUE_3 = "cook for 30 minutes over low heat";
     // declare variables
     RecipeEntity recipeEntity1 = new RecipeEntity(0, NAME_VALUE_1, SHORT_DESCRIPTION_1,
             DESCRIPTION_VALUE_1, SERVINGS_VALUE_1, PREP_TIME_VALUE_1, COOK_TIME_VALUE_1,
@@ -70,9 +67,9 @@ public class CookbookDaoStepAndroidTests {
     RecipeEntity recipeEntity2 = new RecipeEntity(0, NAME_VALUE_2, SHORT_DESCRIPTION_2,
             DESCRIPTION_VALUE_2, SERVINGS_VALUE_2, PREP_TIME_VALUE_2, COOK_TIME_VALUE_2,
             TOTAL_TIME_VALUE_2, COPYRIGHT_VALUE_2, PERSONAL_NOTE_VALUE_2);
-    StepEntity step1;
-    StepEntity step2;
-    StepEntity step3;
+    CookNoteEntity cookNote1;
+    CookNoteEntity cookNote2;
+    CookNoteEntity cookNote3;
     int recipeId1;
     int recipeId2;
 
@@ -87,16 +84,16 @@ public class CookbookDaoStepAndroidTests {
         // add another recipe
         cookbookDao.insertRecipe((recipeEntity2));
         recipeId2 = cookbookDao.getRecipeIdByName(NAME_VALUE_2);
-        step1 = new StepEntity(STEP_ID_VALUE_1, recipeId1, NUMBER_VALUE_1, INSTRUCTION_VALUE_1,
-                STEP_PERSONAL_NOTE_VALUE_1);
-        step2 = new StepEntity(STEP_ID_VALUE_2, recipeId1, NUMBER_VALUE_2, INSTRUCTION_VALUE_2,
-                STEP_PERSONAL_NOTE_VALUE_2);
-        step3 = new StepEntity(STEP_ID_VALUE_3, recipeId2, NUMBER_VALUE_3, INSTRUCTION_VALUE_3,
-                STEP_PERSONAL_NOTE_VALUE_3);
+        cookNote1 = new CookNoteEntity(COOK_NOTE_ID_VALUE_1, recipeId1, NOTE_VALUE_1,
+                NUMBER_VALUE_1);
+        cookNote2 = new CookNoteEntity(COOK_NOTE_ID_VALUE_2, recipeId1, NOTE_VALUE_2,
+                NUMBER_VALUE_2);
+        cookNote3 = new CookNoteEntity(COOK_NOTE_ID_VALUE_3, recipeId2, NOTE_VALUE_3,
+                NUMBER_VALUE_3);
         // this tests insert step
-        cookbookDao.insertStep(step1);
-        cookbookDao.insertStep(step2);
-        cookbookDao.insertStep(step3);
+        cookbookDao.insertCookNote(cookNote1);
+        cookbookDao.insertCookNote(cookNote2);
+        cookbookDao.insertCookNote(cookNote3);
     }
 
     @After
@@ -105,47 +102,47 @@ public class CookbookDaoStepAndroidTests {
     }
 
     @Test
-    public void testInsertAllStepsAndGetAllSteps() {
-        // insert all steps
-        List<StepEntity> steps = new ArrayList<>();
-        steps.add(step1);
-        steps.add(step2);
-        steps.add(step3);
+    public void testInsertAllCookNotesAndGetAllCookNotes() {
+        // insert all cook's notes
+        List<CookNoteEntity> cookNotes = new ArrayList<>();
+        cookNotes.add(cookNote1);
+        cookNotes.add(cookNote2);
+        cookNotes.add(cookNote3);
         // add to database
-        cookbookDao.insertAllSteps(steps);
-        // get all steps for recipe 1 and test
-        cookbookDao.getAllSteps(recipeId1).observeForever(newSteps ->
-                assertEquals(4, newSteps.size()));
+        cookbookDao.insertAllNotes(cookNotes);
+        // get all cook's notes for recipe 1 and test
+        cookbookDao.getAllCookNotes(recipeId1).observeForever(newCookNotes ->
+                assertEquals(4, newCookNotes.size()));
     }
 
     @Test
-    public void testDeleteStepAndGetStepIdByNumber() {
-        int stepId = cookbookDao.getStepIdByNumber(recipeId1, NUMBER_VALUE_1);
-        step1.setStepId(stepId);
-        // delete step
-        cookbookDao.deleteStep(step1);
-        // get steps for recipe 1 and test
-        cookbookDao.getAllSteps(recipeId1).observeForever(newSteps -> {
-            for(StepEntity step : newSteps) {
-                assertNotEquals(stepId, step.getStepId());
+    public void testDeleteCookNoteAndGetCookNoteIdByNumber() {
+        int cookNoteId = cookbookDao.getCookNoteByNumber(recipeId1, NUMBER_VALUE_1);
+        cookNote1.setCookNoteId(cookNoteId);
+        // delete cook note
+        cookbookDao.deleteCookNote(cookNote1);
+        // get cook notes for recipe 1 and test
+        cookbookDao.getAllCookNotes(recipeId1).observeForever(newCookNotes -> {
+            for(CookNoteEntity cookNote : newCookNotes) {
+                assertNotEquals(cookNoteId, cookNote.getCookNoteId());
             }
         });
     }
 
     @Test
-    public void testUpdateStep() {
-        int stepId = cookbookDao.getStepIdByNumber(recipeId1, NUMBER_VALUE_1);
-        step1.setStepId(stepId);
-        // modify step
+    public void testUpdateCookNote() {
+        int cookNoteId = cookbookDao.getCookNoteByNumber(recipeId1, NUMBER_VALUE_1);
+        cookNote1.setCookNoteId(cookNoteId);
+        // modify cook note
         String temp = "add dry ingredients";
-        step1.setInstruction(temp);
-        cookbookDao.updateStep(step1);
-        // get steps for recipe 1 and test
-        cookbookDao.getAllSteps(recipeId1).observeForever(newSteps -> {
+        cookNote1.setNote(temp);
+        cookbookDao.updateCoolNote(cookNote1);
+        // get cook notes for recipe 1 and test
+        cookbookDao.getAllCookNotes(recipeId1).observeForever(newCookNotes -> {
             boolean isAsserted = false;
-            for(StepEntity step : newSteps) {
-                if (stepId == step.getStepId()) {
-                    assertEquals(temp, step.getInstruction());
+            for(CookNoteEntity cookNote : newCookNotes) {
+                if (cookNoteId == cookNote.getCookNoteId()) {
+                    assertEquals(temp, cookNote.getNote());
                     isAsserted = true;
                     break;
                 }

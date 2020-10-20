@@ -125,13 +125,13 @@ public class ContentFragment extends Fragment {
         if (!(temp == null || temp.isEmpty())) {
             mBinding.descriptionTextView.setText(temp);
         }
-        temp = mRecipe.getCookNotes();
-        if (!(temp == null || temp.isEmpty())) {
-            mBinding.notesTextView.setText(temp);
-        }
         temp = mRecipe.getCopyright();
         if (!(temp == null || temp.isEmpty())) {
             mBinding.copyrightTextView.setText(temp);
+        }
+        temp = mRecipe.getPersonalNote();
+        if (!(temp == null || temp.isEmpty())) {
+            mBinding.personalNoteTextView.setText(temp);
         }
     }
 

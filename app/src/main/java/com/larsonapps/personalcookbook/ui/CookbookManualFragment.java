@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.larsonapps.personalcookbook.R;
+import com.larsonapps.personalcookbook.data.CookNoteEntity;
 import com.larsonapps.personalcookbook.data.ImageEntity;
 import com.larsonapps.personalcookbook.data.IngredientEntity;
 import com.larsonapps.personalcookbook.data.KeywordEntity;
@@ -36,6 +37,7 @@ import static android.app.Activity.RESULT_OK;
  */
 public class CookbookManualFragment extends Fragment implements
         EditContentDialogFragment.EditContentDialogListener,
+        EditCookNoteDialogFragment.EditCookNoteDialogAddListener,
         EditIngredientDialogFragment.EditIngredientDialogAddListener,
         EditStepDialogFragment.EditStepDialogAddListener,
         AddImageDialogFragment.AddImageDialogListener,
@@ -44,16 +46,19 @@ public class CookbookManualFragment extends Fragment implements
     private static final String ARG_STATE = "state";
     private static final String STATE = "mState";
     private static final String RECIPE = "mRecipe";
+    private static final String COOK_NOTES = "mCookNotes";
     private static final String IMAGES = "mImageList";
     private static final String INGREDIENTS = "mIngredientList";
     private static final String STEPS = "mStepList";
     private static final String CONTENT_TITLE = "Add Content";
+    private static final String COOK_NOTE_TITLE = "Add Cook's Note";
     private static final String INGREDIENT_TITLE = "Add Ingredient";
     private static final String STEP_TITLE = "Add Step";
     private static final String IMAGE_TITLE = "Add Image";
     private static final String KEYWORD_TITLE = "Add Keyword";
     private static final String TAG = CookbookManualFragment.class.getSimpleName();
     private static final int CONTENT_CODE = 210;
+    private static final int COOK_NOTE_CODE = 215;
     private static final int INGREDIENT_CODE = 220;
     private static final int STEP_CODE = 230;
     private static final int IMAGE_CODE = 240;
@@ -66,6 +71,7 @@ public class CookbookManualFragment extends Fragment implements
     CookbookManualFragmentBinding mBinding;
     private int mState;
     private RecipeEntity mRecipe;
+    private List<CookNoteEntity> mCookNoteList = new ArrayList<>();
     private List<ImageEntity> mImageList = new ArrayList<>();
     private List<IngredientEntity> mIngredientList = new ArrayList<>();
     private List<StepEntity> mStepList = new ArrayList<>();
@@ -108,6 +114,7 @@ public class CookbookManualFragment extends Fragment implements
         if (savedInstanceState != null) {
             mState = savedInstanceState.getInt(STATE);
             mRecipe = savedInstanceState.getParcelable(RECIPE);
+            mCookNoteList = savedInstanceState.getParcelable(COOK_NOTES);
             mImageList = savedInstanceState.getParcelableArrayList(IMAGES);
             mIngredientList = savedInstanceState.getParcelableArrayList(INGREDIENTS);
             mStepList = savedInstanceState.getParcelableArrayList(STEPS);
@@ -115,6 +122,8 @@ public class CookbookManualFragment extends Fragment implements
         getChildFragmentManager().beginTransaction()
                 .replace(mBinding.manualContentContainer.getId(), ContentFragment
                         .newInstance(mState, mRecipe))
+                .replace(mBinding.manualCookNoteListContainer.getId(), CookNoteFragment
+                        .newInstance(mState, mCookNoteList))
                 .replace(mBinding.manualIngredientListContainer.getId(), IngredientFragment
                         .newInstance(mState, mIngredientList))
                 .replace(mBinding.manualStepListContainer.getId(), StepFragment
@@ -131,6 +140,15 @@ public class CookbookManualFragment extends Fragment implements
             if (getActivity() != null) {
                 editContentDialogFragment.show(getActivity().getSupportFragmentManager(),
                         CookbookActivity.EDIT_CONTENT_DIALOG);
+            }
+        });
+        mBinding.manualAddCookNoteButton.setOnClickListener(v -> {
+            EditCookNoteDialogFragment editCookNoteDialogFragment = EditCookNoteDialogFragment
+                    .newInstance(COOK_NOTE_TITLE, CookbookActivity.STATE_ADD, null);
+            editCookNoteDialogFragment.setTargetFragment(this, COOK_NOTE_CODE);
+            if (getActivity() != null) {
+                editCookNoteDialogFragment.show(getActivity().getSupportFragmentManager(),
+                        CookbookActivity.EDIT_COOK_NOTE_DIALOG);
             }
         });
         mBinding.manualAddIngredientButton.setOnClickListener(v -> {
@@ -176,8 +194,8 @@ public class CookbookManualFragment extends Fragment implements
             }
         });
         mBinding.manualSubmitButton.setOnClickListener(v -> {
-            mRecipeViewModel.insertAll(mRecipe, mIngredientList, mStepList, mImageList,
-                    mKeywordList);
+            mRecipeViewModel.insertAll(mRecipe, mCookNoteList, mIngredientList, mStepList,
+                    mImageList, mKeywordList);
             getActivity().getSupportFragmentManager().popBackStack();
         });
         return mBinding.getRoot();
@@ -227,6 +245,7 @@ public class CookbookManualFragment extends Fragment implements
         super.onSaveInstanceState(outState);
         outState.putInt(STATE, mState);
         outState.putParcelable(RECIPE, mRecipe);
+        outState.putParcelableArrayList(COOK_NOTES, (ArrayList<CookNoteEntity>) mCookNoteList);
         outState.putParcelableArrayList(IMAGES, (ArrayList<ImageEntity>) mImageList);
         outState.putParcelableArrayList(INGREDIENTS, (ArrayList<IngredientEntity>) mIngredientList);
         outState.putParcelableArrayList(STEPS, (ArrayList<StepEntity>) mStepList);
@@ -277,6 +296,16 @@ public class CookbookManualFragment extends Fragment implements
                 .beginTransaction()
                 .replace(mBinding.manualImageListContainer.getId(),
                         ImageFragment.newInstance(mState,mImageList))
+                .commit();
+    }
+
+    @Override
+    public void onFinishEditCookNoteDialog(CookNoteEntity cookNote) {
+        mCookNoteList.add(cookNote);
+        getChildFragmentManager()
+                .beginTransaction()
+                .replace(mBinding.manualCookNoteListContainer.getId(),
+                        CookNoteFragment.newInstance(mState, mCookNoteList))
                 .commit();
     }
 }

@@ -99,6 +99,10 @@ public class EditIngredientDialogFragment extends DialogFragment {
             if (temp != null && !temp.isEmpty()) {
                 mBinding.editIngredientPreparationEditText.setText(temp);
             }
+            temp = mIngredient.getPersonalNote();
+            if (temp != null && !temp.isEmpty()) {
+                mBinding.editIngredientPersonalNoteEditText.setText(temp);
+            }
         } else {
             mIngredient = new IngredientEntity();
         }
@@ -196,6 +200,10 @@ public class EditIngredientDialogFragment extends DialogFragment {
         tempString = mBinding.editIngredientPreparationEditText.getText().toString();
         if (!(tempString.isEmpty() || tempString.equals(mIngredient.getPreparation()))) {
             mIngredient.setPreparation(tempString);
+        }
+        tempString = mBinding.editIngredientPersonalNoteEditText.getText().toString();
+        if (!(tempString.isEmpty() || tempString.equals(mIngredient.getPersonalNote()))) {
+            mIngredient.setPersonalNote(tempString);
         }
     }
 }

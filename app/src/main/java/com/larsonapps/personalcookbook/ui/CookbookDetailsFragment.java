@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.larsonapps.personalcookbook.R;
 import com.larsonapps.personalcookbook.data.RecipeEntity;
 import com.larsonapps.personalcookbook.databinding.CookbookDetailsFragmentBinding;
 
@@ -75,6 +74,8 @@ public class CookbookDetailsFragment extends Fragment {
                 .getSupportActionBar()).setTitle(mRecipe.getName());
         getChildFragmentManager().beginTransaction()
                 .replace(mBinding.detailsContentContainer.getId(), ContentFragment
+                        .newInstance(mState, mRecipe.getId()))
+                .replace(mBinding.detailsCookNoteListContainer.getId(), CookNoteFragment
                         .newInstance(mState, mRecipe.getId()))
                 .replace(mBinding.detailsIngredientListContainer.getId(), IngredientFragment
                         .newInstance(mState, mRecipe.getId()))

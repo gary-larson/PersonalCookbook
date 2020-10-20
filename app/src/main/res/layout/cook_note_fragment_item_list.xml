@@ -2,10 +2,10 @@
 <androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/step_list"
-    android:name="com.larsonapps.personalcookbook.ui.StepFragment"
+    android:id="@+id/cook_note_list"
+    android:name="com.larsonapps.personalcookbook.ui.CookNoteFragment"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".ui.StepFragment"
-    tools:listitem="@layout/step_fragment_item" />
+    tools:context=".ui.CookNoteFragment"
+    tools:listitem="@layout/cook_note_fragment_item" />

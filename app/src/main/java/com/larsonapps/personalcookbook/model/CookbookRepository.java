@@ -10,6 +10,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 
 import com.larsonapps.personalcookbook.data.CategoryEntity;
+import com.larsonapps.personalcookbook.data.CookNoteEntity;
 import com.larsonapps.personalcookbook.data.CookbookDao;
 import com.larsonapps.personalcookbook.data.CookbookRoomDatabase;
 import com.larsonapps.personalcookbook.data.ImageEntity;
@@ -94,7 +95,7 @@ public class CookbookRepository {
         return mDao.getRecipe(recipeId);
     }
 
-    public void addRwcipe(RecipeEntity recipe) {
+    public void addRecipe(RecipeEntity recipe) {
         CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.insertRecipe(recipe));
     }
 
@@ -140,12 +141,18 @@ public class CookbookRepository {
         CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.updateStep(step));
     }
 
-    public void insertAll(RecipeEntity recipe, List<IngredientEntity> ingredients,
-                          List<StepEntity> steps, List<ImageEntity> images,
-                          List<KeywordEntity> keywords) {
+    public void insertAll(RecipeEntity recipe, List<CookNoteEntity> cookNotes,
+                          List<IngredientEntity> ingredients, List<StepEntity> steps,
+                          List<ImageEntity> images, List<KeywordEntity> keywords) {
         CookbookRoomDatabase.databaseWriteExecutor.execute(() -> {
             mDao.insertRecipe(recipe);
             int recipeId = mDao.getRecipeIdByName(recipe.getName());
+            if (cookNotes.size() > 0 ) {
+                for (CookNoteEntity cookNote : cookNotes) {
+                    cookNote.setRecipeId(recipeId);
+                }
+                mDao.insertAllNotes(cookNotes);
+            }
             if (ingredients.size() > 0) {
                 for (IngredientEntity ingredient : ingredients) {
                     ingredient.setRecipeId(recipeId);
@@ -324,5 +331,21 @@ public class CookbookRepository {
         File imageFile = new File(directory, fileName);
         // delete image file
         return imageFile.delete();
+    }
+
+    public LiveData<List<CookNoteEntity>> getNotes(int recipeId) {
+        return mDao.getAllCookNotes(recipeId);
+    }
+
+    public void insertCookNote(CookNoteEntity cookNote) {
+        CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.insertCookNote(cookNote));
+    }
+
+    public void updateCookNote(CookNoteEntity cookNote) {
+        CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.updateCoolNote(cookNote));
+    }
+
+    public void deleteCookNote(CookNoteEntity cookNote) {
+        CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.deleteCookNote(cookNote));
     }
 }

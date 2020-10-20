@@ -40,7 +40,6 @@ public class CookbookDaoIngredientAndroidTests {
     private static final int PREP_TIME_VALUE_1 = 40;
     private static final int COOK_TIME_VALUE_1 = 12;
     private static final int TOTAL_TIME_VALUE_1 = 52;
-    private static final String NOTES_VALUE_1 = "These are the notes by the cook.";
     private static final String COPYRIGHT_VALUE_1 = "copyright 5201";
     private static final String PERSONAL_NOTE_VALUE_1 = "personal note";
     private static final String NAME_VALUE_2 = "Apple Pie";
@@ -50,7 +49,6 @@ public class CookbookDaoIngredientAndroidTests {
     private static final int PREP_TIME_VALUE_2 = 35;
     private static final int COOK_TIME_VALUE_2 = 60;
     private static final int TOTAL_TIME_VALUE_2 = 95;
-    private static final String NOTES_VALUE_2 = "These are apple pie notes by the cook.";
     private static final String COPYRIGHT_VALUE_2 = "copyright 2020";
     private static final String PERSONAL_NOTE_VALUE_2 = "Another personal note";
     private static final int INGREDIENT_ID_VALUE_1 = 0;
@@ -74,10 +72,10 @@ public class CookbookDaoIngredientAndroidTests {
     // declare variables
     RecipeEntity recipeEntity1 = new RecipeEntity(0, NAME_VALUE_1, SHORT_DESCRIPTION_1,
             DESCRIPTION_VALUE_1, SERVINGS_VALUE_1, PREP_TIME_VALUE_1, COOK_TIME_VALUE_1,
-            TOTAL_TIME_VALUE_1, NOTES_VALUE_1, COPYRIGHT_VALUE_1, PERSONAL_NOTE_VALUE_1);
+            TOTAL_TIME_VALUE_1, COPYRIGHT_VALUE_1, PERSONAL_NOTE_VALUE_1);
     RecipeEntity recipeEntity2 = new RecipeEntity(0, NAME_VALUE_2, SHORT_DESCRIPTION_2,
             DESCRIPTION_VALUE_2, SERVINGS_VALUE_2, PREP_TIME_VALUE_2, COOK_TIME_VALUE_2,
-            TOTAL_TIME_VALUE_2, NOTES_VALUE_2, COPYRIGHT_VALUE_2, PERSONAL_NOTE_VALUE_2);
+            TOTAL_TIME_VALUE_2, COPYRIGHT_VALUE_2, PERSONAL_NOTE_VALUE_2);
     IngredientEntity ingredient1;
     IngredientEntity ingredient2;
     IngredientEntity ingredient3;

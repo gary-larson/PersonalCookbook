@@ -83,6 +83,20 @@ public interface CookbookDao {
     void insertCategory(CategoryEntity category);
 
     /**
+     * Method to insert cook's note
+     * @param cookNote to insert
+     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertCookNote(CookNoteEntity cookNote);
+
+    /**
+     * Method to insert all cook's notes
+     * @param cookNotes to insert
+     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertAllNotes(List<CookNoteEntity> cookNotes);
+
+    /**
      * Method to delete a recipe
      * @param recipe to delete
      */
@@ -124,6 +138,13 @@ public interface CookbookDao {
     void deleteCategory(CategoryEntity category);
 
     /**
+     * Method to delete a cook's note
+     * @param cookNote to delete
+     */
+    @Delete
+    void deleteCookNote(CookNoteEntity cookNote);
+
+    /**
      * Method to update a recipe
      * @param recipe to update
      */
@@ -150,6 +171,13 @@ public interface CookbookDao {
      */
     @Update
     void updateImage(ImageEntity image);
+
+    /**
+     * Method to Update a cook's note
+     * @param cookNote to update
+     */
+    @Update
+    void updateCoolNote(CookNoteEntity cookNote);
 
     /**
      * Method to retrieve all recipes
@@ -286,4 +314,20 @@ public interface CookbookDao {
      */
     @Query("SELECT category_id FROM categories WHERE category_name = :name")
     int getCategoryIdByName(String name);
+
+    /**
+     * Method to get all cook notes by recipe id
+     * @param recipeId to get the cook's notes for
+     * @return list of cook's notes
+     */
+    @Query("SELECT * FROM cook_notes WHERE recipe_id = :recipeId")
+    LiveData<List<CookNoteEntity>> getAllCookNotes(int recipeId);
+
+    /**
+     * Method to ger cook's note by number
+     * @param recipeId of the recipe
+     * @param number of the note
+     */
+    @Query("SELECT note_id FROM cook_notes WHERE recipe_id = :recipeId AND number = :number")
+    int getCookNoteByNumber(int recipeId, int number);
 }

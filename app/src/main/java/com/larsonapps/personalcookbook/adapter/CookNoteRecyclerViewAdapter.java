@@ -9,47 +9,38 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.larsonapps.personalcookbook.data.StepEntity;
-import com.larsonapps.personalcookbook.databinding.StepFragmentItemBinding;
+import com.larsonapps.personalcookbook.data.CookNoteEntity;
+import com.larsonapps.personalcookbook.databinding.CookNoteFragmentItemBinding;
+import com.larsonapps.personalcookbook.ui.CookNoteFragment;
 import com.larsonapps.personalcookbook.ui.CookbookActivity;
-import com.larsonapps.personalcookbook.ui.StepFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Class to display atep information
- */
-public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerViewAdapter.ViewHolder> {
+public class CookNoteRecyclerViewAdapter extends RecyclerView.Adapter<CookNoteRecyclerViewAdapter.ViewHolder> {
     // Declare variables
-    private List<StepEntity> mValues = new ArrayList<>();
-    private StepFragment.OnListFragmentInteractionListener mListener;
+    private List<CookNoteEntity> mValues = new ArrayList<>();
+    private CookNoteFragment.OnListFragmentInteractionListener mListener;
     private final int mState;
 
-    public StepRecyclerViewAdapter(StepFragment.OnListFragmentInteractionListener listener,
-                                   int state) {
+    public CookNoteRecyclerViewAdapter(CookNoteFragment.OnListFragmentInteractionListener listener,
+                                       int state) {
         mListener = listener;
         mState = state;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(StepFragmentItemBinding.inflate(
+    public CookNoteRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new CookNoteRecyclerViewAdapter.ViewHolder(CookNoteFragmentItemBinding.inflate(
                 LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final CookNoteRecyclerViewAdapter.ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        String tempString = holder.mItem.getNumber() + ") " + holder.mItem.getInstruction();
-        holder.mStepView.setText(tempString);
-        if (holder.mItem.getPersonalNote() == null || holder.mItem.getPersonalNote().isEmpty()) {
-            holder.mPersonalNoteView.setVisibility(View.GONE);
-        } else {
-            holder.mPersonalNoteView.setVisibility(View.VISIBLE);
-            holder.mPersonalNoteView.setText(holder.mItem.getPersonalNote());
-        }
+        String tempString = holder.mItem.getNumber() + ") " + holder.mItem.getNote();
+        holder.mCookNoteView.setText(tempString);
         if (mState == CookbookActivity.STATE_EDIT) {
             holder.mEditImageButton.setOnClickListener(v -> {
                 if (null != mListener) {
@@ -83,28 +74,26 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
 
     /**
      * Method to set data and notify adapter
-     * @param steps to set
+     * @param notes to set
      */
-    public void setData(List<StepEntity> steps) {
-        mValues = steps;
+    public void setData(List<CookNoteEntity> notes) {
+        mValues = notes;
         notifyDataSetChanged();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mStepView;
-        public final TextView mPersonalNoteView;
+        public final TextView mCookNoteView;
         public final ImageView mEditImageButton;
         public final ImageView mDeleteImageButton;
-        public StepEntity mItem;
+        public CookNoteEntity mItem;
 
-        public ViewHolder(StepFragmentItemBinding binding) {
+        public ViewHolder(CookNoteFragmentItemBinding binding) {
             super(binding.getRoot());
             mView = binding.getRoot();
-            mStepView = binding.stepTextView;
-            mPersonalNoteView = binding.stepPersonalNoteTextView;
-            mEditImageButton = binding.stepEditImageButton;
-            mDeleteImageButton = binding.stepDeleteImageButton;
+            mCookNoteView = binding.cookNoteTextView;
+            mEditImageButton = binding.cookNoteEditImageButton;
+            mDeleteImageButton = binding.cookNoteDeleteImageButton;
         }
     }
 }

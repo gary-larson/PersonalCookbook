@@ -6,7 +6,7 @@
     android:background="@color/colorPrimaryDark">
 
     <EditText
-        android:id="@+id/edit_step_number_edit_text"
+        android:id="@+id/edit_cook_note_number_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dialog_margin"
@@ -20,27 +20,13 @@
         android:textColorHint="@color/white" />
 
     <EditText
-        android:id="@+id/edit_step_instruction_edit_text"
+        android:id="@+id/edit_cook_note_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dialog_margin"
         android:layout_marginEnd="@dimen/dialog_margin"
         android:layout_marginBottom="@dimen/dialog_vertical_margin"
-        android:hint="@string/edit_step_instruction_hint"
-        android:imeOptions="actionDone"
-        android:importantForAutofill="no"
-        android:inputType="textCapSentences"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white" />
-
-    <EditText
-        android:id="@+id/edit_step_personal_note_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dialog_margin"
-        android:layout_marginEnd="@dimen/dialog_margin"
-        android:layout_marginBottom="@dimen/dialog_vertical_margin"
-        android:hint="@string/personal_note_hint"
+        android:hint="@string/edit_cook_note_edit_text_hint"
         android:imeOptions="actionDone"
         android:importantForAutofill="no"
         android:inputType="textCapSentences"
@@ -48,7 +34,7 @@
         android:textColorHint="@color/white" />
 
     <Button
-        android:id="@+id/edit_step_submit_button"
+        android:id="@+id/edit_cook_note_submit_button"
         style="@style/AppButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

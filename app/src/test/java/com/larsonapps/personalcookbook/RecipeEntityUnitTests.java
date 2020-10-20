@@ -16,7 +16,6 @@ public class RecipeEntityUnitTests {
     private static final int PREP_TIME_VALUE = 22;
     private static final int COOK_TIME_VALUE = 142;
     private static final int TOTAL_TIME_VALUE = 1501;
-    private static final String COOK_NOTES_VALUE = "These are the notes by the cook.";
     private static final String COPYRIGHT_VALUE = "copyright 5201";
     private static final String PREP_TIME_STRING_VALUE = "22 minutes";
     private static final String COOK_TIME_STRING_VALUE = "2 hours 22 mins";
@@ -33,7 +32,7 @@ public class RecipeEntityUnitTests {
     // Tests for the constructor and Getters
     RecipeEntity recipe = new RecipeEntity(ID_VALUE, NAME_VALUE, SHORT_DESCRIPTION_VALUE,
             DESCRIPTION_VALUE, SERVINGS_VALUE, PREP_TIME_VALUE, COOK_TIME_VALUE, TOTAL_TIME_VALUE,
-            COOK_NOTES_VALUE, COPYRIGHT_VALUE, PERSONAL_NOTE_VALUE);
+            COPYRIGHT_VALUE, PERSONAL_NOTE_VALUE);
 
     @Test
     public void testRecipeIdGetter() {
@@ -73,11 +72,6 @@ public class RecipeEntityUnitTests {
     @Test
     public void testRecipeTotalTimeGetter() {
         assertEquals(TOTAL_TIME_VALUE, recipe.getTotalTime());
-    }
-
-    @Test
-    public void testRecipeNotesGetter() {
-        assertEquals(COOK_NOTES_VALUE, recipe.getCookNotes());
     }
 
     @Test
@@ -145,13 +139,6 @@ public class RecipeEntityUnitTests {
         int temp = 151515;
         recipe.setTotalTime(temp);
         assertEquals(temp, recipe.getTotalTime());
-    }
-
-    @Test
-    public void testRecipeNotesSetter() {
-        String temp = "This is another note";
-        recipe.setCookNotes(temp);
-        assertEquals(temp, recipe.getCookNotes());
     }
 
     @Test

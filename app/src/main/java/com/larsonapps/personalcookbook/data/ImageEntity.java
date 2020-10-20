@@ -160,6 +160,7 @@ public class ImageEntity implements Parcelable {
      * Constructor for Parcelable
      * @param in parcel
      */
+    @Ignore
     public ImageEntity(Parcel in) {
         this.imageId = in.readInt();
         this.recipeId = in.readInt();

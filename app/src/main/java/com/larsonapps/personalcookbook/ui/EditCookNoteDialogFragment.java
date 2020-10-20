@@ -10,43 +10,43 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.larsonapps.personalcookbook.data.StepEntity;
-import com.larsonapps.personalcookbook.databinding.EditStepFragmentBinding;
+import com.larsonapps.personalcookbook.data.CookNoteEntity;
+import com.larsonapps.personalcookbook.databinding.EditCookNoteFragmentBinding;
 
-public class EditStepDialogFragment extends DialogFragment {
+public class EditCookNoteDialogFragment extends DialogFragment {
     // Declare constants
     private static final String ARG_TITLE = "title";
     private static final String ARG_STATE = "state";
-    private static final String ARG_STEP = "step";
+    private static final String ARG_COOK_NOTE = "cookNote";
     private static final String TITLE = "mTitle";
     private static final String STATE = "mState";
-    private static final String STEP = "mStep";
+    private static final String COOK_NOTE = "mCookNote";
     // Declare variables
-    private EditStepFragmentBinding mBinding;
+    private EditCookNoteFragmentBinding mBinding;
     private int mState;
-    private StepEntity mStep;
+    private CookNoteEntity mCookNote;
     private String mTitle;
 
 
     /**
      * Default constructor
      */
-    public EditStepDialogFragment() {}
+    public EditCookNoteDialogFragment() {}
 
     /**
-     * Method to create a new instance of edit step dialog fragment
+     * Method to create a new instance of edit cook's note dialog fragment
      * @param title to display
      * @param state to save
-     * @param step to use
+     * @param cookNote to use
      * @return created dialog fragment
      */
-    public static EditStepDialogFragment newInstance(String title, int state,
-                                                           StepEntity step) {
-        EditStepDialogFragment dialogFragment = new EditStepDialogFragment();
+    public static EditCookNoteDialogFragment newInstance(String title, int state,
+                                                     CookNoteEntity cookNote) {
+        EditCookNoteDialogFragment dialogFragment = new EditCookNoteDialogFragment();
         Bundle args = new Bundle();
         args.putString(ARG_TITLE, title);
         args.putInt(ARG_STATE, state);
-        args.putParcelable(ARG_STEP, step);
+        args.putParcelable(ARG_COOK_NOTE, cookNote);
         dialogFragment.setArguments(args);
         return dialogFragment;
     }
@@ -57,12 +57,12 @@ public class EditStepDialogFragment extends DialogFragment {
         if (getArguments() != null) {
             mTitle = getArguments().getString(ARG_TITLE);
             mState = getArguments().getInt(ARG_STATE);
-            mStep = getArguments().getParcelable(ARG_STEP);
+            mCookNote = getArguments().getParcelable(ARG_COOK_NOTE);
         }
     }
 
     /**
-     * Method to create the view for edit step dialog fragment
+     * Method to create the view for edit cook's note dialog fragment
      * @param inflater to inflate the view
      * @param container the view is in
      * @param savedInstanceState of the fragment
@@ -73,27 +73,23 @@ public class EditStepDialogFragment extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mBinding = EditStepFragmentBinding.inflate(inflater, container, false);
+        mBinding = EditCookNoteFragmentBinding.inflate(inflater, container, false);
         if (savedInstanceState != null) {
             mTitle = savedInstanceState.getString(TITLE);
             mState = savedInstanceState.getInt(STATE);
-            mStep = savedInstanceState.getParcelable(STEP);
+            mCookNote = savedInstanceState.getParcelable(COOK_NOTE);
         }
-        if (mStep != null) {
-            String temp = String.valueOf(mStep.getNumber());
-            mBinding.editStepNumberEditText.setText(temp);
-            temp = mStep.getInstruction();
+        if (mCookNote != null) {
+            String temp = String.valueOf(mCookNote.getNumber());
+            mBinding.editCookNoteNumberEditText.setText(temp);
+            temp = mCookNote.getNote();
             if (temp != null && !temp.isEmpty()) {
-                mBinding.editStepInstructionEditText.setText(temp);
-            }
-            temp = mStep.getPersonalNote();
-            if (temp != null && !temp.isEmpty()) {
-                mBinding.editStepPersonalNoteEditText.setText(temp);
+                mBinding.editCookNoteEditText.setText(temp);
             }
         } else {
-            mStep = new StepEntity();
+            mCookNote = new CookNoteEntity();
         }
-        mBinding.editStepSubmitButton.setOnClickListener(v -> sendStepToParent());
+        mBinding.editCookNoteSubmitButton.setOnClickListener(v -> sendCookNoteToParent());
         return mBinding.getRoot();
     }
 
@@ -110,7 +106,7 @@ public class EditStepDialogFragment extends DialogFragment {
             getDialog().setTitle(mTitle);
         }
         // set focus
-        mBinding.editStepNumberEditText.requestFocus();
+        mBinding.editCookNoteNumberEditText.requestFocus();
         // display the virtual keyboard
         if (getDialog() != null && getDialog().getWindow() != null) {
             getDialog().getWindow().setSoftInputMode(
@@ -123,33 +119,33 @@ public class EditStepDialogFragment extends DialogFragment {
         super.onSaveInstanceState(outState);
         outState.putString(TITLE, mTitle);
         outState.putInt(STATE, mState);
-        outState.putParcelable(STEP, mStep);
+        outState.putParcelable(COOK_NOTE, mCookNote);
     }
 
     /**
      * Method to send the step to the calling fragment
      */
-    public void sendStepToParent() {
+    public void sendCookNoteToParent() {
         // set listener
         if (mState == CookbookActivity.STATE_ADD) {
             // fragment listener
-            EditStepDialogFragment.EditStepDialogAddListener listener =
-                    (EditStepDialogFragment.EditStepDialogAddListener) getTargetFragment();
-            // build step
-            buildStep();
-            // send step
+            EditCookNoteDialogFragment.EditCookNoteDialogAddListener listener =
+                    (EditCookNoteDialogFragment.EditCookNoteDialogAddListener) getTargetFragment();
+            // build cook note
+            buildCookNote();
+            // send cook note
             if (listener != null) {
-                listener.onFinishEditStepDialog(mStep);
+                listener.onFinishEditCookNoteDialog(mCookNote);
             }
         } else {
             // activity listener
-            EditStepDialogFragment.EditStepDialogEditListener listener =
-                    (EditStepDialogFragment.EditStepDialogEditListener) getActivity();
-            // build step
-            buildStep();
-            // send step
+            EditCookNoteDialogFragment.EditCookNoteDialogEditListener listener =
+                    (EditCookNoteDialogFragment.EditCookNoteDialogEditListener) getActivity();
+            // build cook note
+            buildCookNote();
+            // send cook note
             if (listener != null) {
-                listener.onFinishEditStepDialog(mStep);
+                listener.onFinishEditCookNoteDialog(mCookNote);
             }
         }
         dismiss();
@@ -158,39 +154,35 @@ public class EditStepDialogFragment extends DialogFragment {
     /**
      * Method to build the step
      */
-    private void buildStep() {
+    private void buildCookNote() {
         // build step
-        String tempString = mBinding.editStepNumberEditText.getText().toString();
+        String tempString = mBinding.editCookNoteNumberEditText.getText().toString();
         int tempInt;
         try {
             tempInt = Integer.parseInt(tempString);
         } catch (NumberFormatException e) {
             tempInt = 0;
         }
-        if (!(tempInt == 0 || tempInt == mStep.getNumber())) {
-            mStep.setNumber(tempInt);
+        if (!(tempInt == 0 || tempInt == mCookNote.getNumber())) {
+            mCookNote.setNumber(tempInt);
         }
-        tempString = mBinding.editStepInstructionEditText.getText().toString();
-        if (!(tempString.isEmpty() || tempString.equals(mStep.getInstruction()))) {
-            mStep.setInstruction(tempString);
-        }
-        tempString = mBinding.editStepPersonalNoteEditText.getText().toString();
-        if (!(tempString.isEmpty() || tempString.equals(mStep.getPersonalNote()))) {
-            mStep.setPersonalNote(tempString);
+        tempString = mBinding.editCookNoteEditText.getText().toString();
+        if (!(tempString.isEmpty() || tempString.equals(mCookNote.getNote()))) {
+            mCookNote.setNote(tempString);
         }
     }
 
     /**
      * Interface for the fragment listener
      */
-    public interface EditStepDialogAddListener {
-        void onFinishEditStepDialog(StepEntity step);
+    public interface EditCookNoteDialogAddListener {
+        void onFinishEditCookNoteDialog(CookNoteEntity cookNote);
     }
 
     /**
      * Interface for the activity listener
      */
-    public interface EditStepDialogEditListener {
-        void onFinishEditStepDialog(StepEntity step);
+    public interface EditCookNoteDialogEditListener {
+        void onFinishEditCookNoteDialog(CookNoteEntity cookNote);
     }
 }

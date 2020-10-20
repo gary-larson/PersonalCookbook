@@ -113,18 +113,18 @@
 
         <TextView
             style="@style/ContentHeadingTextView"
-            android:text="@string/content_notes"/>
-
-        <TextView
-            android:id="@+id/notes_text_view"
-            style="@style/ContentTextView" />
-
-        <TextView
-            style="@style/ContentHeadingTextView"
             android:text="@string/content_copyright" />
 
         <TextView
             android:id="@+id/copyright_text_view"
+            style="@style/ContentTextView" />
+
+        <TextView
+            style="@style/ContentHeadingTextView"
+            android:text="@string/personal_note_text" />
+
+        <TextView
+            android:id="@+id/personal_note_text_view"
             style="@style/ContentTextView" />
 
     </LinearLayout>

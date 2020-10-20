@@ -36,7 +36,6 @@ public class CookbookDaoRecipeAndroidTests {
     private static final int PREP_TIME_VALUE_1 = 40;
     private static final int COOK_TIME_VALUE_1 = 12;
     private static final int TOTAL_TIME_VALUE_1 = 52;
-    private static final String NOTES_VALUE_1 = "These are the notes by the cook.";
     private static final String COPYRIGHT_VALUE_1 = "copyright 5201";
     private static final String PERSONAL_NOTE_VALUE_1 = "Personal note";
     private static final String NAME_VALUE_2 = "Apple Pie";
@@ -46,16 +45,15 @@ public class CookbookDaoRecipeAndroidTests {
     private static final int PREP_TIME_VALUE_2 = 35;
     private static final int COOK_TIME_VALUE_2 = 60;
     private static final int TOTAL_TIME_VALUE_2 = 95;
-    private static final String NOTES_VALUE_2 = "These are apple pie notes by the cook.";
     private static final String COPYRIGHT_VALUE_2 = "copyright 2020";
     private static final String PERSONAL_NOTE_VALUE_2 = "Personal note two";
     // declare variables
     RecipeEntity recipeEntity1 = new RecipeEntity(0, NAME_VALUE_1, SHORT_DESCRIPTION_VALUE_1,
             DESCRIPTION_VALUE_1, SERVINGS_VALUE_1, PREP_TIME_VALUE_1, COOK_TIME_VALUE_1,
-            TOTAL_TIME_VALUE_1, NOTES_VALUE_1, COPYRIGHT_VALUE_1, PERSONAL_NOTE_VALUE_1);
+            TOTAL_TIME_VALUE_1, COPYRIGHT_VALUE_1, PERSONAL_NOTE_VALUE_1);
     RecipeEntity recipeEntity2 = new RecipeEntity(0, NAME_VALUE_2, SHORT_DESCRIPTION_VALUE_2,
             DESCRIPTION_VALUE_2, SERVINGS_VALUE_2, PREP_TIME_VALUE_2, COOK_TIME_VALUE_2,
-            TOTAL_TIME_VALUE_2, NOTES_VALUE_2, COPYRIGHT_VALUE_2, PERSONAL_NOTE_VALUE_2);
+            TOTAL_TIME_VALUE_2, COPYRIGHT_VALUE_2, PERSONAL_NOTE_VALUE_2);
     int recipeId1;
     int recipeId2;
 
@@ -96,7 +94,6 @@ public class CookbookDaoRecipeAndroidTests {
             assertEquals(PREP_TIME_VALUE_1, newRecipes.get(position).getPrepTime());
             assertEquals(COOK_TIME_VALUE_1, newRecipes.get(position).getCookTime());
             assertEquals(TOTAL_TIME_VALUE_1, newRecipes.get(position).getTotalTime());
-            assertEquals(NOTES_VALUE_1, newRecipes.get(position).getCookNotes());
             assertEquals(COPYRIGHT_VALUE_1, newRecipes.get(position).getCopyright());
             assertEquals(PERSONAL_NOTE_VALUE_1, newRecipes.get(position).getPersonalNote());
         });
@@ -115,7 +112,6 @@ public class CookbookDaoRecipeAndroidTests {
             assertEquals(PREP_TIME_VALUE_1, newRecipe.getPrepTime());
             assertEquals(COOK_TIME_VALUE_1, newRecipe.getCookTime());
             assertEquals(TOTAL_TIME_VALUE_1, newRecipe.getTotalTime());
-            assertEquals(NOTES_VALUE_1, newRecipe.getCookNotes());
             assertEquals(COPYRIGHT_VALUE_1, newRecipe.getCopyright());
             assertEquals(PERSONAL_NOTE_VALUE_1, newRecipe.getPersonalNote());
         });

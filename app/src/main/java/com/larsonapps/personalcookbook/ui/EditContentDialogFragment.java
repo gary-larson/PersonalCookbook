@@ -99,13 +99,13 @@ public class EditContentDialogFragment extends DialogFragment {
             if (temp != null && !temp.isEmpty()) {
                 mBinding.editContentDescriptionEditText.setText(temp);
             }
-            temp = mRecipe.getCookNotes();
-            if (temp != null && !temp.isEmpty()) {
-                mBinding.editContentNotesEditText.setText(temp);
-            }
             temp = mRecipe.getCopyright();
             if (temp != null && !temp.isEmpty()) {
                 mBinding.editContentCopyrightEditText.setText(temp);
+            }
+            temp = mRecipe.getPersonalNote();
+            if (temp != null && !temp.isEmpty()) {
+                mBinding.editContentPersonalNoteEditText.setText(temp);
             }
         } else {
             mRecipe = new RecipeEntity();
@@ -202,13 +202,13 @@ public class EditContentDialogFragment extends DialogFragment {
         if (!(tempString.isEmpty() || tempString.equals(mRecipe.getDescription()))) {
             mRecipe.setDescription(tempString);
         }
-        tempString = mBinding.editContentNotesEditText.getText().toString();
-        if (!(tempString.isEmpty() || tempString.equals(mRecipe.getCookNotes()))) {
-            mRecipe.setCookNotes(tempString);
-        }
         tempString = mBinding.editContentCopyrightEditText.getText().toString();
-        if (!(tempString.isEmpty() || tempString.equals(mRecipe.getName()))) {
+        if (!(tempString.isEmpty() || tempString.equals(mRecipe.getCopyright()))) {
             mRecipe.setCopyright(tempString);
+        }
+        tempString = mBinding.editContentPersonalNoteEditText.getText().toString();
+        if (!(tempString.isEmpty() || tempString.equals(mRecipe.getPersonalNote()))) {
+            mRecipe.setPersonalNote(tempString);
         }
         // send recipe
         if (listener != null) {

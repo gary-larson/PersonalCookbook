@@ -11,8 +11,9 @@
     <dimen name="list_text_margin">4dp</dimen>
     <dimen name="list_text_padding">8dp</dimen>
     <dimen name="list_top_text_margin">8dp</dimen>
-    <dimen name="list_horizontal_text_margin">8dp</dimen>
+    <dimen name="list_horizontal_text_margin">20dp</dimen>
     <dimen name="list_root_margin">16dp</dimen>
+    <dimen name="list_divider_margin">8dp</dimen>
     <dimen name="image_max_height">250dp</dimen>
     <dimen name="image_max_width">250dp</dimen>
     <dimen name="image_margin">4dp</dimen>

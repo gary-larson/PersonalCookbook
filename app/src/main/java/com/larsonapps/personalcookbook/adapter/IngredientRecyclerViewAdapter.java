@@ -43,14 +43,31 @@ public class IngredientRecyclerViewAdapter extends
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        String tempString = holder.mItem.getAmount() + " " + holder.mItem.getMeasure() +
-                holder.mItem.getName();
+        String tempString;
+        if (holder.mItem.getAmount().isEmpty()) {
+            if (holder.mItem.getMeasure().isEmpty()) {
+                tempString = holder.mItem.getName();
+            } else {
+                tempString = holder.mItem.getMeasure() + " " + holder.mItem.getName();
+            }
+        } else if (holder.mItem.getMeasure().isEmpty()) {
+            tempString = holder.mItem.getAmount() + holder.mItem.getName();
+        } else {
+            tempString = holder.mItem.getAmount() + " " + holder.mItem.getMeasure() + " " +
+                    holder.mItem.getName();
+        }
         holder.mTextView.setText(tempString);
         if (holder.mItem.getPreparation() == null || holder.mItem.getPreparation().isEmpty()) {
             holder.mPreparationView.setVisibility(View.GONE);
         } else {
             holder.mPreparationView.setVisibility(View.VISIBLE);
             holder.mPreparationView.setText(holder.mItem.getPreparation());
+        }
+        if (holder.mItem.getPersonalNote() == null || holder.mItem.getPersonalNote().isEmpty()) {
+            holder.mPersonalNoteView.setVisibility(View.GONE);
+        } else {
+            holder.mPersonalNoteView.setVisibility(View.VISIBLE);
+            holder.mPersonalNoteView.setText(holder.mItem.getPersonalNote());
         }
         if (mState == CookbookActivity.STATE_EDIT) {
             holder.mEditImageButton.setOnClickListener(v -> {
@@ -96,6 +113,7 @@ public class IngredientRecyclerViewAdapter extends
         public final View mView;
         public final TextView mTextView;
         public final TextView mPreparationView;
+        public final TextView mPersonalNoteView;
         public final ImageView mEditImageButton;
         public final ImageView mDeleteImageButton;
         public IngredientEntity mItem;
@@ -105,6 +123,7 @@ public class IngredientRecyclerViewAdapter extends
             mView = binding.getRoot();
             mTextView = binding.ingredientTextView;
             mPreparationView = binding.ingredientPreparationTextView;
+            mPersonalNoteView = binding.ingredientPersonalNoteTextView;
             mEditImageButton = binding.ingredientEditImageButton;
             mDeleteImageButton = binding.ingredientDeleteImageButton;
         }

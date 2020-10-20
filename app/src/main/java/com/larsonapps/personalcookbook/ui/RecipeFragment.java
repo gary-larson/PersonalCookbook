@@ -65,6 +65,7 @@ public class RecipeFragment extends Fragment {
     private boolean isMealSpinnerInitialized = false;
     private boolean isProteinSpinnerInitialized = false;
     private boolean isCategorySpinnerInitialized = false;
+    private List<String> mCategories;
     private List<RecipeEntity> mRecipes;
 
     /**
@@ -92,8 +93,8 @@ public class RecipeFragment extends Fragment {
         mBinding.recipeList.setLayoutManager(new LinearLayoutManager(context));
         RecipeRecyclerViewAdapter adapter = new RecipeRecyclerViewAdapter(mListener, mRecipes);
         mBinding.recipeList.setAdapter(adapter);
-        mBinding.shareFab.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Shared FAB Clicked", Toast.LENGTH_LONG).show();
+        mBinding.searchFab.setOnClickListener(v -> {
+            Toast.makeText(getContext(), "Search FAB Clicked", Toast.LENGTH_LONG).show();
 
         });
         // Create the observer which updates the UI and sets the adapter
@@ -105,17 +106,17 @@ public class RecipeFragment extends Fragment {
         mRecipeViewModel.getRecipes(false).observe(getViewLifecycleOwner(), recipeObserver);
         mRecipeViewModel.getCategories().observe(getViewLifecycleOwner(), newCategories -> {
             if (newCategories != null) {
-                List<String> categories = new ArrayList<>();
-                categories.add("Category");
-                categories.add("Favorite");
+                mCategories = new ArrayList<>();
+                mCategories.add("Category");
+                mCategories.add("Favorite");
                 for (CategoryEntity category : newCategories) {
                     if (!isEmpty(category.getCategoryName())) {
-                        categories.add(category.getCategoryName());
+                        mCategories.add(category.getCategoryName());
                     }
                 }
                 if (getActivity() != null) {
                     ArrayAdapter<String> spinnerAdapter2 = new ArrayAdapter<>(getActivity(),
-                            R.layout.spinner_custom_item, categories);
+                            R.layout.spinner_custom_item, mCategories);
                     spinnerAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     mBinding.categorySpinner.setAdapter(spinnerAdapter2);
                 }
@@ -175,7 +176,7 @@ public class RecipeFragment extends Fragment {
                 if (position == 0) {
                     mProteinSpinnerSelection = "";
                 } else {
-                    String[] temp = getResources().getStringArray(R.array.meal_array);
+                    String[] temp = getResources().getStringArray(R.array.protein_array);
                     mProteinSpinnerSelection = temp[position];
                 }
                 String[] keywords = getKeywords(null);
@@ -205,8 +206,7 @@ public class RecipeFragment extends Fragment {
                 if (position == 0) {
                     mCategorySpinnerSelection = "";
                 } else {
-                    String[] temp = getResources().getStringArray(R.array.meal_array);
-                    mCategorySpinnerSelection = temp[position];
+                    mCategorySpinnerSelection = mCategories.get(position);
                 }
                 String[] keywords = getKeywords(null);
                 if (keywords.length == 0) {

@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 2,
-    "identityHash": "0eb21f34a19ee999c884f788ce6a0d15",
+    "version": 5,
+    "identityHash": "8a44cbe438ed4b42ce0ecc1d0d6adf7f",
     "entities": [
       {
         "tableName": "ingredients",
@@ -62,7 +62,7 @@
       },
       {
         "tableName": "recipes",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recipe_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `short_description` TEXT, `description` TEXT, `servings` INTEGER NOT NULL, `prep_time` INTEGER NOT NULL, `cook_time` INTEGER NOT NULL, `total_time` INTEGER NOT NULL, `cook_notes` TEXT, `copyright` TEXT, `personal_note` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recipe_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `short_description` TEXT, `description` TEXT, `servings` INTEGER NOT NULL, `prep_time` INTEGER NOT NULL, `cook_time` INTEGER NOT NULL, `total_time` INTEGER NOT NULL, `copyright` TEXT, `personal_note` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -111,12 +111,6 @@
             "columnName": "total_time",
             "affinity": "INTEGER",
             "notNull": true
-          },
-          {
-            "fieldPath": "cookNotes",
-            "columnName": "cook_notes",
-            "affinity": "TEXT",
-            "notNull": false
           },
           {
             "fieldPath": "copyright",
@@ -291,12 +285,50 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "cook_notes",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`note_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `recipe_id` INTEGER NOT NULL, `note` TEXT, `number` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "cookNoteId",
+            "columnName": "note_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "recipeId",
+            "columnName": "recipe_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "note",
+            "columnName": "note",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "number",
+            "columnName": "number",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "note_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0eb21f34a19ee999c884f788ce6a0d15')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8a44cbe438ed4b42ce0ecc1d0d6adf7f')"
     ]
   }
 }

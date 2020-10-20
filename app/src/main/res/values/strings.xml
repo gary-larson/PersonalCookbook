@@ -65,7 +65,7 @@
     <string name="edit_ingredient_measure_hint">Enter Ingredient Measure</string>
     <string name="edit_ingredient_preparation_hint">Enter Ingredient Preparation</string>
     <string name="edit_step_instruction_hint">Enter Step Instruction</string>
-    <string name="edit_step_number_hint">Enter Step Number</string>
+    <string name="edit_number_hint">Enter Step Number</string>
     <string name="keywords">Keywords</string>
     <string name="edit_keyword_hint">Enter Keyword</string>
     <string name="add_image_press_button_text">Press button to select from your photos</string>
@@ -90,4 +90,10 @@
     <string name="alert_image_title">Delete Image</string>
     <string name="alert_keyword_message">Deleting this keyword cannot be undone are you sure you want to?</string>
     <string name="alert_keyword_title">Delete Keyword</string>
+    <string name="personal_note_hint">Enter Personal Note</string>
+    <string name="personal_note_text">Personal Note</string>
+    <string name="cook_notes_label_text">Cook\'s Notes</string>
+    <string name="edit_cook_note_edit_text_hint">Enter Cook\'s Note</string>
+    <string name="alert_cook_note_message">Deleting this cook\'s note cannot be undone are you sure you want to?</string>
+    <string name="alert_cook_note_title">Delete Cook\'s Note</string>
 </resources>

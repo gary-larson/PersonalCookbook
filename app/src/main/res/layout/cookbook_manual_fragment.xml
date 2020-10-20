@@ -51,11 +51,35 @@
                 tools:context="com.larsonapps.personalcookbook.ContentFragment" />
 
             <TextView
+                android:id="@+id/manual_cook_note_label"
+                style="@style/HeadingTextView"
+                android:text="@string/cook_notes_label_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/manual_content_container" />
+
+            <Button
+                android:id="@+id/manual_add_cook_note_button"
+                style="@style/AppButton"
+                android:text="@string/add_button_text"
+                app:icon="@drawable/ic_add_24px"
+                app:layout_constraintTop_toTopOf="@id/manual_cook_note_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/manual_cook_note_label" />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/manual_cook_note_list_container"
+                android:layout_width="match_parent"
+                style="@style/AppFragmentContainer"
+                app:layout_constraintBottom_toTopOf="@id/manual_ingredient_label"
+                app:layout_constraintTop_toBottomOf="@id/manual_cook_note_label"
+                tools:context="com.larsonapps.personalcookbook.CookNoteFragment" />
+
+            <TextView
                 android:id="@+id/manual_ingredient_label"
                 style="@style/HeadingTextView"
                 android:text="@string/ingredients"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/manual_content_container" />
+                app:layout_constraintTop_toBottomOf="@id/manual_cook_note_list_container" />
 
             <Button
                 android:id="@+id/manual_add_ingredient_button"
