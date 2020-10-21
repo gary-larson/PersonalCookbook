@@ -28,6 +28,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.larsonapps.personalcookbook.R;
+import com.larsonapps.personalcookbook.data.CategoryEntity;
 import com.larsonapps.personalcookbook.data.CookNoteEntity;
 import com.larsonapps.personalcookbook.data.ImageEntity;
 import com.larsonapps.personalcookbook.data.IngredientEntity;
@@ -50,6 +51,7 @@ public class CookbookActivity extends AppCompatActivity implements
         ImageFragment.OnListFragmentInteractionListener,
         KeywordFragment.OnListFragmentInteractionListener,
         CookNoteFragment.OnListFragmentInteractionListener,
+        CategoryFragment.OnListFragmentInteractionListener,
         AddCategoryDialogFragment.OnAddCategoryDialogListener,
         EditCookNoteDialogFragment.EditCookNoteDialogEditListener,
         EditIngredientDialogFragment.EditIngredientDialogEditListener,
@@ -60,6 +62,7 @@ public class CookbookActivity extends AppCompatActivity implements
     public static final int STATE_EDIT= 1;
     public static final int STATE_MANUAL = 2;
     public static final int STATE_ADD = 3;
+    private static final String CATEGORY_FRAGMENT = "CategoryFragment";
     private static final String DETAILS_FRAGMENT = "DetailsFragment";
     private static final String EDIT_FRAGMENT = "EditFragment";
     private static final String MANUAL_FRAGMENT = "ManualFragment";
@@ -174,6 +177,14 @@ public class CookbookActivity extends AppCompatActivity implements
                     return true;
                 }
             }
+            case R.id.action_delete_category:
+                // Get fragment manager and open category fragment
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(mBinding.container.getId(), new CategoryFragment())
+                        .addToBackStack(CATEGORY_FRAGMENT)
+                        .commit();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -301,6 +312,20 @@ public class CookbookActivity extends AppCompatActivity implements
             AlertDialog dialog = builder.create();
             dialog.show();
         }
+    }
+
+    @Override
+    public void onListFragmentInteraction(CategoryEntity category, View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.alert_category_message)
+                .setTitle(R.string.alert_category_title);
+        builder.setPositiveButton(R.string.alert_delete, (dialog, id) ->
+                mRecipeViewModel.deleteCategory(category));
+        builder.setNegativeButton(R.string.alert_cancel, (dialog, id) -> {
+            // User cancelled the dialog do nothing
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     /**

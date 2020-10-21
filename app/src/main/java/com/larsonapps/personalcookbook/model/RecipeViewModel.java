@@ -103,4 +103,8 @@ public class RecipeViewModel extends AndroidViewModel {
                           List<ImageEntity> images, List<KeywordEntity> keywords) {
         mRepository.insertAll(recipe, cookNotes, ingredients, steps, images, keywords);
     }
+
+    public void deleteCategory(CategoryEntity category) {
+        mRepository.deleteCategory(category);
+    }
 }

@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_larson_apps_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat">
-        <activity android:name="com.larsonapps.personalcookbook.ui.CookbookActivity">
+        <activity android:name="com.larsonapps.personalcookbook.ui.CookbookActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

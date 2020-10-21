@@ -81,6 +81,7 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
         return mValues.size();
     }
 
+
     /**
      * Method to set data and notify adapter
      * @param steps to set
@@ -89,7 +90,6 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
         mValues = steps;
         notifyDataSetChanged();
     }
-
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mStepView;

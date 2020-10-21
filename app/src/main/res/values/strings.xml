@@ -96,4 +96,21 @@
     <string name="edit_cook_note_edit_text_hint">Enter Cook\'s Note</string>
     <string name="alert_cook_note_message">Deleting this cook\'s note cannot be undone are you sure you want to?</string>
     <string name="alert_cook_note_title">Delete Cook\'s Note</string>
+    <string name="menu_action_delete_categories_title">Delete Categories</string>
+    <string name="alert_category_message">Deleting this category cannot be undone are you sure you want to?</string>
+    <string name="alert_category_title">Delete Category</string>
+    <string name="about_title">About</string>
+    <string name="about_introduction">Welcome to Cookbook Personal App</string>
+    <string name="about_instructions_opening_screen_label">Recipe List</string>
+    <string name="about_instructions_opening_screen_text_1">Select a recipe to view recipe details.</string>
+    <string name="about_instructions_opening_screen_text_2">Use the menu to manage categories, start
+        entering a recipe, or view this screen</string>
+    <string name="about_instructions_opening_screen_text_3">You may filter the recipes based on the
+        three dropdown lists one selection per list. The filter will select all recipes that have
+        any of the selected keywords, Meal, Protein and Category do not filter.</string>
+    <string name="about_instructions_opening_screen_text_4">The search floating action button can be
+        used to increase the keywords you filter by.</string>
+    <string name="about_instructions_opening_screen_text_5">For easy access you can add or delete
+        categories to the category dropdown list through the menu.</string>
+    <string name="about_copyright">© 2020 Larson Apps</string>
 </resources>
