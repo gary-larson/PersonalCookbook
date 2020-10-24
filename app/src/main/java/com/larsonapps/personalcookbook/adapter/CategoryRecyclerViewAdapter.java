@@ -74,7 +74,7 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
             super(binding.getRoot());
             mView = binding.getRoot();
             mCategoryView = binding.categoryTextView;
-            mDeleteImageButton = binding.stepDeleteImageButton;
+            mDeleteImageButton = binding.categoryDeleteImageButton;
         }
 
 

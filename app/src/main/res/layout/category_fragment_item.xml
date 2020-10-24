@@ -17,10 +17,11 @@
             android:layout_marginStart="@dimen/list_horizontal_text_margin"
             android:layout_marginTop="@dimen/list_top_text_margin"
             android:layout_weight="8"
+            style="@style/ListItemHeadingStyle"
             android:textColor="@color/white" />
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/step_delete_image_button"
+            android:id="@+id/category_delete_image_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/edit_icon_margin"

@@ -81,10 +81,10 @@ public class CookbookDaoKeywordAndroidTests {
         cookbookDao = db.cookbookDao();
         // insert recipe 1
         cookbookDao.insertRecipe(recipeEntity1);
-        recipeId1 = cookbookDao.getRecipeIdByName(NAME_VALUE_1);
+        recipeId1 = cookbookDao.getRecipeId(NAME_VALUE_1);
         // add another recipe
         cookbookDao.insertRecipe((recipeEntity2));
-        recipeId2 = cookbookDao.getRecipeIdByName(NAME_VALUE_2);
+        recipeId2 = cookbookDao.getRecipeId(NAME_VALUE_2);
         keyword1 = new KeywordEntity(KEYWORD_ID_VALUE_1, recipeId1, KEYWORD_VALUE_1);
         keyword2 = new KeywordEntity(KEYWORD_ID_VALUE_2, recipeId1, KEYWORD_VALUE_2);
         keyword3 = new KeywordEntity(KEYWORD_ID_VALUE_3, recipeId2, KEYWORD_VALUE_3);

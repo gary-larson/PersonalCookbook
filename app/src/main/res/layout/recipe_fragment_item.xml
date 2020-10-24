@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/list_text_margin"
-        android:textAppearance="?attr/textAppearanceListItem"
+        style="@style/ListItemHeadingStyle"
         android:textColor="@color/white" />
 
     <TextView
@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/list_text_margin"
-        android:textAppearance="?attr/textAppearanceListItem"
+        style="@style/ListItemStyle"
         android:textColor="@color/white" />
 
     <LinearLayout
@@ -33,7 +33,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textAppearance="?attr/textAppearanceListItem"
+            style="@style/ListItemStyle"
             android:textColor="@color/white" />
 
         <TextView
@@ -41,7 +41,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textAppearance="?attr/textAppearanceListItem"
+            style="@style/ListItemStyle"
             android:textColor="@color/white" />
     </LinearLayout>
 </LinearLayout>

@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.larsonapps.personalcookbook.data.CategoryEntity;
 import com.larsonapps.personalcookbook.data.CookbookDao;
@@ -15,11 +16,16 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
+import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+@RunWith(AndroidJUnit4.class)
 public class CookbookDaoCategoryAndroidTests {
+    /**
+     * Method to set test rule
+     */
     @Rule
     public TestRule rule = new InstantTaskExecutorRule();
 

@@ -73,7 +73,7 @@ public abstract class CookbookRoomDatabase extends RoomDatabase {
                         " intense flavor.");
                 recipe.setCopyright("© 2013 ABC Television / the chew");
                 dao.insertRecipe(recipe);
-                int recipeId = dao.getRecipeIdByName(recipe.getName());
+                int recipeId = dao.getRecipeId(recipe.getName());
                 CookNoteEntity cookNote = new CookNoteEntity();
                 cookNote.setRecipeId(recipeId);
                 cookNote.setNumber(1);

@@ -21,6 +21,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/list_horizontal_text_margin"
                 android:layout_marginTop="@dimen/list_top_text_margin"
+                android:layout_marginEnd="@dimen/list_horizontal_text_margin"
+                style="@style/ListItemHeadingStyle"
                 android:textColor="@color/white" />
 
         </LinearLayout>
@@ -32,6 +34,7 @@
             android:layout_margin="@dimen/edit_icon_margin"
             android:layout_weight="1"
             android:background="@drawable/button_selector"
+            android:contentDescription="@string/edit_button"
             android:padding="@dimen/edit_icon_padding"
             android:src="@drawable/ic_edit_24px" />
 
@@ -41,6 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/edit_icon_margin"
             android:layout_weight="1"
+            android:contentDescription="@string/delete_button"
             android:background="@drawable/button_selector"
             android:padding="@dimen/edit_icon_padding"
             android:src="@drawable/ic_delete_24px" />

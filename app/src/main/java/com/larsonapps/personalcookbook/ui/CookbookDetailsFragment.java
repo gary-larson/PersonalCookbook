@@ -108,7 +108,7 @@ public class CookbookDetailsFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        if (context instanceof IngredientFragment.OnListFragmentInteractionListener) {
+        if (context instanceof CookbookDetailsFragment.OnCookbookDetailsEditFabListener) {
             mListener = (CookbookDetailsFragment.OnCookbookDetailsEditFabListener) context;
         } else {
             throw new RuntimeException(context.toString() );

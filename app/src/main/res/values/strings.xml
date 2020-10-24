@@ -4,7 +4,6 @@
     <string name="meal">Meal</string>
     <string name="protein">Protein</string>
     <string name="category">Category</string>
-    <string name="search">Search</string>
     <string-array name="meal_array">
         <item>Meal</item>
         <item>Breakfast</item>
@@ -24,8 +23,6 @@
         <item>Category</item>
         <item>Favorites</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="recipe_content_description">Photo of Recipe</string>
     <string name="edit">Edit</string>
     <string name="content">Content</string>
@@ -39,9 +36,8 @@
     <string name="enter_recipe_description_hint">Enter Recipe Description</string>
     <string name="submit">Submit</string>
     <string name="enter_url_of_recipe_hint">Enter url of recipe</string>
-    <string name="manual_entry_menu_title">Manual Entry</string>
-
-    <string name="about_menu_title">About</string>
+    <string name="manual_entry_menu_title">Add Recipe</string>
+    <string name="about_menu_title">About/Help</string>
     <string name="add_category_enter_category">Enter Category</string>
     <string name="add_category_edit_text_hint">Enter a category to search by.</string>
     <string name="add_category_menu_title">Add Category</string>
@@ -80,37 +76,122 @@
     <string name="content_description">Description</string>
     <string name="content_notes">Cook\'s Notes</string>
     <string name="content_copyright">Copyright</string>
-    <string name="alert_ingredient_message">Deleting this ingredient cannot be undone are you sure you want to?</string>
+    <string name="alert_ingredient_message">Deleting this ingredient cannot be undone are you sure
+        you want to?</string>
     <string name="alert_ingredient_title">Delete Ingredient</string>
     <string name="alert_delete">Delete</string>
     <string name="alert_cancel">Cancel</string>
-    <string name="alert_step_message">Deleting this step cannot be undone are you sure you want to?</string>
+    <string name="alert_step_message">Deleting this step cannot be undone are you sure you want
+        to?</string>
     <string name="alert_step_title">Delete Step</string>
-    <string name="alert_image_message">Deleting this image cannot be undone are you sure you want to?</string>
+    <string name="alert_image_message">Deleting this image cannot be undone are you sure you want
+        to?</string>
     <string name="alert_image_title">Delete Image</string>
-    <string name="alert_keyword_message">Deleting this keyword cannot be undone are you sure you want to?</string>
+    <string name="alert_keyword_message">Deleting this keyword cannot be undone are you sure you
+        want to?</string>
     <string name="alert_keyword_title">Delete Keyword</string>
     <string name="personal_note_hint">Enter Personal Note</string>
     <string name="personal_note_text">Personal Note</string>
     <string name="cook_notes_label_text">Cook\'s Notes</string>
     <string name="edit_cook_note_edit_text_hint">Enter Cook\'s Note</string>
-    <string name="alert_cook_note_message">Deleting this cook\'s note cannot be undone are you sure you want to?</string>
+    <string name="alert_cook_note_message">Deleting this cook\'s note cannot be undone are you sure
+        you want to?</string>
     <string name="alert_cook_note_title">Delete Cook\'s Note</string>
     <string name="menu_action_delete_categories_title">Delete Categories</string>
-    <string name="alert_category_message">Deleting this category cannot be undone are you sure you want to?</string>
+    <string name="alert_category_message">Deleting this category cannot be undone are you sure you
+        want to?</string>
     <string name="alert_category_title">Delete Category</string>
-    <string name="about_title">About</string>
-    <string name="about_introduction">Welcome to Cookbook Personal App</string>
-    <string name="about_instructions_opening_screen_label">Recipe List</string>
-    <string name="about_instructions_opening_screen_text_1">Select a recipe to view recipe details.</string>
-    <string name="about_instructions_opening_screen_text_2">Use the menu to manage categories, start
-        entering a recipe, or view this screen</string>
-    <string name="about_instructions_opening_screen_text_3">You may filter the recipes based on the
-        three dropdown lists one selection per list. The filter will select all recipes that have
-        any of the selected keywords, Meal, Protein and Category do not filter.</string>
-    <string name="about_instructions_opening_screen_text_4">The search floating action button can be
-        used to increase the keywords you filter by.</string>
-    <string name="about_instructions_opening_screen_text_5">For easy access you can add or delete
-        categories to the category dropdown list through the menu.</string>
+    <string name="alert_delete_recipe_message">Deleting this recipe cannot be undone are you sure you
+        want to?</string>
+    <string name="alert_delete_recipe_title">Delete Recipe</string>
+    <string name="about_title">About and Help</string>
+    <string name="about_introduction">Welcome to Personal Cookbook</string>
+    <string name="about_instructions_recipe_list_label">Recipe List Screen</string>
+    <string name="about_instructions_recipe_list_text_1">Select a recipe to view recipe
+        details.</string>
+    <string name="about_instructions_recipe_list_text_2">Use the menu to manage categories, start
+        entering a recipe, or view this screen.</string>
+    <string name="about_instructions_recipe_list_text_3">For easy access you can add or delete
+        categories in the category dropdown list through the menu.</string>
+    <string name="about_instructions_recipe_list_text_4">You may filter the recipes based on the
+        three dropdown lists with one filter selection per list. The filter will select all recipes
+        that have any of the selected keywords, Meal, Protein and Category are not filters.</string>
+    <string name="about_instructions_details_label">Details Screen</string>
+    <string name="about_instructions_details_text_1">The menu is the same as the recipe
+        list screen.</string>
+    <string name="about_instructions_details_text_2">The content section displays the basic
+        information of the recipe with labels. The servings are a number and the times are all
+        in minutes. There is a place to add a personal note concerning the recipe in
+        general.</string>
+    <string name="about_instructions_details_text_3">The cook\'s notes are from the creator of the
+        recipe.</string>
+    <string name="about_instructions_details_text_4">The ingredients are listed in no particular
+        order. They include an amount of the ingredient, the measure of the amount, the name of the
+        ingredient. Any preparation of the ingredient will follow and there is a personal note
+        concerning this ingredient.</string>
+    <string name="about_instructions_details_text_5">The steps are listed in order to complete the
+        recipe. Each step is numbered and that is followed by the instructions. There is a personal
+        note concerning this step.</string>
+    <string name="about_instructions_details_text_6">The images are shown and scroll
+        horizontally.</string>
+    <string name="about_instructions_details_text_7">Keywords are used on the filters on the Recipe
+        List screen drop down lists. Any keyword that matches one of the three filters will make
+        this recipe be listed when the filter is selected. If there are no keywords the recipe will
+        only aooear when no filter is selected.</string>
+    <string name="about_instructions_details_text_8">Press the floating edit button to show the
+        recipe edit screen.</string>
+    <string name="about_instructions_edit_details_label">Edit Details Screen</string>
+    <string name="about_instructions_edit_details_text_1">The menu is the same as the recipe
+        list screen.</string>
+    <string name="about_instructions_edit_details_text_2">This screen lists the same information as
+        the details screen with the addition of buttons.</string>
+    <string name="about_instructions_edit_details_text_3">The edit button across from Content
+        will open a dialog box to edit or add all information in the content section. Submitting the
+        dialog box will cause the changes to appear on this screen as well as being permanent in the
+        recipe.</string>
+    <string name="about_instructions_edit_details_text_4">The add buttona will open a dialog box to
+        add a new entry to the list following the heading. These items added will be at the end of
+        the list except the step which is ordered by step number. If two steps have the same number
+        the one created first will be listed first.</string>
+    <string name="about_instructions_edit_details_text_5">The icon buttons are edit and delete in
+        that order.  The edit button will open a dialog box to edit the contents of that item. The
+        delete button will open a dialog box to confirm the deletion of that item. Both of these
+        actions are permanent when submitted.</string>
+    <string name="about_instructions_edit_details_text_6">The (+ Gallery) and (+ Internet) will add
+        images to the list of images. The gallery button will allow you to select an image from your
+        photos and the internet button will allow you to select an image from the internet (right
+        click (long press) on image and select image address paste address where the dialog box says
+        Enter URL. Please make sure you follow all copyright laws</string>
+    <string name="about_instructions_edit_details_text_7">Images and keyword have no edit if you
+        desire to change either of these delete the one to change and add the replacement.</string>
+    <string name="about_instructions_manual_entry_label">Add Recipe Screen</string>
+    <string name="about_instructions_manual_entry_text_1">The menu is the same as the recipe
+        list screen.</string>
+    <string name="about_instructions_manual_entry_text_2">The add recipe screen, which is accessed
+        by the menu an any screen or the "ADD RECIPE" on the tool bar, will open a screen similar to
+        the details screen with no information.</string>
+    <string name="about_instructions_manual_entry_text_3">All buttons on this screen work the same
+        as the Edit Details Screen with two exceptions. 1. The dialog boxes will have no data in
+        them. 2. The submit buttons on the dialog boxes only put the information on this screen and
+        will not save the information to a recipe.</string>
+    <string name="about_instructions_manual_entry_text_4">The submit button will save the recipe and
+        all information on this screen. You may use the submit button any time even on a blank
+        recipe. It is recommended that you give the recipe a name so you can find it later and edit
+        it to finish adding the recipe details.</string>
+    <string name="about_instructions_manual_entry_text_5">It is possible to create multiple recipes
+        with the same name. This could make it difficult to find the desired recipe. You can always
+        use the Edit Details Screen to change one of the recipe names.</string>
+    <string name="about_instructions_dialog_label">Dialog Boxes</string>
+    <string name="about_instructions_dialog_text_1">All dialogs are enter and submit what you want
+        to add or change. No changes are saved until the submit button is selected.
+        If in doubt you can submit and use the edit details screen to finish later.</string>
+    <string name="about_instructions_dialog_text_2">All app actions are suspended while a dialog
+        box is open, the submit button closes the dialog box.</string>
+    <string name="about_instructions_dialog_text_3">Dialog boxes can be dismissed without making any
+        changes by using the back button on your phone (if the keyboard is open you may have to hit
+        back twice.</string>
     <string name="about_copyright">© 2020 Larson Apps</string>
+    <string name="delete_button">Delete Button</string>
+    <string name="edit_button">Edit Button</string>
+
 </resources>

@@ -19,6 +19,14 @@
 
     </style>
 
+    <style name="ListItemHeadingStyle">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+    </style>
+
+    <style name="ListItemStyle">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Small</item>
+    </style>
+
     <!-- Define your custom dialog theme here extending from base -->
     <style name="AppDialogTheme" parent="Theme.MaterialComponents.Dialog">
         <!-- Define color properties as desired -->
@@ -71,7 +79,7 @@
     <style name="ContentHeadingTextView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body1</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline6</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:layout_marginStart">@dimen/text_margin_start</item>
         <item name="android:layout_marginEnd">@dimen/text_margin</item>

@@ -80,10 +80,10 @@ public class CookbookDaoCookNoteAndroidTests {
         cookbookDao = db.cookbookDao();
         // insert recipe 1
         cookbookDao.insertRecipe(recipeEntity1);
-        recipeId1 = cookbookDao.getRecipeIdByName(NAME_VALUE_1);
+        recipeId1 = cookbookDao.getRecipeId(NAME_VALUE_1);
         // add another recipe
         cookbookDao.insertRecipe((recipeEntity2));
-        recipeId2 = cookbookDao.getRecipeIdByName(NAME_VALUE_2);
+        recipeId2 = cookbookDao.getRecipeId(NAME_VALUE_2);
         cookNote1 = new CookNoteEntity(COOK_NOTE_ID_VALUE_1, recipeId1, NOTE_VALUE_1,
                 NUMBER_VALUE_1);
         cookNote2 = new CookNoteEntity(COOK_NOTE_ID_VALUE_2, recipeId1, NOTE_VALUE_2,

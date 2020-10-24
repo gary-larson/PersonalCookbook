@@ -1,72 +1,271 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/colorPrimaryDark"
-    tools:context=".ui.CookbookAboutFragment">
+    android:orientation="vertical">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/HeadingTextView"
-        android:text="@string/about_introduction" />
+        android:background="@color/colorPrimaryDark"
+        android:orientation="vertical"
+        tools:context=".ui.CookbookAboutFragment">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="@dimen/list_divider_margin"
-        android:layout_marginBottom="@dimen/list_divider_margin"
-        android:background="@color/black" />
+        <TextView
+            style="@style/HeadingTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_introduction" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/HeadingTextView"
-        android:text="@string/about_instructions_opening_screen_label" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/list_divider_margin"
+            android:layout_marginBottom="@dimen/list_divider_margin"
+            android:background="@color/black" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/AboutTextView"
-        android:text="@string/about_instructions_opening_screen_text_2" />
+        <TextView
+            style="@style/HeadingTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_instructions_recipe_list_label" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/AboutTextView"
-        android:text="@string/about_instructions_opening_screen_text_3" />
+        <TextView
+            style="@style/AboutTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_instructions_recipe_list_text_1" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/AboutTextView"
-        android:text="@string/about_instructions_opening_screen_text_4" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/AboutTextView"
-        android:text="@string/about_instructions_opening_screen_text_5" />
+        <TextView
+            style="@style/AboutTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_instructions_recipe_list_text_2" />
 
-<!--    <TextView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        style="@style/AboutTextView"-->
-<!--        android:text="@string/about_instructions_opening_screen_text_6" />-->
+        <TextView
+            style="@style/AboutTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_instructions_recipe_list_text_3" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="@dimen/list_divider_margin"
-        android:layout_marginBottom="@dimen/list_divider_margin"
-        android:background="@color/black" />
+        <TextView
+            style="@style/AboutTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_instructions_recipe_list_text_4" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/HeadingTextView"
-        android:text="@string/about_copyright" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/list_divider_margin"
+            android:layout_marginBottom="@dimen/list_divider_margin"
+            android:background="@color/black" />
 
-</LinearLayout>
+        <TextView
+            style="@style/HeadingTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_instructions_details_label" />
+
+        <TextView
+            style="@style/AboutTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_instructions_details_text_1" />
+
+        <TextView
+            style="@style/AboutTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_instructions_details_text_2" />
+
+        <TextView
+            style="@style/AboutTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_instructions_details_text_3" />
+
+        <TextView
+            style="@style/AboutTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_instructions_details_text_4" />
+
+        <TextView
+            style="@style/AboutTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_instructions_details_text_5" />
+
+        <TextView
+            style="@style/AboutTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_instructions_details_text_6" />
+
+        <TextView
+            style="@style/AboutTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_instructions_details_text_7" />
+
+        <TextView
+            style="@style/AboutTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_instructions_details_text_8" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/list_divider_margin"
+            android:layout_marginBottom="@dimen/list_divider_margin"
+            android:background="@color/black" />
+
+        <TextView
+            style="@style/HeadingTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_instructions_edit_details_label" />
+
+        <TextView
+            style="@style/AboutTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_instructions_edit_details_text_1" />
+
+        <TextView
+            style="@style/AboutTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_instructions_edit_details_text_2" />
+
+        <TextView
+            style="@style/AboutTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_instructions_edit_details_text_3" />
+
+        <TextView
+            style="@style/AboutTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_instructions_edit_details_text_4" />
+
+        <TextView
+            style="@style/AboutTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_instructions_edit_details_text_5" />
+
+        <TextView
+            style="@style/AboutTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_instructions_edit_details_text_6" />
+
+        <TextView
+            style="@style/AboutTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_instructions_edit_details_text_7" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/list_divider_margin"
+            android:layout_marginBottom="@dimen/list_divider_margin"
+            android:background="@color/black" />
+
+
+        <TextView
+            style="@style/HeadingTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_instructions_manual_entry_label" />
+
+        <TextView
+            style="@style/AboutTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_instructions_manual_entry_text_1" />
+
+        <TextView
+            style="@style/AboutTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_instructions_manual_entry_text_2" />
+
+        <TextView
+            style="@style/AboutTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_instructions_manual_entry_text_3" />
+
+        <TextView
+            style="@style/AboutTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_instructions_manual_entry_text_4" />
+
+        <TextView
+            style="@style/AboutTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_instructions_manual_entry_text_5" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/list_divider_margin"
+            android:layout_marginBottom="@dimen/list_divider_margin"
+            android:background="@color/black" />
+
+        <TextView
+            style="@style/HeadingTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_instructions_dialog_label" />
+
+        <TextView
+            style="@style/AboutTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_instructions_dialog_text_1" />
+
+        <TextView
+            style="@style/AboutTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_instructions_dialog_text_2" />
+
+        <TextView
+            style="@style/AboutTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_instructions_dialog_text_3" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/list_divider_margin"
+            android:layout_marginBottom="@dimen/list_divider_margin"
+            android:background="@color/black" />
+
+        <TextView
+            style="@style/HeadingTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_copyright" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/list_divider_margin"
+            android:layout_marginBottom="@dimen/list_divider_margin"
+            android:background="@color/black" />
+
+    </LinearLayout>
+</ScrollView>

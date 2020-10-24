@@ -26,7 +26,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,14 +36,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.larsonapps.personalcookbook.R;
+import com.larsonapps.personalcookbook.adapter.RecipeRecyclerViewAdapter;
 import com.larsonapps.personalcookbook.data.CategoryEntity;
+import com.larsonapps.personalcookbook.data.RecipeEntity;
 import com.larsonapps.personalcookbook.databinding.RecipeFragmentItemListBinding;
 import com.larsonapps.personalcookbook.model.RecipeViewModel;
-import com.larsonapps.personalcookbook.adapter.RecipeRecyclerViewAdapter;
-import com.larsonapps.personalcookbook.data.RecipeEntity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -93,10 +91,7 @@ public class RecipeFragment extends Fragment {
         mBinding.recipeList.setLayoutManager(new LinearLayoutManager(context));
         RecipeRecyclerViewAdapter adapter = new RecipeRecyclerViewAdapter(mListener, mRecipes);
         mBinding.recipeList.setAdapter(adapter);
-        mBinding.searchFab.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Search FAB Clicked", Toast.LENGTH_LONG).show();
 
-        });
         // Create the observer which updates the UI and sets the adapter
         final Observer<List<RecipeEntity>> recipeObserver = newRecipes -> {
             if (newRecipes != null) {
@@ -108,7 +103,6 @@ public class RecipeFragment extends Fragment {
             if (newCategories != null) {
                 mCategories = new ArrayList<>();
                 mCategories.add("Category");
-                mCategories.add("Favorite");
                 for (CategoryEntity category : newCategories) {
                     if (!isEmpty(category.getCategoryName())) {
                         mCategories.add(category.getCategoryName());
@@ -149,7 +143,7 @@ public class RecipeFragment extends Fragment {
                     String[] temp = getResources().getStringArray(R.array.meal_array);
                     mMealSpinnerSelection = temp[position];
                 }
-                String[] keywords = getKeywords(null);
+                String[] keywords = getKeywords();
                 if (keywords.length == 0) {
                     mRecipeViewModel.getRecipes(true)
                             .observe(getViewLifecycleOwner(), recipeObserver);
@@ -179,7 +173,7 @@ public class RecipeFragment extends Fragment {
                     String[] temp = getResources().getStringArray(R.array.protein_array);
                     mProteinSpinnerSelection = temp[position];
                 }
-                String[] keywords = getKeywords(null);
+                String[] keywords = getKeywords();
                 if (keywords.length == 0) {
                     mRecipeViewModel.getRecipes(true)
                             .observe(getViewLifecycleOwner(), recipeObserver);
@@ -208,7 +202,7 @@ public class RecipeFragment extends Fragment {
                 } else {
                     mCategorySpinnerSelection = mCategories.get(position);
                 }
-                String[] keywords = getKeywords(null);
+                String[] keywords = getKeywords();
                 if (keywords.length == 0) {
                     mRecipeViewModel.getRecipes(true)
                             .observe(getViewLifecycleOwner(), recipeObserver);
@@ -234,11 +228,8 @@ public class RecipeFragment extends Fragment {
         outState.putParcelableArrayList(RECIPES, (ArrayList<RecipeEntity>) mRecipes);
     }
 
-    private String[] getKeywords(String[] strings) {
+    private String[] getKeywords() {
         List<String> temp = new ArrayList<>();
-        if (strings != null && strings.length > 0) {
-            temp.addAll(Arrays.asList(strings));
-        }
         if (!isEmpty(mMealSpinnerSelection)) {
             temp.add(mMealSpinnerSelection);
         }

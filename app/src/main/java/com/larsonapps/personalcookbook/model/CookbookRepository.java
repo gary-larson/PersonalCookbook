@@ -30,6 +30,9 @@ import java.net.URL;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Class to handle room database access
+ */
 public class CookbookRepository {
     // Declare constants
     private static final String INTERNET_TYPE = "Internet";
@@ -41,6 +44,10 @@ public class CookbookRepository {
     private CookbookExecutor mExecutor;
     private Context mContext;
 
+    /**
+     * Constructor to initialize variables
+     * @param context to access
+     */
     public CookbookRepository(Context context) {
         // Initialize variables
         CookbookRoomDatabase cookbookRoomDatabase = CookbookRoomDatabase.getDatabase(context);
@@ -49,41 +56,85 @@ public class CookbookRepository {
         mContext = context;
     }
 
+    /**
+     * Method to get all recipes
+     * @return list of recipes through live data
+     */
     public LiveData<List<RecipeEntity>> getRecipes () {
         return mDao.getAllRecipes();
     }
 
+    /**
+     * method to get all recipes with keyword
+     * @param keyword to filter
+     * @return list of recipes through live data
+     */
     public LiveData<List<RecipeEntity>> getRecipes(String keyword) {
         return mDao.getAllRecipes(keyword);
     }
 
+    /**
+     * Method to get all recipes with any of the keywords
+     * @param keywords to filer with
+     * @return list of recipes through live date
+     */
     public LiveData<List<RecipeEntity>> getRecipes(String[] keywords) {
         return mDao.getAllRecipes(keywords);
     }
 
+    /**
+     * Method to get all ingredients for a recipe
+     * @param recipeId to get ingredients for
+     * @return list of imngredients through live data
+     */
     public LiveData<List<IngredientEntity>> getIngredients(int recipeId) {
         return mDao.getAllIngredients(recipeId);
     }
 
+    /**
+     * Method to get all steps for a recipe
+     * @param recipeId to get steps for
+     * @return list of steps through live data
+     */
     public LiveData<List<StepEntity>> getSteps(int recipeId) {
         return mDao.getAllSteps(recipeId);
     }
 
+    /**
+     * Method to get all Images for a recipe
+     * @param recipeId to get images for
+     * @return list of images through live data
+     */
     public LiveData<List<ImageEntity>> getImages(int recipeId) {
         return mDao.getAllImages(recipeId);
     }
 
+    /**
+     * Method to get all keyword for a recipe
+     * @param recipeId to get keywords for
+     * @return list of keywords through live data
+     */
     public LiveData<List<KeywordEntity>> getKeywords(int recipeId) {
         return mDao.getAllKeywords(recipeId);
     }
 
+    /**
+     * Method to get all categories
+     * @return list of categories through live data
+     */
     public LiveData<List<CategoryEntity>> getCategories() {
         return mDao.getAllCategories();
     }
 
+    /**
+     * Method to add a category to the database
+     * @param category to add
+     */
     public void addCategory(String category) {
+        // create category anf populate
         CategoryEntity categoryEntity = new CategoryEntity();
         categoryEntity.setCategoryName(category);
+        // start database thread
         CookbookRoomDatabase.databaseWriteExecutor.execute(() -> {
             if (mDao.categoryExists(category) == 0) {
                 mDao.insertCategory(categoryEntity);
@@ -91,34 +142,61 @@ public class CookbookRepository {
         });
     }
 
+    /**
+     * Method to get a recipe by recipe id
+     * @param recipeId to get recipe for
+     * @return recipe through live data
+     */
     public LiveData<RecipeEntity> getRecipe(int recipeId) {
         return mDao.getRecipe(recipeId);
     }
 
+    /**
+     * Method to add a recipe to the database
+     * @param recipe to add
+     */
     public void addRecipe(RecipeEntity recipe) {
+        // start database thread
         CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.insertRecipe(recipe));
     }
 
-    public int getRecipeId(String name) {
-        return mDao.getRecipeIdByName(name);
-    }
-
+    /**
+     * Method to update recipe
+     * @param recipe to update
+     */
     public void updateRecipe(RecipeEntity recipe) {
+        // start database thread
         CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.updateRecipe(recipe));
     }
 
+    /**
+     * Method to ass an ingredient to the database
+     * @param ingredient to add
+     */
     public void insertIngredient(IngredientEntity ingredient) {
+        // start a database thread
         CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.insertIngredient(ingredient));
     }
 
+    /**
+     * Method to add a step to the database
+     * @param step to add
+     */
     public void insertStep(StepEntity step) {
+        // start a database thread
         CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.insertStep(step));
     }
 
+    /**
+     * Method to add an image to the database
+     * @param image to add
+     */
     public void insertImage(ImageEntity image) {
         if (image.getType().equals(INTERNET_TYPE)) {
+            // start a new thread
             mExecutor.execute(() -> {
                 try {
+                    // retrieve height and weight of image
                     URL url = new URL(image.getImageUrl());
                     Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                     image.setHeight(bmp.getHeight());
@@ -126,86 +204,154 @@ public class CookbookRepository {
                 } catch (IOException e) {
                     Log.e(TAG, "Exception for image: " + e.getMessage());
                 }
+                // start a database thread
                 CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.insertImage(image));
             });
         } else {
+            // start a database thread
             CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.insertImage(image));
         }
     }
 
+    /**
+     * Mehtod to update an ingredient in the database
+     * @param ingredient to update
+     */
     public void updateIngredient(IngredientEntity ingredient) {
+        // start a database thread
         CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.updateIngredient(ingredient));
     }
 
+    /**
+     * Mehtod to update a step in the database
+     * @param step to update
+     */
     public void updateStep(StepEntity step) {
+        // start a database thread
         CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.updateStep(step));
     }
 
+    /**
+     * Method to add a recipe with it's cook's notes, ingredients, steps, images and keywords
+     * to the database
+     * @param recipe to add
+     * @param cookNotes to add
+     * @param ingredients to add
+     * @param steps to add
+     * @param images to add
+     * @param keywords to add
+     */
     public void insertAll(RecipeEntity recipe, List<CookNoteEntity> cookNotes,
                           List<IngredientEntity> ingredients, List<StepEntity> steps,
                           List<ImageEntity> images, List<KeywordEntity> keywords) {
+        // start a database thread
         CookbookRoomDatabase.databaseWriteExecutor.execute(() -> {
+            // add recipe
+            if (recipe == null || recipe.getName() == null) {
+                return;
+            }
             mDao.insertRecipe(recipe);
-            int recipeId = mDao.getRecipeIdByName(recipe.getName());
-            if (cookNotes.size() > 0 ) {
+            // get recipe id
+            int recipeId = mDao.getRecipeId(recipe.getName());
+            // add recipe id to cook's notes
+            if (cookNotes != null && cookNotes.size() > 0 ) {
                 for (CookNoteEntity cookNote : cookNotes) {
                     cookNote.setRecipeId(recipeId);
                 }
+                // add cook's notes to database
                 mDao.insertAllNotes(cookNotes);
             }
-            if (ingredients.size() > 0) {
+            // add recipe id to ingredients
+            if (ingredients != null && ingredients.size() > 0) {
                 for (IngredientEntity ingredient : ingredients) {
                     ingredient.setRecipeId(recipeId);
                 }
+                // add ingredients to database
                 mDao.insertAllIngredients(ingredients);
             }
-            if (steps.size() > 0) {
+            // add recipe id to steps
+            if (steps != null && steps.size() > 0) {
                 for (StepEntity step : steps) {
                     step.setRecipeId(recipeId);
                 }
+                // add steps to database
                 mDao.insertAllSteps(steps);
             }
-            if (images.size() > 0) {
+            // add recipe id to images
+            if (images != null && images.size() > 0) {
                 for (ImageEntity image : images) {
                     image.setRecipeId(recipeId);
                 }
+                // add images to database
                 mDao.insertAllImages(images);
             }
-            if (keywords.size() > 0) {
+            // add recipe id to keywords
+            if (keywords != null && keywords.size() > 0) {
                 for (KeywordEntity keyword : keywords) {
                     keyword.setRecipeId(recipeId);
                 }
+                // add keywords to database
                 mDao.insertAllKeywords(keywords);
             }
         });
     }
 
+    /**
+     * Mehtod to add keyword to database
+     * @param keyword to add
+     */
     public void insertKeyword(KeywordEntity keyword) {
+        // start a database thread
         CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.insertKeyword(keyword));
     }
 
+    /**
+     * Method to remove an ingredient from the database
+     * @param ingredient to remove
+     */
     public void deleteIngredient(IngredientEntity ingredient) {
+        // start a database thread
         CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.deleteIngredient(ingredient));
     }
 
+    /**
+     * Method to remove a step from the database
+     * @param step to remove
+     */
     public void deleteStep(StepEntity step) {
+        // start a database thread
         CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.deleteStep(step));
     }
 
+    /**
+     * Mehtod to remove an image from the database and file storage
+     * @param image to remove
+     */
     public void deleteImage(ImageEntity image) {
         if (image.getType().equals(FILE_TYPE)) {
             // remove image file and database entry
             removeImage(image);
         } else {
+            // start a database thread
             CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.deleteImage(image));
         }
     }
 
+    /**
+     * Method to remove a keyword from the database
+     * @param keyword to remove
+     */
     public void deleteKeyword(KeywordEntity keyword) {
+        // start a database thread
         CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.deleteKeyword(keyword));
     }
 
+    /**
+     * Method to remove a category from the database
+     * @param category to remove
+     */
     public void deleteCategory(CategoryEntity category) {
+        // start a database thread
         CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.deleteCategory(category));
     }
 
@@ -333,19 +479,44 @@ public class CookbookRepository {
         return imageFile.delete();
     }
 
+    /**
+     * Method to get all Cook's notes for a recipe from the database
+     * @param recipeId to get the cook's notes for
+     * @return list of cook's notes through live data
+     */
     public LiveData<List<CookNoteEntity>> getNotes(int recipeId) {
         return mDao.getAllCookNotes(recipeId);
     }
 
+    /**
+     * Method to add a Cook's note to the database
+     * @param cookNote to add
+     */
     public void insertCookNote(CookNoteEntity cookNote) {
+        // start a database thread
         CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.insertCookNote(cookNote));
     }
 
+    /**
+     * Method to update a cook's note in the database
+     * @param cookNote to update
+     */
     public void updateCookNote(CookNoteEntity cookNote) {
+        // start a database thread
         CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.updateCoolNote(cookNote));
     }
 
+    /**
+     * Method to remove a cook's note from the database
+     * @param cookNote to remove
+     */
     public void deleteCookNote(CookNoteEntity cookNote) {
+        // start a database thread
         CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.deleteCookNote(cookNote));
+    }
+
+    public void deleteRecipe(RecipeEntity recipe) {
+        // start a database thread
+        CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.deleteRecipe(recipe));
     }
 }

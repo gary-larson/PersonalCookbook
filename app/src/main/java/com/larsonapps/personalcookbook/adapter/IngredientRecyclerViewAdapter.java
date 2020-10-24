@@ -44,13 +44,13 @@ public class IngredientRecyclerViewAdapter extends
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         String tempString;
-        if (holder.mItem.getAmount().isEmpty()) {
-            if (holder.mItem.getMeasure().isEmpty()) {
+        if (holder.mItem.getAmount() == null || holder.mItem.getAmount().isEmpty()) {
+            if (holder.mItem.getMeasure() == null || holder.mItem.getMeasure().isEmpty()) {
                 tempString = holder.mItem.getName();
             } else {
                 tempString = holder.mItem.getMeasure() + " " + holder.mItem.getName();
             }
-        } else if (holder.mItem.getMeasure().isEmpty()) {
+        } else if (holder.mItem.getMeasure() == null || holder.mItem.getMeasure().isEmpty()) {
             tempString = holder.mItem.getAmount() + holder.mItem.getName();
         } else {
             tempString = holder.mItem.getAmount() + " " + holder.mItem.getMeasure() + " " +

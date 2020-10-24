@@ -5,7 +5,7 @@
     android:background="@color/colorPrimaryDark">
 
     <EditText
-        android:id="@+id/edit_keyword_edit_text"
+        android:id="@+id/add_keyword_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dialog_margin"
@@ -19,7 +19,7 @@
         android:textColorHint="@color/white" />
 
     <Button
-        android:id="@+id/edit_keyword_submit_button"
+        android:id="@+id/add_keyword_submit_button"
         style="@style/AppButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

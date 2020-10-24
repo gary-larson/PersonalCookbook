@@ -81,11 +81,11 @@ public class AddKeywordDialogFragment extends DialogFragment {
         }
         if (mKeyword != null) {
             String temp = String.valueOf(mKeyword.getKeyword());
-            mBinding.editKeywordEditText.setText(temp);
+            mBinding.addKeywordEditText.setText(temp);
         } else {
             mKeyword = new KeywordEntity();
         }
-        mBinding.editKeywordSubmitButton.setOnClickListener(v -> sendKeywordToParent());
+        mBinding.addKeywordSubmitButton.setOnClickListener(v -> sendKeywordToParent());
         return mBinding.getRoot();
     }
 
@@ -102,7 +102,7 @@ public class AddKeywordDialogFragment extends DialogFragment {
             getDialog().setTitle(mTitle);
         }
         // set focus
-        mBinding.editKeywordEditText.requestFocus();
+        mBinding.addKeywordEditText.requestFocus();
         // display the virtual keyboard
         if (getDialog() != null && getDialog().getWindow() != null) {
             getDialog().getWindow().setSoftInputMode(
@@ -126,7 +126,7 @@ public class AddKeywordDialogFragment extends DialogFragment {
         AddKeywordDialogFragment.EditKeywordDialogListener listener =
                 (AddKeywordDialogFragment.EditKeywordDialogListener) getTargetFragment();
         // build keyword
-        String tempString = mBinding.editKeywordEditText.getText().toString();
+        String tempString = mBinding.addKeywordEditText.getText().toString();
         if (!(tempString.isEmpty() || tempString.equals(mKeyword.getKeyword()))) {
             mKeyword.setKeyword(tempString);
         }

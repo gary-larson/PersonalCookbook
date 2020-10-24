@@ -86,10 +86,10 @@ public class CookbookDaoImageAndroidTests {
         cookbookDao = db.cookbookDao();
         // insert recipe 1
         cookbookDao.insertRecipe(recipeEntity1);
-        recipeId1 = cookbookDao.getRecipeIdByName(NAME_VALUE_1);
+        recipeId1 = cookbookDao.getRecipeId(NAME_VALUE_1);
         // add another recipe
         cookbookDao.insertRecipe((recipeEntity2));
-        recipeId2 = cookbookDao.getRecipeIdByName(NAME_VALUE_2);
+        recipeId2 = cookbookDao.getRecipeId(NAME_VALUE_2);
         image1 = new ImageEntity(IMAGE_ID_VALUE_1, recipeId1, TYPE_VALUE_1,
                 IMAGE_URL_VALUE_1, HEIGHT_VALUE_1, WIDTH_VALUE_1);
         image2 = new ImageEntity(IMAGE_ID_VALUE_2, recipeId1, TYPE_VALUE_2,

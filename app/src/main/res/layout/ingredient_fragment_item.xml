@@ -22,6 +22,7 @@
                 android:layout_marginStart="@dimen/list_horizontal_text_margin"
                 android:layout_marginTop="@dimen/list_top_text_margin"
                 android:layout_marginEnd="@dimen/list_horizontal_text_margin"
+                style="@style/ListItemHeadingStyle"
                 android:textColor="@color/white" />
 
             <TextView
@@ -30,6 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/list_horizontal_text_margin"
                 android:layout_marginEnd="@dimen/list_horizontal_text_margin"
+                style="@style/ListItemStyle"
                 android:textColor="@color/white" />
 
             <TextView
@@ -38,6 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/list_horizontal_text_margin"
                 android:layout_marginEnd="@dimen/list_horizontal_text_margin"
+                style="@style/ListItemStyle"
                 android:textColor="@color/white" />
 
         </LinearLayout>

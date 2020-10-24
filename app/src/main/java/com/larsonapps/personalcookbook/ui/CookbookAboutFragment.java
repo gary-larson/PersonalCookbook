@@ -2,6 +2,7 @@ package com.larsonapps.personalcookbook.ui;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -9,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.larsonapps.personalcookbook.R;
+
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,7 +38,9 @@ public class CookbookAboutFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.cookbook_about_fragment, container, false);
-        getActivity().setTitle(R.string.about_title);
+        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity()))
+                .getSupportActionBar()).setTitle(getString(R.string.about_title));
+
         return view;
     }
 }

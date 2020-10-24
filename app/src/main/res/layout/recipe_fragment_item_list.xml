@@ -82,16 +82,4 @@
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/search_fab"
-        android:layout_width="@dimen/fab_size"
-        android:layout_height="@dimen/fab_size"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="@dimen/fab_margin"
-        android:layout_marginBottom="@dimen/fab_margin"
-        android:contentDescription="@string/search"
-        android:elevation="@dimen/fab_elevation"
-        android:src="@drawable/ic_search_24px" />
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

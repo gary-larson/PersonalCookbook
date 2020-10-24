@@ -56,7 +56,8 @@ public class CookbookActivity extends AppCompatActivity implements
         EditCookNoteDialogFragment.EditCookNoteDialogEditListener,
         EditIngredientDialogFragment.EditIngredientDialogEditListener,
         EditStepDialogFragment.EditStepDialogEditListener,
-        CookbookDetailsFragment.OnCookbookDetailsEditFabListener {
+        CookbookDetailsFragment.OnCookbookDetailsEditFabListener,
+        CookbookEditFragment.OnCookbookEditDeleteFabListener {
     // Declare constants
     public static final int STATE_DISPLAY = 0;
     public static final int STATE_EDIT= 1;
@@ -378,5 +379,22 @@ public class CookbookActivity extends AppCompatActivity implements
     @Override
     public void onFinishEditCookNoteDialog(CookNoteEntity cookNote) {
         mCookNoteViewModel.updateCookNote(cookNote);
+    }
+
+    @Override
+    public void onDeleteFabClickListener(RecipeEntity recipe) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.alert_delete_recipe_message)
+                .setTitle(R.string.alert_delete_recipe_title);
+        builder.setPositiveButton(R.string.alert_delete, (dialog, id) -> {
+            mRecipeViewModel.deleteRecipe(recipe);
+            getSupportFragmentManager().popBackStack(null,
+                    FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        });
+        builder.setNegativeButton(R.string.alert_cancel, (dialog, id) -> {
+            // User cancelled the dialog do nothing
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

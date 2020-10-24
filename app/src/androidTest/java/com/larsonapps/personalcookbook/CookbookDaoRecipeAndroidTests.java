@@ -66,10 +66,10 @@ public class CookbookDaoRecipeAndroidTests {
         cookbookDao = db.cookbookDao();
         // insert recipe 1
         cookbookDao.insertRecipe(recipeEntity1);
-        recipeId1 = cookbookDao.getRecipeIdByName(NAME_VALUE_1);
+        recipeId1 = cookbookDao.getRecipeId(NAME_VALUE_1);
         // add another recipe
         cookbookDao.insertRecipe((recipeEntity2));
-        recipeId2 = cookbookDao.getRecipeIdByName(NAME_VALUE_2);
+        recipeId2 = cookbookDao.getRecipeId(NAME_VALUE_2);
     }
 
     @After
@@ -120,7 +120,7 @@ public class CookbookDaoRecipeAndroidTests {
     @Test
     public void testDeleteRecipe() {
         // get recipe id
-        int recipeId = cookbookDao.getRecipeIdByName(NAME_VALUE_1);
+        int recipeId = cookbookDao.getRecipeId(NAME_VALUE_1);
         recipeEntity1.setId(recipeId);
         // delete recipe
         cookbookDao.deleteRecipe(recipeEntity1);
@@ -134,7 +134,7 @@ public class CookbookDaoRecipeAndroidTests {
     @Test
     public void testUpdateRecipe() {
         // get recipe id
-        int recipeId = cookbookDao.getRecipeIdByName(NAME_VALUE_1);
+        int recipeId = cookbookDao.getRecipeId(NAME_VALUE_1);
         recipeEntity1.setId(recipeId);
         // change recipe
         recipeEntity1.setCookTime(500);

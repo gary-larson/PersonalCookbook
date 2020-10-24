@@ -16,7 +16,6 @@ import com.larsonapps.personalcookbook.adapter.CategoryRecyclerViewAdapter;
 import com.larsonapps.personalcookbook.data.CategoryEntity;
 import com.larsonapps.personalcookbook.databinding.CategoryFragmentItemListBinding;
 import com.larsonapps.personalcookbook.model.RecipeViewModel;
-import com.larsonapps.personalcookbook.model.StepViewModel;
 
 /**
  * A fragment representing a list of Items.

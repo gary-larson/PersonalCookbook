@@ -90,10 +90,6 @@ public class RecipeViewModel extends AndroidViewModel {
         mRepository.addRecipe(recipe);
     }
 
-    public int getRecipeId(String name) {
-        return mRepository.getRecipeId(name);
-    }
-
     public void updateRecipe(RecipeEntity recipe) {
         mRepository.updateRecipe(recipe);
     }
@@ -106,5 +102,9 @@ public class RecipeViewModel extends AndroidViewModel {
 
     public void deleteCategory(CategoryEntity category) {
         mRepository.deleteCategory(category);
+    }
+
+    public void deleteRecipe(RecipeEntity recipe) {
+        mRepository.deleteRecipe(recipe);
     }
 }

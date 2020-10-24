@@ -89,10 +89,10 @@ public class CookbookDaoIngredientAndroidTests {
         cookbookDao = db.cookbookDao();
         // insert recipe 1
         cookbookDao.insertRecipe(recipeEntity1);
-        recipeId1 = cookbookDao.getRecipeIdByName(NAME_VALUE_1);
+        recipeId1 = cookbookDao.getRecipeId(NAME_VALUE_1);
         // add another recipe
         cookbookDao.insertRecipe((recipeEntity2));
-        recipeId2 = cookbookDao.getRecipeIdByName(NAME_VALUE_2);
+        recipeId2 = cookbookDao.getRecipeId(NAME_VALUE_2);
         ingredient1 = new IngredientEntity(INGREDIENT_ID_VALUE_1, recipeId1,
                 INGREDIENT_NAME_VALUE_1, AMOUNT_VALUE_1, MEASURE_VALUE_1, PREPARATION_VALUE_1,
                 INGREDIENT_PERSONAL_NOTE_1);

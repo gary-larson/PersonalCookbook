@@ -2,14 +2,10 @@ package com.larsonapps.personalcookbook.ui;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,12 +16,12 @@ import com.larsonapps.personalcookbook.databinding.AddCategoryFragmentBinding;
 /**
  * Class to deal with add category dialog fragment
  */
-public class AddCategoryDialogFragment extends DialogFragment implements
-        EditText.OnEditorActionListener {
+public class AddCategoryDialogFragment extends DialogFragment {
     // Declare constants
     private static final String ARG_TITLE = "title";
     // Declare variables
     AddCategoryFragmentBinding mBinding;
+    String mCategory;
 
     /**
      * Default constructor
@@ -58,6 +54,7 @@ public class AddCategoryDialogFragment extends DialogFragment implements
                              @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mBinding = AddCategoryFragmentBinding.inflate(inflater, container, false);
+        mBinding.addCategorySubmitButton.setOnClickListener(v -> sendCategoryToParent());
         return mBinding.getRoot();
     }
 
@@ -69,14 +66,8 @@ public class AddCategoryDialogFragment extends DialogFragment implements
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mBinding.addCategoryEditText.setOnEditorActionListener(this);
         // set focus
         mBinding.addCategoryEditText.requestFocus();
-        // display the virtual keyboard
-        if (getDialog() != null && getDialog().getWindow() != null) {
-            getDialog().getWindow().setSoftInputMode(
-                    WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-        }
     }
 
     @NonNull
@@ -90,19 +81,23 @@ public class AddCategoryDialogFragment extends DialogFragment implements
         return dialog;
     }
 
-    @Override
-    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-        if (EditorInfo.IME_ACTION_DONE == actionId) {
-            // Return input text back to activity through the implemented listener
-            OnAddCategoryDialogListener listener = (OnAddCategoryDialogListener) getActivity();
-            if (listener != null) {
-                listener.onFinishedAddDialog(mBinding.addCategoryEditText.getText().toString());
-            }
-            // Close the dialog and return back to the parent activity
-            dismiss();
-            return true;
+    /**
+     * Method to send the keyword to the calling activity
+     */
+    public void sendCategoryToParent() {
+        // set listener
+        AddCategoryDialogFragment.OnAddCategoryDialogListener listener =
+                (AddCategoryDialogFragment.OnAddCategoryDialogListener) getActivity();
+        // build cook note
+        String tempString = mBinding.addCategoryEditText.getText().toString();
+        if (!(tempString.isEmpty() || tempString.equals(mCategory))) {
+            mCategory = tempString;
         }
-        return false;
+        // send cook note
+        if (listener != null) {
+            listener.onFinishedAddDialog(mCategory);
+        }
+        dismiss();
     }
 
     /**

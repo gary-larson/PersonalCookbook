@@ -1,5 +1,6 @@
 package com.larsonapps.personalcookbook.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -75,6 +76,7 @@ public class CookbookEditFragment extends Fragment implements
     private StepViewModel mStepViewModel;
     private ImageViewModel mImageViewModel;
     private KeywordViewModel mKeywordViewModel;
+    private CookbookEditFragment.OnCookbookEditDeleteFabListener mListener;
 
     public static CookbookEditFragment newInstance(int state, RecipeEntity recipe) {
         CookbookEditFragment fragment = new CookbookEditFragment();
@@ -192,6 +194,11 @@ public class CookbookEditFragment extends Fragment implements
                         CookbookActivity.ADD_KEYWORD_DIALOG);
             }
         });
+        mBinding.deleteFab.setOnClickListener(v -> {
+            if (null != mListener) {
+                mListener.onDeleteFabClickListener(mRecipe);
+            }
+        });
         return mBinding.getRoot();
     }
 
@@ -271,5 +278,32 @@ public class CookbookEditFragment extends Fragment implements
     public void onFinishEditCookNoteDialog(CookNoteEntity cookNote) {
         cookNote.setRecipeId(mRecipe.getId());
         mCookNoteViewModel.insertCookNote(cookNote);
+    }
+
+    /**
+     * Method that initializes the listener
+     * @param context to use
+     */
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof CookbookEditFragment.OnCookbookEditDeleteFabListener) {
+            mListener = (CookbookEditFragment.OnCookbookEditDeleteFabListener) context;
+        } else {
+            throw new RuntimeException(context.toString() );
+        }
+    }
+
+    /**
+     * Method to remove listener
+     */
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    public interface OnCookbookEditDeleteFabListener {
+        void onDeleteFabClickListener(RecipeEntity recipe);
     }
 }

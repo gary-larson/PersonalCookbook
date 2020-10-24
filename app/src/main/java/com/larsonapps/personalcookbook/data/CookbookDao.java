@@ -248,14 +248,6 @@ public interface CookbookDao {
     LiveData<List<CategoryEntity>> getAllCategories();
 
     /**
-     * Method to get a category by category id
-     * @param categoryId of the category to get
-     * @return category
-     */
-    @Query("SELECT * FROM categories WHERE category_id = :categoryId")
-    CategoryEntity getCategory(int categoryId);
-
-    /**
      * Method to see if category exists by category name
      * @param name to check
      * @return true if exists false otherwise
@@ -269,7 +261,7 @@ public interface CookbookDao {
      * @return recipe id
      */
     @Query("SELECT recipe_id FROM recipes WHERE name = :name")
-    int getRecipeIdByName(String name);
+    int getRecipeId(String name);
 
     /**
      * Method to get image id by url
