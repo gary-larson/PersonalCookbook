@@ -191,22 +191,8 @@ public class RecipeFragment extends Fragment {
                     // get selected item
                     mMealSpinnerSelection = temp[position];
                 }
-                // get keywords
-                String[] keywords = getKeywords();
-                // test keywords
-                if (keywords.length == 0) {
-                    // call get recipes no keywords to observer
-                    mRecipeViewModel.getRecipes(true)
-                            .observe(getViewLifecycleOwner(), recipeObserver);
-                } else if (keywords.length == 1) {
-                    // call get recipes one keyword to observer
-                    mRecipeViewModel.getRecipes(true, keywords[0])
-                            .observe(getViewLifecycleOwner(), recipeObserver);
-                } else {
-                    // call get recipes 2+ keywords to observer
-                    mRecipeViewModel.getRecipes(true, keywords)
-                            .observe(getViewLifecycleOwner(), recipeObserver);
-                }
+                // process observers
+                processObservers(recipeObserver);
             }
 
             @Override
@@ -232,22 +218,8 @@ public class RecipeFragment extends Fragment {
                     // get selected
                     mProteinSpinnerSelection = temp[position];
                 }
-                // get keywords
-                String[] keywords = getKeywords();
-                // test keywords
-                if (keywords.length == 0) {
-                    // get recipes 0 keywords to observer
-                    mRecipeViewModel.getRecipes(true)
-                            .observe(getViewLifecycleOwner(), recipeObserver);
-                } else if (keywords.length == 1) {
-                    // get recipes 1 keyword to observer
-                    mRecipeViewModel.getRecipes(true, keywords[0])
-                            .observe(getViewLifecycleOwner(), recipeObserver);
-                } else {
-                    // get recipes 2+ keywords to observer
-                    mRecipeViewModel.getRecipes(true, keywords)
-                            .observe(getViewLifecycleOwner(), recipeObserver);
-                }
+                // process observers
+                processObservers(recipeObserver);
             }
 
             @Override
@@ -273,22 +245,8 @@ public class RecipeFragment extends Fragment {
                     // get category spinner selection at position
                     mCategorySpinnerSelection = mCategories.get(position);
                 }
-                // get keywords
-                String[] keywords = getKeywords();
-                // test keywords
-                if (keywords.length == 0) {
-                    // get recipes 0 keywords to observer
-                    mRecipeViewModel.getRecipes(true)
-                            .observe(getViewLifecycleOwner(), recipeObserver);
-                } else if (keywords.length == 1) {
-                    //v get recipes 1 keyword to observer
-                    mRecipeViewModel.getRecipes(true, keywords[0])
-                            .observe(getViewLifecycleOwner(), recipeObserver);
-                } else {
-                    // get recipes 2+ keywords to observer
-                    mRecipeViewModel.getRecipes(true, keywords)
-                            .observe(getViewLifecycleOwner(), recipeObserver);
-                }
+                // process observers
+                processObservers(recipeObserver);
             }
 
             @Override
@@ -296,6 +254,29 @@ public class RecipeFragment extends Fragment {
             }
         });
         return mBinding.getRoot();
+    }
+
+    /**
+     * Method to process get recipes observers for spinners
+     * @param recipeObserver to use
+     */
+    private void processObservers(Observer<List<RecipeEntity>> recipeObserver) {
+        // get keywords
+        String[] keywords = getKeywords();
+        // test keywords
+        if (keywords.length == 0) {
+            // call get recipes no keywords to observer
+            mRecipeViewModel.getRecipes(true)
+                    .observe(getViewLifecycleOwner(), recipeObserver);
+        } else if (keywords.length == 1) {
+            // call get recipes one keyword to observer
+            mRecipeViewModel.getRecipes(true, keywords[0])
+                    .observe(getViewLifecycleOwner(), recipeObserver);
+        } else {
+            // call get recipes 2+ keywords to observer
+            mRecipeViewModel.getRecipes(true, keywords)
+                    .observe(getViewLifecycleOwner(), recipeObserver);
+        }
     }
 
     /**
