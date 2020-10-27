@@ -51,6 +51,10 @@ public class AddKeywordDialogFragment extends DialogFragment {
         return dialogFragment;
     }
 
+    /**
+     * Method to load arguments
+     * @param savedInstanceState of the fragment
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,17 +78,20 @@ public class AddKeywordDialogFragment extends DialogFragment {
                              @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mBinding = AddKeywordFragmentBinding.inflate(inflater, container, false);
+        // if state is saved load it
         if (savedInstanceState != null) {
             mTitle = savedInstanceState.getString(TITLE);
             mState = savedInstanceState.getInt(STATE);
             mKeyword = savedInstanceState.getParcelable(KEYWORD);
         }
+        // set keyword if exists
         if (mKeyword != null) {
-            String temp = String.valueOf(mKeyword.getKeyword());
-            mBinding.addKeywordEditText.setText(temp);
+            mBinding.addKeywordEditText.setText(mKeyword.getKeyword());
         } else {
+            // create keyword entity
             mKeyword = new KeywordEntity();
         }
+        // set submit listener
         mBinding.addKeywordSubmitButton.setOnClickListener(v -> sendKeywordToParent());
         return mBinding.getRoot();
     }
@@ -110,6 +117,10 @@ public class AddKeywordDialogFragment extends DialogFragment {
         }
     }
 
+    /**
+     * Method to save state
+     * @param outState to save in
+     */
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);

@@ -31,23 +31,38 @@ public class CategoryFragment extends Fragment {
      */
     public CategoryFragment() {}
 
+    /**
+     * Nethod to create a new instance of fragment
+     * @return fragment
+     */
     public static CategoryFragment newInstance() {
         return new CategoryFragment();
     }
 
+    /**
+     * Method to create fragment
+     * @param inflater to inflate views
+     * @param container for the fragment
+     * @param savedInstanceState to maintain state
+     * @return fragment
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mBinding = CategoryFragmentItemListBinding.inflate(inflater, container, false);
         mRecipeViewModel = new ViewModelProvider(requireActivity()).get(RecipeViewModel.class);
-        // Set the adapter
+        // get context
         Context context = mBinding.getRoot().getContext();
+        // set adapter
         RecyclerView recyclerView = mBinding.categoryList;
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        // create adapter and set listener
         CategoryRecyclerViewAdapter adapter = new CategoryRecyclerViewAdapter(mListener);
         recyclerView.setAdapter(adapter);
+        // set observer for live data categories
         mRecipeViewModel.getCategories().observe(getViewLifecycleOwner(), newCategories -> {
             if (newCategories != null) {
+                // set and refresh adapter
                 adapter.setData(newCategories);
             }
         });

@@ -38,7 +38,7 @@ public class ContentFragment extends Fragment {
     public ContentFragment() {}
 
     /**
-     * Method to create an instance of this fragment
+     * Method to create an instance of this fragment with recipe id
      * @param state the state of fragment
      * @param recipeId to use
      * @return A new instance of fragment CookbookDetailsContentFragment.
@@ -52,6 +52,12 @@ public class ContentFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * Method to create a new instance of fragment with recipe (no id)
+     * @param state state of app
+     * @param recipe to use
+     * @return fragment
+     */
     public static ContentFragment newInstance(int state, RecipeEntity recipe) {
         ContentFragment fragment = new ContentFragment();
         Bundle args = new Bundle();
@@ -61,6 +67,10 @@ public class ContentFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * Method to get arguments
+     * @param savedInstanceState to maintain
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +85,13 @@ public class ContentFragment extends Fragment {
         }
     }
 
+    /**
+     * Method to create views
+     * @param inflater views
+     * @param container for views
+     * @param savedInstanceState to maintain
+     * @return root view
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -82,20 +99,26 @@ public class ContentFragment extends Fragment {
         mBinding = ContentFragmentBinding.inflate(inflater, container, false);
         RecipeViewModel mRecipeViewModel = new ViewModelProvider(requireActivity())
                 .get(RecipeViewModel.class);
+        // if state saved restore
         if (savedInstanceState != null) {
             mState = savedInstanceState.getInt(STATE);
             mRecipeId = savedInstanceState.getInt(RECIPE_ID);
             mRecipe = savedInstanceState.getParcelable(RECIPE);
         }
+        // test state
         if (mState == CookbookActivity.STATE_MANUAL) {
             if (mRecipe == null) {
+                // create new recipe
                 mRecipe = new RecipeEntity();
             } else {
+                // load user interface
                 updateUI();
             }
         } else {
+            // set observer for recipe
             mRecipeViewModel.getRecipe(mRecipeId).observe(getViewLifecycleOwner(), newRecipe -> {
                 if (newRecipe != null) {
+                    // set recipe and update user interface
                     mRecipe = newRecipe;
                     updateUI();
                 }
@@ -104,37 +127,53 @@ public class ContentFragment extends Fragment {
         return mBinding.getRoot();
     }
 
+    /**
+     * Method to update user interface
+     */
     private void updateUI() {
+        // set recipe name
         String temp = mRecipe.getName();
         if (!(temp == null || temp.isEmpty())) {
             mBinding.nameTextView.setText(temp);
         }
+        // set short description
         temp = mRecipe.getShortDescription();
         if (!(temp == null || temp.isEmpty())) {
             mBinding.shortDescriptionTextView.setText(temp);
         }
+        // set servings
         temp = String.valueOf(mRecipe.getServings());
         mBinding.servingsTextView.setText(temp);
+        // set prep time
         temp = mRecipe.getPrepTimeString();
         mBinding.prepTimeTextView.setText(temp);
+        // set cook time
         temp = mRecipe.getCookTimeString();
         mBinding.cookTimeTextView.setText(temp);
+        // set total time
         temp = mRecipe.getTotalTimeString();
         mBinding.totalTimeTextView.setText(temp);
+        // set description
         temp = mRecipe.getDescription();
         if (!(temp == null || temp.isEmpty())) {
             mBinding.descriptionTextView.setText(temp);
         }
+        // set copyright
         temp = mRecipe.getCopyright();
         if (!(temp == null || temp.isEmpty())) {
             mBinding.copyrightTextView.setText(temp);
         }
+        // set personal note
         temp = mRecipe.getPersonalNote();
         if (!(temp == null || temp.isEmpty())) {
             mBinding.personalNoteTextView.setText(temp);
         }
     }
 
+    /**
+     * Method to save fragment state
+     * @param outState to save in
+     */
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);

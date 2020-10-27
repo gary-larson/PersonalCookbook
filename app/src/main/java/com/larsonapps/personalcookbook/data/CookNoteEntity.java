@@ -8,6 +8,9 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+/**
+ * Class for cook note entity
+ */
 @Entity(tableName = "cook_notes")
 public class CookNoteEntity implements Parcelable {
     @PrimaryKey(autoGenerate = true)

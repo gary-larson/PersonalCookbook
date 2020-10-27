@@ -37,6 +37,9 @@ import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 
+/**
+ * Class to test cookbook edit fragment
+ */
 @RunWith(AndroidJUnit4.class)
 public class CookbookEditFragmentAndroidTests {
     private CookbookRoomDatabase db;

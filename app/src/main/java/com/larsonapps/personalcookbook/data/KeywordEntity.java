@@ -8,6 +8,9 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+/**
+ * Class for keyword entity
+ */
 @Entity(tableName = "keywords")
 public class KeywordEntity implements Parcelable {
     @PrimaryKey(autoGenerate = true)

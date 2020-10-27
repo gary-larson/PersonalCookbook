@@ -22,42 +22,68 @@ public class IngredientEntityUnitTests {
             AMOUNT_VALUE, MEASURE_VALUE, PREPARATION_VALUE, PERSONAL_NOTE_VALUE);
 
     // Tests for the constructor and Getters
+
+    /**
+     * test for ingredient id getter
+     */
     @Test
     public void testIngredientIDGetter() {
         assertEquals(ID_VALUE, ingredient.getIngredientId());
     }
 
+    /**
+     * test for ingredient recipe id getter
+     */
     @Test
     public void testIngredientRecipeIdGetter() {
         assertEquals(RECIPE_ID_VALUE, ingredient.getRecipeId());
     }
 
+    /**
+     * Test for ingredient amount getter
+     */
     @Test
     public void testIngredientAmountGetter() {
         assertEquals(AMOUNT_VALUE, ingredient.getAmount());
     }
 
+    /**
+     * Test for ingredient name getter
+     */
     @Test
     public void testIngredientNameGetter() {
         assertEquals(NAME_VALUE, ingredient.getName());
     }
 
+    /**
+     * Test for ingredient measuer getter
+     */
     @Test
     public void testIngredientMeasureGetter() {
         assertEquals(MEASURE_VALUE, ingredient.getMeasure());
     }
 
+    /**
+     * Test for ingredient preparation getter
+     */
     @Test
     public void testIngredientPreparationGetter() {
         assertEquals(PREPARATION_VALUE, ingredient.getPreparation());
     }
 
+    /**
+     * Test for ingredient personal note getter
+     */
     @Test
     public void testIngredientPersonalNoteGetter() {
         assertEquals(PERSONAL_NOTE_VALUE, ingredient.getPersonalNote());
     }
 
     // Test default constructor and setters
+
+    /**
+     * Test for ingredient id setter
+     */
     @Test
     public void testIngredientIdSetter() {
         int temp = 846;
@@ -65,6 +91,9 @@ public class IngredientEntityUnitTests {
         assertEquals(temp, ingredient.getIngredientId());
     }
 
+    /**
+     * Test for ingredient recipe id setter
+     */
     @Test
     public void testIngredientRecipeIdSetter() {
         int temp = 456;
@@ -72,6 +101,9 @@ public class IngredientEntityUnitTests {
         assertEquals(temp, ingredient.getRecipeId());
     }
 
+    /**
+     * Test for ingredient amount setter
+     */
     @Test
     public void testIngredientAmountSetter() {
         String temp = "2 3/4";
@@ -79,6 +111,9 @@ public class IngredientEntityUnitTests {
         assertEquals(temp, ingredient.getAmount());
     }
 
+    /**
+     * Test for ingredient name setter
+     */
     @Test
     public void testIngredientNameSetter() {
         String temp = "Oatmeal Coconut cookies";
@@ -86,6 +121,9 @@ public class IngredientEntityUnitTests {
         assertEquals(temp, ingredient.getName());
     }
 
+    /**
+     * Test for ingredient measure setter
+     */
     @Test
     public void testIngredientMeasureSetter() {
         String temp = "cups";
@@ -93,6 +131,9 @@ public class IngredientEntityUnitTests {
         assertEquals(temp, ingredient.getName());
     }
 
+    /**
+     * Test for ingredient preparation setter
+     */
     @Test
     public void testIngredientPreparationSetter() {
         String temp = "This is a preparation statement";
@@ -100,6 +141,9 @@ public class IngredientEntityUnitTests {
         assertEquals(temp, ingredient.getName());
     }
 
+    /**
+     * Test for ingredient personal note setter
+     */
     @Test
     public void testIngredientPersonalNoteSetter() {
         String temp = "Another personal note";
@@ -107,6 +151,9 @@ public class IngredientEntityUnitTests {
         assertEquals(temp, ingredient.getPersonalNote());
     }
 
+    /**
+     * Test for ingredient to string
+     */
     @Test
     public void testIngredientToString() {
         assertEquals(TO_STRING_VALUE, ingredient.toString());

@@ -516,7 +516,43 @@ public class CookbookRepository {
     }
 
     public void deleteRecipe(RecipeEntity recipe) {
+        if (recipe.getId() < 1) {
+            return;
+        }
         // start a database thread
-        CookbookRoomDatabase.databaseWriteExecutor.execute(() -> mDao.deleteRecipe(recipe));
+        CookbookRoomDatabase.databaseWriteExecutor.execute(() -> {
+            // get cook notes
+            List<CookNoteEntity> cookNotes = mDao.getCookNotes(recipe.getId());
+            if (cookNotes != null && cookNotes.size() > 0) {
+                // delete cook notes
+                mDao.deleteCookNote(cookNotes);
+            }
+            // get ingredients
+            List<IngredientEntity> ingredients = mDao.getIngredients(recipe.getId());
+            if (ingredients != null && ingredients.size() > 0) {
+                // delete ingredients
+                mDao.deleteIngredient(ingredients);
+            }
+            // get steps
+            List<StepEntity> steps = mDao.getSteps(recipe.getId());
+            if (steps != null && steps.size() > 0) {
+                // delete steps
+                mDao.deleteStep(steps);
+            }
+            // get images
+            List<ImageEntity> images = mDao.getImages(recipe.getId());
+            if (images != null && images.size() > 0) {
+                // delete images
+                mDao.deleteImage(images);
+            }
+            // get keywords
+            List<KeywordEntity> keywords = mDao.getKeywords(recipe.getId());
+            if (keywords != null && keywords.size() > 0) {
+                // delete keywords
+                mDao.deleteKeyword(keywords);
+            }
+            // delete recipe
+            mDao.deleteRecipe(recipe);
+        });
     }
 }

@@ -63,12 +63,16 @@ public class ImageRecyclerViewAdapter extends
      */
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+        // Get image at position
         holder.mImage = mValues.get(position);
+        // test if image has url
         if (holder.mImage.getImageUrl() != null) {
+            // check if image is to large and if file
             if (holder.mImage.getType().equals(CookbookRepository.FILE_TYPE)) {
                 if (holder.mImage.getWidth() > holder.mView.getResources()
                         .getDimension(R.dimen.image_max_width) || holder.mImage.getHeight() >
                         holder.mView.getResources().getDimension(R.dimen.image_max_height)) {
+                    // set file image and resize
                     Picasso.get().load(new File(holder.mImage.getImageUrl()))
                             .noPlaceholder()
                             .resize((int) holder.mView.getResources()
@@ -77,14 +81,17 @@ public class ImageRecyclerViewAdapter extends
                                             .getDimension(R.dimen.image_max_height))
                             .into(holder.mImageView);
                 } else {
+                    // set file image
                     Picasso.get().load(new File(holder.mImage.getImageUrl()))
                             .noPlaceholder()
                             .into(holder.mImageView);
                 }
             } else {
+                // test image size
                 if (holder.mImage.getWidth() > holder.mView.getResources()
                         .getDimension(R.dimen.image_max_width) || holder.mImage.getHeight() >
                         holder.mView.getResources().getDimension(R.dimen.image_max_height)) {
+                    // set image and resize
                     Picasso.get().load(holder.mImage.getImageUrl())
                             .noPlaceholder()
                             .resize((int) holder.mView.getResources()
@@ -93,13 +100,16 @@ public class ImageRecyclerViewAdapter extends
                                             .getDimension(R.dimen.image_max_height))
                             .into(holder.mImageView);
                 } else {
+                    //set image
                     Picasso.get().load(holder.mImage.getImageUrl())
                             .noPlaceholder()
                             .into(holder.mImageView);
                 }
             }
         }
+        // test state and set view visibility accordingly
         if (mState == CookbookActivity.STATE_EDIT) {
+            // set listener for delete icon
             holder.mImageButton.setOnClickListener(v -> {
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
@@ -107,9 +117,11 @@ public class ImageRecyclerViewAdapter extends
                     mListener.onListFragmentInteraction(holder.mImage, mState, v);
                 }
             });
+            // set visibility
             holder.mImageButton.setVisibility(View.VISIBLE);
         } else {
-                holder.mImageButton.setVisibility(View.GONE);
+            // set visibility
+            holder.mImageButton.setVisibility(View.GONE);
         }
     }
 
@@ -126,7 +138,7 @@ public class ImageRecyclerViewAdapter extends
     }
 
     /**
-     * Method to set the adapter data
+     * Method to set the adapter data and notify data set changed
      * @param lists of the data to set
      */
     public void setData(List<ImageEntity> lists) {

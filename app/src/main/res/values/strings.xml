@@ -193,5 +193,9 @@
     <string name="about_copyright">© 2020 Larson Apps</string>
     <string name="delete_button">Delete Button</string>
     <string name="edit_button">Edit Button</string>
+    <string name="appwidget_text">Personal Cookbook</string>
+    <string name="add_widget">Add widget</string>
+    <string name="cookbook_widget_text">Recipes</string>
+    <string name="cookbook_widget_empty_text">No Recipes</string>
 
 </resources>

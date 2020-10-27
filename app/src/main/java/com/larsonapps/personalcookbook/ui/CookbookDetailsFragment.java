@@ -16,14 +16,15 @@ import com.larsonapps.personalcookbook.databinding.CookbookDetailsFragmentBindin
 
 import java.util.Objects;
 
+/**
+ * Class for cookbook details fragment
+ */
 public class CookbookDetailsFragment extends Fragment {
     // Declare constants
     private static final String ARG_STATE = "state";
     private static final String ARG_RECIPE = "recipe";
     private static final String STATE = "mState";
     private static final String RECIPE = "mRecipe";
-    // Declare variables
-    private CookbookDetailsFragmentBinding mBinding;
     private RecipeEntity mRecipe;
     private int mState;
     private OnCookbookDetailsEditFabListener mListener;
@@ -49,7 +50,7 @@ public class CookbookDetailsFragment extends Fragment {
     }
 
     /**
-     * Method to save the state of the instance
+     * Method to get arguments of the instance
      * @param savedInstanceState to save
      */
     @Override
@@ -62,30 +63,50 @@ public class CookbookDetailsFragment extends Fragment {
         }
     }
 
+    /**
+     * Method to create views for cookbook details fragment
+     * @param inflater for the views
+     * @param container of the views
+     * @param savedInstanceState to maintain state of the fragment
+     * @return root view
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mBinding = CookbookDetailsFragmentBinding.inflate(inflater, container, false);
+        // create binding and inflate views
+        // Declare variables
+        com.larsonapps.personalcookbook.databinding.CookbookDetailsFragmentBinding mBinding =
+                CookbookDetailsFragmentBinding.inflate(inflater, container, false);
+        // if state saved restore
         if (savedInstanceState != null) {
             mState = savedInstanceState.getInt(STATE);
             mRecipe = savedInstanceState.getParcelable(RECIPE);
         }
+        // set title to recipe name
         Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity()))
                 .getSupportActionBar()).setTitle(mRecipe.getName());
+        // set fragments for the recipe
         getChildFragmentManager().beginTransaction()
+                // set recipe content fragment
                 .replace(mBinding.detailsContentContainer.getId(), ContentFragment
                         .newInstance(mState, mRecipe.getId()))
+                // set cook note fragment
                 .replace(mBinding.detailsCookNoteListContainer.getId(), CookNoteFragment
                         .newInstance(mState, mRecipe.getId()))
+                // set ingredient fragment
                 .replace(mBinding.detailsIngredientListContainer.getId(), IngredientFragment
                         .newInstance(mState, mRecipe.getId()))
+                // set step fragment
                 .replace(mBinding.detailsStepListContainer.getId(), StepFragment
                         .newInstance(mState, mRecipe.getId()))
+                // set image fragment
                 .replace(mBinding.detailsImageListContainer.getId(), ImageFragment
                         .newInstance(mState, mRecipe.getId()))
+                // set keyword fragment
                 .replace(mBinding.detailsKeywordListContainer.getId(), KeywordFragment
                         .newInstance(mState, mRecipe.getId()))
                 .commit();
+        // set edit fab listener
         mBinding.editFab.setOnClickListener(v -> {
             if (null != mListener) {
                 mListener.onEditFabClickListener(mRecipe);
@@ -94,6 +115,10 @@ public class CookbookDetailsFragment extends Fragment {
         return mBinding.getRoot();
     }
 
+    /**
+     * Method to save state of the fragment
+     * @param outState to hold state
+     */
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -124,6 +149,9 @@ public class CookbookDetailsFragment extends Fragment {
         mListener = null;
     }
 
+    /**
+     * Interface of the edit fab listener
+     */
     public interface OnCookbookDetailsEditFabListener {
         void onEditFabClickListener(RecipeEntity recipe);
     }

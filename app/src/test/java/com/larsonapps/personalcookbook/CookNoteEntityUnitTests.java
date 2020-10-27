@@ -18,27 +18,44 @@ public class CookNoteEntityUnitTests {
             COOK_NOTE_VALUE, NUMBER_VALUE);
 
     // Tests for the constructor and Getters
+
+    /**
+     * Test for cook note id getter
+     */
     @Test
     public void testCookNoteIdGetter() {
         assertEquals(COOK_NOTE_ID_VALUE, cookNote.getCookNoteId());
     }
 
+    /**
+     * test for cook note recipe id getter
+     */
     @Test
     public void testCookNoteRecipeIdGetter() {
         assertEquals(RECIPE_ID_VALUE, cookNote.getRecipeId());
     }
 
+    /**
+     * test for cook note getter
+     */
     @Test
     public void testCookNoteGetter() {
         assertEquals(COOK_NOTE_VALUE, cookNote.getNote());
     }
 
+    /**
+     * test for cook note number getter
+     */
     @Test
     public void testCookNoteNumberGetter() {
         assertEquals(NUMBER_VALUE, cookNote.getNumber());
     }
 
     // Test default constructor and setters
+
+    /**
+     * test for cook note id setter
+     */
     @Test
     public void testCookNoteIdSetter() {
         int temp = 48;
@@ -46,12 +63,19 @@ public class CookNoteEntityUnitTests {
         assertEquals(temp, cookNote.getCookNoteId());
     }
 
+    /**
+     * test for cook note recipe id setter
+     */
     @Test
     public void testCookNoteRecipeIdSetter() {
         int temp = 64;
         cookNote.setRecipeId(temp);
         assertEquals(temp, cookNote.getRecipeId());
     }
+
+    /**
+     * test for cook note setter
+     */
     @Test
     public void testCookNoteSetter() {
         String temp = "season to taste";
@@ -59,6 +83,9 @@ public class CookNoteEntityUnitTests {
         assertEquals(temp, cookNote.getNote());
     }
 
+    /**
+     * test for cook note number setter
+     */
     @Test
     public void testCookNoteNumberSetter() {
         int temp = 66;

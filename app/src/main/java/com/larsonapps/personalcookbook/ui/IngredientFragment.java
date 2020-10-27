@@ -2,7 +2,6 @@ package com.larsonapps.personalcookbook.ui;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,7 @@ import java.util.List;
 
 
 /**
- * A fragment representing a list of Items.
+ * Class for ingredient fragment
  */
 public class IngredientFragment extends Fragment {
     // Declare constants
@@ -36,9 +35,7 @@ public class IngredientFragment extends Fragment {
     private int mState = 0;
     private int mRecipeId = 0;
     private List<IngredientEntity> mIngredientList;
-    private IngredientFragmentItemListBinding mBinding;
     private OnListFragmentInteractionListener mListener;
-    private IngredientViewModel mIngredientViewModel;
 
 
     /**
@@ -61,6 +58,12 @@ public class IngredientFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * Method to create a new ingredient fragment instance
+     * @param state of thepp
+     * @param list of ingredients
+     * @return ingredient fragment
+     */
     public static IngredientFragment newInstance(int state, List<IngredientEntity> list) {
         IngredientFragment fragment = new IngredientFragment();
         Bundle args = new Bundle();
@@ -71,7 +74,7 @@ public class IngredientFragment extends Fragment {
     }
 
     /**
-     * Method to save the state of the instance
+     * Method to get arguments
      * @param savedInstanceState to save
      */
     @Override
@@ -99,23 +102,38 @@ public class IngredientFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mBinding = IngredientFragmentItemListBinding.inflate(inflater, container, false);
+        // set binding and inflate views
+        com.larsonapps.personalcookbook.databinding.IngredientFragmentItemListBinding mBinding =
+                IngredientFragmentItemListBinding.inflate(inflater, container, false);
+        // set context
         Context context = mBinding.getRoot().getContext();
-        mIngredientViewModel = new ViewModelProvider(requireActivity()).get(IngredientViewModel.class);
+        // get ingredient view model
+        IngredientViewModel mIngredientViewModel = new ViewModelProvider(requireActivity())
+                .get(IngredientViewModel.class);
+        // if saved instance state restore
         if (savedInstanceState != null) {
             mState = savedInstanceState.getInt(STATE);
             mRecipeId = savedInstanceState.getInt(RECIPE_ID);
             mIngredientList = savedInstanceState.getParcelableArrayList(INGREDIENTS);
         }
-        // Set the adapter
+        // Set the layout manager
         mBinding.ingredientList.setLayoutManager(new LinearLayoutManager(context));
-        IngredientRecyclerViewAdapter adapter = new IngredientRecyclerViewAdapter(mListener, mState);
+        // create the adapter
+        IngredientRecyclerViewAdapter adapter =
+                new IngredientRecyclerViewAdapter(mListener, mState);
+        // set adapter
         mBinding.ingredientList.setAdapter(adapter);
+        // test state
         if (mState == CookbookActivity.STATE_MANUAL) {
+            // set data
             adapter.setData(mIngredientList);
         } else {
-            mIngredientViewModel.getIngredients(mRecipeId).observe(getViewLifecycleOwner(), newIngredients -> {
+            // set observer for live data
+            mIngredientViewModel.getIngredients(mRecipeId).observe(getViewLifecycleOwner(),
+                    newIngredients -> {
+                //test new ingredients
                 if (newIngredients != null && newIngredients.size() > 0) {
+                    // set data
                     adapter.setData(newIngredients);
                 }
             });
@@ -123,6 +141,10 @@ public class IngredientFragment extends Fragment {
         return mBinding.getRoot();
     }
 
+    /**
+     * Method to save instance state
+     * @param outState to save state in
+     */
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);

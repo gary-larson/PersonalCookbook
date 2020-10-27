@@ -20,37 +20,60 @@ public class ImageEntityUnitTests {
             IMAGE_URL_VALUE, HEIGHT_VALUE, WIDTH_VALUE);
 
     // Tests for the constructor and Getters
+
+    /**
+     * test for image id getter
+     */
     @Test
     public void testImageIdGetter() {
         assertEquals(IMAGE_ID_VALUE, image.getImageId());
     }
 
+    /**
+     * test for image recipe id getter
+     */
     @Test
     public void testImageRecipeIdGetter() {
         assertEquals(RECIPE_ID_VALUE, image.getRecipeId());
     }
 
+    /**
+     * test for image type getter
+     */
     @Test
     public void testImageTypeGetter() {
         assertEquals(TYPE_VALUE, image.getType());
     }
 
+    /**
+     * test for image url getter
+     */
     @Test
     public void testImageUrlGetter() {
         assertEquals(IMAGE_URL_VALUE, image.getImageUrl());
     }
 
+    /**
+     * test for image height getter
+     */
     @Test
     public void testImageHeightGetter() {
         assertEquals(HEIGHT_VALUE, image.getHeight());
     }
 
+    /**
+     * test for image width getter
+     */
     @Test
     public void testImageWidthGetter() {
         assertEquals(WIDTH_VALUE, image.getWidth());
     }
 
     // Test default constructor and setters
+
+    /**
+     * test for image id setter
+     */
     @Test
     public void testImageIdSetter() {
         int temp = 255;
@@ -58,6 +81,9 @@ public class ImageEntityUnitTests {
         assertEquals(temp, image.getImageId());
     }
 
+    /**
+     * test for image recipe id setter
+     */
     @Test
     public void testImageRecipeIdSetter() {
         int temp = 91;
@@ -65,6 +91,9 @@ public class ImageEntityUnitTests {
         assertEquals(temp, image.getRecipeId());
     }
 
+    /**
+     * test for image type setter
+     */
     @Test
     public void testImageTypeSetter() {
         String temp = "local";
@@ -72,6 +101,9 @@ public class ImageEntityUnitTests {
         assertEquals(temp, image.getType());
     }
 
+    /**
+     * test for image url setter
+     */
     @Test
     public void testImageUrlSetter() {
         String temp = "c:/4648486.jpg";
@@ -79,6 +111,9 @@ public class ImageEntityUnitTests {
         assertEquals(temp, image.getImageUrl());
     }
 
+    /**
+     * test for image height setter
+     */
     @Test
     public void testImageHeightSetter() {
         int temp = 4000;
@@ -86,6 +121,9 @@ public class ImageEntityUnitTests {
         assertEquals(temp, image.getHeight());
     }
 
+    /**
+     * test for image width setter
+     */
     @Test
     public void testImageWidthSetter() {
         int temp = 3000;

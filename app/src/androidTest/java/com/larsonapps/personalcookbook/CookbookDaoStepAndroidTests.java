@@ -25,8 +25,14 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+/**
+ * Class to test database step
+ */
 @RunWith(AndroidJUnit4.class)
 public class CookbookDaoStepAndroidTests {
+    /**
+     * Rule to test live data
+     */
     @Rule
     public TestRule rule = new InstantTaskExecutorRule();
 
@@ -76,6 +82,9 @@ public class CookbookDaoStepAndroidTests {
     int recipeId1;
     int recipeId2;
 
+    /**
+     * Method to create database and populate for step tests
+     */
     @Before
     public void createDb() {
         Context context = ApplicationProvider.getApplicationContext();
@@ -99,11 +108,17 @@ public class CookbookDaoStepAndroidTests {
         cookbookDao.insertStep(step3);
     }
 
+    /**
+     * Method to close database
+     */
     @After
     public void closeDb() {
         db.close();
     }
 
+    /**
+     * Test for adding a list of steps and getting a list of steps
+     */
     @Test
     public void testInsertAllStepsAndGetAllSteps() {
         // insert all steps
@@ -118,6 +133,9 @@ public class CookbookDaoStepAndroidTests {
                 assertEquals(4, newSteps.size()));
     }
 
+    /**
+     * Test for deleting a step and getting a step by number
+     */
     @Test
     public void testDeleteStepAndGetStepIdByNumber() {
         int stepId = cookbookDao.getStepIdByNumber(recipeId1, NUMBER_VALUE_1);
@@ -132,6 +150,9 @@ public class CookbookDaoStepAndroidTests {
         });
     }
 
+    /**
+     * Test for updating a step
+     */
     @Test
     public void testUpdateStep() {
         int stepId = cookbookDao.getStepIdByNumber(recipeId1, NUMBER_VALUE_1);

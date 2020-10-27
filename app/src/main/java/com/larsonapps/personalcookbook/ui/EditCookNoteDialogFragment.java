@@ -13,6 +13,9 @@ import androidx.fragment.app.DialogFragment;
 import com.larsonapps.personalcookbook.data.CookNoteEntity;
 import com.larsonapps.personalcookbook.databinding.EditCookNoteFragmentBinding;
 
+/**
+ * Class for cook note dialog fragment
+ */
 public class EditCookNoteDialogFragment extends DialogFragment {
     // Declare constants
     private static final String ARG_TITLE = "title";
@@ -51,6 +54,10 @@ public class EditCookNoteDialogFragment extends DialogFragment {
         return dialogFragment;
     }
 
+    /**
+     * Method to get arguments
+     * @param savedInstanceState of fragments state
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,21 +81,27 @@ public class EditCookNoteDialogFragment extends DialogFragment {
                              @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mBinding = EditCookNoteFragmentBinding.inflate(inflater, container, false);
+        // if saved instance state restore
         if (savedInstanceState != null) {
             mTitle = savedInstanceState.getString(TITLE);
             mState = savedInstanceState.getInt(STATE);
             mCookNote = savedInstanceState.getParcelable(COOK_NOTE);
         }
+        // test cook note
         if (mCookNote != null) {
+            // set number
             String temp = String.valueOf(mCookNote.getNumber());
             mBinding.editCookNoteNumberEditText.setText(temp);
+            // set note
             temp = mCookNote.getNote();
             if (temp != null && !temp.isEmpty()) {
                 mBinding.editCookNoteEditText.setText(temp);
             }
         } else {
+            // create cook note
             mCookNote = new CookNoteEntity();
         }
+        // set listener for cook note submit button
         mBinding.editCookNoteSubmitButton.setOnClickListener(v -> sendCookNoteToParent());
         return mBinding.getRoot();
     }
@@ -114,6 +127,10 @@ public class EditCookNoteDialogFragment extends DialogFragment {
         }
     }
 
+    /**
+     * Method to save fragment state
+     * @param outState to save state in
+     */
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -156,6 +173,7 @@ public class EditCookNoteDialogFragment extends DialogFragment {
      */
     private void buildCookNote() {
         // build step
+        // set number
         String tempString = mBinding.editCookNoteNumberEditText.getText().toString();
         int tempInt;
         try {
@@ -166,6 +184,7 @@ public class EditCookNoteDialogFragment extends DialogFragment {
         if (!(tempInt == 0 || tempInt == mCookNote.getNumber())) {
             mCookNote.setNumber(tempInt);
         }
+        // set note
         tempString = mBinding.editCookNoteEditText.getText().toString();
         if (!(tempString.isEmpty() || tempString.equals(mCookNote.getNote()))) {
             mCookNote.setNote(tempString);

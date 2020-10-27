@@ -14,9 +14,7 @@ import com.larsonapps.personalcookbook.R;
 import java.util.Objects;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link CookbookAboutFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Class for cookbook about fragment
  */
 public class CookbookAboutFragment extends Fragment {
 
@@ -33,11 +31,19 @@ public class CookbookAboutFragment extends Fragment {
         return new CookbookAboutFragment();
     }
 
+    /**
+     * Method to create views for about fragment
+     * @param inflater for views
+     * @param container to hold views
+     * @param savedInstanceState to maintain state
+     * @return fragment
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.cookbook_about_fragment, container, false);
+        // set title
         Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity()))
                 .getSupportActionBar()).setTitle(getString(R.string.about_title));
 

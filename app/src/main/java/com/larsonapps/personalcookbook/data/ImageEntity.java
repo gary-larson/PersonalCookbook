@@ -8,6 +8,9 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+/**
+ * Class for image entity
+ */
 @Entity(tableName = "images")
 public class ImageEntity implements Parcelable {
     @PrimaryKey(autoGenerate = true)

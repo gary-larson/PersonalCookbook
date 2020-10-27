@@ -21,8 +21,14 @@ import org.junit.runner.RunWith;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+/**
+ * Class to test database recipe
+ */
 @RunWith(AndroidJUnit4.class)
 public class CookbookDaoRecipeAndroidTests {
+    /**
+     * Rule to test live data
+     */
     @Rule
     public TestRule rule = new InstantTaskExecutorRule();
 
@@ -57,7 +63,9 @@ public class CookbookDaoRecipeAndroidTests {
     int recipeId1;
     int recipeId2;
 
-
+    /**
+     * Method to create database and populate for recipe tests
+     */
     @Before
     public void createDb() {
         Context context = ApplicationProvider.getApplicationContext();
@@ -72,11 +80,17 @@ public class CookbookDaoRecipeAndroidTests {
         recipeId2 = cookbookDao.getRecipeId(NAME_VALUE_2);
     }
 
+    /**
+     * Method to close database
+     */
     @After
     public void closeDb() {
         db.close();
     }
 
+    /**
+     * Test for getting a list of recipes
+     */
     @Test
     public void testGetAllRecipes() {
         // get all recipes
@@ -99,6 +113,9 @@ public class CookbookDaoRecipeAndroidTests {
         });
     }
 
+    /**
+     * Test for getting a recipe
+     */
     @Test
     public void testGetRecipe() {
         // get recipe by id
@@ -117,6 +134,9 @@ public class CookbookDaoRecipeAndroidTests {
         });
     }
 
+    /**
+     * Test for deleting a recipe
+     */
     @Test
     public void testDeleteRecipe() {
         // get recipe id
@@ -131,6 +151,9 @@ public class CookbookDaoRecipeAndroidTests {
         });
     }
 
+    /**
+     * Test for updating a recipe
+     */
     @Test
     public void testUpdateRecipe() {
         // get recipe id

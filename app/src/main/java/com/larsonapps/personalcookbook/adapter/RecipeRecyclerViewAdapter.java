@@ -41,12 +41,23 @@ public class RecipeRecyclerViewAdapter extends
     private List<RecipeEntity> mValues;
     private RecipeFragment.OnListFragmentInteractionListener mListener;
 
+    /**
+     * Constructor for listener and list of recipes
+     * @param listener to set
+     * @param items to set
+     */
     public RecipeRecyclerViewAdapter(RecipeFragment.OnListFragmentInteractionListener listener,
                                      List<RecipeEntity> items) {
         mListener = listener;
         mValues = items;
     }
 
+    /**
+     * Method to create recipe view holder
+     * @param parent of the view holder
+     * @param viewType of the view holder
+     * @return view holder
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -55,17 +66,28 @@ public class RecipeRecyclerViewAdapter extends
                         parent, false));
     }
 
+    /**
+     * Method to bind recipe data to view holder
+     * @param holder to use
+     * @param position of the data
+     */
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+        // get recipe at position
         holder.mItem = mValues.get(position);
+        // Set name
         holder.mNameView.setText(mValues.get(position).getName());
+        // set short description
         holder.mShortDescriptionView.setText(mValues.get(position).getShortDescription());
+        // format and set number of servings
         String temp = String.format(Locale.getDefault(), "Servings: %d",
                 holder.mItem.getServings());
         holder.mServingsView.setText(temp);
+        // format and set total time
         temp = String.format(Locale.getDefault(),"Time: %s",
                 holder.mItem.getTotalTimeString());
         holder.mTotalTimeView.setText(temp);
+        // set listener on view holder
         holder.mView.setOnClickListener(v -> {
             if (null != mListener) {
                 mListener.onListFragmentInteraction(holder.mItem);
@@ -73,6 +95,10 @@ public class RecipeRecyclerViewAdapter extends
         });
     }
 
+    /**
+     * Method to get number of recipes
+     * @return number of recipes
+     */
     @Override
     public int getItemCount() {
         if (mValues == null) {
@@ -81,12 +107,19 @@ public class RecipeRecyclerViewAdapter extends
         return mValues.size();
     }
 
+    /**
+     * Method to set data and notify of data change
+     * @param list to set
+     */
     public void setData(List<RecipeEntity> list) {
         mValues = list;
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    /**
+     * Class for recipe view holder
+     */
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mNameView;
         public final TextView mShortDescriptionView;
@@ -94,6 +127,10 @@ public class RecipeRecyclerViewAdapter extends
         public final TextView mTotalTimeView;
         public RecipeEntity mItem;
 
+        /**
+         * Constructor for binding
+         * @param binding to use
+         */
         public ViewHolder(RecipeFragmentItemBinding binding) {
             super(binding.getRoot());
             mView = binding.getRoot();

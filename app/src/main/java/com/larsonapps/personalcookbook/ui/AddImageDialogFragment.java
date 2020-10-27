@@ -55,6 +55,10 @@ public class AddImageDialogFragment extends DialogFragment {
         return dialogFragment;
     }
 
+    /**
+     * Method to load arguments
+     * @param savedInstanceState to maintain state
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +87,7 @@ public class AddImageDialogFragment extends DialogFragment {
             mState = savedInstanceState.getInt(STATE);
             mImage = savedInstanceState.getParcelable(IMAGE);
         }
+        // set image url
         if (mImage != null) {
             String temp = mImage.getImageUrl();
             mBinding.addImageUrlEditText.setText(temp);
@@ -90,6 +95,7 @@ public class AddImageDialogFragment extends DialogFragment {
         } else {
             mImage = new ImageEntity();
         }
+        // set listener for url edit text
         mBinding.addImageUrlEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -104,20 +110,28 @@ public class AddImageDialogFragment extends DialogFragment {
             @Override
             public void afterTextChanged(Editable s) {}
         });
+        // set listener for submit button
         mBinding.addImageSubmitButton.setOnClickListener(v -> sendImageToParent());
         return mBinding.getRoot();
     }
 
+    /**
+     * Method to load image
+     */
     private void loadImage() {
+        // test for url
         if (mImage.getImageUrl() != null) {
+            // test for large image
             if (mImage.getHeight() > getResources().getDimension(R.dimen.image_max_height) ||
                     mImage.getWidth() > getResources().getDimension(R.dimen.image_max_width)) {
+                // set image and resize
                 Picasso.get().load(mImage.getImageUrl())
                     .noPlaceholder()
                     .resize((int) getResources().getDimension(R.dimen.image_max_width),
                             (int) getResources().getDimension(R.dimen.image_max_height))
                     .into(mBinding.addImageView);
             } else {
+                // set image
                 Picasso.get().load(mImage.getImageUrl())
                     .noPlaceholder()
                     .into(mBinding.addImageView);
@@ -146,6 +160,10 @@ public class AddImageDialogFragment extends DialogFragment {
         }
     }
 
+    /**
+     * Method to save state
+     * @param outState state
+     */
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);

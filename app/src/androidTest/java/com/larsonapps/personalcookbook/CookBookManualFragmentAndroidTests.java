@@ -25,6 +25,9 @@ import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 
+/**
+ * Class to tes cookbook manual fragment
+ */
 @RunWith(AndroidJUnit4.class)
 public class CookBookManualFragmentAndroidTests {
     // Declare variables

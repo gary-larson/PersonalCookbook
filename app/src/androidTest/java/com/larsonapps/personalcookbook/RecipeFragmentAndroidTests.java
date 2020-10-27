@@ -41,6 +41,9 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.not;
 
+/**
+ * Class to test recipe fragment
+ */
 @RunWith(AndroidJUnit4.class)
 public class RecipeFragmentAndroidTests {
     private CookbookRoomDatabase db;

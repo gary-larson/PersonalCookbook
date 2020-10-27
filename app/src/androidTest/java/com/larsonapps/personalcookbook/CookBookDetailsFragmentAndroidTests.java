@@ -32,6 +32,9 @@ import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 
+/**
+ * Class to test cookbook details fragment
+ */
 public class CookBookDetailsFragmentAndroidTests {
     private CookbookRoomDatabase db;
     private static final String RECIPE_NAME_TEXT = "Michael Symon's Fettuccine Alfredo";

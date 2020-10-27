@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -70,6 +69,11 @@ public class AddCategoryDialogFragment extends DialogFragment {
         mBinding.addCategoryEditText.requestFocus();
     }
 
+    /**
+     * Method to create the dialog
+     * @param savedInstanceState to maintain state
+     * @return dialog
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {

@@ -2,6 +2,9 @@ package com.larsonapps.personalcookbook.ui;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -9,13 +12,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.larsonapps.personalcookbook.adapter.ImageRecyclerViewAdapter;
 import com.larsonapps.personalcookbook.data.ImageEntity;
-import com.larsonapps.personalcookbook.data.IngredientEntity;
 import com.larsonapps.personalcookbook.databinding.ImageFragmentItemListBinding;
 import com.larsonapps.personalcookbook.model.CookbookRepository;
 import com.larsonapps.personalcookbook.model.ImageViewModel;
@@ -24,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A fragment representing a list of Items.
+ * class for displaying image fragment
  */
 public class ImageFragment extends Fragment {
     // Declare constants
@@ -38,7 +36,6 @@ public class ImageFragment extends Fragment {
     private int mState;
     private int mRecipeId;
     private List<ImageEntity> mImageList;
-    private ImageFragmentItemListBinding mBinding;
     private ImageFragment.OnListFragmentInteractionListener mListener;
     private ImageViewModel mImageViewModel;
 
@@ -64,6 +61,12 @@ public class ImageFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * Method to create a new image fragment instance
+     * @param state of the app
+     * @param list of images
+     * @return image fragment
+     */
     public static ImageFragment newInstance(int state, List<ImageEntity> list) {
         ImageFragment fragment = new ImageFragment();
         Bundle args = new Bundle();
@@ -74,8 +77,7 @@ public class ImageFragment extends Fragment {
     }
 
     /**
-     * Method to initialize when activity is created
-     *
+     * Method to get arguments
      * @param savedInstanceState for state changes
      */
     @Override
@@ -104,29 +106,44 @@ public class ImageFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mBinding = ImageFragmentItemListBinding.inflate(inflater, container, false);
+        // inflate views and get binding
+        com.larsonapps.personalcookbook.databinding.ImageFragmentItemListBinding mBinding =
+                ImageFragmentItemListBinding.inflate(inflater, container, false);
+        // set image view model
         mImageViewModel = new ViewModelProvider(requireActivity()).get(ImageViewModel.class);
 
-        // Set the adapter
+        // Set context
         Context context = mBinding.getRoot().getContext();
+        // get image list
         RecyclerView recyclerView = mBinding.imageList;
+        // if saved instance state restore
         if (savedInstanceState != null) {
             mState = savedInstanceState.getInt(STATE);
             mRecipeId = savedInstanceState.getInt(RECIPE_ID);
             mImageList = savedInstanceState.getParcelableArrayList(IMAGES);
         }
+        // create adapter
         ImageRecyclerViewAdapter adapter = new ImageRecyclerViewAdapter(mListener, mState);
+        // set layout manager
         recyclerView.setLayoutManager(new LinearLayoutManager(context,
                 LinearLayoutManager.HORIZONTAL, false));
+        // set adapter
         recyclerView.setAdapter(adapter);
+        // test state
         if (mState == CookbookActivity.STATE_MANUAL) {
+            // set data
             adapter.setData(mImageList);
         } else {
+            // set image observer through live data
             mImageViewModel.getImages(mRecipeId).observe(getViewLifecycleOwner(), newImages -> {
+                // test new images
                 if (newImages != null) {
+                    // set data
                     adapter.setData(newImages);
                     for (ImageEntity image : newImages) {
+                        // test image type
                         if (!image.getType().equals(CookbookRepository.FILE_TYPE)) {
+                            // add image to app storage
                             mImageViewModel.addImage(image);
                         }
                     }
@@ -136,6 +153,10 @@ public class ImageFragment extends Fragment {
         return mBinding.getRoot();
     }
 
+    /**
+     * Method to save instance state
+     * @param outState to save state in
+     */
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);

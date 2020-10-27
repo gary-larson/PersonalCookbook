@@ -13,6 +13,9 @@ import androidx.fragment.app.DialogFragment;
 import com.larsonapps.personalcookbook.data.IngredientEntity;
 import com.larsonapps.personalcookbook.databinding.EditIngredientFragmentBinding;
 
+/**
+ * Class for edit ingredient dialog fragment
+ */
 public class EditIngredientDialogFragment extends DialogFragment {
     // Declare constants
     private static final String ARG_TITLE = "title";
@@ -53,6 +56,10 @@ public class EditIngredientDialogFragment extends DialogFragment {
         return dialogFragment;
     }
 
+    /**
+     * Method to get arguments
+     * @param savedInstanceState of the fragment
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,35 +84,44 @@ public class EditIngredientDialogFragment extends DialogFragment {
                              @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mBinding = EditIngredientFragmentBinding.inflate(inflater, container, false);
+        // if saved instance state restore
         if (savedInstanceState != null) {
             mTitle = savedInstanceState.getString(TITLE);
             mState = savedInstanceState.getInt(STATE);
             mIngredient = savedInstanceState.getParcelable(INGREDIENT);
         }
+        // test ingredient
         if (mIngredient != null) {
+            // set name
             String temp = mIngredient.getName();
             if (temp != null && !temp.isEmpty()) {
                 mBinding.editIngredientNameEditText.setText(temp);
             }
+            // set amount
             temp = mIngredient.getAmount();
             if (temp != null && !temp.isEmpty()) {
                 mBinding.editIngredientAmountEditText.setText(temp);
             }
+            // set measure
             temp = mIngredient.getMeasure();
             if (temp != null && !temp.isEmpty()) {
                 mBinding.editIngredientMeasureEditText.setText(temp);
             }
+            // set preparation
             temp = mIngredient.getPreparation();
             if (temp != null && !temp.isEmpty()) {
                 mBinding.editIngredientPreparationEditText.setText(temp);
             }
+            // set personal note
             temp = mIngredient.getPersonalNote();
             if (temp != null && !temp.isEmpty()) {
                 mBinding.editIngredientPersonalNoteEditText.setText(temp);
             }
         } else {
+            // create ingredient
             mIngredient = new IngredientEntity();
         }
+        // set listener for edit ingredient submit button
         mBinding.editIngredientSubmitButton.setOnClickListener(v -> sendIngredientToParent());
         return mBinding.getRoot();
     }
@@ -132,6 +148,10 @@ public class EditIngredientDialogFragment extends DialogFragment {
         }
     }
 
+    /**
+     * Method to save fragment state
+     * @param outState to save state in
+     */
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -178,29 +198,39 @@ public class EditIngredientDialogFragment extends DialogFragment {
         void onFinishEditIngredientDialog(IngredientEntity ingredient);
     }
 
+    /**
+     * Interface for the activity listener
+     */
     public interface EditIngredientDialogEditListener {
         void onFinishEditIngredientDialog(IngredientEntity ingredient);
     }
 
+    /**
+     * Method to build the ingredient
+     */
     private void buildIngredient() {
         // build ingredient
+        // set name
         String tempString = mBinding.editIngredientNameEditText.getText().toString();
         if (!(tempString.isEmpty() || tempString.equals(mIngredient.getName()))) {
             mIngredient.setName(tempString);
         }
+        // set amount
         tempString = mBinding.editIngredientAmountEditText.getText().toString();
-
         if (!(tempString.isEmpty() || tempString.equals(mIngredient.getAmount()))) {
             mIngredient.setAmount(tempString);
         }
+        // set measure
         tempString = mBinding.editIngredientMeasureEditText.getText().toString();
         if (!(tempString.isEmpty() || tempString.equals(mIngredient.getMeasure()))) {
             mIngredient.setMeasure(tempString);
         }
+        // set preparation
         tempString = mBinding.editIngredientPreparationEditText.getText().toString();
         if (!(tempString.isEmpty() || tempString.equals(mIngredient.getPreparation()))) {
             mIngredient.setPreparation(tempString);
         }
+        // set personal note
         tempString = mBinding.editIngredientPersonalNoteEditText.getText().toString();
         if (!(tempString.isEmpty() || tempString.equals(mIngredient.getPersonalNote()))) {
             mIngredient.setPersonalNote(tempString);

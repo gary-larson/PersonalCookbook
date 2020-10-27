@@ -13,6 +13,9 @@ import androidx.fragment.app.DialogFragment;
 import com.larsonapps.personalcookbook.data.StepEntity;
 import com.larsonapps.personalcookbook.databinding.EditStepFragmentBinding;
 
+/**
+ * Class for edit step dialog fragment
+ */
 public class EditStepDialogFragment extends DialogFragment {
     // Declare constants
     private static final String ARG_TITLE = "title";
@@ -51,6 +54,10 @@ public class EditStepDialogFragment extends DialogFragment {
         return dialogFragment;
     }
 
+    /**
+     * Method to get arguments
+     * @param savedInstanceState for dialog fragment state
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,25 +81,32 @@ public class EditStepDialogFragment extends DialogFragment {
                              @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mBinding = EditStepFragmentBinding.inflate(inflater, container, false);
+        // if saved instance state restore
         if (savedInstanceState != null) {
             mTitle = savedInstanceState.getString(TITLE);
             mState = savedInstanceState.getInt(STATE);
             mStep = savedInstanceState.getParcelable(STEP);
         }
+        // test step
         if (mStep != null) {
+            // set number
             String temp = String.valueOf(mStep.getNumber());
             mBinding.editStepNumberEditText.setText(temp);
+            // set instruction
             temp = mStep.getInstruction();
             if (temp != null && !temp.isEmpty()) {
                 mBinding.editStepInstructionEditText.setText(temp);
             }
+            // set personal note
             temp = mStep.getPersonalNote();
             if (temp != null && !temp.isEmpty()) {
                 mBinding.editStepPersonalNoteEditText.setText(temp);
             }
         } else {
+            // create step
             mStep = new StepEntity();
         }
+        // set listener for edit step submit button
         mBinding.editStepSubmitButton.setOnClickListener(v -> sendStepToParent());
         return mBinding.getRoot();
     }
@@ -118,6 +132,10 @@ public class EditStepDialogFragment extends DialogFragment {
         }
     }
 
+    /**
+     * Method to save instance state of the dialog fragment
+     * @param outState to save state in
+     */
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -160,6 +178,7 @@ public class EditStepDialogFragment extends DialogFragment {
      */
     private void buildStep() {
         // build step
+        // set number
         String tempString = mBinding.editStepNumberEditText.getText().toString();
         int tempInt;
         try {
@@ -170,10 +189,12 @@ public class EditStepDialogFragment extends DialogFragment {
         if (!(tempInt == 0 || tempInt == mStep.getNumber())) {
             mStep.setNumber(tempInt);
         }
+        // set instruction
         tempString = mBinding.editStepInstructionEditText.getText().toString();
         if (!(tempString.isEmpty() || tempString.equals(mStep.getInstruction()))) {
             mStep.setInstruction(tempString);
         }
+        // set personal note
         tempString = mBinding.editStepPersonalNoteEditText.getText().toString();
         if (!(tempString.isEmpty() || tempString.equals(mStep.getPersonalNote()))) {
             mStep.setPersonalNote(tempString);

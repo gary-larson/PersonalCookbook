@@ -10,6 +10,9 @@ import androidx.room.PrimaryKey;
 
 import java.util.Locale;
 
+/**
+ * Class for recipe entity
+ */
 @Entity(tableName = "recipes")
 public class RecipeEntity implements Parcelable {
     // Declare Variables
@@ -224,7 +227,9 @@ public class RecipeEntity implements Parcelable {
      * @return string representation of the time
      */
     private String getString(int time) {
+        // declare variable
         String temp;
+        // get time in days hours and minutes
         int days = time / 1440;
         int hours;
         if (time > 1440) {
@@ -233,15 +238,18 @@ public class RecipeEntity implements Parcelable {
             hours = time / 60;
         }
         int mins = time % 60;
+        // create base strings
         String day = "days";
         String hour = "hours";
         String min = "mins";
+        // change strings for single amounts
         if (days == 1) {
             day = "day";
         }
         if (hours == 1) {
             hour = "hour";
         }
+        // use short minutes if days or hours
         if (hours == 0 && days == 0) {
             if (mins == 1) {
                 min = "minute";
@@ -253,6 +261,7 @@ public class RecipeEntity implements Parcelable {
                 min = "min";
             }
         }
+        // build final string
         if (days > 0) {
             temp = String.format(Locale.getDefault(), "%d %s %d %s %d %s", days, day,
                     hours, hour, mins, min);

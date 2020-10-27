@@ -25,8 +25,14 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+/**
+ * Class to test database cook notes
+ */
 @RunWith(AndroidJUnit4.class)
 public class CookbookDaoCookNoteAndroidTests {
+    /**
+     * Method to create rule for live data
+     */
     @Rule
     public TestRule rule = new InstantTaskExecutorRule();
 
@@ -73,6 +79,9 @@ public class CookbookDaoCookNoteAndroidTests {
     int recipeId1;
     int recipeId2;
 
+    /**
+     * Method to prepare database and populate for cook note tests
+     */
     @Before
     public void createDb() {
         Context context = ApplicationProvider.getApplicationContext();
@@ -96,11 +105,17 @@ public class CookbookDaoCookNoteAndroidTests {
         cookbookDao.insertCookNote(cookNote3);
     }
 
+    /**
+     * Method to close database
+     */
     @After
     public void closeDb() {
         db.close();
     }
 
+    /**
+     * Test for adding a list of cook notes and getting a list of cook notes
+     */
     @Test
     public void testInsertAllCookNotesAndGetAllCookNotes() {
         // insert all cook's notes
@@ -115,6 +130,9 @@ public class CookbookDaoCookNoteAndroidTests {
                 assertEquals(4, newCookNotes.size()));
     }
 
+    /**
+     * Test for deleting a cook note and getting a cook note id by name
+     */
     @Test
     public void testDeleteCookNoteAndGetCookNoteIdByNumber() {
         int cookNoteId = cookbookDao.getCookNoteByNumber(recipeId1, NUMBER_VALUE_1);
@@ -129,6 +147,9 @@ public class CookbookDaoCookNoteAndroidTests {
         });
     }
 
+    /**
+     * Test for updating cook note
+     */
     @Test
     public void testUpdateCookNote() {
         int cookNoteId = cookbookDao.getCookNoteByNumber(recipeId1, NUMBER_VALUE_1);

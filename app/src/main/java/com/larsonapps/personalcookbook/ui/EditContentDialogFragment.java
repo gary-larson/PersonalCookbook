@@ -50,6 +50,10 @@ public class EditContentDialogFragment extends DialogFragment {
         return dialogFragment;
     }
 
+    /**
+     * Method to get arguments
+     * @param savedInstanceState of the fragment
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,43 +77,56 @@ public class EditContentDialogFragment extends DialogFragment {
                              @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mBinding = EditContentFragmentBinding.inflate(inflater, container, false);
+        // if saved instance state restore
         if (savedInstanceState != null) {
             mTitle = savedInstanceState.getString(TITLE);
             mState = savedInstanceState.getInt(STATE);
             mRecipe = savedInstanceState.getParcelable(RECIPE);
         }
+        // test recipe
         if (mRecipe != null) {
+            // set name
             String temp = mRecipe.getName();
             if (temp != null && !temp.isEmpty()) {
                 mBinding.editContentNameEditText.setText(temp);
             }
+            // set short description
             temp = mRecipe.getShortDescription();
             if (temp != null && !temp.isEmpty()) {
                 mBinding.editContentShortDescriptionEditText.setText(temp);
             }
+            // set servings
             temp = String.valueOf(mRecipe.getServings());
             mBinding.editContentServingsEditText.setText(temp);
+            // set prep time
             temp = String.valueOf(mRecipe.getPrepTime());
             mBinding.editContentPrepTimeEditText.setText(temp);
+            // set cook time
             temp = String.valueOf(mRecipe.getCookTime());
             mBinding.editContentCookTimeEditText.setText(temp);
+            // set total time
             temp = String.valueOf(mRecipe.getTotalTime());
             mBinding.editContentTotalTimeEditText.setText(temp);
+            // set description
             temp = mRecipe.getDescription();
             if (temp != null && !temp.isEmpty()) {
                 mBinding.editContentDescriptionEditText.setText(temp);
             }
+            // set copyright
             temp = mRecipe.getCopyright();
             if (temp != null && !temp.isEmpty()) {
                 mBinding.editContentCopyrightEditText.setText(temp);
             }
+            // set personal note
             temp = mRecipe.getPersonalNote();
             if (temp != null && !temp.isEmpty()) {
                 mBinding.editContentPersonalNoteEditText.setText(temp);
             }
         } else {
+            // create a recipe entity
             mRecipe = new RecipeEntity();
         }
+        // set listener for edit content submit button
         mBinding.editContentSubmitButton.setOnClickListener(v -> sendRecipeToParent());
         return mBinding.getRoot();
     }
@@ -135,6 +152,10 @@ public class EditContentDialogFragment extends DialogFragment {
         }
     }
 
+    /**
+     * Method to save instance data
+     * @param outState to save instance data
+     */
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -150,10 +171,12 @@ public class EditContentDialogFragment extends DialogFragment {
         // set listener
         EditContentDialogListener listener = (EditContentDialogListener) getTargetFragment();
         // build recipe
+        // set name
         String tempString = mBinding.editContentNameEditText.getText().toString();
         if (!(tempString.isEmpty() || tempString.equals(mRecipe.getName()))) {
             mRecipe.setName(tempString);
         }
+        // set servings
         tempString = mBinding.editContentServingsEditText.getText().toString();
         int tempInt;
         try {
@@ -164,6 +187,7 @@ public class EditContentDialogFragment extends DialogFragment {
         if (!(tempInt == 0 || tempInt == mRecipe.getServings())) {
             mRecipe.setServings(tempInt);
         }
+        // set prep time
         tempString = mBinding.editContentPrepTimeEditText.getText().toString();
         try {
             tempInt = Integer.parseInt(tempString);
@@ -173,6 +197,7 @@ public class EditContentDialogFragment extends DialogFragment {
         if (!(tempInt == 0 || tempInt == mRecipe.getPrepTime())) {
             mRecipe.setPrepTime(tempInt);
         }
+        // set cook time
         tempString = mBinding.editContentCookTimeEditText.getText().toString();
         try {
             tempInt = Integer.parseInt(tempString);
@@ -182,6 +207,7 @@ public class EditContentDialogFragment extends DialogFragment {
         if (!(tempInt == 0 || tempInt == mRecipe.getCookTime())) {
             mRecipe.setCookTime(tempInt);
         }
+        // set total time
         tempString = mBinding.editContentTotalTimeEditText.getText().toString();
         try {
             tempInt = Integer.parseInt(tempString);
@@ -191,6 +217,7 @@ public class EditContentDialogFragment extends DialogFragment {
         if (!(tempInt == 0 || tempInt == mRecipe.getTotalTime())) {
             mRecipe.setTotalTime(tempInt);
         }
+        // set short description
         tempString = mBinding.editContentShortDescriptionEditText.getText().toString();
         if (!(tempString.isEmpty() || tempString.equals(mRecipe.getShortDescription()))) {
             mRecipe.setShortDescription(tempString);
@@ -198,14 +225,17 @@ public class EditContentDialogFragment extends DialogFragment {
                 mRecipe.setDescription(tempString);
             }
         }
+        // set description
         tempString = mBinding.editContentDescriptionEditText.getText().toString();
         if (!(tempString.isEmpty() || tempString.equals(mRecipe.getDescription()))) {
             mRecipe.setDescription(tempString);
         }
+        // set copyright
         tempString = mBinding.editContentCopyrightEditText.getText().toString();
         if (!(tempString.isEmpty() || tempString.equals(mRecipe.getCopyright()))) {
             mRecipe.setCopyright(tempString);
         }
+        // set personal note
         tempString = mBinding.editContentPersonalNoteEditText.getText().toString();
         if (!(tempString.isEmpty() || tempString.equals(mRecipe.getPersonalNote()))) {
             mRecipe.setPersonalNote(tempString);

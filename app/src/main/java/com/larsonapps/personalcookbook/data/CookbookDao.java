@@ -10,6 +10,9 @@ import androidx.room.Update;
 
 import java.util.List;
 
+/**
+ * Interface for database methods
+ */
 @Dao
 public interface CookbookDao {
     /**
@@ -111,11 +114,25 @@ public interface CookbookDao {
     void deleteIngredient(IngredientEntity ingredient);
 
     /**
+     * Method to delete  ingredients
+     * @param ingredients to delete
+     */
+    @Delete
+    void deleteIngredient(List<IngredientEntity> ingredients);
+
+    /**
      * Method to delete a step
      * @param step to delete
      */
     @Delete
     void deleteStep(StepEntity step);
+
+    /**
+     * Method to delete steps
+     * @param steps to delete
+     */
+    @Delete
+    void deleteStep(List<StepEntity> steps);
 
     /**
      * Method to delete an image
@@ -125,6 +142,13 @@ public interface CookbookDao {
     void deleteImage(ImageEntity image);
 
     /**
+     * Method to delete images
+     * @param images to delete
+     */
+    @Delete
+    void deleteImage(List<ImageEntity> images);
+
+    /**
      * Method to delete a keyword
      * @param keyword to delete
      */
@@ -132,7 +156,14 @@ public interface CookbookDao {
     void deleteKeyword(KeywordEntity keyword);
 
     /**
-     * Method to delete a cayegory
+     * Method to delete keywords
+     * @param keywords to delete
+     */
+    @Delete
+    void deleteKeyword(List<KeywordEntity> keywords);
+
+    /**
+     * Method to delete a category
      */
     @Delete
     void deleteCategory(CategoryEntity category);
@@ -143,6 +174,13 @@ public interface CookbookDao {
      */
     @Delete
     void deleteCookNote(CookNoteEntity cookNote);
+
+    /**
+     * Method to delete cook's notes
+     * @param cookNotes to delete
+     */
+    @Delete
+    void deleteCookNote(List<CookNoteEntity> cookNotes);
 
     /**
      * Method to update a recipe
@@ -180,28 +218,35 @@ public interface CookbookDao {
     void updateCoolNote(CookNoteEntity cookNote);
 
     /**
-     * Method to retrieve all recipes
+     * Method to retrieve all recipes with live data
      * @return list of recipes
      */
     @Query("SELECT * FROM recipes")
     LiveData<List<RecipeEntity>> getAllRecipes();
 
     /**
-     * Method to retrieve all recipes of one keyword
+     * Method to retrieve all recipes of one keyword with live data
      * @return list of recipes
      */
     @Query("SELECT recipes.* FROM recipes INNER JOIN keywords ON recipes.recipe_id = keywords.recipe_id WHERE keyword = :keyword")
     LiveData<List<RecipeEntity>> getAllRecipes(String keyword);
 
     /**
-     * Method to retrieve all recipes with a keyword from a list of keywords
+     * Method to retrieve all recipes with a keyword from a list of keywords with live data
      * @return list of recipes
      */
     @Query("SELECT recipes.* FROM recipes INNER JOIN keywords ON recipes.recipe_id = keywords.recipe_id WHERE keyword IN (:keywords)")
     LiveData<List<RecipeEntity>> getAllRecipes(String[] keywords);
 
     /**
-     * Method to retrieve a recipe by id
+     * Method to get all recipes for widget
+     * @return list of recipes
+     */
+    @Query("SELECT * FROM recipes")
+    List<RecipeEntity> getWidgetRecipes();
+
+    /**
+     * Method to retrieve a recipe by id with live data
      * @param recipeId of recipe to retrieve
      * @return recipe
      */
@@ -209,7 +254,7 @@ public interface CookbookDao {
     LiveData<RecipeEntity> getRecipe(int recipeId);
 
     /**
-     * Method to retrieve all of a recipes ingredients
+     * Method to retrieve all of a recipes ingredients with live data
      * @param recipeId of the recipe to retrieve
      * @return list of ingredients
      */
@@ -217,7 +262,23 @@ public interface CookbookDao {
     LiveData<List<IngredientEntity>> getAllIngredients(int recipeId);
 
     /**
-     * Method to retrieve all of a recipes steps
+     * Method to retrieve all of a recipes ingredients
+     * @param recipeId of the recipe to retrieve
+     * @return list of ingredients
+     */
+    @Query("SELECT * FROM ingredients WHERE recipe_id = :recipeId")
+    List<IngredientEntity> getIngredients(int recipeId);
+
+    /**
+     * Method to get all ingredients for widget
+     * @param recipeId to get recipes for
+     * @return list of ingredients
+     */
+    @Query("SELECT * FROM ingredients WHERE recipe_id = :recipeId")
+    List<IngredientEntity> getWidgetIngredients(int recipeId);
+
+    /**
+     * Method to retrieve all of a recipes steps with live data
      * @param recipeId of the recipe to retrieve
      * @return list of steps
      */
@@ -225,7 +286,15 @@ public interface CookbookDao {
     LiveData<List<StepEntity>> getAllSteps(int recipeId);
 
     /**
-     * Method to retrieve all of a recipes images
+     * Method to retrieve all of a recipes steps
+     * @param recipeId of the recipe to retrieve
+     * @return list of steps
+     */
+    @Query("SELECT * FROM steps WHERE recipe_id = :recipeId ORDER BY number")
+    List<StepEntity> getSteps(int recipeId);
+
+    /**
+     * Method to retrieve all of a recipes images with live data
      * @param recipeId of the recipe to retrieve
      * @return list of images
      */
@@ -233,12 +302,28 @@ public interface CookbookDao {
     LiveData<List<ImageEntity>> getAllImages(int recipeId);
 
     /**
-     * Method to retrieve all keywords by recipe id
+     * Method to retrieve all of a recipes images
+     * @param recipeId of the recipe to retrieve
+     * @return list of images
+     */
+    @Query("SELECT * FROM images WHERE recipe_id = :recipeId")
+    List<ImageEntity> getImages(int recipeId);
+
+    /**
+     * Method to retrieve all keywords by recipe id with live data
      * @param recipeId of the recipe to retrieve keywords for
      * @return list of keywords
      */
     @Query("SELECT * FROM keywords WHERE recipe_id = :recipeId")
     LiveData<List<KeywordEntity>> getAllKeywords(int recipeId);
+
+    /**
+     * Method to retrieve all keywords by recipe id
+     * @param recipeId of the recipe to retrieve keywords for
+     * @return list of keywords
+     */
+    @Query("SELECT * FROM keywords WHERE recipe_id = :recipeId")
+    List<KeywordEntity> getKeywords(int recipeId);
 
     /**
      * Method to get all categories
@@ -308,12 +393,20 @@ public interface CookbookDao {
     int getCategoryIdByName(String name);
 
     /**
-     * Method to get all cook notes by recipe id
+     * Method to get all cook notes by recipe id with live data
      * @param recipeId to get the cook's notes for
      * @return list of cook's notes
      */
     @Query("SELECT * FROM cook_notes WHERE recipe_id = :recipeId")
     LiveData<List<CookNoteEntity>> getAllCookNotes(int recipeId);
+
+    /**
+     * Method to get all cook notes by recipe id
+     * @param recipeId to get the cook's notes for
+     * @return list of cook's notes
+     */
+    @Query("SELECT * FROM cook_notes WHERE recipe_id = :recipeId")
+    List<CookNoteEntity> getCookNotes(int recipeId);
 
     /**
      * Method to ger cook's note by number

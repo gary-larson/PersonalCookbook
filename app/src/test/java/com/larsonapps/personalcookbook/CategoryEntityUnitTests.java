@@ -6,6 +6,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Class to test category entity data
+ */
 public class CategoryEntityUnitTests {
     // category update data
     private static final int CATEGORY_ID_VALUE = 48;
@@ -16,17 +19,28 @@ public class CategoryEntityUnitTests {
             CategoryEntity(CATEGORY_ID_VALUE, CATEGORY_NAME_VALUE);
 
     // test constructor and getters
+
+    /**
+     * Test for category id getter
+     */
     @Test
     public void testCategoryIdGetter() {
         assertEquals(CATEGORY_ID_VALUE, categoryEntity.getCategoryId());
     }
 
+    /**
+     * Test for category name getter
+     */
     @Test
     public void testCategoryNameGetter() {
         assertEquals(CATEGORY_NAME_VALUE, categoryEntity.getCategoryName());
     }
 
     // test setters
+
+    /**
+     * Test for category id setter
+     */
     @Test
     public void testCategoryIdSetter() {
         int temp = 46;
@@ -34,8 +48,11 @@ public class CategoryEntityUnitTests {
         assertEquals(temp, categoryEntity.getCategoryId());
     }
 
+    /**
+     * Test for category name setter
+     */
     @Test
-    public void testCategorySetter() {
+    public void testCategoryNameSetter() {
         String temp = "Snacks";
         categoryEntity.setCategoryName(temp);
         assertEquals(temp, categoryEntity.getCategoryName());

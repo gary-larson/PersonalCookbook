@@ -43,6 +43,9 @@ import com.larsonapps.personalcookbook.model.KeywordViewModel;
 import com.larsonapps.personalcookbook.model.RecipeViewModel;
 import com.larsonapps.personalcookbook.model.StepViewModel;
 
+/**
+ * Class for cookbook activity
+ */
 public class CookbookActivity extends AppCompatActivity implements
         FragmentManager.OnBackStackChangedListener,
         RecipeFragment.OnListFragmentInteractionListener,
@@ -118,7 +121,7 @@ public class CookbookActivity extends AppCompatActivity implements
     }
 
     /**
-     * Method to display upo button if back stack is greater than 0
+     * Method to display up button if back stack is greater than 0
      */
     private void displayUpButton() {
         if (getSupportActionBar() != null) {
@@ -152,11 +155,13 @@ public class CookbookActivity extends AppCompatActivity implements
         // take action depending on item selected
         switch (menuItemThatWasSelected) {
             case R.id.action_add_category:
+                // open add category dialog box
                 AddCategoryDialogFragment addCategoryDialogFragment =
                         AddCategoryDialogFragment.newInstance(CATEGORY_TITLE);
                 addCategoryDialogFragment.show(getSupportFragmentManager(), ADD_CATEGORY_DIALOG);
                 return true;
             case R.id.action_manual:
+                // open manual entry fragment
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(mBinding.container.getId(),
@@ -173,6 +178,7 @@ public class CookbookActivity extends AppCompatActivity implements
                         .commit();
                 return true;
             case android.R.id.home: {
+                // deal with up button
                 if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
                     getSupportFragmentManager().popBackStack();
                     return true;
@@ -187,6 +193,7 @@ public class CookbookActivity extends AppCompatActivity implements
                         .commit();
                 return true;
         }
+        // if not handled send to super
         return super.onOptionsItemSelected(item);
     }
 
@@ -212,16 +219,20 @@ public class CookbookActivity extends AppCompatActivity implements
      */
     @Override
     public void onListFragmentInteraction(IngredientEntity ingredient, int state, View view) {
+        // test which view
         if (view.getId() == R.id.ingredient_edit_image_button) {
+            // open edit ingredient dialog fragment
             EditIngredientDialogFragment editIngredientDialogFragment =
                     EditIngredientDialogFragment.newInstance(INGREDIENT_TITLE, STATE_EDIT,
                             ingredient);
             editIngredientDialogFragment.show(getSupportFragmentManager(), EDIT_INGREDIENT_DIALOG);
         } else if (view.getId() == R.id.ingredient_delete_image_button) {
+            // open alert dialog to confirm or cancel delete
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.alert_ingredient_message)
                     .setTitle(R.string.alert_ingredient_title);
             builder.setPositiveButton(R.string.alert_delete, (dialog, id) ->
+                    // delete ingredient
                     mIngredientViewModel.deleteIngredient(ingredient));
             builder.setNegativeButton(R.string.alert_cancel, (dialog, id) -> {
                 // User cancelled the dialog do nothing
@@ -239,15 +250,19 @@ public class CookbookActivity extends AppCompatActivity implements
      */
     @Override
     public void onListFragmentInteraction(StepEntity step, int state, View view) {
+        // test for which view
         if (view.getId() == R.id.step_edit_image_button) {
+            // open edit step dialog
             EditStepDialogFragment editStepDialogFragment = EditStepDialogFragment
                     .newInstance(STEP_TITLE, STATE_EDIT, step);
             editStepDialogFragment.show(getSupportFragmentManager(), EDIT_STEP_DIALOG);
         } else if (view.getId() == R.id.step_delete_image_button) {
+            // open alert to confirm or cancel delete step
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.alert_step_message)
                     .setTitle(R.string.alert_step_title);
             builder.setPositiveButton(R.string.alert_delete, (dialog, id) ->
+                    // delete step
                     mStepViewModel.deleteStep(step));
             builder.setNegativeButton(R.string.alert_cancel, (dialog, id) -> {
                 // User cancelled the dialog do nothing
@@ -265,11 +280,14 @@ public class CookbookActivity extends AppCompatActivity implements
      */
     @Override
     public void onListFragmentInteraction(ImageEntity image, int state, View view) {
+        //test which view
         if (view.getId() == R.id.image_button) {
+            // open alert to confirm or cancel delete image
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.alert_image_message)
                     .setTitle(R.string.alert_image_title);
             builder.setPositiveButton(R.string.alert_delete, (dialog, id) ->
+                    // delete image
                     mImageViewModel.deleteImage(image));
             builder.setNegativeButton(R.string.alert_cancel, (dialog, id) -> {
                 // User cancelled the dialog do nothing
@@ -279,13 +297,22 @@ public class CookbookActivity extends AppCompatActivity implements
         }
     }
 
+    /**
+     * Method to handle keyword clicks
+     * @param keyword to use
+     * @param state of app
+     * @param view clicked
+     */
     @Override
     public void onListFragmentInteraction(KeywordEntity keyword, int state, View view) {
+        // test which view was clicked
         if (view.getId() == R.id.keyword_delete_image_button) {
+            // open alert to confirm or cancel keyword delete
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.alert_keyword_message)
                     .setTitle(R.string.alert_keyword_title);
             builder.setPositiveButton(R.string.alert_delete, (dialog, id) ->
+                    // delete keyword
                     mKeywordViewModel.deleteKeyword(keyword));
             builder.setNegativeButton(R.string.alert_cancel, (dialog, id) -> {
                 // User cancelled the dialog do nothing
@@ -295,17 +322,27 @@ public class CookbookActivity extends AppCompatActivity implements
         }
     }
 
+    /**
+     * Method to deal with cook note clicks
+     * @param cookNote to use
+     * @param state of app
+     * @param view clicked
+     */
     @Override
     public void onListFragmentInteraction(CookNoteEntity cookNote, int state, View view) {
+        // test which view was clicked
         if (view.getId() == R.id.cook_note_edit_image_button) {
+            // open cook note dialog box
             EditCookNoteDialogFragment editCookNoteDialogFragment = EditCookNoteDialogFragment
                     .newInstance(COOK_NOTE_TITLE, STATE_EDIT, cookNote);
             editCookNoteDialogFragment.show(getSupportFragmentManager(), EDIT_COOK_NOTE_DIALOG);
         } else if (view.getId() == R.id.cook_note_delete_image_button) {
+            // open alert dialog to confirm or cancel cook note delete
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.alert_cook_note_message)
                     .setTitle(R.string.alert_cook_note_title);
             builder.setPositiveButton(R.string.alert_delete, (dialog, id) ->
+                    // delete cook note
                     mCookNoteViewModel.deleteCookNote(cookNote));
             builder.setNegativeButton(R.string.alert_cancel, (dialog, id) -> {
                 // User cancelled the dialog do nothing
@@ -315,12 +352,19 @@ public class CookbookActivity extends AppCompatActivity implements
         }
     }
 
+    /**
+     * Method to deal with category clicks
+     * @param category to use
+     * @param view clicked
+     */
     @Override
     public void onListFragmentInteraction(CategoryEntity category, View view) {
+        // open alert dialog to confirm or cancel category delete
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.alert_category_message)
                 .setTitle(R.string.alert_category_title);
         builder.setPositiveButton(R.string.alert_delete, (dialog, id) ->
+                // delete category
                 mRecipeViewModel.deleteCategory(category));
         builder.setNegativeButton(R.string.alert_cancel, (dialog, id) -> {
             // User cancelled the dialog do nothing
@@ -351,13 +395,21 @@ public class CookbookActivity extends AppCompatActivity implements
         }
     }
 
+    /**
+     * Method to deal with up button changes
+     */
     @Override
     public void onBackStackChanged() {
         displayUpButton();
     }
 
+    /**
+     * Method to deal with edit fab clicked on cookbook details fragment
+     * @param recipe to use
+     */
     @Override
     public void onEditFabClickListener(RecipeEntity recipe) {
+        // open cookbook edit fragment
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(mBinding.container.getId(),
@@ -366,28 +418,50 @@ public class CookbookActivity extends AppCompatActivity implements
                 .commit();
     }
 
+    /**
+     * Method to deal with edit ingredient dialog box submit button
+     * @param ingredient to use
+     */
     @Override
     public void onFinishEditIngredientDialog(IngredientEntity ingredient) {
+        // update ingredient in database
         mIngredientViewModel.updateIngredient(ingredient);
     }
 
+    /**
+     * Method to deal with edit step dialog box submit button
+     * @param step to use
+     */
     @Override
     public void onFinishEditStepDialog(StepEntity step) {
+        // update step in database
         mStepViewModel.updateStep(step);
     }
 
+    /**
+     * Method to deal with edit cook note dialog box submit button
+     * @param cookNote to use
+     */
     @Override
     public void onFinishEditCookNoteDialog(CookNoteEntity cookNote) {
+        // update cook note in database
         mCookNoteViewModel.updateCookNote(cookNote);
     }
 
+    /**
+     * Method to deal with cookbook edit fragment delete fab
+     * @param recipe to delete
+     */
     @Override
     public void onDeleteFabClickListener(RecipeEntity recipe) {
+        // open alert dialog box to confirm or cancel delete recipe
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.alert_delete_recipe_message)
                 .setTitle(R.string.alert_delete_recipe_title);
         builder.setPositiveButton(R.string.alert_delete, (dialog, id) -> {
+            // delete recipe
             mRecipeViewModel.deleteRecipe(recipe);
+            // pop cookbook edit and details fragments
             getSupportFragmentManager().popBackStack(null,
                     FragmentManager.POP_BACK_STACK_INCLUSIVE);
         });

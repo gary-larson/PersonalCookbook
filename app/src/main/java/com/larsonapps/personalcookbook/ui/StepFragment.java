@@ -2,7 +2,6 @@ package com.larsonapps.personalcookbook.ui;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A fragment representing a list of Items.
+ * Class for step fragment
  */
 public class StepFragment extends Fragment {
 
@@ -36,9 +35,7 @@ public class StepFragment extends Fragment {
     private int mState;
     private int mRecipeId;
     private List<StepEntity> mStepList;
-    private StepFragmentItemListBinding mBinding;
     private OnListFragmentInteractionListener mListener;
-    private StepViewModel mStepViewModel;
 
     /**
      * Default constructor
@@ -46,6 +43,12 @@ public class StepFragment extends Fragment {
     public StepFragment() {
     }
 
+    /**
+     * Method to create step fragment instance
+     * @param state of app
+     * @param recipeId to use
+     * @return step fragment
+     */
     public static StepFragment newInstance(int state, int recipeId) {
         StepFragment fragment = new StepFragment();
         Bundle args = new Bundle();
@@ -55,6 +58,12 @@ public class StepFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * Method to create step fragment instance
+     * @param state of the app
+     * @param list of steps
+     * @return step fragment
+     */
     public static StepFragment newInstance(int state, List<StepEntity> list) {
         StepFragment fragment = new StepFragment();
         Bundle args = new Bundle();
@@ -64,6 +73,10 @@ public class StepFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * Method to get arguments
+     * @param savedInstanceState of the fragment state
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,28 +92,46 @@ public class StepFragment extends Fragment {
         }
     }
 
+    /**
+     * Method to create step fragment views
+     * @param inflater for the views
+     * @param container of the views
+     * @param savedInstanceState of the fragment
+     * @return step fragment views
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mBinding = StepFragmentItemListBinding.inflate(inflater, container, false);
-
-        // Set the adapter
+        // set binding and inflate step fragment views
+        com.larsonapps.personalcookbook.databinding.StepFragmentItemListBinding mBinding =
+                StepFragmentItemListBinding.inflate(inflater, container, false);
+        // Set context
         Context context = mBinding.getRoot().getContext();
-
+        // set layout manager
         mBinding.stepList.setLayoutManager(new LinearLayoutManager(context));
-        mStepViewModel = new ViewModelProvider(requireActivity()).get(StepViewModel.class);
+        // get step view model
+        StepViewModel mStepViewModel = new ViewModelProvider(requireActivity())
+                .get(StepViewModel.class);
+        // if saved instance state restore
         if (savedInstanceState != null) {
             mState = savedInstanceState.getInt(STATE);
             mRecipeId = savedInstanceState.getInt(RECIPE_ID);
             mStepList = savedInstanceState.getParcelableArrayList(STEPS);
         }
+        // create adapter
         StepRecyclerViewAdapter adapter = new StepRecyclerViewAdapter(mListener, mState);
+        // set adapter
         mBinding.stepList.setAdapter(adapter);
+        // test state
         if (mState == CookbookActivity.STATE_MANUAL) {
+            // set data
             adapter.setData(mStepList);
         } else {
+            // set observer for live data
             mStepViewModel.getSteps(mRecipeId).observe(getViewLifecycleOwner(), newSteps -> {
+                // test new steps
                 if (newSteps != null && newSteps.size() > 0) {
+                    // set data
                     adapter.setData(newSteps);
                 }
             });
@@ -108,6 +139,10 @@ public class StepFragment extends Fragment {
         return mBinding.getRoot();
     }
 
+    /**
+     * Method to save instance state
+     * @param outState to save state in
+     */
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);

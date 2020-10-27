@@ -22,17 +22,28 @@ import java.util.List;
  */
 public class IngredientRecyclerViewAdapter extends
         RecyclerView.Adapter<IngredientRecyclerViewAdapter.ViewHolder> {
-
+    // Declare variables
     private List<IngredientEntity> mValues = new ArrayList<>();
     private final int mState;
     private final IngredientFragment.OnListFragmentInteractionListener mListener;
 
+    /**
+     * Constructor for listener and state
+     * @param listener to set
+     * @param state to set
+     */
     public IngredientRecyclerViewAdapter(
             IngredientFragment.OnListFragmentInteractionListener listener, int state) {
         mListener = listener;
         mState = state;
     }
 
+    /**
+     * Method to creat view holder for ingredient adaptor
+     * @param parent of the view holder
+     * @param viewType of the view holder
+     * @return view holder
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -40,9 +51,16 @@ public class IngredientRecyclerViewAdapter extends
                 LayoutInflater.from(parent.getContext()), parent, false));
     }
 
+    /**
+     * Method to bind data to the view holder
+     * @param holder to bind data for
+     * @param position of the data
+     */
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+        // get ingredient for this position
         holder.mItem = mValues.get(position);
+        // build string for ingredient
         String tempString;
         if (holder.mItem.getAmount() == null || holder.mItem.getAmount().isEmpty()) {
             if (holder.mItem.getMeasure() == null || holder.mItem.getMeasure().isEmpty()) {
@@ -56,20 +74,29 @@ public class IngredientRecyclerViewAdapter extends
             tempString = holder.mItem.getAmount() + " " + holder.mItem.getMeasure() + " " +
                     holder.mItem.getName();
         }
+        // set ingredient text
         holder.mTextView.setText(tempString);
+        // test if ingredient preparation exists
         if (holder.mItem.getPreparation() == null || holder.mItem.getPreparation().isEmpty()) {
+            // set visibility
             holder.mPreparationView.setVisibility(View.GONE);
         } else {
+            // set visibility and preparation text
             holder.mPreparationView.setVisibility(View.VISIBLE);
             holder.mPreparationView.setText(holder.mItem.getPreparation());
         }
+        // test if personal note exists
         if (holder.mItem.getPersonalNote() == null || holder.mItem.getPersonalNote().isEmpty()) {
+            // set visibility
             holder.mPersonalNoteView.setVisibility(View.GONE);
         } else {
+            // set visibility and personal note text
             holder.mPersonalNoteView.setVisibility(View.VISIBLE);
             holder.mPersonalNoteView.setText(holder.mItem.getPersonalNote());
         }
+        // test state
         if (mState == CookbookActivity.STATE_EDIT) {
+            // set edit icon listener
             holder.mEditImageButton.setOnClickListener(v -> {
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
@@ -77,6 +104,7 @@ public class IngredientRecyclerViewAdapter extends
                     mListener.onListFragmentInteraction(holder.mItem, mState, v);
                 }
             });
+            // set delete icon listener
             holder.mDeleteImageButton.setOnClickListener(v -> {
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
@@ -84,9 +112,11 @@ public class IngredientRecyclerViewAdapter extends
                     mListener.onListFragmentInteraction(holder.mItem, mState, v);
                 }
             });
+            // set visibility
             holder.mEditImageButton.setVisibility(View.VISIBLE);
             holder.mDeleteImageButton.setVisibility(View.VISIBLE);
         } else {
+            // set visibility
             holder.mEditImageButton.setVisibility(View.GONE);
             holder.mDeleteImageButton.setVisibility(View.GONE);
         }
@@ -101,6 +131,10 @@ public class IngredientRecyclerViewAdapter extends
         notifyDataSetChanged();
     }
 
+    /**
+     * Method to set number of ingredients
+     * @return number of ingredients
+     */
     @Override
     public int getItemCount() {
         if (mValues == null) {
@@ -109,6 +143,9 @@ public class IngredientRecyclerViewAdapter extends
         return mValues.size();
     }
 
+    /**
+     * Class for ingredients view holder
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mTextView;
@@ -118,6 +155,10 @@ public class IngredientRecyclerViewAdapter extends
         public final ImageView mDeleteImageButton;
         public IngredientEntity mItem;
 
+        /**
+         * Constructor for ingredient binding
+         * @param binding to use
+         */
         public ViewHolder(IngredientFragmentItemBinding binding) {
             super(binding.getRoot());
             mView = binding.getRoot();

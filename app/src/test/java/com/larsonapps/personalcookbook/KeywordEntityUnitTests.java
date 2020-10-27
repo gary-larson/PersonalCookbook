@@ -6,6 +6,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Class for keyword entity tests
+ */
 public class KeywordEntityUnitTests {
     // keyword update data
     private static final int KEYWORD_ID_VALUE = 48;
@@ -17,22 +20,36 @@ public class KeywordEntityUnitTests {
             KeywordEntity(KEYWORD_ID_VALUE, RECIPE_ID_VALUE, KEYWORD_VALUE);
 
     // test constructor and getters
+
+    /**
+     * Test for keyword id getter
+     */
     @Test
     public void testKeywordIdGetter() {
         assertEquals(KEYWORD_ID_VALUE, keywordEntity.getKeywordId());
     }
 
+    /**
+     * Test for keyword recipe id getter
+     */
     @Test
-    public void testRecipeIdGetter() {
+    public void testKeywordRecipeIdGetter() {
         assertEquals(RECIPE_ID_VALUE, keywordEntity.getRecipeId());
     }
 
+    /**
+     * Test for keyword getter
+     */
     @Test
     public void testKeywordGetter() {
         assertEquals(KEYWORD_VALUE, keywordEntity.getKeyword());
     }
 
     // test setters
+
+    /**
+     * Test for keyword id setter
+     */
     @Test
     public void testKeywordIdSetter() {
         int temp = 46;
@@ -40,13 +57,19 @@ public class KeywordEntityUnitTests {
         assertEquals(temp, keywordEntity.getKeywordId());
     }
 
+    /**
+     * Test for keyword recipe id setter
+     */
     @Test
-    public void testResipeIdSetter() {
+    public void testKeywordResipeIdSetter() {
         int temp = 91;
         keywordEntity.setRecipeId(temp);
         assertEquals(temp, keywordEntity.getRecipeId());
     }
 
+    /**
+     * Test for keyword setter
+     */
     @Test
     public void testKeywordSetter() {
         String temp = "spaghetti";

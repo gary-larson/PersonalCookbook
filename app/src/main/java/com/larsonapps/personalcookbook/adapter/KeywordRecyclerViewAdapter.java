@@ -27,12 +27,23 @@ public class KeywordRecyclerViewAdapter extends
     private final int mState;
     private final KeywordFragment.OnListFragmentInteractionListener mListener;
 
+    /**
+     * Constructor for listener and state
+     * @param listener to set
+     * @param state to set
+     */
     public KeywordRecyclerViewAdapter(KeywordFragment.OnListFragmentInteractionListener listener,
                                       int state) {
         mListener = listener;
         mState = state;
     }
 
+    /**
+     * Method to create a keyword view holder
+     * @param parent of the view holder
+     * @param viewType of the view holder
+     * @return view holder
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -40,11 +51,20 @@ public class KeywordRecyclerViewAdapter extends
                 LayoutInflater.from(parent.getContext()), parent, false));
     }
 
+    /**
+     * Method to bind keyword data to view holder
+     * @param holder to bind data for
+     * @param position of the data
+     */
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+        // get keyword for this position
         holder.mItem = mValues.get(position);
+        // set keyword text
         holder.mKeywordView.setText(mValues.get(position).getKeyword());
+        // test state
         if (mState == CookbookActivity.STATE_EDIT) {
+            // set delete icon listener
             holder.mDeleteImageButton.setOnClickListener(v -> {
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
@@ -52,17 +72,27 @@ public class KeywordRecyclerViewAdapter extends
                     mListener.onListFragmentInteraction(holder.mItem, mState, v);
                 }
             });
+            // set visibility
             holder.mDeleteImageButton.setVisibility(View.VISIBLE);
         } else {
+            // set visibility
             holder.mDeleteImageButton.setVisibility(View.GONE);
         }
     }
 
+    /**
+     * Method to set keyword data and notify data changed
+     * @param keywords to set
+     */
     public void setData(List<KeywordEntity> keywords) {
         mValues = keywords;
         notifyDataSetChanged();
     }
 
+    /**
+     * Methos to get the number of keywords
+     * @return number of keywords
+     */
     @Override
     public int getItemCount() {
         if (mValues == null) {
@@ -71,12 +101,19 @@ public class KeywordRecyclerViewAdapter extends
         return mValues.size();
     }
 
+    /**
+     * Class for the keyword view holder
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mKeywordView;
         public final ImageView mDeleteImageButton;
         public KeywordEntity mItem;
 
+        /**
+         * Constructor for keyword binding
+         * @param binding to use
+         */
         public ViewHolder(KeywordFragmentItemBinding binding) {
             super(binding.getRoot());
             mView = binding.getRoot();

@@ -25,8 +25,14 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+/**
+ * Class to test database image
+ */
 @RunWith(AndroidJUnit4.class)
 public class CookbookDaoImageAndroidTests {
+    /**
+     * Method to set rule for live data
+     */
     @Rule
     public TestRule rule = new InstantTaskExecutorRule();
 
@@ -79,6 +85,9 @@ public class CookbookDaoImageAndroidTests {
     int recipeId1;
     int recipeId2;
 
+    /**
+     * Method to prepare and populate database for image tests
+     */
     @Before
     public void createDb() {
         Context context = ApplicationProvider.getApplicationContext();
@@ -102,11 +111,17 @@ public class CookbookDaoImageAndroidTests {
         cookbookDao.insertImage(image3);
     }
 
+    /**
+     * method to close database
+     */
     @After
     public void closeDb() {
         db.close();
     }
 
+    /**
+     * Test for adding a list of images and getting a list of images
+     */
     @Test
     public void testInsertAllImagesAndGetAllImages() {
         // insert all images
@@ -135,8 +150,11 @@ public class CookbookDaoImageAndroidTests {
         });
     }
 
+    /**
+     * Test for deleting an image and getting an image id by url
+     */
     @Test
-    public void testDeleteImageAndGetImageIdByCaption() {
+    public void testDeleteImageAndGetImageIdByUrl() {
         int imageId = cookbookDao.getImageIdByUrl(recipeId1, image1.getImageUrl());
         image1.setImageId(imageId);
         // delete image
@@ -149,8 +167,11 @@ public class CookbookDaoImageAndroidTests {
         });
     }
 
+    /**
+     * Test for updating an image and getting an image id by url
+     */
     @Test
-    public void testUpdateImageAndGetImageIdByCaption() {
+    public void testUpdateImageAndGetImageIdByUrl() {
         int imageId = cookbookDao.getImageIdByUrl(recipeId1, IMAGE_URL_VALUE_1);
         // modify image
         String temp = "https://54644645.jpg";

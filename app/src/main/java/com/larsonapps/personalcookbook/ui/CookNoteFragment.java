@@ -19,6 +19,9 @@ import com.larsonapps.personalcookbook.model.CookNoteViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class for cook note fragment
+ */
 public class CookNoteFragment extends Fragment {
     // Declare constants
     private static final String ARG_STATE= "state";
@@ -39,6 +42,12 @@ public class CookNoteFragment extends Fragment {
     public CookNoteFragment() {
     }
 
+    /**
+     * Method to create a cook note fragment instance
+     * @param state of the app
+     * @param recipeId of the recipe the cook notes are for
+     * @return cook note fragment
+     */
     public static CookNoteFragment newInstance(int state, int recipeId) {
         CookNoteFragment fragment = new CookNoteFragment();
         Bundle args = new Bundle();
@@ -48,6 +57,12 @@ public class CookNoteFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * Methd to creat a cook note fragment instance
+     * @param state of the app
+     * @param list of cook notes
+     * @return cook note gragment
+     */
     public static CookNoteFragment newInstance(int state, List<CookNoteEntity> list) {
         CookNoteFragment fragment = new CookNoteFragment();
         Bundle args = new Bundle();
@@ -57,6 +72,10 @@ public class CookNoteFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * Method to get arguments
+     * @param savedInstanceState of the fragment
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,30 +91,46 @@ public class CookNoteFragment extends Fragment {
         }
     }
 
+    /**
+     * Method to create cook book note fragment views
+     * @param inflater of the views
+     * @param container for the views
+     * @param savedInstanceState for fragment state
+     * @return cook note fragment
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         com.larsonapps.personalcookbook.databinding.CookNoteFragmentItemListBinding mBinding =
                 CookNoteFragmentItemListBinding.inflate(inflater, container, false);
 
-        // Set the adapter
+        // Set the context
         Context context = mBinding.getRoot().getContext();
-
+        // set the layout manager
         mBinding.cookNoteList.setLayoutManager(new LinearLayoutManager(context));
+        // connect to cook note view model
         CookNoteViewModel mCookNoteViewModel = new ViewModelProvider(requireActivity())
                 .get(CookNoteViewModel.class);
+        // if saved instance state restore
         if (savedInstanceState != null) {
             mState = savedInstanceState.getInt(STATE);
             mRecipeId = savedInstanceState.getInt(RECIPE_ID);
             mCookNoteList = savedInstanceState.getParcelableArrayList(COOK_NOTES);
         }
+        // create the adapter
         CookNoteRecyclerViewAdapter adapter = new CookNoteRecyclerViewAdapter(mListener, mState);
+        // set the adapter
         mBinding.cookNoteList.setAdapter(adapter);
+        // test state
         if (mState == CookbookActivity.STATE_MANUAL) {
+            // set data
             adapter.setData(mCookNoteList);
         } else {
+            // set observer for cook notelive data
             mCookNoteViewModel.getNotes(mRecipeId).observe(getViewLifecycleOwner(), newCookNotes -> {
+                // test new cook notes
                 if (newCookNotes != null && newCookNotes.size() > 0) {
+                    // set data
                     adapter.setData(newCookNotes);
                 }
             });
@@ -103,6 +138,10 @@ public class CookNoteFragment extends Fragment {
         return mBinding.getRoot();
     }
 
+    /**
+     * Method to set saved instance data
+     * @param outState to save state data
+     */
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);

@@ -25,6 +25,9 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+/**
+ * Class to test databse keywords
+ */
 @RunWith(AndroidJUnit4.class)
 public class CookbookDaoKeywordAndroidTests {
     @Rule
@@ -73,6 +76,9 @@ public class CookbookDaoKeywordAndroidTests {
     int recipeId1;
     int recipeId2;
 
+    /**
+     * Method to create database and populate for keyword tests
+     */
     @Before
     public void createDb() {
         Context context = ApplicationProvider.getApplicationContext();
@@ -96,11 +102,17 @@ public class CookbookDaoKeywordAndroidTests {
         cookbookDao.insertKeyword(keyword4);
     }
 
+    /**
+     * Method to close database
+     */
     @After
     public void closeDb() {
         db.close();
     }
 
+    /**
+     * Test for adding a list of keywords and getting a list of keywords
+     */
     @Test
     public void testInsertAllKeywordsAndGetAllKeywords() {
         // insert all keywords
@@ -127,6 +139,9 @@ public class CookbookDaoKeywordAndroidTests {
         });
     }
 
+    /**
+     * Test for deleteing a keyword
+     */
     @Test
     public void testDeleteKeyword() {
         int keywordId = cookbookDao.getKeywordIdByKeyword(recipeId1, keyword1.getKeyword());
@@ -141,6 +156,9 @@ public class CookbookDaoKeywordAndroidTests {
         });
     }
 
+    /**
+     * Test for getting a list of recipes by keyword
+     */
     @Test
     public void testGetAllRecipesByKeyword() {
         // get recipes by keyword beef
@@ -154,6 +172,9 @@ public class CookbookDaoKeywordAndroidTests {
                 assertEquals(0, newRecipes.size()));
     }
 
+    /**
+     * Test for getting a list of recipes by an array of keywords
+     */
     @Test
     public void testGetAllRecipesByArrayOfKeywords() {
         // get recipes by keyword chicken and pork

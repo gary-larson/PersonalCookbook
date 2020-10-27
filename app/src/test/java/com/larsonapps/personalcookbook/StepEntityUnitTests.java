@@ -20,31 +20,52 @@ public class StepEntityUnitTests {
             INSTRUCTION_VALUE, PERSONAL_NOTE_VALUE);
 
     // Tests for the constructor and Getters
+
+    /**
+     * Test for step id getter
+     */
     @Test
     public void testStepIdGetter() {
         assertEquals(STEP_ID_VALUE, step.getStepId());
     }
 
+    /**
+     * Test for step recipe id getter
+     */
     @Test
     public void testStepRecipeIdGetter() {
         assertEquals(RECIPE_ID_VALUE, step.getRecipeId());
     }
 
+    /**
+     * Test for step instruction getter
+     */
     @Test
-    public void testStepDescriptionGetter() {
+    public void testStepInstructionGetter() {
         assertEquals(INSTRUCTION_VALUE, step.getInstruction());
     }
 
+    /**
+     * Test for step number getter
+     */
     @Test
     public void testStepNumberGetter() {
         assertEquals(NUMBER_VALUE, step.getNumber());
     }
 
+    /**
+     * Test for step personal note getter
+     */
+    @Test
     public void testStepPersonalNoteGetter() {
         assertEquals(PERSONAL_NOTE_VALUE, step.getPersonalNote());
     }
 
     // Test default constructor and setters
+
+    /**
+     * Test for step id setter
+     */
     @Test
     public void testStepIdSetter() {
         int temp = 84;
@@ -52,12 +73,19 @@ public class StepEntityUnitTests {
         assertEquals(temp, step.getStepId());
     }
 
+    /**
+     * Test for step recipe id setter
+     */
     @Test
     public void testStepRecipeIdSetter() {
         int temp = 46;
         step.setRecipeId(temp);
         assertEquals(temp, step.getRecipeId());
     }
+
+    /**
+     * Test for step instruction setter
+     */
     @Test
     public void testStepInstructionSetter() {
         String temp = "put in oven";
@@ -65,6 +93,9 @@ public class StepEntityUnitTests {
         assertEquals(temp, step.getInstruction());
     }
 
+    /**
+     * Test for step number setter
+     */
     @Test
     public void testStepNumberSetter() {
         int temp = 55;
@@ -72,6 +103,9 @@ public class StepEntityUnitTests {
         assertEquals(temp, step.getNumber());
     }
 
+    /**
+     * Test for step personal note setter
+     */
     @Test
     public void testStepPersonalNoteSetter() {
         String temp = "Another personal note.";
@@ -79,6 +113,9 @@ public class StepEntityUnitTests {
         assertEquals(temp, step.getPersonalNote());
     }
 
+    /**
+     * Test for step to string
+     */
     @Test
     public void testToString() {
         assertEquals(TO_STRING_VALUE, step.toString());

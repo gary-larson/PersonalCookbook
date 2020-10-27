@@ -21,6 +21,9 @@ import org.junit.runner.RunWith;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+/**
+ * Class to test database category
+ */
 @RunWith(AndroidJUnit4.class)
 public class CookbookDaoCategoryAndroidTests {
     /**
@@ -40,6 +43,9 @@ public class CookbookDaoCategoryAndroidTests {
     CategoryEntity category2;
 
 
+    /**
+     * Method to prepare database and populate for category tests
+     */
     @Before
     public void createDb() {
         Context context = ApplicationProvider.getApplicationContext();
@@ -52,11 +58,17 @@ public class CookbookDaoCategoryAndroidTests {
         cookbookDao.insertCategory(category2);
     }
 
+    /**
+     * Method to close database
+     */
     @After
     public void closeDb() {
         db.close();
     }
 
+    /**
+     * Test on getting all categories
+     */
     @Test
     public void testGetAllCategories() {
         // get categories and test
@@ -70,6 +82,9 @@ public class CookbookDaoCategoryAndroidTests {
         });
     }
 
+    /**
+     * Test for delete category and get category id by name
+     */
     @Test
     public void testDeleteCategoryAndGetCategoryIdByName() {
         int categoryId = cookbookDao.getCategoryIdByName(CATEGORY_NAME_VALUE_1);
