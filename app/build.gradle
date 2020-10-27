@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 30
@@ -106,6 +107,9 @@ dependencies {
     // For image placement and control
     implementation "com.squareup.picasso:picasso:2.71828"
     // Google play services
+    // firebase
+    implementation platform('com.google.firebase:firebase-bom:25.12.0')
+    implementation 'com.google.firebase:firebase-analytics'
 //    implementation 'com.google.android.gms:play-services-ads:19.3.0'
 //    implementation 'com.google.api-client:google-api-client:1.23.0'
 //    implementation 'com.google.http-client:google-http-client-android:1.23.0'
