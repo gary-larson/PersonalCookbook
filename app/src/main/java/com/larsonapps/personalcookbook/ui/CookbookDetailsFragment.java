@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.ads.AdRequest;
 import com.larsonapps.personalcookbook.data.RecipeEntity;
 import com.larsonapps.personalcookbook.databinding.CookbookDetailsFragmentBinding;
 
@@ -77,6 +78,9 @@ public class CookbookDetailsFragment extends Fragment {
         // Declare variables
         com.larsonapps.personalcookbook.databinding.CookbookDetailsFragmentBinding mBinding =
                 CookbookDetailsFragmentBinding.inflate(inflater, container, false);
+        // load ad
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mBinding.detailsAdView.loadAd(adRequest);
         // if state saved restore
         if (savedInstanceState != null) {
             mState = savedInstanceState.getInt(STATE);

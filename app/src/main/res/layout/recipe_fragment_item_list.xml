@@ -17,12 +17,12 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-
     <androidx.core.widget.NestedScrollView
         android:id="@+id/recipe_nested"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -39,9 +39,9 @@
                     android:id="@+id/meal_spinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
                     android:entries="@array/meal_array"
                     android:paddingTop="@dimen/spinner_padding"
-                    android:backgroundTint="@color/white"
                     android:paddingBottom="@dimen/spinner_padding"
                     android:spinnerMode="dropdown" />
 
@@ -49,9 +49,9 @@
                     android:id="@+id/protein_spinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
                     android:entries="@array/protein_array"
                     android:paddingTop="@dimen/spinner_padding"
-                    android:backgroundTint="@color/white"
                     android:paddingBottom="@dimen/spinner_padding"
                     android:spinnerMode="dropdown" />
 
@@ -59,14 +59,20 @@
                     android:id="@+id/category_spinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
                     android:entries="@array/category_array"
                     android:paddingTop="@dimen/spinner_padding"
-                    android:backgroundTint="@color/white"
                     android:paddingBottom="@dimen/spinner_padding"
                     android:spinnerMode="dropdown" />
 
             </LinearLayout>
 
+            <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/recipe_adView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                ads:adSize="BANNER"
+                ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recipe_list"

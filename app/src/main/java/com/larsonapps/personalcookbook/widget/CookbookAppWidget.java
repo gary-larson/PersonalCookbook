@@ -36,6 +36,12 @@ public class CookbookAppWidget extends AppWidgetProvider {
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
+    /**
+     * Method to update the wirget
+     * @param context to use
+     * @param appWidgetManager to use
+     * @param appWidgetIds of all widgets
+     */
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them

@@ -27,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.gms.ads.MobileAds;
 import com.larsonapps.personalcookbook.R;
 import com.larsonapps.personalcookbook.data.CategoryEntity;
 import com.larsonapps.personalcookbook.data.CookNoteEntity;
@@ -114,6 +115,9 @@ public class CookbookActivity extends AppCompatActivity implements
         mStepViewModel = new ViewModelProvider(this).get(StepViewModel.class);
         mImageViewModel = new ViewModelProvider(this).get(ImageViewModel.class);
         mKeywordViewModel = new ViewModelProvider(this).get(KeywordViewModel.class);
+        // initialize ads
+        MobileAds.initialize(this, initializationStatus -> {
+        });
         // set on back stack listener
         getSupportFragmentManager().addOnBackStackChangedListener(this);
         // display up button
@@ -471,4 +475,6 @@ public class CookbookActivity extends AppCompatActivity implements
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
+
 }

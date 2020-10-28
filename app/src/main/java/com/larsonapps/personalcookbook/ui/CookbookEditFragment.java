@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.gms.ads.AdRequest;
 import com.larsonapps.personalcookbook.data.CookNoteEntity;
 import com.larsonapps.personalcookbook.data.ImageEntity;
 import com.larsonapps.personalcookbook.data.IngredientEntity;
@@ -127,6 +128,9 @@ public class CookbookEditFragment extends Fragment implements
         mStepViewModel = new ViewModelProvider(requireActivity()).get(StepViewModel.class);
         mImageViewModel = new ViewModelProvider(requireActivity()).get(ImageViewModel.class);
         mKeywordViewModel = new ViewModelProvider(requireActivity()).get(KeywordViewModel.class);
+        // load ad
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mBinding.editAdView.loadAd(adRequest);
         // if state is saved restore
         if (savedInstanceState != null) {
             mState = savedInstanceState.getInt(STATE);

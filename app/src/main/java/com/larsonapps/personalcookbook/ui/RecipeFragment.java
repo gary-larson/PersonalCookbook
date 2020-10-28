@@ -34,6 +34,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.android.gms.ads.AdRequest;
 import com.larsonapps.personalcookbook.R;
 import com.larsonapps.personalcookbook.adapter.RecipeRecyclerViewAdapter;
 import com.larsonapps.personalcookbook.data.CategoryEntity;
@@ -89,6 +90,9 @@ public class RecipeFragment extends Fragment {
         mBinding = RecipeFragmentItemListBinding.inflate(inflater, container, false);
         // set context
         Context context = getContext();
+        // load ad
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mBinding.recipeAdView.loadAd(adRequest);
         // get recipe view model
         mRecipeViewModel = new ViewModelProvider(requireActivity()).get(RecipeViewModel.class);
         // set title

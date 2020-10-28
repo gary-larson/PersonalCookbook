@@ -46,6 +46,9 @@
         <uses-library
             android:name="android.test.mock"
             android:required="false" />
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-5948059920813252~3506441108"/>
     </application>
 
 </manifest>

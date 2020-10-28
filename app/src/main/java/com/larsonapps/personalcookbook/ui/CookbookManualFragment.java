@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.gms.ads.AdRequest;
 import com.larsonapps.personalcookbook.R;
 import com.larsonapps.personalcookbook.data.CookNoteEntity;
 import com.larsonapps.personalcookbook.data.ImageEntity;
@@ -125,6 +126,9 @@ public class CookbookManualFragment extends Fragment implements
         // set title
         Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity()))
                 .getSupportActionBar()).setTitle(getString(R.string.manual_entry_menu_title));
+        // load ad
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mBinding.manualAdView.loadAd(adRequest);
         // if state is saved restore
         if (savedInstanceState != null) {
             mState = savedInstanceState.getInt(STATE);
