@@ -102,7 +102,8 @@ public class CookbookActivity extends AppCompatActivity implements
         // inflate the view
         mBinding = CookbookActivityBinding.inflate(getLayoutInflater());
         setContentView(mBinding.getRoot());
-        // check for saved inatance atate
+        setSupportActionBar(mBinding.toolbar);
+        // check for saved inatance state
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .replace(mBinding.container.getId(), RecipeFragment.newInstance())

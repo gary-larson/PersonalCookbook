@@ -7,7 +7,6 @@ import androidx.lifecycle.LiveData;
 
 import com.larsonapps.personalcookbook.AppContainer;
 import com.larsonapps.personalcookbook.CookbookApplication;
-import com.larsonapps.personalcookbook.data.IngredientEntity;
 import com.larsonapps.personalcookbook.data.StepEntity;
 
 import java.util.List;

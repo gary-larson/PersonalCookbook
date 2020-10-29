@@ -4,11 +4,9 @@ import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.larsonapps.personalcookbook.AppContainer;
 import com.larsonapps.personalcookbook.CookbookApplication;
-import com.larsonapps.personalcookbook.data.ImageEntity;
 import com.larsonapps.personalcookbook.data.IngredientEntity;
 
 import java.util.List;

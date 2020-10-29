@@ -23,9 +23,19 @@ android {
         }
     }
 
+    signingConfigs {
+        config {
+            keyAlias 'LaPcKey'
+            keyPassword 'Fhe!2u9B(W'
+            storeFile file('../LarsonAppskeystore.jks')
+            storePassword 'fSV6H*knBR'
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.config
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
